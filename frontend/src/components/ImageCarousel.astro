@@ -31,6 +31,7 @@ function getSlideRealIndex(i: number): number {
 ---
 
 <div class="carousel" data-carousel data-total={total} data-has-video={items.some((x) => x.type === "video") ? "true" : undefined}>
+	<div class="carousel__track-wrap">
 	<div class="carousel__track" role="list">
 		{slides.map((item, i) => {
 			const realIndex = getSlideRealIndex(i);
@@ -38,17 +39,38 @@ function getSlideRealIndex(i: number): number {
 			return (
 				<div class={`carousel__slide${isVideo ? " carousel__slide--video" : ""}`} role="listitem" data-index={realIndex}>
 					{isVideo ? (
-						<video
-							class="carousel__video"
-							src={item.src}
-							poster={item.poster}
-							controls
-							playsinline
-							preload="auto"
-							tabindex="-1"
-						>
-							<track kind="captions" />
-						</video>
+						<>
+							<div class="carousel__video-wrap">
+								<video
+									class="carousel__video"
+									src={item.src}
+									poster={item.poster}
+									playsinline
+									preload="metadata"
+									muted
+									tabindex="-1"
+								>
+									<track kind="captions" />
+								</video>
+							</div>
+							<div class="carousel__video-overlay" data-video-overlay>
+								<button type="button" class="carousel__video-play-btn" aria-label="播放／暫停">
+									<span class="carousel__video-icon carousel__video-icon--play" aria-hidden="true">
+										<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+											<path d="M8 5v14l11-7z" />
+										</svg>
+									</span>
+									<span class="carousel__video-icon carousel__video-icon--pause" aria-hidden="true">
+										<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+											<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+										</svg>
+									</span>
+								</button>
+								<div class="carousel__video-progress">
+									<div class="carousel__video-progress-fill"></div>
+								</div>
+							</div>
+						</>
 					) : (
 						<img
 							src={item.src}
@@ -75,19 +97,22 @@ function getSlideRealIndex(i: number): number {
 					<path d="M9 18l6-6-6-6" />
 				</svg>
 			</button>
-			<div class="carousel__dots" role="tablist">
-				{items.map((item, i) => (
-					<button
-						type="button"
-						class="carousel__dot"
-						role="tab"
-						aria-label={item.type === "video" ? `第 ${i + 1} 則（影片）` : `第 ${i + 1} 張`}
-						aria-selected={i === 0}
-						data-index={i}
-					/>
-				))}
-			</div>
 		</>
+	)}
+	</div>
+	{total > 1 && (
+		<div class="carousel__dots" role="tablist">
+			{items.map((item, i) => (
+				<button
+					type="button"
+					class="carousel__dot"
+					role="tab"
+					aria-label={item.type === "video" ? `第 ${i + 1} 則（影片）` : `第 ${i + 1} 張`}
+					aria-selected={i === 0}
+					data-index={i}
+				/>
+			))}
+		</div>
 	)}
 </div>
 
@@ -96,6 +121,9 @@ function getSlideRealIndex(i: number): number {
 		position: relative;
 		width: 100%;
 		margin-top: 1rem;
+	}
+	.carousel__track-wrap {
+		position: relative;
 	}
 	.carousel__track {
 		display: flex;
@@ -122,8 +150,12 @@ function getSlideRealIndex(i: number): number {
 		scroll-snap-align: start;
 		scroll-snap-stop: always;
 	}
+	.carousel__slide--video {
+		position: relative;
+	}
 	.carousel__slide picture,
 	.carousel__slide img,
+	.carousel__slide .carousel__video-wrap,
 	.carousel__slide .carousel__video {
 		width: 100%;
 		height: auto;
@@ -133,13 +165,80 @@ function getSlideRealIndex(i: number): number {
 	}
 	/* 影片 slide 用深色底，避免未解碼時白屏閃爍 */
 	.carousel__slide--video,
+	.carousel__slide--video .carousel__video-wrap,
 	.carousel__slide--video .carousel__video {
 		background: #0c0c0c;
+	}
+	.carousel__video-wrap {
+		position: relative;
 	}
 	.carousel__video {
 		vertical-align: middle;
 	}
-	.carousel__btn {
+	/* 自訂影片 overlay：播放／暫停 + 進度條，hover 與箭頭一起出現，僅圓圈半透明黑底 */
+	.carousel__video-overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transition: opacity 0.25s ease;
+		cursor: pointer;
+	}
+	.carousel:hover .carousel__video-overlay {
+		opacity: 1;
+	}
+	.carousel__video-play-btn {
+		width: 3.5rem;
+		height: 3.5rem;
+		border: none;
+		border-radius: 50%;
+		background: rgba(0, 0, 0, 0.45);
+		color: #fff;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: background 0.2s, transform 0.2s;
+	}
+	.carousel__video-play-btn:hover {
+		background: rgba(0, 0, 0, 0.6);
+	}
+	.carousel__video-play-btn:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 2px;
+	}
+	.carousel__video-icon {
+		display: none;
+		width: 2rem;
+		height: 2rem;
+	}
+	.carousel__video-icon svg {
+		width: 100%;
+		height: 100%;
+	}
+	.carousel__video-play-btn[data-playing="false"] .carousel__video-icon--play,
+	.carousel__video-play-btn[data-playing="true"] .carousel__video-icon--pause {
+		display: block;
+	}
+	.carousel__video-progress {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 3px;
+		background: rgba(255, 255, 255, 0.25);
+		pointer-events: none;
+	}
+	.carousel__video-progress-fill {
+		height: 100%;
+		width: 0%;
+		background: rgba(255, 255, 255, 0.9);
+		transition: width 0.1s linear;
+	}
+	.carousel__track-wrap .carousel__btn {
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -157,7 +256,7 @@ function getSlideRealIndex(i: number): number {
 		transition: opacity 0.25s ease;
 		z-index: 2;
 	}
-	.carousel:hover .carousel__btn {
+	.carousel:hover .carousel__track-wrap .carousel__btn {
 		opacity: 1;
 	}
 	.carousel__btn--prev {
@@ -220,7 +319,7 @@ function getSlideRealIndex(i: number): number {
 				track.scrollLeft = sw();
 				track.style.scrollBehavior = "smooth";
 				isReady = true;
-				updateVideoPlayback(0);
+				updateVideoPlayback();
 			});
 		});
 
@@ -228,27 +327,72 @@ function getSlideRealIndex(i: number): number {
 			dots.forEach((dot, j) =>
 				dot.setAttribute("aria-selected", j === i ? "true" : "false")
 			);
-			updateVideoPlayback(i);
 		}
 
-		function updateVideoPlayback(activeIndex: number) {
+		// 依「目前可見的 slide」切換播放，避免 Safari 在捲動中頻繁切換導致卡頓／glitch
+		function updateVideoPlayback() {
 			if (!carousel.hasAttribute("data-has-video")) return;
 			track.querySelectorAll("video").forEach((v) => {
 				v.pause();
 			});
-			const slide = track.querySelector(`[data-index="${activeIndex}"]`);
+			const domIndex = Math.round(track.scrollLeft / sw());
+			const slide = track.children[domIndex];
 			const video = slide?.querySelector("video");
 			if (video) {
-				video.currentTime = 0;
-				video.play().catch(() => {});
+				requestAnimationFrame(() => {
+					video.currentTime = 0;
+					video.play().catch(() => {});
+				});
 			}
 		}
+
+		function initVideoOverlays() {
+			if (!carousel.hasAttribute("data-has-video")) return;
+			track.querySelectorAll(".carousel__slide--video").forEach((slide) => {
+				const video = slide.querySelector("video");
+				const overlay = slide.querySelector("[data-video-overlay]") as HTMLElement | null;
+				if (!video || !overlay) return;
+				const playBtn = overlay.querySelector(".carousel__video-play-btn") as HTMLButtonElement | null;
+				const progressFill = overlay.querySelector(".carousel__video-progress-fill") as HTMLElement | null;
+
+				function updateUI() {
+					const playing = !video.paused;
+					if (playBtn) {
+						playBtn.setAttribute("data-playing", String(playing));
+						playBtn.setAttribute("aria-label", playing ? "暫停" : "播放");
+					}
+					if (progressFill && Number.isFinite(video.duration) && video.duration > 0) {
+						progressFill.style.width = `${(video.currentTime / video.duration) * 100}%`;
+					}
+				}
+
+				function togglePlay() {
+					if (video.paused) video.play().catch(() => {});
+					else video.pause();
+				}
+
+				video.addEventListener("play", updateUI);
+				video.addEventListener("pause", updateUI);
+				video.addEventListener("timeupdate", updateUI);
+				video.addEventListener("loadedmetadata", updateUI);
+				updateUI();
+
+				overlay.addEventListener("click", (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					togglePlay();
+				});
+			});
+		}
+		initVideoOverlays();
 
 		function goTo(i: number) {
 			index = ((i % total) + total) % total;
 			track.scrollTo({ left: (index + 1) * sw(), behavior: "smooth" });
 			setDots(index);
 		}
+
+		let videoUpdateTimer: ReturnType<typeof setTimeout> | null = null;
 
 		// 捲動停止後，若停在複製張則靜默傳送到對應的真實張
 		function maybeTeleport() {
@@ -267,6 +411,7 @@ function getSlideRealIndex(i: number): number {
 				index = 0;
 				setDots(index);
 			}
+			updateVideoPlayback();
 		}
 
 		function scheduleTeleport() {
@@ -277,13 +422,18 @@ function getSlideRealIndex(i: number): number {
 			}, 80);
 		}
 
-		// scroll 期間即時更新點點，停止後安排傳送
+		// scroll 期間即時更新點點，停止後安排傳送；影片切換改為捲動停止後才執行，減少 Safari glitch
 		function onScroll() {
 			const s = sw();
 			const dom = Math.round(track.scrollLeft / s);
 			const di = dom <= 0 ? total - 1 : dom >= total + 1 ? 0 : dom - 1;
 			setDots(di);
 			scheduleTeleport();
+			if (videoUpdateTimer != null) clearTimeout(videoUpdateTimer);
+			videoUpdateTimer = setTimeout(() => {
+				videoUpdateTimer = null;
+				updateVideoPlayback();
+			}, 120);
 		}
 
 		// ── 按鈕：往右包回時順向捲至右側 clone，不往左跳 ──────────
@@ -360,10 +510,12 @@ function getSlideRealIndex(i: number): number {
 				setDots(index);
 				track.scrollTo({ left: domIndex * s, behavior: "smooth" });
 			}
+			updateVideoPlayback();
 		}
 
 		track.addEventListener("pointerdown", (e: PointerEvent) => {
 			if (e.pointerType === "mouse" && e.button !== 0) return;
+			if ((e.target as Element).closest("[data-video-overlay]")) return;
 			startDrag(e.clientX);
 			try { track.setPointerCapture(e.pointerId); } catch (_) {}
 		});
@@ -388,6 +540,7 @@ function getSlideRealIndex(i: number): number {
 			"touchstart",
 			(e: TouchEvent) => {
 				if (e.touches.length !== 1) return;
+				if ((e.target as Element).closest("[data-video-overlay]")) return;
 				startDrag(e.touches[0].clientX);
 			},
 			{ passive: true },

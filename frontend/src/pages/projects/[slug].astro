@@ -2,6 +2,7 @@
 import { getCollection, getEntry } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import ImageCarousel from "../../components/ImageCarousel.astro";
+import VideoWithOverlay from "../../components/VideoWithOverlay.astro";
 import Separator from "../../components/Separator.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
@@ -107,16 +108,11 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 					isReelsLayout ? (
 						<>
 							{firstVideo && (
-								<video
-									class="project-video"
+								<VideoWithOverlay
 									src={firstVideo.src}
 									poster={firstVideo.poster}
-									controls
-									playsinline
-									preload="auto"
-								>
-									<track kind="captions" />
-								</video>
+									class="project-video-wrap"
+								/>
 							)}
 							{reelsCarouselItems.length > 1 ? (
 								<ImageCarousel
@@ -147,15 +143,11 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 							class="project-image"
 						/>
 					) : (
-						<video
-							class="project-video"
+						<VideoWithOverlay
 							src={mediaItems[0].src}
-							controls
-							playsinline
-							preload="metadata"
-						>
-							<track kind="captions" />
-						</video>
+							poster={mediaItems[0].poster}
+							class="project-video-wrap"
+						/>
 					)
 				) : null}
 			</div>
@@ -297,15 +289,17 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 		width: 100%;
 	}
 	.project-image,
-	.project-video {
+	.project-video-wrap {
 		width: 100%;
 		max-width: 100%;
-		height: auto;
-		object-fit: contain;
 	}
-	.project-video {
+	.project-video-wrap {
 		display: block;
 		margin-top: 0.5rem;
+	}
+	.project-video-wrap :global(.video-with-overlay__video) {
+		height: auto;
+		object-fit: contain;
 	}
 	.meta {
 		margin: 0 0 0.5rem;
