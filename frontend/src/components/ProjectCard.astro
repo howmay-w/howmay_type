@@ -1,0 +1,118 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+function getProjectSlug(id: string) {
+	return id.replace(/\/index$/, "") || id;
+}
+
+type Props = {
+	project: CollectionEntry<"projects">;
+	deferred?: boolean;
+};
+
+const { project, deferred = false } = Astro.props;
+const slug = getProjectSlug(project.id);
+const { title, thumbnail, image, images, hoverVideo, hoverVideoFit, video, pubDate, tags } = project.data;
+// 縮圖優先順序：專屬縮圖 thumbnail → 輪播第一張 images[0] → 單張 image
+const heroImage = thumbnail ?? (images?.length ? images[0] : image);
+// 若完全沒有圖片但有影片，用影片第一格當封面
+const thumbVideoSrc = !heroImage && video?.src ? video.src : null;
+const year = pubDate ? new Date(pubDate).getFullYear().toString() : "";
+const dateStr = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "";
+const tagsStr = tags?.length ? tags.join("、") : "";
+---
+
+<a
+	class="project-card"
+	data-project-title={title}
+	data-project-year={year}
+	data-project-date={dateStr}
+	data-project-tags={tagsStr}
+	data-hover-video={hoverVideo?.src ?? ""}
+	data-hover-video-fit={hoverVideoFit ?? ""}
+	data-astro-prefetch="tap"
+	{...(deferred ? { "data-deferred": "" } : {})}
+	href={`/projects/${slug}`}
+>
+	<article>
+		{heroImage && (
+			<span class="project-card__img-wrap">
+				<picture>
+					<img
+						src={heroImage.src}
+						alt={heroImage.alt ?? title}
+						width="800"
+						loading={deferred ? "lazy" : "eager"}
+						decoding="async"
+					/>
+				</picture>
+			</span>
+		)}
+		{!heroImage && thumbVideoSrc && (
+			<span class="project-card__img-wrap">
+				<video
+					class="project-card__thumb-video"
+					src={thumbVideoSrc}
+					data-thumb-video={thumbVideoSrc}
+					muted
+					playsinline
+					preload="metadata"
+					aria-hidden="true"
+				></video>
+			</span>
+		)}
+		<span class="sr-only">
+			<h3>{title}</h3>
+			{pubDate && <p>{new Date(pubDate).getFullYear()}</p>}
+		</span>
+	</article>
+</a>
+
+<style>
+	.project-card {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		background: var(--color-placeholder, #eee);
+		line-height: 0;
+		-webkit-touch-callout: none;
+		user-select: none;
+	}
+	.project-card article {
+		position: absolute;
+		inset: 0;
+		display: block;
+	}
+	.project-card__img-wrap {
+		position: absolute;
+		inset: 0;
+		display: block;
+	}
+	.project-card__img-wrap picture,
+	.project-card__img-wrap img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		display: block;
+	}
+	.project-card__thumb-video {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		display: block;
+	}
+	h3,
+	p {
+		margin: 0;
+	}
+</style>

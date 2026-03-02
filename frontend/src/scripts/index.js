@@ -13,7 +13,12 @@ const initializeVariables = () => {
 	lines = document.querySelectorAll("hr");
 	textSliders = document.querySelectorAll("header .oh > .oh__inner");
 	gridContainer = document.querySelector("[data-grid]");
-	gridItems = gridContainer ? Array.from(gridContainer.children) : [];
+	// 只取尚未延遲載入（非 data-deferred）的可見卡片，避免對全部 N 個元素建 tween
+	gridItems = gridContainer
+		? Array.from(gridContainer.children).filter(
+				(el) => !el.hasAttribute("data-deferred"),
+			)
+		: [];
 	hasPreloaderComponent = document.querySelector(".loading");
 };
 
@@ -43,8 +48,8 @@ const animateHomepageElements = () => {
 		)
 		.from(textSliders, { yPercent: 100, stagger: 0.1 }, 0.2)
 		.set(gridContainer, { autoAlpha: 1 }, "<+=1")
-		.from(gridItems, { yPercent: 100, stagger: 0.08 }, "<")
-		.from(gridItems, { ease: "sine", autoAlpha: 0, stagger: 0.08 }, "<");
+		.from(gridItems, { yPercent: 100, stagger: 0.04, duration: 0.8 }, "<")
+		.from(gridItems, { ease: "sine", autoAlpha: 0, stagger: 0.04, duration: 0.8 }, "<");
 };
 
 // Clean up animations and DOM references to prevent memory leaks.

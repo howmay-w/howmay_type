@@ -1,0 +1,175 @@
+---
+type Props = {
+	src: string;
+	poster?: string;
+	class?: string;
+};
+
+const { src, poster, class: className = "" } = Astro.props;
+---
+
+<div class={`video-with-overlay ${className}`.trim()} data-video-with-overlay>
+	<video
+		class="video-with-overlay__video"
+		src={src}
+		poster={poster}
+		playsinline
+		preload="metadata"
+		muted
+		tabindex="-1"
+	>
+		<track kind="captions" />
+	</video>
+	<div class="video-with-overlay__overlay" data-video-overlay>
+		<button type="button" class="video-with-overlay__play-btn" aria-label="播放／暫停">
+			<span class="video-with-overlay__icon video-with-overlay__icon--play" aria-hidden="true">
+				<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M8 5v14l11-7z" />
+				</svg>
+			</span>
+			<span class="video-with-overlay__icon video-with-overlay__icon--pause" aria-hidden="true">
+				<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+				</svg>
+			</span>
+		</button>
+		<div class="video-with-overlay__progress">
+			<div class="video-with-overlay__progress-fill"></div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.video-with-overlay {
+		position: relative;
+		width: 100%;
+		background: #0c0c0c;
+	}
+	.video-with-overlay__video {
+		width: 100%;
+		height: auto;
+		display: block;
+		object-fit: contain;
+		vertical-align: middle;
+	}
+	.video-with-overlay__overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transition: opacity 0.25s ease;
+		cursor: pointer;
+	}
+	.video-with-overlay:hover .video-with-overlay__overlay {
+		opacity: 1;
+	}
+	.video-with-overlay__play-btn {
+		width: 3.5rem;
+		height: 3.5rem;
+		border: none;
+		border-radius: 50%;
+		background: rgba(0, 0, 0, 0.45);
+		color: #fff;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: background 0.2s;
+	}
+	.video-with-overlay__play-btn:hover {
+		background: rgba(0, 0, 0, 0.6);
+	}
+	.video-with-overlay__play-btn:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 2px;
+	}
+	.video-with-overlay__icon {
+		display: none;
+		width: 2rem;
+		height: 2rem;
+	}
+	.video-with-overlay__icon svg {
+		width: 100%;
+		height: 100%;
+	}
+	.video-with-overlay__play-btn[data-playing="false"] .video-with-overlay__icon--play,
+	.video-with-overlay__play-btn[data-playing="true"] .video-with-overlay__icon--pause {
+		display: block;
+	}
+	.video-with-overlay__progress {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 3px;
+		background: rgba(255, 255, 255, 0.25);
+		pointer-events: none;
+	}
+	.video-with-overlay__progress-fill {
+		height: 100%;
+		width: 0%;
+		background: rgba(255, 255, 255, 0.9);
+		transition: width 0.1s linear;
+	}
+</style>
+
+<script>
+	function initVideoWithOverlay(container: HTMLElement) {
+		if ((container as HTMLElement & { _videoOverlayInited?: boolean })._videoOverlayInited) return;
+		(container as HTMLElement & { _videoOverlayInited?: boolean })._videoOverlayInited = true;
+
+		const video = container.querySelector("video");
+		const overlay = container.querySelector("[data-video-overlay]") as HTMLElement | null;
+		if (!video || !overlay) return;
+		const playBtn = overlay.querySelector(".video-with-overlay__play-btn") as HTMLButtonElement | null;
+		const progressFill = overlay.querySelector(".video-with-overlay__progress-fill") as HTMLElement | null;
+
+		function updateUI() {
+			const playing = !video.paused;
+			if (playBtn) {
+				playBtn.setAttribute("data-playing", String(playing));
+				playBtn.setAttribute("aria-label", playing ? "暫停" : "播放");
+			}
+			if (progressFill && Number.isFinite(video.duration) && video.duration > 0) {
+				progressFill.style.width = `${(video.currentTime / video.duration) * 100}%`;
+			}
+		}
+
+		function togglePlay() {
+			if (video.paused) video.play().catch(() => {});
+			else video.pause();
+		}
+
+		video.addEventListener("play", updateUI);
+		video.addEventListener("pause", updateUI);
+		video.addEventListener("timeupdate", updateUI);
+		video.addEventListener("loadedmetadata", updateUI);
+		updateUI();
+
+		overlay.addEventListener("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			togglePlay();
+		});
+		// 點影片本體也可播放（overlay 透明時仍可點到）
+		video.addEventListener("click", (e) => {
+			e.preventDefault();
+			e.stopPropagation();
+			togglePlay();
+		});
+	}
+
+	function initAll() {
+		document.querySelectorAll<HTMLElement>("[data-video-with-overlay]").forEach(initVideoWithOverlay);
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initAll);
+	} else {
+		initAll();
+	}
+	document.addEventListener("astro:page-load", initAll);
+</script>

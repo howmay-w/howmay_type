@@ -1,0 +1,444 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import ImageCarousel from "../../components/ImageCarousel.astro";
+import Separator from "../../components/Separator.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+/** 專案資料夾名稱 = URL slug（index.md 時為 example-project-a，非 index 時為 project.id） */
+function getProjectSlug(id: string) {
+	return id.replace(/\/index$/, "") || id;
+}
+
+export const getStaticPaths = async () => {
+	const projects = await getCollection("projects");
+	return projects.map((project) => ({
+		params: { slug: project.id.replace(/\/index$/, "") || project.id },
+		props: { project },
+	}));
+};
+
+type Props = {
+	project: CollectionEntry<"projects">;
+};
+
+const { project } = Astro.props;
+const { title, description, image, video, videos, images, pubDate, tags } = project.data;
+// video（單部）與 videos（多部）統一合併成陣列，只取第一部放在第二張
+const allVideos = videos ?? (video ? [video] : []);
+const firstVideo = allVideos[0];
+
+// 首圖／輪播第一張：有 images 用 images[0]，否則用單張 image
+const carouselImages = images?.filter((img): img is { src: string; alt?: string } => Boolean(img.src)) ?? [];
+const hasCarousel = carouselImages.length > 0;
+const heroImage = hasCarousel ? carouselImages[0] : image;
+
+// 合併媒體：第一張圖、第二張影片（若有）、其餘圖片；無多張圖時則為 [圖, 影片] 或單一媒體
+type MediaItem = { type: "image"; src: string; alt?: string } | { type: "video"; src: string; poster?: string };
+const mediaItems: MediaItem[] = (() => {
+	if (carouselImages.length > 0) {
+		const list: MediaItem[] = [
+			{ type: "image", src: carouselImages[0].src, alt: carouselImages[0].alt },
+		];
+		if (firstVideo) list.push({ type: "video", src: firstVideo.src, poster: firstVideo.poster });
+		for (let i = 1; i < carouselImages.length; i++) {
+			list.push({ type: "image", src: carouselImages[i].src, alt: carouselImages[i].alt });
+		}
+		return list;
+	}
+	if (heroImage) {
+		const list: MediaItem[] = [{ type: "image", src: heroImage.src, alt: heroImage.alt }];
+		if (firstVideo) list.push({ type: "video", src: firstVideo.src, poster: firstVideo.poster });
+		return list;
+	}
+	if (firstVideo) return [{ type: "video", src: firstVideo.src, poster: firstVideo.poster }];
+	return [];
+})();
+const hasMedia = mediaItems.length > 0;
+
+// reels 專案：相簿拆開，影片在上（含首幀 poster）、圖片在下
+const isReelsLayout = tags?.includes("reels") ?? false;
+const reelsCarouselItems: MediaItem[] = carouselImages.map((img) => ({ type: "image", src: img.src, alt: img.alt }));
+
+// 從 glob loader 產生的 rendered HTML 渲染 Markdown 內文
+const entry = await getEntry("projects", project.id);
+let bodyHtml = entry?.rendered?.html ?? "";
+// 外連改為另開分頁
+bodyHtml = bodyHtml.replace(
+	/<a href="(https?:\/\/[^"]+)"([^>]*)>/g,
+	'<a href="$1" target="_blank" rel="noopener noreferrer"$2>',
+);
+
+// SEO 描述：優先用 frontmatter description，否則從內文第一段抽取（最多 160 字）
+const bodyText = bodyHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
+const seoDescription = description ?? (bodyText || undefined);
+
+// 上一篇 / 下一篇：依 pubDate 升冪排序（越新越後）
+const allProjects = await getCollection("projects");
+const sortedProjects = allProjects.sort((a, b) => {
+	const da = a.data.pubDate ? new Date(a.data.pubDate).getTime() : 0;
+	const db = b.data.pubDate ? new Date(b.data.pubDate).getTime() : 0;
+	return da - db;
+});
+const currentIndex = sortedProjects.findIndex((p) => p.id === project.id);
+const prevProject = currentIndex > 0 ? sortedProjects[currentIndex - 1] : null;
+const nextProject = currentIndex < sortedProjects.length - 1 ? sortedProjects[currentIndex + 1] : null;
+const prevSlug = prevProject ? getProjectSlug(prevProject.id) : null;
+const nextSlug = nextProject ? getProjectSlug(nextProject.id) : null;
+const currentSlug = getProjectSlug(project.id);
+const allSlugs = sortedProjects.map((p) => getProjectSlug(p.id)).filter((s) => s !== currentSlug);
+const fromSearch = Astro.url.searchParams.get("from_search") ?? "";
+const fromLatest = Astro.url.searchParams.get("from") === "latest";
+const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fromLatest ? "/?from=latest" : "/";
+---
+
+<BaseLayout title={title} description={seoDescription}>
+	<section>
+		<header class="title-header">
+			<h2>{title}</h2>
+			<div>
+				<a class="back" href={backHref} data-back data-from-search={fromSearch || undefined} data-from-latest={fromLatest || undefined}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg> BACK</a>
+			</div>
+		</header>
+		<Separator />
+		<div class="content-wrap">
+			<div class="media-column">
+				{hasMedia ? (
+					isReelsLayout ? (
+						<>
+							{firstVideo && (
+								<video
+									class="project-video"
+									src={firstVideo.src}
+									poster={firstVideo.poster}
+									controls
+									playsinline
+									preload="auto"
+								>
+									<track kind="captions" />
+								</video>
+							)}
+							{reelsCarouselItems.length > 1 ? (
+								<ImageCarousel
+									items={reelsCarouselItems}
+									title={title}
+								/>
+							) : reelsCarouselItems.length === 1 ? (
+								<img
+									src={reelsCarouselItems[0].src}
+									alt={reelsCarouselItems[0].alt ?? title}
+									width="1000"
+									loading="lazy"
+									class="project-image"
+								/>
+							) : null}
+						</>
+					) : mediaItems.length > 1 ? (
+						<ImageCarousel
+							items={mediaItems}
+							title={title}
+						/>
+					) : mediaItems[0].type === "image" ? (
+						<img
+							src={mediaItems[0].src}
+							alt={mediaItems[0].alt ?? title}
+							width="1000"
+							loading="lazy"
+							class="project-image"
+						/>
+					) : (
+						<video
+							class="project-video"
+							src={mediaItems[0].src}
+							controls
+							playsinline
+							preload="metadata"
+						>
+							<track kind="captions" />
+						</video>
+					)
+				) : null}
+			</div>
+			<div class="content">
+				{pubDate && (
+					<p class="meta faded">
+						{new Date(pubDate).toLocaleDateString("zh-TW", {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
+						}).replace(/(\d+)/g, " $1 ").trim()}
+					</p>
+				)}
+			{tags && tags.length > 0 && (
+				<p class="tags faded">
+					{tags.map((tag) => (
+						<a class="tag" href={`/?tag=${encodeURIComponent(tag)}`}>{tag}</a>
+					))}
+				</p>
+			)}
+			{bodyHtml && (
+					<div class="prose" set:html={bodyHtml} />
+				)}
+			</div>
+		</div>
+		<nav class="project-nav">
+			<Separator />
+			<div class="nav-links">
+			<div class="nav-prev">
+				{prevProject && prevSlug ? (
+					<a href={fromSearch ? `/projects/${prevSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${prevSlug}?from=latest` : `/projects/${prevSlug}`} class="nav-link">
+						<span class="nav-label">
+							<span class="nav-meta">Prev</span>
+							<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg></span>
+						</span>
+						<span class="nav-title">{prevProject.data.title}</span>
+					</a>
+				) : <span />}
+			</div>
+			<div class="nav-center">
+				<a href="/" class="nav-link nav-link--center">
+					<span class="nav-label">
+						<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6" /></svg></span>
+						<span class="nav-meta">HOME</span>
+					</span>
+				</a>
+				<button class="nav-link nav-link--center nav-random" data-slugs={JSON.stringify(allSlugs)} data-from-search={fromSearch || undefined} data-from-latest={fromLatest || undefined}>
+					<span class="nav-label">
+						<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg></span>
+						<span class="nav-meta">Random</span>
+					</span>
+				</button>
+			</div>
+			<div class="nav-next">
+				{nextProject && nextSlug ? (
+					<a href={fromSearch ? `/projects/${nextSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${nextSlug}?from=latest` : `/projects/${nextSlug}`} class="nav-link nav-link--right">
+						<span class="nav-label">
+							<span class="nav-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" /></svg></span>
+							<span class="nav-meta">Next</span>
+						</span>
+						<span class="nav-title">{nextProject.data.title}</span>
+					</a>
+				) : <span />}
+			</div>
+			</div>
+		</nav>
+	</section>
+</BaseLayout>
+
+<script>
+	document.addEventListener("astro:page-load", () => {
+		const btn = document.querySelector<HTMLButtonElement>(".nav-random");
+		if (btn) {
+			btn.addEventListener("click", () => {
+				const slugs: string[] = JSON.parse(btn.dataset.slugs ?? "[]");
+				if (!slugs.length) return;
+				const slug = slugs[Math.floor(Math.random() * slugs.length)];
+				const q = btn.dataset.fromSearch ? `?from_search=${encodeURIComponent(btn.dataset.fromSearch)}` : btn.dataset.fromLatest ? "?from=latest" : "";
+				window.location.href = `/projects/${slug}${q}`;
+			});
+		}
+		// 有 from_search 或 from_latest 時用 href；否則有 history 則用 history.back()
+		document.querySelectorAll<HTMLAnchorElement>("a[data-back]").forEach((a) => {
+			a.addEventListener("click", (e) => {
+				if (a.dataset.fromSearch || a.dataset.fromLatest) return;
+				if (window.history.length > 1) {
+					e.preventDefault();
+					window.history.back();
+				}
+			});
+		});
+	});
+</script>
+
+<style>
+	.back {
+		font-size: 1rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+	.back svg {
+		display: block;
+		flex-shrink: 0;
+	}
+	.content-wrap {
+		display: grid;
+		gap: 2rem;
+		max-width: 90ch;
+		align-items: start;
+	}
+	.content {
+		max-width: 34ch;
+	}
+	@media screen and (min-width: 50em) {
+		.content-wrap {
+			grid-template-columns: minmax(320px, 45vw) 34ch;
+			grid-template-areas: "media content";
+		}
+		.media-column {
+			grid-area: media;
+		}
+		.content {
+			grid-area: content;
+			max-width: none;
+			width: 34ch;
+		}
+	}
+	.media-column {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.media-column :global(.carousel) {
+		margin-top: 0;
+		width: 100%;
+	}
+	.project-image,
+	.project-video {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		object-fit: contain;
+	}
+	.project-video {
+		display: block;
+		margin-top: 0.5rem;
+	}
+	.meta {
+		margin: 0 0 0.5rem;
+		font-size: 0.9rem;
+	}
+	.tags {
+		margin: 0 0 0.5rem;
+		font-size: 0.9rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 0.5rem;
+	}
+	.tag {
+		white-space: nowrap;
+		text-decoration: none;
+		color: inherit;
+		transition: opacity 0.2s;
+	}
+	.tag:hover {
+		opacity: 0.6;
+	}
+	.tag::before {
+		content: "#";
+	}
+	.prose {
+		font-family: "TASA Explorer Variable", system-ui, "GenKiGothicTW", sans-serif;
+		font-weight: 400;
+		line-height: 1.7;
+		letter-spacing: 0.02em;
+	}
+	.prose :global(h2) {
+		font-size: 1.75rem;
+		font-weight: 700;
+		line-height: 1.5;
+		margin-top: 2rem;
+		margin-bottom: 0.5rem;
+	}
+	.prose :global(h3) {
+		font-size: 1.25rem;
+		font-weight: 700;
+		line-height: 1.3;
+		margin-top: 1.25rem;
+		margin-bottom: 0.5rem;
+	}
+	.prose :global(p) {
+		margin: 0.5rem 0;
+		font-weight: 400;  /* 內文文字大小 */
+		line-height: 1.7;
+	}
+	.prose :global(ul) {
+		padding-left: 1.5rem;
+	}
+	.prose :global(hr) {
+		border: none;
+		border-top: 1px solid var(--border-color);
+		box-shadow: none;
+		margin-top: 2.5rem;
+		margin-bottom: 0;
+	}
+
+	/* ── 底部導覽 ─────────────────────────── */
+	.project-nav {
+		margin-top: 4rem;
+		padding-bottom: 3rem;
+	}
+	.nav-links {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		gap: 1rem;
+		padding: 1.5rem 0;
+		align-items: start;
+	}
+	.nav-link {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		text-decoration: none;
+		color: var(--color-text);
+		transition: color 0.3s;
+		font-weight: 600;
+	}
+	.nav-label {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 0.25rem;
+	}
+	.nav-link:hover {
+		color: var(--color-link-hover);
+	}
+	.nav-arrow {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+	}
+	.nav-arrow svg {
+		display: block;
+	}
+	.nav-meta {
+		font-size: 1rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+	.nav-title {
+		font-size: 0.95rem;
+		font-weight: 600;
+		line-height: 1.3;
+		color: var(--color-faded);
+	}
+	.nav-center {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.25rem;
+	}
+	.nav-random {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		font-family: inherit;
+	}
+	.nav-link--center {
+		align-items: center;
+		text-align: center;
+	}
+	.nav-next {
+		display: flex;
+		justify-content: flex-end;
+	}
+	.nav-link--right {
+		align-items: flex-end;
+		text-align: right;
+	}
+</style>

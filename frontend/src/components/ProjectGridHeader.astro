@@ -1,0 +1,65 @@
+---
+import Cross from "../assets/images/cross.svg";
+import Search from "../components/Search.astro";
+import Separator from "../components/Separator.astro";
+import TextSlider from "../components/TextSlider.astro";
+
+type Props = {
+	projectsTotal: number;
+};
+
+const { projectsTotal } = Astro.props;
+---
+
+<header class="title-header title-header--initial">
+	<h2><TextSlider content="Works" /></h2>
+	<div>
+		<button data-sort><TextSlider content="最新" /></button>
+		<button data-shuffle><TextSlider content="隨機" /></button>
+		<div>
+			<button data-search class="search"><TextSlider content="搜尋" /></button>
+			<button data-clear class="clear hidden" aria-label="清除搜尋">
+				<Cross width={14} height={14} />
+			</button>
+		</div>
+	</div>
+	<span><TextSlider content={projectsTotal} /></span>
+</header>
+
+<Separator />
+<Search />
+
+<style>
+	div {
+		display: flex;
+		list-style: none;
+		align-items: center;
+		gap: 1rem;
+		margin: 0;
+		padding: 0;
+	}
+	div:has(> .search) {
+		position: relative;
+	}
+	div:has(> .search--active) {
+		margin-left: 1rem;
+	}
+	div:has(> .search--active)::before {
+		pointer-events: none;
+		content: "";
+		position: absolute;
+		left: -1rem;
+		right: -1rem;
+		top: -0.5rem;
+		bottom: -0.5rem;
+		border: 1px solid;
+		border-radius: 2rem;
+	}
+	.search--active {
+		&:focus-visible {
+			color: inherit;
+		}
+	}
+</style>
+
+<script src="../scripts/productGridActions.js"></script>

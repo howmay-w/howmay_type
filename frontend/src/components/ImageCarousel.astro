@@ -1,0 +1,419 @@
+---
+type MediaItem =
+	| { type: "image"; src: string; alt?: string }
+	| { type: "video"; src: string; poster?: string };
+
+type Props = {
+	/** 混合媒體（圖＋影片），影片會依陣列順序出現在輪播中 */
+	items?: MediaItem[];
+	/** 僅圖片時可沿用舊介面 */
+	images?: { src: string; alt?: string }[];
+	title: string;
+};
+
+const { items: rawItems, images, title } = Astro.props;
+const items: MediaItem[] =
+	rawItems?.length
+		? rawItems
+		: (images ?? []).map((img) => ({ type: "image" as const, src: img.src, alt: img.alt }));
+const total = items.length;
+const slides =
+	total > 1
+		? [items[total - 1], ...items, items[0]]
+		: items;
+
+function getSlideRealIndex(i: number): number {
+	if (total <= 1) return i;
+	if (i === 0) return total - 1;
+	if (i === total + 1) return 0;
+	return i - 1;
+}
+---
+
+<div class="carousel" data-carousel data-total={total} data-has-video={items.some((x) => x.type === "video") ? "true" : undefined}>
+	<div class="carousel__track" role="list">
+		{slides.map((item, i) => {
+			const realIndex = getSlideRealIndex(i);
+			const isVideo = item.type === "video";
+			return (
+				<div class={`carousel__slide${isVideo ? " carousel__slide--video" : ""}`} role="listitem" data-index={realIndex}>
+					{isVideo ? (
+						<video
+							class="carousel__video"
+							src={item.src}
+							poster={item.poster}
+							controls
+							playsinline
+							preload="auto"
+							tabindex="-1"
+						>
+							<track kind="captions" />
+						</video>
+					) : (
+						<img
+							src={item.src}
+							alt={item.alt ?? `${title} - 圖 ${realIndex + 1}`}
+							width="800"
+							loading={i <= 1 ? "eager" : "lazy"}
+							decoding="async"
+							draggable="false"
+						/>
+					)}
+				</div>
+			);
+		})}
+	</div>
+	{total > 1 && (
+		<>
+			<button type="button" class="carousel__btn carousel__btn--prev" aria-label="上一張">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M15 18l-6-6 6-6" />
+				</svg>
+			</button>
+			<button type="button" class="carousel__btn carousel__btn--next" aria-label="下一張">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M9 18l6-6-6-6" />
+				</svg>
+			</button>
+			<div class="carousel__dots" role="tablist">
+				{items.map((item, i) => (
+					<button
+						type="button"
+						class="carousel__dot"
+						role="tab"
+						aria-label={item.type === "video" ? `第 ${i + 1} 則（影片）` : `第 ${i + 1} 張`}
+						aria-selected={i === 0}
+						data-index={i}
+					/>
+				))}
+			</div>
+		</>
+	)}
+</div>
+
+<style>
+	.carousel {
+		position: relative;
+		width: 100%;
+		margin-top: 1rem;
+	}
+	.carousel__track {
+		display: flex;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+		-webkit-overflow-scrolling: touch;
+		gap: 0;
+		cursor: grab;
+		user-select: none;
+		touch-action: pan-y;
+		/* 隱藏捲軸，避免滑動時出現上下黑條 */
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+	.carousel__track::-webkit-scrollbar {
+		display: none;
+	}
+	.carousel__track:active {
+		cursor: grabbing;
+	}
+	.carousel__slide {
+		flex: 0 0 100%;
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+	}
+	.carousel__slide picture,
+	.carousel__slide img,
+	.carousel__slide .carousel__video {
+		width: 100%;
+		height: auto;
+		display: block;
+		object-fit: contain;
+		background: var(--color-placeholder, #f8f8f8);
+	}
+	/* 影片 slide 用深色底，避免未解碼時白屏閃爍 */
+	.carousel__slide--video,
+	.carousel__slide--video .carousel__video {
+		background: #0c0c0c;
+	}
+	.carousel__video {
+		vertical-align: middle;
+	}
+	.carousel__btn {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 20%;
+		min-width: 4rem;
+		max-width: 4rem;
+		border: none;
+		background: none;
+		color: #fff;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transition: opacity 0.25s ease;
+		z-index: 2;
+	}
+	.carousel:hover .carousel__btn {
+		opacity: 1;
+	}
+	.carousel__btn--prev {
+		left: 0;
+	}
+	.carousel__btn--next {
+		right: 0;
+	}
+	.carousel__dots {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-top: 1.25rem;
+	}
+	.carousel__dot {
+		width: 0.4rem;
+		height: 0.4rem;
+		border-radius: 50%;
+		border: none;
+		background: var(--color-faded);
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+	.carousel__dot[aria-selected="true"],
+	.carousel__dot:hover {
+		background: var(--color-text-alt);
+	}
+</style>
+
+<script>
+	function initCarousel() {
+		const carousel = document.querySelector("[data-carousel]:not([data-carousel-inited])");
+		if (!carousel) return;
+		(carousel as HTMLElement).dataset.carouselInited = "true";
+
+		const track = carousel.querySelector(".carousel__track") as HTMLElement | null;
+		const prevBtn = carousel.querySelector(".carousel__btn--prev");
+		const nextBtn = carousel.querySelector(".carousel__btn--next");
+		const dots = carousel.querySelectorAll(".carousel__dot");
+		const total = parseInt(carousel.getAttribute("data-total") ?? "0", 10);
+
+		if (total <= 1 || !track) return;
+
+		// DOM 結構：[clone_last, real_0 … real_(N-1), clone_first]
+		// 捲動位置：clone_last=0, real_i=(i+1)*sw, clone_first=(total+1)*sw
+
+		const sw = () => track.offsetWidth;
+
+		let index = 0;
+		let isDragging = false;
+		let startX = 0;
+		let startScrollLeft = 0;
+		let teleportTimer: ReturnType<typeof setTimeout> | null = null;
+		let isReady = false;
+
+		// 等兩個 rAF，確保 View Transition 與 layout 都穩定後再設定起始位置
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				track.style.scrollBehavior = "auto";
+				track.scrollLeft = sw();
+				track.style.scrollBehavior = "smooth";
+				isReady = true;
+				updateVideoPlayback(0);
+			});
+		});
+
+		function setDots(i: number) {
+			dots.forEach((dot, j) =>
+				dot.setAttribute("aria-selected", j === i ? "true" : "false")
+			);
+			updateVideoPlayback(i);
+		}
+
+		function updateVideoPlayback(activeIndex: number) {
+			if (!carousel.hasAttribute("data-has-video")) return;
+			track.querySelectorAll("video").forEach((v) => {
+				v.pause();
+			});
+			const slide = track.querySelector(`[data-index="${activeIndex}"]`);
+			const video = slide?.querySelector("video");
+			if (video) {
+				video.currentTime = 0;
+				video.play().catch(() => {});
+			}
+		}
+
+		function goTo(i: number) {
+			index = ((i % total) + total) % total;
+			track.scrollTo({ left: (index + 1) * sw(), behavior: "smooth" });
+			setDots(index);
+		}
+
+		// 捲動停止後，若停在複製張則靜默傳送到對應的真實張
+		function maybeTeleport() {
+			const s = sw();
+			const left = track.scrollLeft;
+			if (left < s * 0.5) {
+				track.style.scrollBehavior = "auto";
+				track.scrollLeft = total * s;
+				track.style.scrollBehavior = "smooth";
+				index = total - 1;
+				setDots(index);
+			} else if (left > (total + 0.5) * s) {
+				track.style.scrollBehavior = "auto";
+				track.scrollLeft = s;
+				track.style.scrollBehavior = "smooth";
+				index = 0;
+				setDots(index);
+			}
+		}
+
+		function scheduleTeleport() {
+			if (teleportTimer !== null) clearTimeout(teleportTimer);
+			teleportTimer = setTimeout(() => {
+				teleportTimer = null;
+				maybeTeleport();
+			}, 80);
+		}
+
+		// scroll 期間即時更新點點，停止後安排傳送
+		function onScroll() {
+			const s = sw();
+			const dom = Math.round(track.scrollLeft / s);
+			const di = dom <= 0 ? total - 1 : dom >= total + 1 ? 0 : dom - 1;
+			setDots(di);
+			scheduleTeleport();
+		}
+
+		// ── 按鈕：往右包回時順向捲至右側 clone，不往左跳 ──────────
+		prevBtn?.addEventListener("click", () => {
+			if (!isReady) return;
+			if (index === 0) {
+				// 向左捲至 clone_last，停止後傳送到真實最後一張
+				index = total - 1;
+				track.scrollTo({ left: 0, behavior: "smooth" });
+				setDots(index);
+			} else {
+				goTo(index - 1);
+			}
+		});
+
+		nextBtn?.addEventListener("click", () => {
+			if (!isReady) return;
+			if (index === total - 1) {
+				// 向右捲至 clone_first，停止後傳送到真實第一張
+				index = 0;
+				track.scrollTo({ left: (total + 1) * sw(), behavior: "smooth" });
+				setDots(index);
+			} else {
+				goTo(index + 1);
+			}
+		});
+
+		dots.forEach((dot, i) => {
+			dot.addEventListener("click", () => {
+				if (!isReady) return;
+				goTo(i);
+			});
+		});
+
+		track.addEventListener("scroll", onScroll);
+
+		// ── 拖曳 ────────────────────────────────────────────────────
+		function startDrag(clientX: number) {
+			if (!isReady) return;
+			isDragging = true;
+			startX = clientX;
+			startScrollLeft = track.scrollLeft;
+			if (teleportTimer !== null) { clearTimeout(teleportTimer); teleportTimer = null; }
+			track.style.scrollBehavior = "auto";
+		}
+
+		function doDrag(clientX: number) {
+			if (!isDragging) return;
+			track.scrollLeft = startScrollLeft - (clientX - startX);
+		}
+
+		function endDrag() {
+			if (!isDragging) return;
+			isDragging = false;
+			track.style.scrollBehavior = "smooth";
+
+			const s = sw();
+			const domIndex = Math.round(track.scrollLeft / s);
+
+			if (domIndex <= 0) {
+				track.style.scrollBehavior = "auto";
+				track.scrollLeft = total * s;
+				track.style.scrollBehavior = "smooth";
+				index = total - 1;
+				setDots(index);
+			} else if (domIndex >= total + 1) {
+				track.style.scrollBehavior = "auto";
+				track.scrollLeft = s;
+				track.style.scrollBehavior = "smooth";
+				index = 0;
+				setDots(index);
+			} else {
+				index = domIndex - 1;
+				setDots(index);
+				track.scrollTo({ left: domIndex * s, behavior: "smooth" });
+			}
+		}
+
+		track.addEventListener("pointerdown", (e: PointerEvent) => {
+			if (e.pointerType === "mouse" && e.button !== 0) return;
+			startDrag(e.clientX);
+			try { track.setPointerCapture(e.pointerId); } catch (_) {}
+		});
+
+		track.addEventListener(
+			"pointermove",
+			(e: PointerEvent) => {
+				if (!isDragging) return;
+				e.preventDefault();
+				doDrag(e.clientX);
+			},
+			{ passive: false },
+		);
+
+		track.addEventListener("pointerup", (e: PointerEvent) => {
+			try { track.releasePointerCapture(e.pointerId); } catch (_) {}
+			endDrag();
+		});
+		track.addEventListener("pointercancel", endDrag);
+
+		track.addEventListener(
+			"touchstart",
+			(e: TouchEvent) => {
+				if (e.touches.length !== 1) return;
+				startDrag(e.touches[0].clientX);
+			},
+			{ passive: true },
+		);
+
+		track.addEventListener(
+			"touchmove",
+			(e: TouchEvent) => {
+				if (!isDragging || e.touches.length !== 1) return;
+				e.preventDefault();
+				doDrag(e.touches[0].clientX);
+			},
+			{ passive: false },
+		);
+
+		track.addEventListener(
+			"touchend",
+			(e: TouchEvent) => {
+				if (e.changedTouches.length) endDrag();
+			},
+			{ passive: true },
+		);
+
+		track.addEventListener("touchcancel", endDrag);
+	}
+
+	initCarousel();
+	document.addEventListener("astro:page-load", initCarousel);
+</script>

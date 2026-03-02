@@ -1,0 +1,76 @@
+---
+// 浮動黑色視窗：hover 時顯示作品標題、年度與標籤
+// 腳本會讀取卡片的 data-project-title、data-project-year、data-project-tags
+---
+
+<div
+	class="tooltip"
+	aria-hidden="true"
+	style="opacity: 0; transform: scale(0);"
+>
+	<div class="tooltip__row tooltip__row--title" data-field="titleYear">
+		<span class="oh"><span class="oh__inner"></span></span>
+		<span class="oh"><span class="oh__inner"></span></span>
+	</div>
+	<div class="tooltip__row tooltip__row--muted" data-field="tags">
+		<span class="oh"><span class="oh__inner"></span></span>
+		<span class="oh"><span class="oh__inner"></span></span>
+	</div>
+</div>
+
+<style>
+	.tooltip {
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 100;
+		pointer-events: none;
+		padding: 1rem;
+		width: 160px;
+		background: #000;
+		color: #bababa;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 1;
+		box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
+		transform-origin: 0% 100%;
+		opacity: 0;
+		transform: scale(0);
+	}
+	.tooltip__row {
+		display: grid;
+		grid-template-columns: 100%;
+		grid-template-rows: 1em;
+		grid-template-areas: "slider";
+	}
+	.tooltip__row + .tooltip__row {
+		margin-top: 0.4rem;
+	}
+	.tooltip__row .oh {
+		grid-area: slider;
+		overflow: hidden;
+		display: block;
+	}
+	.tooltip__row .oh__inner {
+		display: block;
+		will-change: transform;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.tooltip__row--title .oh__inner {
+		font-weight: 700;
+		color: #fff;
+		text-transform: uppercase;
+	}
+	/* 年度：動態插入的 HTML 需用 :global 才套得到 */
+	.tooltip__row--title :global(.tooltip__year) {
+		color: rgba(255, 255, 255, 0.5);
+		font-weight: 700;
+	}
+	.tooltip__row--muted .oh__inner {
+		color: #bababa;
+	}
+</style>
+
+<script src="../scripts/productTooltip.js"></script>

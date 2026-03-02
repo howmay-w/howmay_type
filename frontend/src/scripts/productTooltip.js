@@ -1,299 +1,310 @@
 import gsap from "gsap";
 
+function escapeHtml(s) {
+  const div = document.createElement("div");
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+function setRowContent(row, slider, value) {
+  const field = row.getAttribute("data-field");
+  if (field === "titleYear") {
+    slider.innerHTML = value;
+  } else {
+    slider.textContent = value;
+  }
+}
+
 class Tooltip {
-	constructor(gridEl) {
-		this.grid = gridEl;
-		this.products = this.grid.children;
-		if (this.products.length === 0) return;
-		this.tooltip = document.querySelector(".tooltip");
-		this.OFFSET_X = 20; // Distance from cursor to left edge of tooltip
-		this.OFFSET_Y = -60; // Distance from cursor to top edge of tooltip
-		this.animationConfig = {
-			// Configuration for the text animations (e.g., rows sliding in/out)
-			texts: {
-				duration: 0.7,
-				ease: "expo",
-			},
-			// Configuration for the tooltip's scaling animations
-			tooltip: {
-				duration: 0.6,
-				ease: "power4.inOut",
-			},
-			// Delay before starting text animations when showing the tooltip
-			textsDelay: 0.4, // Delay in seconds before the text animations start
-			// Overlap delay for hiding the tooltip and text animations
-			hideDelay: "-=0.7", // Overlaps the tooltip's scale-down with text sliding animations
-		};
-		// Animation directions for the rows
-		this.rowAnimationDirections = {
-			productTitle: { in: { yPercent: -100 }, out: { yPercent: -100 } }, // In and out to/from the top
-			creatorName: { in: { yPercent: 100 }, out: { yPercent: 100 } }, // In and out to/from the bottom
-			price: { in: { yPercent: 100 }, out: { yPercent: 100 } }, // In and out to/from the bottom
-		};
-		this.hoverTarget = null; // Tracks the currently hovered `.product`
-		this.isTooltipVisible = false; // Tracks tooltip visibility
-		this.scaleDownTimeout; // Tracks the scale-down timeout
-		this.scaleDownTimeline; // Stores the tooltip scale-down timeline
-		this.mouseLeaveTimeout; // Timeout for mouseleave handling
-		this.rowTimelines = {}; // Stores timelines for each row
-		this.windowWidth = window.innerWidth; // Cache window width
+  constructor(gridEl) {
+    this.grid = gridEl;
 
-		// Define smooth animations for moving the tooltip
-		// xTo and yTo control the tooltip's horizontal (x) and vertical (y) positions
-		// Using GSAP's quickTo for better performance
-		this.xTo = gsap.quickTo(this.tooltip, "x", { duration: 0.6, ease: "expo" });
-		this.yTo = gsap.quickTo(this.tooltip, "y", { duration: 0.6, ease: "expo" });
+    if (!this.grid.querySelector("[data-project-title]")) return;
 
-		// Initialize row active states
-		for (const row of this.tooltip.querySelectorAll(".tooltip__row")) {
-			row.dataset.active = "0";
-		}
+    this.tooltip = document.querySelector(".tooltip");
+    this.OFFSET_X = 20;
+    this.OFFSET_Y = -60;
+    this.animationConfig = {
+      texts: {
+        duration: 0.7,
+        ease: "expo",
+      },
+      tooltip: {
+        duration: 0.6,
+        ease: "power4.inOut",
+      },
+      textsDelay: 0.4,
+      hideDelay: "-=0.7",
+    };
+    this.rowAnimationDirections = {
+      titleYear: { in: { yPercent: -100 }, out: { yPercent: -100 } },
+      tags: { in: { yPercent: 100 }, out: { yPercent: 100 } },
+    };
+    this.hoverTarget = null;
+    this.isTooltipVisible = false;
+    this.scaleDownTimeout;
+    this.scaleDownTimeline;
+    this.mouseLeaveTimeout;
+    this.rowTimelines = {};
+    this.windowWidth = window.innerWidth;
 
-		this.initializeEvents();
-	}
+    this.xTo = gsap.quickTo(this.tooltip, "x", { duration: 0.6, ease: "expo" });
+    this.yTo = gsap.quickTo(this.tooltip, "y", { duration: 0.6, ease: "expo" });
 
-	initializeEvents() {
-		this.grid.addEventListener("mousemove", this.handleMouseMove);
-		window.addEventListener("resize", this.handleResize);
+    for (const row of this.tooltip.querySelectorAll(".tooltip__row")) {
+      row.dataset.active = "0";
+    }
 
-		for (const product of [...this.products]) {
-			product.addEventListener("mouseenter", this.handleMouseEnter);
-			product.addEventListener("mouseleave", this.handleMouseLeave);
-		}
-	}
+    // 事件委派：只在 grid 上掛 listener
+    this.handleMouseMove = this._handleMouseMove.bind(this);
+    this.handleMouseOver = this._handleMouseOver.bind(this);
+    this.handleMouseOut = this._handleMouseOut.bind(this);
+    this.handleResize = this._handleResize.bind(this);
 
-	handleMouseMove = (e) => {
-		if (!this.hoverTarget) return;
+    this.grid.addEventListener("mousemove", this.handleMouseMove);
+    this.grid.addEventListener("mouseover", this.handleMouseOver);
+    this.grid.addEventListener("mouseout", this.handleMouseOut);
+    window.addEventListener("resize", this.handleResize);
+  }
 
-		const tooltipWidth = this.tooltip.offsetWidth;
-		let tooltipX;
-		const tooltipY = e.clientY + this.OFFSET_Y + window.scrollY;
+  // 取得滑鼠指向的卡片（有 data-project-title）
+  _getCard(e) {
+    return e.target.closest("[data-project-title]");
+  }
 
-		if (e.clientX + this.OFFSET_X + tooltipWidth > this.windowWidth) {
-			tooltipX = e.clientX - this.OFFSET_X - tooltipWidth + window.scrollX;
-		} else {
-			tooltipX = e.clientX + this.OFFSET_X + window.scrollX;
-		}
+  _handleMouseMove(e) {
+    if (!this.hoverTarget) return;
 
-		if (!this.isTooltipVisible) {
-			if (this.scaleDownTimeline) this.scaleDownTimeline.kill();
-			clearTimeout(this.scaleDownTimeout);
+    const tooltipWidth = this.tooltip.offsetWidth;
+    let tooltipX;
+    const tooltipY = e.clientY + this.OFFSET_Y;
 
-			gsap.set(this.tooltip, { x: tooltipX, y: tooltipY });
-			gsap.fromTo(
-				this.tooltip,
-				{ scale: 0, opacity: 1, transformOrigin: "0% 100%" },
-				{ ...this.animationConfig.tooltip, scale: 1 },
-			);
+    if (e.clientX + this.OFFSET_X + tooltipWidth > this.windowWidth) {
+      tooltipX = e.clientX - this.OFFSET_X - tooltipWidth;
+    } else {
+      tooltipX = e.clientX + this.OFFSET_X;
+    }
 
-			this.isTooltipVisible = true;
-		} else {
-			this.xTo(tooltipX);
-			this.yTo(tooltipY);
-		}
+    if (!this.isTooltipVisible) {
+      if (this.scaleDownTimeline) this.scaleDownTimeline.kill();
+      clearTimeout(this.scaleDownTimeout);
 
-		clearTimeout(this.scaleDownTimeout);
-		this.scaleDownTimeout = setTimeout(() => {
-			if (!this.hoverTarget) {
-				this.scaleDownTimeline = gsap.timeline();
-				this.updateTooltip(
-					{ productTitle: "", creatorName: "", price: "" },
-					this.scaleDownTimeline,
-					"out",
-				);
-				this.scaleDownTimeline.to(
-					this.tooltip,
-					{ ...this.animationConfig.tooltip, scale: 0 },
-					this.animationConfig.hideDelay,
-				);
-				this.isTooltipVisible = false;
-			}
-		}, 50);
-	};
+      gsap.set(this.tooltip, { x: tooltipX, y: tooltipY });
+      gsap.fromTo(
+        this.tooltip,
+        { scale: 0, opacity: 1, transformOrigin: "0% 100%" },
+        { ...this.animationConfig.tooltip, scale: 1 }
+      );
 
-	handleMouseEnter = (e) => {
-		clearTimeout(this.mouseLeaveTimeout);
-		this.hoverTarget = e.currentTarget;
+      this.isTooltipVisible = true;
+    } else {
+      this.xTo(tooltipX);
+      this.yTo(tooltipY);
+    }
 
-		if (this.scaleDownTimeline) this.scaleDownTimeline.kill();
-		clearTimeout(this.scaleDownTimeout);
+    clearTimeout(this.scaleDownTimeout);
+    this.scaleDownTimeout = setTimeout(() => {
+      if (!this.hoverTarget) {
+        this.scaleDownTimeline = gsap.timeline();
+        this.updateTooltip(
+          { titleYear: "", tags: "" },
+          this.scaleDownTimeline,
+          "out"
+        );
+        this.scaleDownTimeline.to(
+          this.tooltip,
+          { ...this.animationConfig.tooltip, scale: 0 },
+          this.animationConfig.hideDelay
+        );
+        this.isTooltipVisible = false;
+      }
+    }, 50);
+  }
 
-		const productTitle = this.hoverTarget.dataset.productTitle;
-		const creatorName = this.hoverTarget.dataset.creatorName;
-		const price = this.hoverTarget.dataset.price;
+  // 模擬 mouseenter：從外部進入卡片時觸發
+  _handleMouseOver(e) {
+    const card = this._getCard(e);
+    if (!card) return;
+    if (card.contains(e.relatedTarget)) return; // 仍在卡片內移動，忽略
 
-		const updateTimeline = gsap.timeline();
-		this.updateTooltip(
-			{ productTitle, creatorName, price },
-			updateTimeline,
-			this.isTooltipVisible ? "none" : "in",
-		);
-	};
+    clearTimeout(this.mouseLeaveTimeout);
+    this.hoverTarget = card;
 
-	handleMouseLeave = () => {
-		this.hoverTarget = null;
+    if (this.scaleDownTimeline) this.scaleDownTimeline.kill();
+    clearTimeout(this.scaleDownTimeout);
 
-		this.mouseLeaveTimeout = setTimeout(() => {
-			if (!this.hoverTarget && this.isTooltipVisible) {
-				gsap.set(this.tooltip, { scale: 0, opacity: 0 });
-				this.isTooltipVisible = false;
-			}
-		}, 50);
-	};
+    const title = card.dataset.projectTitle ?? "";
+    const year = card.dataset.projectYear ?? "";
+    const tagsRaw = card.dataset.projectTags ?? "";
+    const titleYear = year
+      ? `${escapeHtml(title)}／<span class="tooltip__year">${escapeHtml(year)}</span>`
+      : escapeHtml(title);
+    const tags = tagsRaw
+      ? tagsRaw
+          .split(/[,\、]/)
+          .map((t) => "#" + t.trim())
+          .filter(Boolean)
+          .join(" ")
+      : "";
 
-	handleResize = () => {
-		this.windowWidth = window.innerWidth;
-	};
+    const updateTimeline = gsap.timeline();
+    this.updateTooltip(
+      { titleYear, tags },
+      updateTimeline,
+      this.isTooltipVisible ? "none" : "in"
+    );
+  }
 
-	destroy() {
-		if (this.scaleDownTimeline) this.scaleDownTimeline.kill();
-		for (const timeline of Object.values(this.rowTimelines)) {
-			timeline?.kill();
-		}
+  // 模擬 mouseleave：離開至卡片外部時觸發
+  _handleMouseOut(e) {
+    const card = this._getCard(e);
+    if (!card) return;
+    if (card.contains(e.relatedTarget)) return; // 仍在卡片內移動，忽略
 
-		clearTimeout(this.scaleDownTimeout);
-		clearTimeout(this.mouseLeaveTimeout);
+    this.hoverTarget = null;
 
-		this.grid.removeEventListener("mousemove", this.handleMouseMove);
-		window.removeEventListener("resize", this.handleResize);
+    this.mouseLeaveTimeout = setTimeout(() => {
+      if (!this.hoverTarget && this.isTooltipVisible) {
+        gsap.set(this.tooltip, { scale: 0, opacity: 0 });
+        this.isTooltipVisible = false;
+      }
+    }, 50);
+  }
 
-		for (const product of [...this.products]) {
-			product.removeEventListener("mouseenter", this.handleMouseEnter);
-			product.removeEventListener("mouseleave", this.handleMouseLeave);
-		}
-	}
+  _handleResize() {
+    this.windowWidth = window.innerWidth;
+  }
 
-	// Function to update all rows dynamically
-	updateTooltip(values, timeline, direction) {
-		for (const [field, newValue] of Object.entries(values)) {
-			const rowSelector = `[data-field="${field}"]`;
-			this.updateTextSlider(rowSelector, newValue, timeline, direction);
-		}
-	}
+  destroy() {
+    if (this.scaleDownTimeline) this.scaleDownTimeline.kill();
+    for (const timeline of Object.values(this.rowTimelines)) {
+      timeline?.kill();
+    }
 
-	// Function to update a single row with sliding animation and add to a timeline
-	updateTextSlider(rowSelector, newValue, timeline, direction) {
-		const row = this.tooltip.querySelector(rowSelector);
-		const textSliders = row.querySelectorAll(".oh__inner");
+    clearTimeout(this.scaleDownTimeout);
+    clearTimeout(this.mouseLeaveTimeout);
 
-		if (textSliders.length < 2) return; // No animations needed
+    this.grid.removeEventListener("mousemove", this.handleMouseMove);
+    this.grid.removeEventListener("mouseover", this.handleMouseOver);
+    this.grid.removeEventListener("mouseout", this.handleMouseOut);
+    window.removeEventListener("resize", this.handleResize);
+  }
 
-		const activeIndex = row.dataset.active === "0" ? 0 : 1;
-		const inactiveIndex = activeIndex === 0 ? 1 : 0;
+  updateTooltip(values, timeline, direction) {
+    for (const [field, newValue] of Object.entries(values)) {
+      const rowSelector = `[data-field="${field}"]`;
+      this.updateTextSlider(rowSelector, newValue, timeline, direction);
+    }
+  }
 
-		const currentSlider = textSliders[activeIndex];
-		const nextSlider = textSliders[inactiveIndex];
+  updateTextSlider(rowSelector, newValue, timeline, direction) {
+    const row = this.tooltip.querySelector(rowSelector);
+    const textSliders = row.querySelectorAll(".oh__inner");
 
-		// Determine animation direction
-		const rowField = rowSelector.replace('[data-field="', "").replace('"]', "");
-		const animationDirection =
-			this.rowAnimationDirections[rowField] ||
-			this.rowAnimationDirections.creatorName;
+    if (textSliders.length < 2) return;
 
-		// Clone animation directions to prevent GSAP mutation
-		const clonedOutDirection = { ...animationDirection.out };
-		const clonedInDirection = { ...animationDirection.in };
+    const activeIndex = row.dataset.active === "0" ? 0 : 1;
+    const inactiveIndex = activeIndex === 0 ? 1 : 0;
 
-		// Kill and reset existing row animation
-		if (this.rowTimelines[rowSelector] && direction !== "out") {
-			this.rowTimelines[rowSelector].kill();
-		}
-		this.rowTimelines[rowSelector] = gsap.timeline();
+    const currentSlider = textSliders[activeIndex];
+    const nextSlider = textSliders[inactiveIndex];
 
-		if (direction === "in") {
-			// Reset both sliders to their "out" positions
-			gsap.set(currentSlider, clonedOutDirection);
-			gsap.set(nextSlider, clonedInDirection); // Ensure the next slider is positioned off-screen for the next animation
+    const rowField = rowSelector.replace('[data-field="', "").replace('"]', "");
+    const animationDirection =
+      this.rowAnimationDirections[rowField] ||
+      this.rowAnimationDirections.tags;
 
-			// Slide the current text out (tooltip appearing)
-			this.rowTimelines[rowSelector].to(
-				currentSlider,
-				{
-					...this.animationConfig.texts,
-					...clonedOutDirection, // Slide out to the correct direction
-				},
-				this.animationConfig.textsDelay,
-			);
+    const clonedOutDirection = { ...animationDirection.out };
+    const clonedInDirection = { ...animationDirection.in };
 
-			// Slide the next text in
-			gsap.set(nextSlider, clonedInDirection); // Position off-screen
-			this.rowTimelines[rowSelector].to(
-				nextSlider,
-				{
-					...this.animationConfig.texts,
-					yPercent: 0, // Slide into place
-					onStart: () => {
-						nextSlider.textContent = newValue; // Update content
-					},
-				},
-				this.animationConfig.textsDelay,
-			); // Start after delay
-		} else if (direction === "none") {
-			// Transition between images
-			const transitionOutDirection = {
-				productTitle: { yPercent: 100 }, // Slide down for productTitle
-				creatorName: { yPercent: -100 }, // Slide up for creatorName
-				price: { yPercent: -100 }, // Slide up for price
-			}[rowField] || { yPercent: 0 };
+    if (this.rowTimelines[rowSelector] && direction !== "out") {
+      this.rowTimelines[rowSelector].kill();
+    }
+    this.rowTimelines[rowSelector] = gsap.timeline();
 
-			this.rowTimelines[rowSelector].to(
-				currentSlider,
-				{
-					...this.animationConfig.texts,
-					...transitionOutDirection, // Correct "out" animation for transitions
-				},
-				0,
-			);
+    if (direction === "in") {
+      gsap.set(currentSlider, clonedOutDirection);
+      gsap.set(nextSlider, clonedInDirection);
 
-			// Slide the next text in
-			gsap.set(nextSlider, clonedInDirection); // Position off-screen
-			this.rowTimelines[rowSelector].to(
-				nextSlider,
-				{
-					...this.animationConfig.texts,
-					yPercent: 0, // Slide into place
-					onStart: () => {
-						nextSlider.textContent = newValue; // Update content
-					},
-				},
-				0,
-			); // Start simultaneously
-		} else if (direction === "out") {
-			// Tooltip disappearing
-			this.rowTimelines[rowSelector].to(
-				currentSlider,
-				{
-					...clonedOutDirection, // Slide out to the correct direction
-					...this.animationConfig.texts,
-				},
-				0,
-			);
-		}
+      this.rowTimelines[rowSelector].to(
+        currentSlider,
+        {
+          ...this.animationConfig.texts,
+          ...clonedOutDirection,
+        },
+        this.animationConfig.textsDelay
+      );
 
-		// Update active state for the row
-		row.dataset.active = inactiveIndex.toString();
+      gsap.set(nextSlider, clonedInDirection);
+      this.rowTimelines[rowSelector].to(
+        nextSlider,
+        {
+          ...this.animationConfig.texts,
+          yPercent: 0,
+          onStart: () => {
+            setRowContent(row, nextSlider, newValue);
+          },
+        },
+        this.animationConfig.textsDelay
+      );
+    } else if (direction === "none") {
+      const transitionOutDirection = {
+        titleYear: { yPercent: 100 },
+        tags: { yPercent: -100 },
+      }[rowField] || { yPercent: 0 };
 
-		// Add row animations to the main timeline
-		timeline.add(this.rowTimelines[rowSelector], 0);
-	}
+      this.rowTimelines[rowSelector].to(
+        currentSlider,
+        {
+          ...this.animationConfig.texts,
+          ...transitionOutDirection,
+        },
+        0
+      );
+
+      gsap.set(nextSlider, clonedInDirection);
+      this.rowTimelines[rowSelector].to(
+        nextSlider,
+        {
+          ...this.animationConfig.texts,
+          yPercent: 0,
+          onStart: () => {
+            setRowContent(row, nextSlider, newValue);
+          },
+        },
+        0
+      );
+    } else if (direction === "out") {
+      this.rowTimelines[rowSelector].to(
+        currentSlider,
+        {
+          ...clonedOutDirection,
+          ...this.animationConfig.texts,
+        },
+        0
+      );
+    }
+
+    row.dataset.active = inactiveIndex.toString();
+
+    timeline.add(this.rowTimelines[rowSelector], 0);
+  }
 }
 
 let tooltip;
 
-// Page event handler
 const handlePageEvent = (type) => {
-	const page = document.documentElement.getAttribute("data-page");
-	if (page !== "home") return;
+  const page = document.documentElement.getAttribute("data-page");
+  if (page !== "home") return;
 
-	if (type === "load") {
-		tooltip = new Tooltip(document.querySelector("[data-grid]"));
-	} else if (type === "before-swap") {
-		tooltip.destroy();
-	}
+  if (type === "load") {
+    tooltip = new Tooltip(document.querySelector("[data-grid]"));
+  } else if (type === "before-swap") {
+    tooltip.destroy();
+  }
 };
 
-// Listen for Astro's lifecycle events
 document.addEventListener("astro:page-load", () => handlePageEvent("load"));
 document.addEventListener("astro:before-swap", () =>
-	handlePageEvent("before-swap"),
+  handlePageEvent("before-swap")
 );

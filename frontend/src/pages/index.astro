@@ -1,22 +1,23 @@
 ---
 import { getCollection } from "astro:content";
 import Preloader from "../components/Preloader.astro";
-import ProductGrid from "../components/ProductGrid.astro";
-import ProductGridHeader from "../components/ProductGridHeader.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
+import ProjectGridHeader from "../components/ProjectGridHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const allProducts = await getCollection("products");
-const productsTotal = allProducts.length;
-const title = "Astro Sanity Club - All Pieces";
+const allProjects = (await getCollection("projects")).sort((a, b) => {
+	const da = a.data.pubDate?.getTime() ?? 0;
+	const db = b.data.pubDate?.getTime() ?? 0;
+	return db - da;
+});
+const projectsTotal = allProjects.length;
+const title = "howmay_ Lettering & Logotype";
 ---
 
 <BaseLayout title={title}>
-  <!--
-    The <Preloader /> component is used to preload all images on the homepage using the images.loaded.js script.
-    If you don’t want to use the preloader (e.g., for faster page load times or if you don’t require preloading images), you can safely remove the <Preloader /> component from this layout.
-  -->
-  <Preloader />
-  <ProductGridHeader productsTotal={productsTotal} />
-  <ProductGrid products={allProducts} />
+	<Preloader />
+	<ProjectGridHeader projectsTotal={projectsTotal} />
+	<ProjectGrid projects={allProjects} />
 </BaseLayout>
 <script src="../scripts/index.js"></script>
+<script src="../scripts/videoThumb.js"></script>

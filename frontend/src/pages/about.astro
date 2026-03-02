@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "About — 王皓梅 Howmay Wang";
+---
+
+<BaseLayout title={title}>
+  <div class="content content--page about">
+    <section>
+      <h1>王皓梅<br />Howmay Wang</h1>
+      <p>
+        美術字／標準字設計創作。<br />
+        <a href="https://www.instagram.com/howmay__/" target="_blank" rel="noopener noreferrer">
+          Instagram ↗
+        </a>
+      </p>
+    </section>
+
+    <section class="credits">
+      <h2>Credits</h2>
+      <ul>
+        <li>
+          UI design by <a href="https://alextkachev.com/" target="_blank" rel="noopener noreferrer">Alex Tkachev</a>
+          （<a href="https://dribbble.com/shots/25156320-Players-Club-UI-Animation" target="_blank" rel="noopener noreferrer">Dribbble ↗</a>）
+        </li>
+        <li>
+          Template <a href="https://tympanus.net/codrops/?p=86632" target="_blank" rel="noopener noreferrer">Players Club</a>
+          by <a href="https://www.codrops.com" target="_blank" rel="noopener noreferrer">Codrops</a>
+          （<a href="https://github.com/jazsouf/astro-sanity-club" target="_blank" rel="noopener noreferrer">GitHub ↗</a>）
+        </li>
+        <li>
+          Built with <a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .about {
+    align-items: flex-start;
+    gap: 3rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 1rem;
+  }
+  h2 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-alt);
+    margin: 0 0 0.75rem;
+  }
+  p {
+    margin: 0;
+  }
+  a {
+    color: inherit;
+    font-weight: 700;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .credits ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .credits li {
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--color-text-alt);
+  }
+</style>

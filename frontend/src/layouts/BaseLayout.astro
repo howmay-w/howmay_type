@@ -9,8 +9,12 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import SmoothScroll from "../components/SmoothScroll.astro";
 
-import "@fontsource-variable/instrument-sans";
-import instrumentSansWoff2 from "@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2";
+import "@fontsource-variable/tasa-explorer";
+import "@fontsource/zen-kaku-gothic-new/300.css";
+import "@fontsource/zen-kaku-gothic-new/400.css";
+import "@fontsource/zen-kaku-gothic-new/500.css";
+import "@fontsource/zen-kaku-gothic-new/700.css";
+import tasaExplorerWoff2 from "@fontsource-variable/tasa-explorer/files/tasa-explorer-latin-wght-normal.woff2";
 
 type Props = {
 	title: string;
@@ -42,6 +46,10 @@ const currentPage =
         // extending the default link tags
         link: [
           {
+            rel: "stylesheet",
+            href: "https://font.emtech.cc/css/GenKiGothicTW",
+          },
+          {
             rel: "icon",
             type: "image/png",
             sizes: "16x16",
@@ -62,7 +70,7 @@ const currentPage =
           { rel: "sitemap", href: "/sitemap-index.xml" },
           {
             rel: "preload",
-            href: instrumentSansWoff2,
+            href: tasaExplorerWoff2,
             as: "font",
             type: "font/woff2",
             crossorigin: "anonymous",
