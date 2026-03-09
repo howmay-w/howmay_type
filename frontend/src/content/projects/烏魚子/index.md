@@ -22,13 +22,13 @@ video:
 hoverVideo:
   src: "/projects/烏魚子/video_0.mp4"
 pubDate: 2024-02-11
-tags: ["whatzurtype","年貨大街","字字字設計串連","mulletroe","🧧"]
+tags: ["whatzurtype", "年貨大街", "字字字設計串連", "mulletroe", "🧧"]
 ---
 
 沒吃到烏魚子，就好像沒過到年。
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是 [#年貨大街](https://www.instagram.com/explore/search/keyword/?q=%23%E5%B9%B4%E8%B2%A8%E5%A4%A7%E8%A1%97)\
-雖然通常家裡的烏魚子都是贈禮獲得，很少自己採買ㄋ。
+雖然通常家裡烏魚子都是獲贈，很少自己採買ㄋ。
 
 ---
 

@@ -35,8 +35,6 @@ tags: ["whatzurtype","字字字設計串連","stroll","🚶"]
 
 也喜歡它呈現在木板上的手感，所以試圖仿造斑駁的效果，並順便用AI算了一個跟照片相近的場景照來搭配（圖8）。
 
-[@justfont](https://www.instagram.com/justfont/)
-
 ---
 
 本作品投稿 2023 年 10 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。

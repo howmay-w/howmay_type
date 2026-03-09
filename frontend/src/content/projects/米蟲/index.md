@@ -24,7 +24,9 @@ video:
 hoverVideo:
   src: "/projects/米蟲/video_0.mp4"
 pubDate: 2023-07-17
-tags: ["ricebug","doingnothing","🪲"]
+tags: ["ricebug", "doingnothing", "🪲"]
 ---
 
-人生總有些時候只想當米蟲，例如現在。（以及永遠。）
+人生總有些時候只想當米蟲，例如現在。
+
+（以及永遠。）

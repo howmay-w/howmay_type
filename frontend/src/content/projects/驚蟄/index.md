@@ -23,8 +23,6 @@ tags: ["Awakening","whatzurtype","字字字設計串連","🐞"]
 
 說好ㄉ回暖ㄋ？！
 
-[@justfont](https://www.instagram.com/justfont/)
-
 ---
 
 本作品投稿 2023 年 2 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。

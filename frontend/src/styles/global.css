@@ -213,6 +213,18 @@ img {
   }
 }
 
+/* 區塊本身左右置中（404、搜尋無結果等） */
+.content--page--center {
+  margin-inline: auto;
+}
+
+@media screen and (min-width: 50em) {
+  .content--page--center {
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+}
+
 .content p,
 .content ol {
   line-height: 1.4;

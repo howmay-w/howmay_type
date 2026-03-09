@@ -22,8 +22,7 @@ video:
 hoverVideo:
   src: "/projects/隨緣/video_0.mp4"
 pubDate: 2022-12-10
-tags: ["gowiththeflow","letitbe","點字","🍃"]
+tags: ["gowiththeflow", "letitbe", "點字", "🍃"]
 ---
 
-來自正在英國闖蕩ㄉ厲害學妹點字：「因為遭遇各種困難，覺得這兩個字很有意思。」\
-也推推她的podcast [@bnd_lab](https://www.instagram.com/bnd_lab/) ✨
+來自在英國闖蕩ㄉ厲害學妹點字：「因為遭遇各種困難，覺得這兩個字很有意思。」

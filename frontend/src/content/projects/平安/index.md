@@ -24,7 +24,7 @@ video:
 hoverVideo:
   src: "/projects/平安/video_0.mp4"
 pubDate: 2024-04-03
-tags: ["besafe","地震#taiwanearthquake","🩶"]
+tags: ["besafe", "地震", "#taiwanearthquake", "🩶"]
 ---
 
 一整天都心神不寧，才發現面對無可預測的天災人會多麼無助。

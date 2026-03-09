@@ -24,10 +24,10 @@ video:
 hoverVideo:
   src: "/projects/飄/video_0.mp4"
 pubDate: 2025-06-09
-tags: ["blowup","🌬️"]
+tags: ["blowup", "🌬️"]
 ---
 
-覺得「貼文飄出去了。」實在是頗貼切又可愛的說法。
+一直覺得「貼文飄出去了。」實在是頗貼切又可愛的說法。
 
 雖然有時候文飄出去也是挺讓人困擾的，吧。
 

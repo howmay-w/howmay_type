@@ -35,8 +35,6 @@ tags: ["whatzurtype","字字字設計串連","hehuanshan","🏔️"]
 
 突然好想再去山上喔。
 
-[@justfont](https://www.instagram.com/justfont/)
-
 ---
 
 本作品投稿 2023 年 10 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。
