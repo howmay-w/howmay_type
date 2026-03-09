@@ -137,7 +137,7 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 					) : mediaItems[0].type === "image" ? (
 						<img
 							src={mediaItems[0].src}
-							alt={mediaItems[0].alt ?? title}
+							alt={'alt' in mediaItems[0] ? mediaItems[0].alt : title}
 							width="1000"
 							loading="lazy"
 							class="project-image"
