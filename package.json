@@ -1,19 +1,13 @@
 {
-  "name": "sanity-astro-club",
+  "name": "howmay_type",
   "scripts": {
-    "dev": "npm-run-all --parallel dev:*",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:studio": "cd studio && npm run dev",
-    "deploy:studio": "cd studio && sanity deploy",
-    "validate": "sanity-template-validate"
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview",
+    "optimize-images": "cd frontend && pnpm optimize-images"
   },
   "workspaces": [
-    "frontend",
-    "studio"
+    "frontend"
   ],
-  "devDependencies": {
-    "@sanity/template-validator": "^2",
-    "npm-run-all": "^4.1.5"
-  },
   "packageManager": "pnpm@10.7.1+sha512.2d92c86b7928dc8284f53494fb4201f983da65f0fb4f0d40baafa5cf628fa31dae3e5968f12466f17df7e97310e30f343a648baea1b9b350685dafafffdf5808"
 }

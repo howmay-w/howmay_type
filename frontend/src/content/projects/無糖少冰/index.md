@@ -53,3 +53,6 @@ FLUX 是成立第 10 年的台灣自造工具品牌，最新推出的這台 Beam
 市價 $89,900，早鳥價優惠 $74,900 ，即日至 12/23（一）
 
 更多資訊請到 [@fluxinctaiwan](https://www.instagram.com/fluxinctaiwan/) 了解✨
+
+---
+有音樂的 Reel 版本在[這裡](https://www.instagram.com/howmay__/reel/DC4DtBaTLS7/)。

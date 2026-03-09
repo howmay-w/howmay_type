@@ -1,12 +1,158 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const title = "Players Club - Contact";
+const title = "Contact — 王皓梅 Howmay Wang";
 ---
 
 <BaseLayout title={title}>
-  <div class="content content--page">
-    <h1>Contact</h1>
-    <p>This is just an example page</p>
+  <div class="content content--page contact hover-underline-animated">
+    <section>
+      <h1>Contact</h1>
+    </section>
+
+    <section>
+      <h2>工作信箱 / Email</h2>
+      <p class="email-row">
+        <button type="button" class="copy-email" data-email="howmay@justfont.com" aria-label="複製信箱 howmay@justfont.com">
+          howmay@justfont.com
+        </button>
+        <span class="copy-feedback" aria-live="polite"></span>
+      </p>
+    </section>
+
+    <section>
+      <h2>來訊 / Message me</h2>
+      <ul>
+        <li>
+          <a href="https://signal.me/#eu/hJR_X4vl-r0z_GurXwdAsBHqkOs_FMNSJyJ_0widnMfwhj5QA89KfLk_cMDzQElz" target="_blank" rel="noopener noreferrer">
+            Signal ↗
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/howmay__/" target="_blank" rel="noopener noreferrer">
+            Instagram ↗
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>演講・工作坊 / Talks & Workshops</h2>
+      <p>
+        相關邀講請至
+        <a href="https://blog.justfont.com/projects/invite/" target="_blank" rel="noopener noreferrer">
+          justfont 講座邀請 ↗
+        </a>
+      </p>
+    </section>
   </div>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll('.copy-email').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const email = btn.getAttribute('data-email') ?? '';
+      const feedback = btn.parentElement?.querySelector('.copy-feedback');
+      try {
+        await navigator.clipboard.writeText(email);
+        if (feedback) {
+          feedback.classList.remove('fade-out');
+          feedback.textContent = '已複製';
+          setTimeout(() => {
+            feedback.classList.add('fade-out');
+            setTimeout(() => {
+              feedback.textContent = '';
+              feedback.classList.remove('fade-out');
+            }, 300);
+          }, 1500);
+        }
+      } catch {
+        if (feedback) feedback.textContent = '請手動複製';
+      }
+    });
+  });
+</script>
+
+<style>
+  .contact {
+    align-items: flex-start;
+    gap: 2rem;
+    font-weight: 500;
+  }
+  h1 {
+    font-size: clamp(1.75rem, 5vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 0 0 0.25rem;
+  }
+  h2 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-alt);
+    margin: 0 0 0.75rem;
+  }
+  /* 內文與專案頁 .prose 一致：字型、行高、字距、段落間距 */
+  .contact p,
+  .contact ul li {
+    font-family: "TASA Explorer Variable", system-ui, "GenKiGothicTW", sans-serif;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+  .contact p {
+    margin: 0.5rem 0;
+  }
+  p {
+    margin: 0;
+  }
+  .contact ul {
+    padding-left: 0rem;
+  }
+  .copy-email {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .email-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+  }
+  .copy-feedback {
+    margin-left: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-text-alt);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  .copy-feedback.fade-out {
+    opacity: 0;
+  }
+  a {
+    color: inherit;
+    font-weight: 600;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .contact ul li {
+    line-height: 1.45;
+  }
+  li {
+    font-weight: 400;
+    line-height: 1.7;
+  }
+</style>

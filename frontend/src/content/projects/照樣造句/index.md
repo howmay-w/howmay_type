@@ -17,7 +17,7 @@ video:
   src: "/projects/照樣造句/video_0.mp4"
 hoverVideo:
   src: "/projects/照樣造句/video_0.mp4"
-pubDate: 2025-07-12
+pubDate: 2025-07-11
 tags: ["whatzurtype","字字字設計串連","宜蘭藝術自造季","mimicking","🤖"]
 ---
 
@@ -31,7 +31,7 @@ tags: ["whatzurtype","字字字設計串連","宜蘭藝術自造季","mimicking"
 
 所以這次的字用直覺拼貼不同筆畫而成，看似合理卻有種異樣感，就跟產生幻覺的模型一樣。
 
-最後再 credit 概念靈感之一：[@gan](https://www.instagram.com/gan/) 的步登體，超厲害，請大家要去看。
+最後再 credit 概念靈感之一：[@ganweiyunn](https://www.instagram.com/gan/) 的步登體，超厲害，請大家要去看。
 
 最後，宜蘭藝術自造季明天就要開展啦。
 大家的投稿也都會在現場展出哦。
@@ -40,4 +40,4 @@ tags: ["whatzurtype","字字字設計串連","宜蘭藝術自造季","mimicking"
 
 ---
 
-本作品投稿 2025 年 7 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。
+本作品投稿 2025 年 6 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。

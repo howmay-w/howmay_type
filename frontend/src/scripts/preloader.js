@@ -54,9 +54,11 @@ const toggleLoading = async () => {
   try {
     await loadAssets();
     sessionStorage.setItem("preloadComplete", "true");
-    hide();
   } catch (error) {
-    console.error("Failed to load assets or animate:", error);
+    console.error("Failed to load assets:", error);
+  } finally {
+    hide(); // 無論成功或失敗都隱藏 preloader，避免卡在白畫面
+    document.dispatchEvent(new CustomEvent("assetsLoaded"));
   }
 };
 

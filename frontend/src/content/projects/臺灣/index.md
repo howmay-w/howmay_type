@@ -26,3 +26,6 @@ tags: ["whatzurtype","台灣","Taiwan","字字字設計串連","reels"]
 ---
 
 本作品投稿 2024 年 9 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。
+
+---
+有音樂的 Reel 版本在[這裡](https://www.instagram.com/howmay__/reel/C_dVafSPxUI/)。

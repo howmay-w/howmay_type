@@ -31,8 +31,6 @@ tags: ["whatzurtype","字字字設計串連","diary","📔"]
 
 這次的字是取自歐文「western」風格的造型，看起來有點怪怪，但有趣。
 
-[@justfont](https://www.instagram.com/justfont/)
-
 ---
 
 本作品投稿 2024 年 1 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。

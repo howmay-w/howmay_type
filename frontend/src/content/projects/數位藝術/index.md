@@ -20,3 +20,7 @@ tags: ["digitalart","fingerpainting","reels"]
 純手繪數位藝術。（真的純用手，因為忘了帶Apple Pencil）
 
 Handrawing “Digital Art” on my iPad, cause I forgot to bring the Pencil.
+
+
+---
+有音樂的 Reel 版本在[這裡](https://www.instagram.com/howmay__/reel/C61EMVhPV8x/)。

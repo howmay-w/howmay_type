@@ -15,7 +15,7 @@ video:
   src: "/projects/沒幹嘛/video_0.mp4"
 hoverVideo:
   src: "/projects/沒幹嘛/video_0.mp4"
-pubDate: 2025-03-02
+pubDate: 2023-04-29
 tags: ["nothing","🫤"]
 ---
 

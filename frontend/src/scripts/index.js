@@ -22,34 +22,51 @@ const initializeVariables = () => {
 	hasPreloaderComponent = document.querySelector(".loading");
 };
 
+// 確保 grid 一定會顯示（動畫出錯時仍可看到內容）
+const ensureGridVisible = () => {
+	if (gridContainer) gsap.set(gridContainer, { autoAlpha: 1 });
+};
+
 // Animate the homepage elements using a GSAP timeline.
 const animateHomepageElements = () => {
-	if (!gridContainer || !gridItems.length) return;
+	if (!gridContainer) return;
+
+	// 沒有卡片時不播入場動畫，直接顯示
+	if (!gridItems.length) {
+		ensureGridVisible();
+		return;
+	}
 
 	// Hide the grid container before starting the animation.
 	animationTimeline = gsap.set(gridContainer, { autoAlpha: 0 });
 
-	gsap
-		.timeline({
-			defaults: {
-				duration: 1.4,
-				ease: "power4",
-			},
-			onComplete: () => {
-				// Dispatch a custom event after all animations complete.
-				const event = new CustomEvent("gridRendered");
-				document.dispatchEvent(event);
-			},
-		})
-		.fromTo(
-			lines,
-			{ transformOrigin: "0% 50%", scaleX: 0 },
-			{ duration: 1.6, ease: "power2", stagger: 0.9, scaleX: 1 },
-		)
-		.from(textSliders, { yPercent: 100, stagger: 0.1 }, 0.2)
-		.set(gridContainer, { autoAlpha: 1 }, "<+=1")
-		.from(gridItems, { yPercent: 100, stagger: 0.04, duration: 0.8 }, "<")
-		.from(gridItems, { ease: "sine", autoAlpha: 0, stagger: 0.04, duration: 0.8 }, "<");
+	try {
+		gsap
+			.timeline({
+				defaults: {
+					duration: 1.4,
+					ease: "power4",
+				},
+				onComplete: () => {
+					const event = new CustomEvent("gridRendered");
+					document.dispatchEvent(event);
+				},
+				onInterrupt: ensureGridVisible,
+				onKill: ensureGridVisible,
+			})
+			.fromTo(
+				lines,
+				{ transformOrigin: "0% 50%", scaleX: 0 },
+				{ duration: 1.6, ease: "power2", stagger: 0.9, scaleX: 1 },
+			)
+			.from(textSliders, { yPercent: 100, stagger: 0.1 }, 0.2)
+			.set(gridContainer, { autoAlpha: 1 }, "<+=1")
+			.from(gridItems, { yPercent: 100, stagger: 0.04, duration: 0.8 }, "<")
+			.from(gridItems, { ease: "sine", autoAlpha: 0, stagger: 0.04, duration: 0.8 }, "<");
+	} catch (err) {
+		console.error("Homepage animation error:", err);
+		ensureGridVisible();
+	}
 };
 
 // Clean up animations and DOM references to prevent memory leaks.

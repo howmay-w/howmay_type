@@ -55,32 +55,4 @@ const projects = defineCollection({
   }),
 });
 
-// 以下為舊的檔案式 collections，可保留或刪除
-const artists = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/data/artists" }),
-  schema: z.object({
-    name: z.string(),
-    stage_name: z.string(),
-    genre: z.string(),
-    image: z.object({
-      src: z.string(),
-      alt: z.string(),
-    }),
-  }),
-});
-
-const albums = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/data/albums" }),
-  schema: z.object({
-    name: z.string(),
-    image: z.object({
-      src: z.string(),
-      alt: z.string(),
-    }),
-    publishDate: z.date(),
-    tracks: z.array(z.string()),
-    artist: z.string(),
-  }),
-});
-
-export const collections = { projects, artists, albums };
+export const collections = { projects };

@@ -1,32 +1,48 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const title = "About — 王皓梅 Howmay Wang";
+const title = "About — 皓梅 Howmay";
 ---
 
 <BaseLayout title={title}>
-  <div class="content content--page about">
+  <div class="content content--page about hover-underline-animated">
     <section>
-      <h1>王皓梅<br />Howmay Wang</h1>
+      <h1>皓梅 Howmay</h1>
       <p>
-        美術字／標準字設計創作。<br />
-        <a href="https://www.instagram.com/howmay__/" target="_blank" rel="noopener noreferrer">
-          Instagram ↗
-        </a>
+        來自台北，台科設計所畢。目前在 justfont 做設計、字體行銷與教育推廣等任務。自己滿喜歡的專案有
+        <a href="https://justfont.com/jf7000" target="_blank" rel="noopener noreferrer">jf 7000 當務字集</a>、<a href="https://justfont.com/kamabit/" target="_blank" rel="noopener noreferrer">柑仔蜜</a>專案、<a href="https://blog.justfont.com/2024/10/elffont/" target="_blank" rel="noopener noreferrer">精靈文字型</a>等。也喜歡到處去演講、帶字型散步。
+      </p>
+      <p>
+        平常出去玩喜歡拍字，下班後會畫畫字作為日記與練習。之前作品只放在 
+        <a href="https://www.instagram.com/howmay__/" target="_blank" rel="noopener noreferrer">@howmay__</a>
+        ，最近總算製作了網頁，未來也會在此更新。
       </p>
     </section>
 
-    <section class="credits">
-      <h2>Credits</h2>
+    <section class="related-links">
+      <h2>歡迎看看 / See also </h2>
       <ul>
         <li>
-          UI design by <a href="https://alextkachev.com/" target="_blank" rel="noopener noreferrer">Alex Tkachev</a>
-          （<a href="https://dribbble.com/shots/25156320-Players-Club-UI-Animation" target="_blank" rel="noopener noreferrer">Dribbble ↗</a>）
+          鼓勵我自己弄個網站的男友
+          <a href="https://kiantiong.com" target="_blank" rel="noopener noreferrer">建中 ↗</a>
+        </li>
+        <li>
+          上班的地方，很認真的台灣字體公司
+          <a href="https://justfont.com/" target="_blank" rel="noopener noreferrer">justfont ↗</a>
+          
+        </li>
+      </ul>
+    </section>
+
+    <section class="credits">
+      <h2>致謝 / Credits</h2>
+      <ul>
+        <li>
+          Based on UI by <a href="https://alextkachev.com/" target="_blank" rel="noopener noreferrer">Alex Tkachev</a>
         </li>
         <li>
           Template <a href="https://tympanus.net/codrops/?p=86632" target="_blank" rel="noopener noreferrer">Players Club</a>
           by <a href="https://www.codrops.com" target="_blank" rel="noopener noreferrer">Codrops</a>
-          （<a href="https://github.com/jazsouf/astro-sanity-club" target="_blank" rel="noopener noreferrer">GitHub ↗</a>）
         </li>
         <li>
           Built with <a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a>
@@ -39,43 +55,55 @@ const title = "About — 王皓梅 Howmay Wang";
 <style>
   .about {
     align-items: flex-start;
-    gap: 3rem;
+    gap: 2rem;
+    font-weight: 500;
   }
   h1 {
-    font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 700;
+    font-size: clamp(1.75rem, 5vw, 3.25rem);
+    font-weight: 600;
     line-height: 1.1;
     margin: 0 0 1rem;
   }
   h2 {
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-text-alt);
     margin: 0 0 0.75rem;
+  }
+  /* 內文與專案頁 .prose 一致：字型、行高、字距、段落間距 */
+  .about p,
+  .about .related-links li,
+  .about .credits li {
+    font-family: "TASA Explorer Variable", system-ui, "GenKiGothicTW", sans-serif;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+  .about p {
+    margin: 0.5rem 0;
   }
   p {
     margin: 0;
   }
   a {
     color: inherit;
-    font-weight: 700;
+    font-weight: 600;
   }
-  a:hover {
-    text-decoration: underline;
-  }
+  .related-links ul,
   .credits ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.1rem;
   }
+  .related-links li,
   .credits li {
-    font-weight: 500;
-    line-height: 1.4;
-    color: var(--color-text-alt);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--color-text);
   }
 </style>

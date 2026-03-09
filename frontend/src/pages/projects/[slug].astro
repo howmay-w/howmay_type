@@ -169,7 +169,7 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 				</p>
 			)}
 			{bodyHtml && (
-					<div class="prose" set:html={bodyHtml} />
+					<div class="prose hover-underline-animated" set:html={bodyHtml} />
 				)}
 			</div>
 		</div>
@@ -358,6 +358,13 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 		box-shadow: none;
 		margin-top: 2.5rem;
 		margin-bottom: 0;
+	}
+	.prose.hover-underline-animated :global(a) {
+		font-weight: 500;
+		color: inherit;
+	}
+	.prose.hover-underline-animated :global(a:hover) {
+		color: inherit;
 	}
 
 	/* ── 底部導覽 ─────────────────────────── */

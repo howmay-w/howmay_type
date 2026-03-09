@@ -15,7 +15,7 @@ video:
   src: "/projects/補課臺灣史/video_0.mp4"
 hoverVideo:
   src: "/projects/補課臺灣史/video_0.mp4"
-pubDate: 2025-02-28
+pubDate: 2026-02-28
 tags: ["台灣史", "228", "和平紀念日", "🕯️"]
 ---
 

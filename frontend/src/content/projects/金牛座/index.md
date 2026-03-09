@@ -25,3 +25,6 @@ tags: ["whatzurtype", "logotype", "reels"]
 ---
 
 本作品投稿 2026 年 1 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。
+
+---
+有音樂的 Reel 版本在[這裡](https://www.instagram.com/howmay__/reel/DTX5fNak7v7/)。

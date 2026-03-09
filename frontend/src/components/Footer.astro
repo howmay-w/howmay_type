@@ -3,29 +3,30 @@ import Separator from "../components/Separator.astro";
 ---
 
 <Separator />
-<footer>
-  <p>
-    Based on the <a
-      href="https://dribbble.com/shots/25156320-Players-Club-UI-Animation"
-      >design</a
-    > by <a href="https://alextkachev.com/">Alex Tkachev</a>. Coded in <a
-      href="https://astro.build/">Astro 5.x</a
-    > by <a href="https://www.codrops.com">Codrops</a>. Augmented with <a href="https://sanity.io/">Sanity</a> by <a href="https://soufianee.com">Soufiane</a>.
+<footer class="hover-underline-animated">
+  <p class="credit">
+    美術字／標準字創作
+    <a href="https://www.instagram.com/howmay__/" target="_blank" rel="noopener noreferrer">
+      @howmay__ 
+    </a>
   </p>
-  <p>
-    Browse the <a href="https://github.com/jazsouf/astro-sanity-club">GitHub repo</a
-    >. Read the original <a href="https://tympanus.net/codrops/?p=86632">article</a>.
-  </p>
+  <p class="copy">© 2025</p>
 </footer>
 <style>
   footer {
     padding: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
   }
   p {
     margin: 0;
-    font-weight: bold;
+    font-weight: 500;
     line-height: 1.4;
-    text-align: center;
     color: var(--color-text-alt);
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 </style>

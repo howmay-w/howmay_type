@@ -23,3 +23,6 @@ tags: ["蘇打綠","flow","喵的奇幻漂流","wave","reels"]
 十年一日，還是第二首歌就哭了。對於時間的飛逝還是感到很奇幻：很多事情像是昨天發生，每個瞬間卻不會再回來了。
 
 但長大還是有些不錯的事，例如現在製作 Reels 時，可以配蘇打綠的曲。
+
+---
+有音樂的 Reel 版本在[這裡](https://www.instagram.com/howmay__/reel/DGdGKHHTRem/)。

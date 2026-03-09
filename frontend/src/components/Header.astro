@@ -7,9 +7,10 @@ const currentPath = Astro.url.pathname;
 // Define a map of routes
 const routes = {
 	"/": "Home",
-	"/releases/": "Releases",
-	"/history/": "History",
-	"/contact/": "Contact",
+	"/about": "About",
+	"/releases": "Releases",
+	"/history": "History",
+	"/contact": "Contact",
 };
 // Determine the active route
 const activeRoute = routes[currentPath] || null;
@@ -17,26 +18,19 @@ const activeRoute = routes[currentPath] || null;
 
 <header>
   <h1>
-    <a href="/" class={activeRoute === "Home" ? "current" : ""}
-      ><TextSlider content="Astro Sanity Club" /></a>
+   <TextSlider content="Howmay 皓梅" /></a>
   </h1>
-  <span><TextSlider content="Creators Collective" /></span>
+  <a href="/" class={activeRoute === "Home" ? "current" : ""} data-astro-prefetch><TextSlider content="Lettering & Logotype 美術字 & 標準字" /></a>
   <ul>
     <li>
       <a
-        href="/releases/"
-        class={activeRoute === "Releases" ? "current" : ""}
-        data-astro-prefetch><TextSlider content="Releases" /></a>
+        href="/about"
+        class={activeRoute === "About" ? "current" : ""}
+        data-astro-prefetch><TextSlider content="About" /></a>
     </li>
     <li>
       <a
-        href="/history/"
-        class={activeRoute === "History" ? "current" : ""}
-        data-astro-prefetch><TextSlider content="History" /></a>
-    </li>
-    <li>
-      <a
-        href="/contact/"
+        href="/contact"
         class={activeRoute === "Contact" ? "current" : ""}
         data-astro-prefetch><TextSlider content="Contact" /></a>
     </li>
@@ -49,7 +43,7 @@ const activeRoute = routes[currentPath] || null;
     position: relative;
     display: grid;
     grid-template-columns: min-content auto;
-    font-weight: 700;
+    font-weight: 600;
     padding: 1rem 0;
     gap: 1rem;
     z-index: 3;
@@ -61,6 +55,7 @@ const activeRoute = routes[currentPath] || null;
     font-size: 1rem;
     font-weight: inherit;
     margin: 0;
+    line-height: 1.2;
   }
   ul {
     display: flex;

@@ -163,11 +163,11 @@ function getSlideRealIndex(i: number): number {
 		object-fit: contain;
 		background: var(--color-placeholder, #f8f8f8);
 	}
-	/* 影片 slide 用深色底，避免未解碼時白屏閃爍 */
+	/* 影片留白處與圖片 placeholder 同色，避免切到影片時出現黑邊／與上一張露白對比 */
 	.carousel__slide--video,
 	.carousel__slide--video .carousel__video-wrap,
 	.carousel__slide--video .carousel__video {
-		background: #0c0c0c;
+		background: var(--color-placeholder, #f8f8f8);
 	}
 	.carousel__video-wrap {
 		position: relative;

@@ -11,5 +11,3 @@ hoverVideo:
 pubDate: 2022-08-20
 tags: ["Headache","💥"]
 ---
-
-我其實很常偏頭痛，做過詳細檢查卻沒找到過原因，嗚嗚。

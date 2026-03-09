@@ -6,7 +6,7 @@ At first, an experimental proof of concept built by [Codrops](https://www.codrop
 
 ![Image Title](https://cdn.sanity.io/images/awmb54he/production/f785e514977a6c57e1f9a32dd8e73e8083e1d1dc-2879x1698.png)
 
-[Demo](https://sanity-astro-club.netlify.app/)
+[Demo](https://howmay-type.netlify.app/)
 
 ## Folder Structure
 

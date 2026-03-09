@@ -24,5 +24,6 @@ BTW 「𤺪」這個漢字，在手機上看起來是問號缺字是正常ㄉ，
 
 總之，祝生日快樂ㄛ！
 
-#𤺪𤺪 [#si](https://www.instagram.com/explore/search/keyword/?q=%23si)ān-siān\
-[#procreate](https://www.instagram.com/explore/search/keyword/?q=%23procreate) [#illustration](https://www.instagram.com/explore/search/keyword/?q=%23illustration) [#lettering](https://www.instagram.com/explore/search/keyword/?q=%23lettering) [#typo](https://www.instagram.com/explore/search/keyword/?q=%23typo) [#typography](https://www.instagram.com/explore/search/keyword/?q=%23typography) [#handwriting](https://www.instagram.com/explore/search/keyword/?q=%23handwriting) [#chinesetypography](https://www.instagram.com/explore/search/keyword/?q=%23chinesetypography) [#font](https://www.instagram.com/explore/search/keyword/?q=%23font) [#chinesecharacters](https://www.instagram.com/explore/search/keyword/?q=%23chinesecharacters) [#logotype](https://www.instagram.com/explore/search/keyword/?q=%23logotype) [#kanji](https://www.instagram.com/explore/search/keyword/?q=%23kanji) [#design](https://www.instagram.com/explore/search/keyword/?q=%23design) [#字體](https://www.instagram.com/explore/search/keyword/?q=%23%E5%AD%97%E9%AB%94) [#字體設計](https://www.instagram.com/explore/search/keyword/?q=%23%E5%AD%97%E9%AB%94%E8%A8%AD%E8%A8%88) [#美術字](https://www.instagram.com/explore/search/keyword/?q=%23%E7%BE%8E%E8%A1%93%E5%AD%97) [#標準字](https://www.instagram.com/explore/search/keyword/?q=%23%E6%A8%99%E6%BA%96%E5%AD%97) [#タイポグラフ](https://www.instagram.com/explore/search/keyword/?q=%23%E3%82%BF%E3%82%A4%E3%83%9D%E3%82%B0%E3%83%A9%E3%83%95) #타이포그래피 [#設計](https://www.instagram.com/explore/search/keyword/?q=%23%E8%A8%AD%E8%A8%88)
+
+---
+有音樂的 Reel 版本在[這裡](https://www.instagram.com/howmay__/reel/DBT1rm4o82n/)。
