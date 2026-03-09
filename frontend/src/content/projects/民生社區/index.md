@@ -24,7 +24,7 @@ video:
 hoverVideo:
   src: "/projects/民生社區/video_0.mp4"
 pubDate: 2023-04-15
-tags: ["whatzurtype","咱佗位","字字字設計串連","🏡"]
+tags: ["whatzurtype", "咱佗位", "字字字設計串連", "🏡"]
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是用字介紹自己的家，試著畫了飽滿圓潤而有點年代感的字。
@@ -33,9 +33,6 @@ tags: ["whatzurtype","咱佗位","字字字設計串連","🏡"]
 
 食物推薦的部分：\
 吃的其實不少，許多老店都平凡而美好，推薦學校周邊幾家：「蕭家牛雜湯」、「KLG快樂雞（記得先打電話訂！他現炸會等比較久）」、「富錦三味」、「阿草赤肉羹（滷肉飯也好吃）」、「好香滷味（記得加辣椒）」、「鴻金寶臭豆腐」，怎麼辦，有點列不完，先這樣ㄌ
-
-
-[@justfont](https://www.instagram.com/justfont/)
 
 ---
 

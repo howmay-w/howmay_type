@@ -7,7 +7,16 @@ hoverVideo:
   src: "/projects/讀字/video_0.mp4"
 pubDate: 2023-11-27
 tags:
-  ["whatzurtype", "字字字設計串連", "獨立出版聯盟", "肥皂", "深海作業", "🫧"]
+  [
+    "whatzurtype",
+    "p5.js",
+    "字字字設計串連",
+    "獨立出版聯盟",
+    "肥皂",
+    "泡泡",
+    "深海作業",
+    "🫧",
+  ]
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是 [@justfont](https://www.instagram.com/justfont/) 跟獨立出版聯盟 [@indiepub.tw](https://www.instagram.com/indiepub.tw/) 的特別合作，要以一段文字為題設計「讀字」。
@@ -26,7 +35,7 @@ tags:
 > 我們不停擁抱\
 > 變出一堆泡泡
 >
-> 陳昭淵《深海作業》
+> **陳昭淵《深海作業》**
 
 發現這本詩集裝幀設計很特別，需要用光穿透紙張，才能完整閱讀分別印在正反面的文字。也想呈現某種互動性，這次投稿決定做每個觀眾都能有自己詮釋的作品。
 

@@ -17,12 +17,11 @@ pubDate: 2025-04-30
 tags: ["whatzurtype", "臺北文學季特展", "sad", "字字字設計串連", "reels"]
 ---
 
-限動做字/ Try using Stories to design a Hanzi logotype✨
+試著用限動做字✨
 
-**\***\
-本月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype)與臺北文學季特展 [@literature_taipei](https://www.instagram.com/literature_taipei/) 合作，抽出《溝通失敗傷心故事集》的一則傷心故事做字。
+本月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 與臺北文學季特展 [@literature_taipei](https://www.instagram.com/literature_taipei/) 合作，抽出《溝通失敗傷心故事集》的一則傷心故事做字。
 
-我抽到 9 號，鄭宜農 [@enno_cheng](https://www.instagram.com/enno_cheng/) 的〈限時動態好好玩〉。對作者提到「是破格的好時機」很有共鳴。我覺得，限動就是一個能自由嘗試、歡迎失敗的實驗室。
+我抽到 9 號， [鄭宜農](https://www.instagram.com/enno_cheng/) 的〈限時動態好好玩〉。對作者提到「是破格的好時機」很有共鳴。我覺得，限動就是一個能自由嘗試、歡迎失敗的實驗室。
 
 之前曾思考過，能不能真的把限時動態當成設計軟體用？可以打字、可以放圖像、可以繪畫甚至可以與觀眾互動，廣義與狹義上都是一種設計的工具。
 
@@ -30,7 +29,7 @@ tags: ["whatzurtype", "臺北文學季特展", "sad", "字字字設計串連", "
 
 ---
 
-「在那個用文字建構自我存在的年代，雖然社群上留下許多現在根本不敢回頭看的足跡，但，寫是因為情感，也是一種依賴。」
+> 「在那個用文字建構自我存在的年代，雖然社群上留下許多現在根本不敢回頭看的足跡，但，寫是因為情感，也是一種依賴。」
 
 作者｜鄭宜農\
 篇名｜限時動態好好玩\

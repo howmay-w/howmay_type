@@ -28,10 +28,7 @@ video:
 hoverVideo:
   src: "/projects/陡降/video_0.mp4"
 pubDate: 2023-12-01
-tags: ["suddendrop","📉"]
+tags: ["suddendrop", "📉"]
 ---
 
 雖然有沒有到真的很冷，但總覺得氣溫降ㄉ太突然ㄌ，身體反應不過來🥲
-
-另外，IG 居然貼文也可以發票選了嗎？\
-大家有看到可以幫我按按看👇
