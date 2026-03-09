@@ -1,5 +1,5 @@
 ---
-title: "人生的歌"
+title: "人生 ê 歌"
 description: "🎤 苦情歌好讚，適合在浴室大唱特唱"
 image:
   src: "/projects/人生的歌/media_0.webp"
@@ -16,7 +16,7 @@ video:
 hoverVideo:
   src: "/projects/人生的歌/video_0.mp4"
 pubDate: 2022-10-12
-tags: ["人生ê歌","Jînsingêkua","黃乙玲","🎤"]
+tags: ["人生ê歌", "Jînsingêkua", "黃乙玲", "台語", "🎤"]
 ---
 
 苦情歌好讚，適合在浴室大唱特唱

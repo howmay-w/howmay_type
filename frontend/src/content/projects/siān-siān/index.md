@@ -11,7 +11,7 @@ hoverVideo:
   src: "/projects/siān-siān/video_0.mp4"
 hoverVideoFit: contain
 pubDate: 2024-10-19
-tags: ["siān-siān", "reels"]
+tags: ["siān-siān", "台語", "reels"]
 ---
 
 今年送男友的生日禮物是點字＋訂做手機殼。

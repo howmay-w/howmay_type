@@ -14,7 +14,7 @@ hoverVideo:
   src: "/projects/金牛座/video_0.mp4"
 hoverVideoFit: contain
 pubDate: 2026-01-11
-tags: ["whatzurtype", "logotype", "reels"]
+tags: ["whatzurtype", "字字字設計串連", "logotype", "reels"]
 ---
 
 用 Rhythm 的筆畫拼出金牛座♉️\

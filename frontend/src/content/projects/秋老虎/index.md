@@ -28,7 +28,7 @@ video:
 hoverVideo:
   src: "/projects/秋老虎/video_0.mp4"
 pubDate: 2022-10-03
-tags: ["toohot","whatzurtype","字字字設計串聯","🥵"]
+tags: ["toohot","whatzurtype","字字字設計串連","🥵"]
 ---
 
 快熱死，不是十月了ㄇ⋯\

@@ -24,7 +24,7 @@ video:
 hoverVideo:
   src: "/projects/蕨貓/video_0.mp4"
 pubDate: 2025-03-30
-tags: ["whatzurtype","字字字設計串連","🌿"]
+tags: ["whatzurtype","字字字設計串連","台語","🌿"]
 ---
 
 蕨貓 kueh-niau\

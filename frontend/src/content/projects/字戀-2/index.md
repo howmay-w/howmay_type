@@ -9,7 +9,7 @@ video:
 hoverVideo:
   src: "/projects/字戀-2/video_0.mp4"
 pubDate: 2022-09-22
-tags: ["whatzurtype","LoveFont","💟"]
+tags: ["whatzurtype","字字字設計串連","LoveFont","💟"]
 ---
 
 投稿看看
