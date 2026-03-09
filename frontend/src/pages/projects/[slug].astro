@@ -122,7 +122,7 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 							) : reelsCarouselItems.length === 1 ? (
 								<img
 									src={reelsCarouselItems[0].src}
-									alt={reelsCarouselItems[0].alt ?? title}
+									alt={reelsCarouselItems[0].type === "image" ? (reelsCarouselItems[0].alt ?? title) : title}
 									width="1000"
 									loading="lazy"
 									class="project-image"
