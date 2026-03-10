@@ -23,7 +23,7 @@ tags: ["whatzurtype", "字字字設計串連", "字戀小聚", "Support", "加�
 
 這次字戀小聚邀請冠穎 aka 日花字型設計師講運動設計，才知道原來他曾有好一陣子的業內經驗，好期待教學跟秘辛。
 
-更新此文當下直播已經公開在 [jf 的 youtube 頻道](https://www.youtube.com/live/swnwn8HR7_A?si=rB0XAiFvJ20t7cPj)，跟之前聽過冠穎的講座分享一樣精彩充實，甚至有現場示範，非常推薦收看👍
+更新此文當下，直播已經公開在 [jf 的 youtube 頻道](https://www.youtube.com/live/swnwn8HR7_A?si=rB0XAiFvJ20t7cPj)，跟之前聽過冠穎的講座分享一樣精彩充實，甚至有現場示範，非常推薦收看👍
 
 這幾年才開始收看各種體育賽事，總是很容易感動。永遠敬佩所有超越自我，以不可思議的毅力與堅持，不斷追求卓越的選手們。
 

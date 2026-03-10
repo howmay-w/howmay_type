@@ -6,9 +6,7 @@ const title = "Contact — 王皓梅 Howmay Wang";
 
 <BaseLayout title={title}>
   <div class="content content--page contact hover-underline-animated">
-    <section>
-      <h1>Contact</h1>
-    </section>
+    <h1 class="sr-only">Contact</h1>
 
     <section>
       <h2>工作信箱 / Email</h2>
@@ -78,12 +76,12 @@ const title = "Contact — 王皓梅 Howmay Wang";
     align-items: flex-start;
     gap: 2rem;
     font-weight: 500;
+    min-height: calc(100vh - 12rem);
   }
-  h1 {
-    font-size: clamp(1.75rem, 5vw, 3.25rem);
-    font-weight: 600;
-    line-height: 1.1;
-    margin: 0 0 0.25rem;
+  @media screen and (min-width: 50em) {
+    .contact {
+      padding: 1rem 1rem 1.25rem 1rem;
+    }
   }
   h2 {
     font-size: 0.85rem;
@@ -93,10 +91,16 @@ const title = "Contact — 王皓梅 Howmay Wang";
     color: var(--color-text-alt);
     margin: 0 0 0.75rem;
   }
+  @media (max-width: 640px) {
+    h2 {
+      font-size: 0.75rem;
+    }
+  }
   /* 內文與專案頁 .prose 一致：字型、行高、字距、段落間距 */
   .contact p,
   .contact ul li {
     font-family: "TASA Explorer Variable", system-ui, "GenKiGothicTW", sans-serif;
+    font-size: 1rem;
     line-height: 1.7;
     letter-spacing: 0.02em;
     font-weight: 400;
@@ -154,5 +158,15 @@ const title = "Contact — 王皓梅 Howmay Wang";
   li {
     font-weight: 400;
     line-height: 1.7;
+  }
+  @media (max-width: 640px) {
+    /* 提高優先級以覆蓋 global .content--page 的 max-width: 32rem */
+    :global(.content--page).contact {
+      max-width: 22rem;
+    }
+    .contact p,
+    .contact ul li {
+      font-size: 0.9rem;
+    }
   }
 </style>

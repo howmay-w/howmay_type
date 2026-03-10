@@ -132,18 +132,15 @@ function getSlideRealIndex(i: number): number {
 		scroll-behavior: smooth;
 		-webkit-overflow-scrolling: touch;
 		gap: 0;
-		cursor: grab;
 		user-select: none;
-		touch-action: pan-y;
+		/* 允許水平拖曳／滑動，觸控與滑鼠一致 */
+		touch-action: pan-x;
 		/* 隱藏捲軸，避免滑動時出現上下黑條 */
 		scrollbar-width: none;
 		-ms-overflow-style: none;
 	}
 	.carousel__track::-webkit-scrollbar {
 		display: none;
-	}
-	.carousel__track:active {
-		cursor: grabbing;
 	}
 	.carousel__slide {
 		flex: 0 0 100%;
@@ -240,11 +237,10 @@ function getSlideRealIndex(i: number): number {
 	}
 	.carousel__track-wrap .carousel__btn {
 		position: absolute;
-		top: 0;
-		bottom: 0;
-		width: 20%;
-		min-width: 4rem;
-		max-width: 4rem;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 2.5rem;
+		height: 2.5rem;
 		border: none;
 		background: none;
 		color: #fff;
@@ -306,9 +302,6 @@ function getSlideRealIndex(i: number): number {
 		const sw = () => track.offsetWidth;
 
 		let index = 0;
-		let isDragging = false;
-		let startX = 0;
-		let startScrollLeft = 0;
 		let teleportTimer: ReturnType<typeof setTimeout> | null = null;
 		let isReady = false;
 
@@ -422,11 +415,12 @@ function getSlideRealIndex(i: number): number {
 			}, 80);
 		}
 
-		// scroll 期間即時更新點點，停止後安排傳送；影片切換改為捲動停止後才執行，減少 Safari glitch
+		// scroll 期間即時更新點點與 index（供按鈕用），停止後安排傳送；影片切換改為捲動停止後才執行，減少 Safari glitch
 		function onScroll() {
 			const s = sw();
 			const dom = Math.round(track.scrollLeft / s);
 			const di = dom <= 0 ? total - 1 : dom >= total + 1 ? 0 : dom - 1;
+			index = di;
 			setDots(di);
 			scheduleTeleport();
 			if (videoUpdateTimer != null) clearTimeout(videoUpdateTimer);
@@ -469,102 +463,6 @@ function getSlideRealIndex(i: number): number {
 		});
 
 		track.addEventListener("scroll", onScroll);
-
-		// ── 拖曳 ────────────────────────────────────────────────────
-		function startDrag(clientX: number) {
-			if (!isReady) return;
-			isDragging = true;
-			startX = clientX;
-			startScrollLeft = track.scrollLeft;
-			if (teleportTimer !== null) { clearTimeout(teleportTimer); teleportTimer = null; }
-			track.style.scrollBehavior = "auto";
-		}
-
-		function doDrag(clientX: number) {
-			if (!isDragging) return;
-			track.scrollLeft = startScrollLeft - (clientX - startX);
-		}
-
-		function endDrag() {
-			if (!isDragging) return;
-			isDragging = false;
-			track.style.scrollBehavior = "smooth";
-
-			const s = sw();
-			const domIndex = Math.round(track.scrollLeft / s);
-
-			if (domIndex <= 0) {
-				track.style.scrollBehavior = "auto";
-				track.scrollLeft = total * s;
-				track.style.scrollBehavior = "smooth";
-				index = total - 1;
-				setDots(index);
-			} else if (domIndex >= total + 1) {
-				track.style.scrollBehavior = "auto";
-				track.scrollLeft = s;
-				track.style.scrollBehavior = "smooth";
-				index = 0;
-				setDots(index);
-			} else {
-				index = domIndex - 1;
-				setDots(index);
-				track.scrollTo({ left: domIndex * s, behavior: "smooth" });
-			}
-			updateVideoPlayback();
-		}
-
-		track.addEventListener("pointerdown", (e: PointerEvent) => {
-			if (e.pointerType === "mouse" && e.button !== 0) return;
-			if ((e.target as Element).closest("[data-video-overlay]")) return;
-			startDrag(e.clientX);
-			try { track.setPointerCapture(e.pointerId); } catch (_) {}
-		});
-
-		track.addEventListener(
-			"pointermove",
-			(e: PointerEvent) => {
-				if (!isDragging) return;
-				e.preventDefault();
-				doDrag(e.clientX);
-			},
-			{ passive: false },
-		);
-
-		track.addEventListener("pointerup", (e: PointerEvent) => {
-			try { track.releasePointerCapture(e.pointerId); } catch (_) {}
-			endDrag();
-		});
-		track.addEventListener("pointercancel", endDrag);
-
-		track.addEventListener(
-			"touchstart",
-			(e: TouchEvent) => {
-				if (e.touches.length !== 1) return;
-				if ((e.target as Element).closest("[data-video-overlay]")) return;
-				startDrag(e.touches[0].clientX);
-			},
-			{ passive: true },
-		);
-
-		track.addEventListener(
-			"touchmove",
-			(e: TouchEvent) => {
-				if (!isDragging || e.touches.length !== 1) return;
-				e.preventDefault();
-				doDrag(e.touches[0].clientX);
-			},
-			{ passive: false },
-		);
-
-		track.addEventListener(
-			"touchend",
-			(e: TouchEvent) => {
-				if (e.changedTouches.length) endDrag();
-			},
-			{ passive: true },
-		);
-
-		track.addEventListener("touchcancel", endDrag);
 	}
 
 	initCarousel();

@@ -57,9 +57,16 @@ const title = "About — 皓梅 Howmay";
     align-items: flex-start;
     gap: 2rem;
     font-weight: 500;
+    max-width: 34rem; /* 與 global .content--page 一致，一般頁面寬度 */
+    min-height: calc(100vh - 12rem);
+  }
+  @media screen and (min-width: 50em) {
+    .about {
+      padding: 1rem 1rem 1.25rem 1rem;
+    }
   }
   h1 {
-    font-size: clamp(1.75rem, 5vw, 3.25rem);
+    font-size: clamp(2rem, 6vw, 2.8rem);
     font-weight: 600;
     line-height: 1.1;
     margin: 0 0 1rem;
@@ -72,11 +79,17 @@ const title = "About — 皓梅 Howmay";
     color: var(--color-text-alt);
     margin: 0 0 0.75rem;
   }
+  @media (max-width: 640px) {
+    h2 {
+      font-size: 0.75rem;
+    }
+  }
   /* 內文與專案頁 .prose 一致：字型、行高、字距、段落間距 */
   .about p,
   .about .related-links li,
   .about .credits li {
     font-family: "TASA Explorer Variable", system-ui, "GenKiGothicTW", sans-serif;
+    font-size: 1rem;
     line-height: 1.7;
     letter-spacing: 0.02em;
     font-weight: 400;
@@ -105,5 +118,16 @@ const title = "About — 皓梅 Howmay";
     font-weight: 400;
     line-height: 1.45;
     color: var(--color-text);
+  }
+  @media (max-width: 640px) {
+    /* 手機時縮窄；一般寬度維持 32rem */
+    :global(.content--page).about {
+      max-width: 21rem;
+    }
+    .about p,
+    .about .related-links li,
+    .about .credits li {
+      font-size: 0.9rem;
+    }
   }
 </style>

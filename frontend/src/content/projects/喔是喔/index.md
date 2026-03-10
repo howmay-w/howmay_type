@@ -1,6 +1,6 @@
 ---
 title: "喔是喔"
-description: "😌 有時唸作Also"
+description: "😌 有時唸作 Also"
 image:
   src: "/projects/喔是喔/media_0.webp"
   alt: "😌"
@@ -25,4 +25,4 @@ pubDate: 2026-01-07
 tags: ["😌"]
 ---
 
-有時唸作Also
+有時唸作 Also。

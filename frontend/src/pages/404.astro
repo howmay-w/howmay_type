@@ -5,8 +5,19 @@ const title = "Players Club - 404";
 ---
 
 <BaseLayout title={title}>
-  <div class="content content--page content--page--center hover-underline-animated">
+  <div class="content content--page content--page--center page-404 hover-underline-animated link-hover-underline-only">
     <h1>404</h1>
-    <p>這裡沒東西  ̊ଳ  ̊ 要不要<a href="/" data-astro-prefetch>回首頁</a>看看？</p>
+    <p>這裡沒東西・ଳ・要不要<a href="/" data-astro-prefetch class="link--bold">回首頁</a>看看？</p>
   </div>
 </BaseLayout>
+
+<style>
+  .page-404 {
+    min-height: calc(100vh - 12rem);
+  }
+  @media screen and (min-width: 50em) {
+    .page-404 {
+      padding: 1rem 1rem 1.25rem 1rem;
+    }
+  }
+</style>

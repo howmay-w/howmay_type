@@ -7,6 +7,12 @@
   }
 }
 
+/* 移除手機點擊時預設的圓角灰底（tap highlight） */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 :root {
   font-size: 16px;
   --color-text: #000;
@@ -69,11 +75,8 @@ a {
 
   &:focus {
     outline: none;
-    background-color: lightgrey;
-
-    &:not(:focus-visible) {
-      background-color: transparent;
-    }
+    /* 僅在鍵盤 focus-visible 時顯示灰底，避免手機點擊時出現 */
+    background-color: transparent;
 
     &:focus-visible {
       opacity: 0.5;
@@ -116,6 +119,15 @@ a.hover-underline-animated:hover::after {
   width: 100%;
 }
 
+/* 僅底線、hover 不轉灰（例如 404 回首頁） */
+.link-hover-underline-only a:hover {
+  color: var(--color-link);
+}
+
+.link-hover-underline-only .link--bold {
+  font-weight: 700;
+}
+
 button {
   background: none;
   display: flex;
@@ -127,6 +139,7 @@ button {
   font-weight: 600;
   color: inherit;
   fill: currentColor;
+  transition: color 0.3s;
 
   &:hover {
     color: var(--color-link-hover);
@@ -134,11 +147,8 @@ button {
 
   &:focus {
     outline: none;
-    background-color: lightgrey;
-
-    &:not(:focus-visible) {
-      background-color: transparent;
-    }
+    /* 避免手機點擊時出現灰底 */
+    background-color: transparent;
 
     &:focus-visible {
       background-color: transparent;
@@ -229,6 +239,9 @@ img {
 .content ol {
   line-height: 1.4;
   font-weight: 500;
+  /* 避頭點：標點不單獨在行首/行尾，依 CJK 斷行規則 */
+  line-break: strict;
+  /* text-wrap: pretty; */
 }
 
 .content ol {
@@ -273,9 +286,44 @@ dd {
 
 .title-header--initial {
   font-size: var(--font-size-l);
+  /* 手機版：Works 與作品數量同一行，數字靠右 */
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+}
 
-  @media screen and (min-width: 50em) {
+.title-header--initial h2 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.title-header--initial > span {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+}
+
+.title-header--initial > div {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+@media screen and (max-width: 49.99em) {
+  .title-header--initial > div button {
+    font-size: 21px;
+  }
+}
+
+@media screen and (min-width: 50em) {
+  .title-header--initial {
     grid-template-columns: 20vw 1fr auto;
+    grid-template-rows: unset;
     gap: 1rem;
+  }
+
+  .title-header--initial h2,
+  .title-header--initial > span,
+  .title-header--initial > div {
+    grid-column: auto;
+    grid-row: auto;
   }
 }

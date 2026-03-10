@@ -326,9 +326,28 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 	}
 	.prose {
 		font-family: "TASA Explorer Variable", system-ui, "GenKiGothicTW", sans-serif;
+		font-size: 1rem;
 		font-weight: 400;
 		line-height: 1.7;
 		letter-spacing: 0.02em;
+	}
+	@media (max-width: 640px) {
+		/* 作法 B：ch 與內文字級一致，32ch = 0.9rem 的 32 字寬 */
+		.content {
+			font-size: 0.9rem;
+			max-width: 32ch;
+		}
+		.prose {
+			font-size: 0.9rem;
+		}
+		/* 上方 BACK：文字與箭頭縮小 */
+		.back {
+			font-size: 0.85rem;
+		}
+		.back svg {
+			width: 16px;
+			height: 16px;
+		}
 	}
 	.prose :global(h2) {
 		font-size: 1.75rem;
@@ -441,5 +460,17 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 	.nav-link--right {
 		align-items: flex-end;
 		text-align: right;
+	}
+	@media (max-width: 640px) {
+		.nav-meta {
+			font-size: 0.8rem;
+		}
+		.nav-title {
+			font-size: 0.75rem;
+		}
+		.nav-arrow svg {
+			width: 16px;
+			height: 16px;
+		}
 	}
 </style>

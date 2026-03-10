@@ -26,10 +26,9 @@ export default defineConfig({
     // @ts-expect-error - custom plugins for project asset copy/serve
     plugins: [projectAssetsPlugin(), projectAssetsDevPlugin()],
     server: {
-      // 強制 IPv4，避免 EPERM on ::1（部分環境會阻擋 IPv6 綁定）
-      host: "127.0.0.1",
+      // 0.0.0.0 讓同一 Wi‑Fi 下的手機可連 http://<你電腦的 IP>:4321 測試
+      host: "0.0.0.0",
       port: 4321,
-      // 若需從其他裝置連線，可改為 host: true 或 host: "0.0.0.0"
     },
     css: {
       devSourcemap: true,

@@ -5,7 +5,7 @@ import Separator from "../components/Separator.astro";
 <Separator />
 <footer class="hover-underline-animated">
   <p class="credit">
-    美術字／標準字創作
+    美術字 & 標準字創作
     <a href="https://www.instagram.com/howmay__/" target="_blank" rel="noopener noreferrer">
       @howmay__ 
     </a>
@@ -36,5 +36,10 @@ import Separator from "../components/Separator.astro";
   .sep {
     margin: 0 0.35em;
     opacity: 0.7;
+  }
+  @media (max-width: 640px) {
+    footer p {
+      font-size: 0.85rem;
+    }
   }
 </style>
