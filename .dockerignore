@@ -1,0 +1,23 @@
+# 建置 Discord Bot 映像時忽略（保留 .git 供 Bot 做 git pull / push）
+node_modules
+frontend/node_modules
+discord-bot/node_modules
+studio/node_modules
+.env
+.env.*
+!.env.example
+*.log
+frontend/dist
+.DS_Store
+
+# 縮小 build context，避免 Fly/Depot 上傳逾時（專案圖/影片通常最大）
+# 容器啟動時會 git pull，會拉回完整 content，故建映像時可忽略
+frontend/src/content/projects
+
+.cursor
+.vscode
+docs
+.github
+*.md
+!discord-bot/*.md
+agent-transcripts

@@ -1,0 +1,13 @@
+{
+  "title": "測試作品",
+  "description": "由 payload 自動產生的範例",
+  "body": "這裡是 **Markdown** 內文，可從 Discord 表單或 Webhook 帶入。",
+  "tags": ["測試", "自動化"],
+  "pubDate": "2025-03-13",
+  "images": [
+    { "url": "https://placehold.co/800x800.jpg", "alt": "圖 1" },
+    { "url": "https://placehold.co/800x600.jpg", "alt": "圖 2" }
+  ],
+  "videos": [],
+  "hoverVideoIndex": 0
+}

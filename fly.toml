@@ -1,0 +1,23 @@
+# Discord Bot 部署用。請在專案根目錄執行：fly deploy
+# app 名稱：howmay-type-bot（需先 fly apps create howmay-type-bot）
+
+app = "howmay-type-bot"
+
+[build]
+  dockerfile = "discord-bot/Dockerfile"
+
+[env]
+  PORT = "8080"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1

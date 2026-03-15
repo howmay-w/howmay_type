@@ -1,0 +1,13 @@
+{
+  "name": "howmay-type-discord-bot",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node index.mjs",
+    "dev": "node --watch index.mjs"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.6.1"
+  }
+}

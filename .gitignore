@@ -19,6 +19,7 @@ yarn-error.log*
 .env
 .env.*
 !.env.example
+discord-bot/.env
 
 
 # typescript

@@ -1,0 +1,23 @@
+# Fly.io 設定（此檔供參考／從 discord-bot 目錄 launch 用）。
+# 正式部署請在「專案根目錄」執行：fly deploy（使用根目錄的 fly.toml，build context 才會是整個 repo）。
+
+app = "howmay-type-bot"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
