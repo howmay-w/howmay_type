@@ -32,7 +32,9 @@ const PROJECTS_DIR = path.resolve(__dirname, "../src/content/projects");
  *   "videos": [                   // 選填
  *     { "url": "https://...", "posterUrl": "https://..." } 或 { "path": "/tmp/v.mp4", "posterPath": "/tmp/p.jpg" }
  *   ],
- *   "hoverVideoIndex": 0          // 選填，用第幾個影片當 hover（預設 0）
+ *   "hoverVideoIndex": 0,         // 選填，用第幾個影片當 hover（預設 0）
+ *   "overwrite": true,            // 選填，若為 true 且同 slug 專案已存在則清空後覆寫
+ *   "onlyUpdateBody": true        // 選填，若為 true 僅更新該專案 index.md 的內文／標題／描述／標籤，不碰圖片
  * }
  */
 
@@ -65,6 +67,60 @@ function escapeYamlString(s) {
   return str;
 }
 
+/** 清空目錄內所有檔案與子目錄（不刪除目錄本身） */
+function clearDir(dir) {
+  const names = fs.readdirSync(dir);
+  for (const name of names) {
+    const full = path.join(dir, name);
+    const stat = fs.statSync(full);
+    if (stat.isDirectory()) {
+      clearDir(full);
+      fs.rmdirSync(full);
+    } else {
+      fs.unlinkSync(full);
+    }
+  }
+}
+
+/** 僅更新現有專案的 index.md：內文與可選的 title / description / tags */
+function updateProjectBodyOnly(projectDir, payload) {
+  const indexPath = path.join(projectDir, "index.md");
+  if (!fs.existsSync(indexPath)) {
+    console.error(`找不到 ${indexPath}`);
+    process.exit(1);
+  }
+  const raw = fs.readFileSync(indexPath, "utf8");
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  if (!match) {
+    console.error("無法解析 index.md 的 frontmatter");
+    process.exit(1);
+  }
+  let fm = match[1];
+  const body = typeof payload.body === "string" ? payload.body.trim() : (match[2] || "").trim();
+  if (payload.title != null && payload.title !== "") {
+    fm = fm.replace(/^title:\s*.*$/m, `title: ${escapeYamlString(payload.title)}`);
+  }
+  if (payload.description !== undefined) {
+    if (fm.includes("description:")) {
+      fm = fm.replace(/^description:\s*.*$/m, `description: ${escapeYamlString(payload.description)}`);
+    } else {
+      fm = fm.trimEnd() + `\ndescription: ${escapeYamlString(payload.description)}`;
+    }
+  }
+  if (payload.tags && Array.isArray(payload.tags)) {
+    const tagsLine = `tags: [${payload.tags.map((t) => `"${String(t).replace(/"/g, '\\"')}"`).join(", ")}]`;
+    if (fm.includes("tags:")) {
+      fm = fm.replace(/^tags:\s*\[[\s\S]*?\]/m, tagsLine);
+    } else {
+      fm = fm.trimEnd() + `\n${tagsLine}`;
+    }
+  }
+  const out = `---\n${fm}\n---\n\n${body}\n`;
+  fs.writeFileSync(indexPath, out, "utf8");
+  console.log(`已更新內文：${projectDir}`);
+  console.log("STATUS: updated");
+}
+
 async function main() {
   const input = process.argv[2]
     ? fs.readFileSync(process.argv[2], "utf8")
@@ -84,11 +140,27 @@ async function main() {
 
   const slug = payload.slug || slugify(title);
   const projectDir = path.join(PROJECTS_DIR, slug);
-  if (fs.existsSync(projectDir)) {
-    console.error(`資料夾已存在: ${projectDir}`);
-    process.exit(1);
+
+  if (payload.onlyUpdateBody) {
+    if (!fs.existsSync(projectDir)) {
+      console.error(`專案不存在，無法僅更新內文: ${projectDir}`);
+      process.exit(1);
+    }
+    updateProjectBodyOnly(projectDir, payload);
+    return;
   }
-  fs.mkdirSync(projectDir, { recursive: true });
+
+  let overwritten = false;
+  if (fs.existsSync(projectDir)) {
+    if (!payload.overwrite) {
+      console.error(`資料夾已存在: ${projectDir}`);
+      process.exit(1);
+    }
+    clearDir(projectDir);
+    overwritten = true;
+  } else {
+    fs.mkdirSync(projectDir, { recursive: true });
+  }
 
   const images = payload.images || [];
   const videos = payload.videos || [];
@@ -181,8 +253,9 @@ async function main() {
   const indexMd = `---\n${yamlLines.join("\n")}\n---\n\n${body}\n`;
   fs.writeFileSync(path.join(projectDir, "index.md"), indexMd, "utf8");
 
-  console.log(`已建立：${projectDir}`);
+  console.log(overwritten ? `已覆寫：${projectDir}` : `已建立：${projectDir}`);
   console.log("請在 frontend 目錄執行：pnpm optimize-images");
+  console.log(overwritten ? "STATUS: overwritten" : "STATUS: created");
 }
 
 main().catch((err) => {

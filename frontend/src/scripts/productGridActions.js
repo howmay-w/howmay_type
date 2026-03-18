@@ -57,7 +57,9 @@ const clearSearchState = () => {
   // 重新觸發圖卡上浮動畫
   const visible = gridItems
     .filter((item) => !item.hasAttribute("data-deferred"))
-    .sort((a, b) => (parseInt(a.style.order) || 0) - (parseInt(b.style.order) || 0));
+    .sort(
+      (a, b) => (parseInt(a.style.order) || 0) - (parseInt(b.style.order) || 0),
+    );
   appearCards(visible);
   toggleClearButton();
   searchContent.innerHTML = searchContentOriginal;
@@ -286,7 +288,9 @@ const filterGrid = (searchValue, options = {}) => {
       if (dateB) return 1;
       return 0;
     });
-    sorted.forEach((item, i) => { item.style.order = String(i); });
+    sorted.forEach((item, i) => {
+      item.style.order = String(i);
+    });
     let order = matchingItems.length;
     for (const item of gridItems) {
       if (item.style.display === "none") {
@@ -307,7 +311,9 @@ const filterGrid = (searchValue, options = {}) => {
     }
   }
   updateLoadMoreVisibility(isSearching);
-  const matchCount = gridItems.filter((item) => item.style.display !== "none").length;
+  const matchCount = gridItems.filter(
+    (item) => item.style.display !== "none",
+  ).length;
   const noResults = isSearching && matchCount === 0;
   if (searchNoResults) {
     searchNoResults.classList.toggle("hidden", !noResults);
@@ -343,7 +349,9 @@ const updateLoadMoreVisibility = (isFilterActive = false) => {
     loadMoreBtn.classList.add("hidden");
     return;
   }
-  const hasDeferred = gridItems.some((item) => item.hasAttribute("data-deferred"));
+  const hasDeferred = gridItems.some((item) =>
+    item.hasAttribute("data-deferred"),
+  );
   loadMoreBtn.classList.toggle("hidden", !hasDeferred);
 };
 
@@ -368,103 +376,119 @@ const toggleClearButton = (searchTerm = "") => {
 
 /* Apply tag filter from URL ?tag= parameter */
 const applyTagFromUrl = () => {
-	const params = new URLSearchParams(window.location.search);
-	const tag = params.get("tag");
-	if (!tag) return;
-	filterGrid(tag);
-	toggleClearButton(tag);
-	searchButton?.classList.add("search--active");
-	if (searchContent) searchContent.innerHTML = tag;
-	if (searchInput) searchInput.value = tag;
-	try {
-		sessionStorage.setItem(GRID_SEARCH_KEY, tag);
-		sessionStorage.setItem(GRID_VIEW_MODE_KEY, "search");
-	} catch (_) {}
-	// Clean up URL without triggering navigation
-	const url = new URL(window.location.href);
-	url.searchParams.delete("tag");
-	window.history.replaceState({}, "", url);
+  const params = new URLSearchParams(window.location.search);
+  const tag = params.get("tag");
+  if (!tag) return;
+  filterGrid(tag);
+  toggleClearButton(tag);
+  searchButton?.classList.add("search--active");
+  if (searchContent) searchContent.innerHTML = tag;
+  if (searchInput) searchInput.value = tag;
+  try {
+    sessionStorage.setItem(GRID_SEARCH_KEY, tag);
+    sessionStorage.setItem(GRID_VIEW_MODE_KEY, "search");
+  } catch (_) {}
+  // Clean up URL without triggering navigation
+  const url = new URL(window.location.href);
+  url.searchParams.delete("tag");
+  window.history.replaceState({}, "", url);
 };
 
 /* 從專案頁 BACK 回「最新」：套用 ?from=latest */
 const applyViewModeFromUrl = () => {
-	const params = new URLSearchParams(window.location.search);
-	if (params.get("from") !== "latest") return;
-	sortGrid();
-	const url = new URL(window.location.href);
-	url.searchParams.delete("from");
-	window.history.replaceState({}, "", url);
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("from") !== "latest") return;
+  sortGrid();
+  const url = new URL(window.location.href);
+  url.searchParams.delete("from");
+  window.history.replaceState({}, "", url);
 };
 
 /* Apply search from URL ?search= or sessionStorage（從專案頁 BACK 回篩選結果） */
 const applySearchFromSession = () => {
-	const params = new URLSearchParams(window.location.search);
-	const fromUrl = params.get("search");
-	const fromSession = (() => { try { return sessionStorage.getItem(GRID_SEARCH_KEY); } catch (_) { return null; } })();
-	const term = fromUrl ?? fromSession ?? "";
-	if (!term) return;
-	filterGrid(term);
-	toggleClearButton(term);
-	searchButton?.classList.add("search--active");
-	if (searchContent) searchContent.innerHTML = term;
-	if (searchInput) searchInput.value = term;
-	if (fromUrl) {
-		const url = new URL(window.location.href);
-		url.searchParams.delete("search");
-		window.history.replaceState({}, "", url);
-	}
+  const params = new URLSearchParams(window.location.search);
+  const fromUrl = params.get("search");
+  const fromSession = (() => {
+    try {
+      return sessionStorage.getItem(GRID_SEARCH_KEY);
+    } catch (_) {
+      return null;
+    }
+  })();
+  const term = fromUrl ?? fromSession ?? "";
+  if (!term) return;
+  filterGrid(term);
+  toggleClearButton(term);
+  searchButton?.classList.add("search--active");
+  if (searchContent) searchContent.innerHTML = term;
+  if (searchInput) searchInput.value = term;
+  if (fromUrl) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("search");
+    window.history.replaceState({}, "", url);
+  }
 };
 
 /* 點擊專案卡片時，帶上 from_search 或 from=latest，讓專案頁 BACK 可回到篩選結果 */
 const handleGridCardClick = (e) => {
-	const link = e.target.closest("a[href^='/projects/']");
-	if (!link) return;
-	const term = (searchContent?.textContent?.trim() !== searchContentOriginal?.trim())
-		? (searchContent?.textContent?.trim() ?? "")
-		: "";
-	const viewMode = (() => { try { return sessionStorage.getItem(GRID_VIEW_MODE_KEY); } catch (_) { return null; } })();
-	if (term) {
-		e.preventDefault();
-		const url = new URL(link.href);
-		url.searchParams.set("from_search", term);
-		window.location.href = url.toString();
-	} else if (viewMode === "latest") {
-		e.preventDefault();
-		const url = new URL(link.href);
-		url.searchParams.set("from", "latest");
-		window.location.href = url.toString();
-	}
+  const link = e.target.closest("a[href^='/projects/']");
+  if (!link) return;
+  const term =
+    searchContent?.textContent?.trim() !== searchContentOriginal?.trim()
+      ? (searchContent?.textContent?.trim() ?? "")
+      : "";
+  const viewMode = (() => {
+    try {
+      return sessionStorage.getItem(GRID_VIEW_MODE_KEY);
+    } catch (_) {
+      return null;
+    }
+  })();
+  if (term) {
+    e.preventDefault();
+    const url = new URL(link.href);
+    url.searchParams.set("from_search", term);
+    window.location.href = url.toString();
+  } else if (viewMode === "latest") {
+    e.preventDefault();
+    const url = new URL(link.href);
+    url.searchParams.set("from", "latest");
+    window.location.href = url.toString();
+  }
 };
 
 /* Initialize event listeners and states */
 const init = () => {
-	initializeVariables();
-	shuffleButton?.addEventListener("click", handleShuffleClick);
-	sortButton?.addEventListener("click", handleSortClick);
-	searchButton?.addEventListener("click", handleSearchClick);
-	closeDialog?.addEventListener("click", handleCloseClick);
-	searchOverlay?.addEventListener("click", handleCloseClick);
-	searchClearButton?.addEventListener("click", handleSearchClearClick);
-	searchInput?.addEventListener("input", handleSearchInput);
-	searchDialog?.addEventListener("close", () => {
-		toggleDialogPageBlur(false);
-		// 關閉對話框後重新套用篩選，避免 form 或瀏覽器行為導致狀態不同步
-		// 以工具列顯示的搜尋文字為準（searchContent），因關閉 dialog 時 input 可能被 form reset 清空
-		// skipAnimation: 僅同步狀態，不觸發圖卡上飄動畫
-		const toolbarTerm = (searchContent?.textContent?.trim() !== searchContentOriginal?.trim())
-			? (searchContent?.textContent?.trim() ?? "")
-			: (searchInput?.value ?? "");
-		// 同步 input 與工具列，避免兩者不一致
-		if (searchInput && toolbarTerm !== searchInput.value) searchInput.value = toolbarTerm;
-		filterGrid(toolbarTerm, { skipAnimation: true });
-	});
-	loadMoreBtn?.addEventListener("click", loadMore);
-	gridContainer?.addEventListener("click", handleGridCardClick);
-	const hadFromLatest = new URLSearchParams(window.location.search).get("from") === "latest";
-	applyViewModeFromUrl();
-	if (!hadFromLatest) applySessionOrder();
-	applyTagFromUrl();
-	applySearchFromSession();
+  initializeVariables();
+  shuffleButton?.addEventListener("click", handleShuffleClick);
+  sortButton?.addEventListener("click", handleSortClick);
+  searchButton?.addEventListener("click", handleSearchClick);
+  closeDialog?.addEventListener("click", handleCloseClick);
+  searchOverlay?.addEventListener("click", handleCloseClick);
+  searchClearButton?.addEventListener("click", handleSearchClearClick);
+  searchInput?.addEventListener("input", handleSearchInput);
+  searchDialog?.addEventListener("close", () => {
+    toggleDialogPageBlur(false);
+    // 關閉對話框後重新套用篩選，避免 form 或瀏覽器行為導致狀態不同步
+    // 以工具列顯示的搜尋文字為準（searchContent），因關閉 dialog 時 input 可能被 form reset 清空
+    // skipAnimation: 僅同步狀態，不觸發圖卡上飄動畫
+    const toolbarTerm =
+      searchContent?.textContent?.trim() !== searchContentOriginal?.trim()
+        ? (searchContent?.textContent?.trim() ?? "")
+        : (searchInput?.value ?? "");
+    // 同步 input 與工具列，避免兩者不一致
+    if (searchInput && toolbarTerm !== searchInput.value)
+      searchInput.value = toolbarTerm;
+    filterGrid(toolbarTerm, { skipAnimation: true });
+  });
+  loadMoreBtn?.addEventListener("click", loadMore);
+  gridContainer?.addEventListener("click", handleGridCardClick);
+  const hadFromLatest =
+    new URLSearchParams(window.location.search).get("from") === "latest";
+  applyViewModeFromUrl();
+  if (!hadFromLatest) applySessionOrder();
+  applyTagFromUrl();
+  applySearchFromSession();
 };
 
 /* Cleanup event listeners and reset variables */
@@ -509,5 +533,5 @@ const handlePageEvent = (type) => {
 // Listen for Astro's lifecycle events
 document.addEventListener("astro:page-load", () => handlePageEvent("load"));
 document.addEventListener("astro:before-swap", () =>
-  handlePageEvent("before-swap")
+  handlePageEvent("before-swap"),
 );

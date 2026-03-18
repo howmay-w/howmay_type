@@ -18,6 +18,7 @@ app = "howmay-type-bot"
   processes = ["app"]
 
 [[vm]]
-  memory = "256mb"
+  # 圖片壓縮（sharp）+ git push 會嘗試分配約 1GB，需 2GB 才有餘裕
+  memory = "2gb"
   cpu_kind = "shared"
   cpus = 1

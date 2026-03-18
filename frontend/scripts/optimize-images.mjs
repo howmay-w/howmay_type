@@ -61,7 +61,9 @@ async function processImage(filePath) {
   }
 
   try {
-    await sharp(filePath)
+    // 限制解碼像素數，避免大圖在 Fly 等低記憶體環境 OOM（約 9MP 以內）
+    const limitInputPixels = 3000 * 3000;
+    await sharp(filePath, { limitInputPixels })
       .resize({ width: maxSize, height: maxSize, fit: "inside", withoutEnlargement: true })
       .webp({ quality: WEBP_QUALITY })
       .toFile(outPath);

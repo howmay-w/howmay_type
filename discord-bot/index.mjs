@@ -36,13 +36,14 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_PUSH_DIRECT = process.env.GITHUB_PUSH_DIRECT === "true" || process.env.GITHUB_PUSH_DIRECT === "1";
 
 if (!DISCORD_BOT_TOKEN) {
-  console.error("請設定環境變數 DISCORD_BOT_TOKEN（在 Discord 開發者後台 Bot 頁面取得）");
+  console.error("[啟動失敗] 請設定環境變數 DISCORD_BOT_TOKEN（在 Discord 開發者後台 Bot 頁面取得）");
   process.exit(1);
 }
 if (!DISCORD_CHANNEL_ID) {
-  console.error("請設定環境變數 DISCORD_CHANNEL_ID（要監聽的頻道 ID）");
+  console.error("[啟動失敗] 請設定環境變數 DISCORD_CHANNEL_ID（要監聽的頻道 ID）");
   process.exit(1);
 }
+console.log("[Discord Bot] 環境變數檢查通過，正在連線 Discord…");
 
 // 雲端平台健康檢查（Fly.io、Railway 等會設 PORT）
 const PORT = process.env.PORT;
@@ -103,48 +104,78 @@ function runOptimizeImages() {
   return new Promise((resolve, reject) => {
     const child = spawn("pnpm", ["--filter", "frontend", "run", "optimize-images"], {
       cwd: REPO_ROOT,
-      stdio: "inherit",
+      stdio: ["pipe", "pipe", "pipe"],
       shell: true,
     });
-    child.on("error", reject);
-    child.on("close", (code) => (code === 0 ? resolve() : reject(new Error(`optimize-images 結束碼 ${code}`))));
+    let stdout = "";
+    let stderr = "";
+    child.stdout?.on("data", (d) => { stdout += d; });
+    child.stderr?.on("data", (d) => { stderr += d; });
+    child.on("error", (err) => reject(new Error(`optimize-images 執行錯誤: ${err.message}`)));
+    child.on("close", (code) => {
+      if (code === 0) return resolve();
+      const detail = [stderr, stdout].filter(Boolean).join("\n").trim().slice(0, 800);
+      reject(new Error(`圖片壓縮失敗 (結束碼 ${code})${detail ? `\n\`\`\`\n${detail}\`\`\`` : ""}`));
+    });
   });
 }
 
-/** 直接 push 到目前分支（不開新分支、不開 PR）。成功回傳 true。 */
-function pushDirectToCurrentBranch(title, slug) {
+/** 直接 push 到目前分支（不開新分支、不開 PR）。回傳 { ok, error? }。commitMsg 可選。 */
+function pushDirectToCurrentBranch(title, slug, commitMsg) {
   const projectPath = `frontend/src/content/projects/${slug}`;
   const remote = execSync("git config --get remote.origin.url", { cwd: REPO_ROOT, encoding: "utf8" }).trim();
   const match = remote.match(/github\.com[:/]([\w.-]+\/[\w.-]+?)(?:\.git)?$/);
   const repo = match ? match[1].replace(/\.git$/, "") : null;
-  if (!repo || !GITHUB_TOKEN) return false;
+  if (!repo || !GITHUB_TOKEN) return { ok: false, error: "缺少 repo 或 GITHUB_TOKEN" };
   let currentBranch;
   try {
     currentBranch = execSync("git rev-parse --abbrev-ref HEAD", { cwd: REPO_ROOT, encoding: "utf8" }).trim();
   } catch {
-    return false;
+    return { ok: false, error: "無法取得目前分支" };
   }
+  const message = commitMsg || `feat: 新增作品「${title}」`;
   const originUrl = remote;
   const authUrl = `https://x-access-token:${GITHUB_TOKEN}@github.com/${repo}.git`;
   try {
     execSync(`git remote set-url origin ${authUrl}`, { cwd: REPO_ROOT });
     execSync(`git add "${projectPath}"`, { cwd: REPO_ROOT });
-    const commitResult = spawnSync("git", ["commit", "-m", `feat: 新增作品「${title}」`], {
-      cwd: REPO_ROOT,
-      encoding: "utf8",
-    });
-    if (commitResult.status !== 0) return false;
-    execSync(`git push origin ${currentBranch}`, { cwd: REPO_ROOT });
-    return true;
-  } catch {
-    return false;
+    // 容器環境常未設定 user.name/email，改用 -c 避免 commit 直接失敗
+    const commitResult = spawnSync(
+      "git",
+      [
+        "-c",
+        "user.name=howmay-type-bot",
+        "-c",
+        "user.email=howmay-type-bot@users.noreply.github.com",
+        "commit",
+        "-m",
+        message,
+      ],
+      {
+        cwd: REPO_ROOT,
+        encoding: "utf8",
+      }
+    );
+    if (commitResult.status !== 0) {
+      const detail = (commitResult.stderr || commitResult.stdout || "git commit 失敗").trim().slice(0, 400);
+      return { ok: false, error: detail };
+    }
+    // 限制 pack 記憶體，避免 push 時 OOM（1048576000 bytes）
+    execSync(
+      `git -c pack.windowMemory=128m -c pack.deltaCacheSize=128m push origin ${currentBranch}`,
+      { cwd: REPO_ROOT }
+    );
+    return { ok: true };
+  } catch (e) {
+    const msg = (e?.message || String(e)).trim().slice(0, 400);
+    return { ok: false, error: msg };
   } finally {
     execSync(`git remote set-url origin ${originUrl}`, { cwd: REPO_ROOT });
   }
 }
 
-/** 開新分支、push、用 API 開 PR。回傳 { prUrl, manualPrUrl }，失敗時 prUrl 為 null、manualPrUrl 為手動開 PR 連結。 */
-async function createPrAndReply(title, slug) {
+/** 開新分支、push、用 API 開 PR。回傳 { prUrl, manualPrUrl }。commitMsg 可選。 */
+async function createPrAndReply(title, slug, commitMsg) {
   const projectPath = `frontend/src/content/projects/${slug}`;
   const remote = execSync("git config --get remote.origin.url", { cwd: REPO_ROOT, encoding: "utf8" }).trim();
   const match = remote.match(/github\.com[:/]([\w.-]+\/[\w.-]+?)(?:\.git)?$/);
@@ -158,18 +189,34 @@ async function createPrAndReply(title, slug) {
   }
   const branchName = `feat/discord-${slug}-${Date.now().toString(36)}`;
   const manualPrUrl = `https://github.com/${repo}/pull/new/${encodeURIComponent(branchName)}`;
+  const message = commitMsg || `feat: 新增作品「${title}」`;
   const originUrl = remote;
   const authUrl = `https://x-access-token:${GITHUB_TOKEN}@github.com/${repo}.git`;
   try {
     execSync(`git remote set-url origin ${authUrl}`, { cwd: REPO_ROOT });
     execSync(`git checkout -b ${branchName}`, { cwd: REPO_ROOT });
     execSync(`git add "${projectPath}"`, { cwd: REPO_ROOT });
-    const commitResult = spawnSync("git", ["commit", "-m", `feat: 新增作品「${title}」`], {
-      cwd: REPO_ROOT,
-      encoding: "utf8",
-    });
+    const commitResult = spawnSync(
+      "git",
+      [
+        "-c",
+        "user.name=howmay-type-bot",
+        "-c",
+        "user.email=howmay-type-bot@users.noreply.github.com",
+        "commit",
+        "-m",
+        message,
+      ],
+      {
+        cwd: REPO_ROOT,
+        encoding: "utf8",
+      }
+    );
     if (commitResult.status !== 0) throw new Error(commitResult.stderr || commitResult.stdout || "git commit 失敗");
-    execSync(`git push -u origin ${branchName}`, { cwd: REPO_ROOT });
+    execSync(
+      `git -c pack.windowMemory=128m -c pack.deltaCacheSize=128m push -u origin ${branchName}`,
+      { cwd: REPO_ROOT }
+    );
   } finally {
     execSync(`git checkout ${currentBranch}`, { cwd: REPO_ROOT });
     execSync(`git remote set-url origin ${originUrl}`, { cwd: REPO_ROOT });
@@ -205,8 +252,10 @@ function runCreateProject(payload) {
     child.stderr.on("data", (d) => { stderr += d; });
     child.on("error", reject);
     child.on("close", (code) => {
-      if (code === 0) resolve({ stdout, stderr });
-      else reject(new Error(`腳本結束碼 ${code}\n${stderr || stdout}`));
+      if (code !== 0) return reject(new Error(`腳本結束碼 ${code}\n${stderr || stdout}`));
+      const statusMatch = stdout.match(/STATUS:\s*(created|overwritten|updated)/);
+      const status = statusMatch ? statusMatch[1] : "created";
+      resolve({ stdout, stderr, status });
     });
     child.stdin.write(JSON.stringify(payload), "utf8", () => {
       child.stdin.end();
@@ -240,11 +289,15 @@ client.on(Events.ClientReady, async () => {
       .setName("新作品")
       .setDescription("填寫標題、標籤、內文後，再發一則帶圖/影片的訊息即可建立專案")
       .toJSON(),
+    new SlashCommandBuilder()
+      .setName("修改作品")
+      .setDescription("僅更新現有專案的內文／描述／標籤，不重新上傳圖片")
+      .toJSON(),
   ];
   try {
     if (DISCORD_GUILD_ID) {
       await rest.put(Routes.applicationGuildCommands(appId, DISCORD_GUILD_ID), { body: commands });
-      console.log("已註冊 Slash Command：/新作品（僅此伺服器，會立即出現）");
+      console.log("已註冊 Slash Command：/新作品、/修改作品（僅此伺服器，會立即出現）");
     } else {
       await rest.put(Routes.applicationCommands(appId), { body: commands });
       console.log("已註冊 Slash Command：/新作品（全球指令，最多約 1 小時後才會出現）");
@@ -344,24 +397,29 @@ client.on("messageCreate", async (message) => {
       images: images.map((a) => ({ url: a.url, alt: a.name || undefined })),
       videos: videos.map((a) => ({ url: a.url })),
       hoverVideoIndex: 0,
+      overwrite: true,
     };
     const reply = await message.reply("正在建立專案…").catch(() => null);
     const update = (text) => reply?.edit(text).catch(() => {});
     try {
-      await runCreateProject(payload);
-      await update(`✅ 已建立專案：\`${pending.title}\`\n正在優化圖片…`);
+      const { status } = await runCreateProject(payload);
+      const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
+      await update(`✅ ${statusLabel}：\`${pending.title}\`\n正在優化圖片…`);
       await runOptimizeImages();
-      let resultMsg = `✅ 已建立專案：\`${pending.title}\`，已執行 \`optimize-images\``;
+      let resultMsg = `✅ ${statusLabel}：\`${pending.title}\`，已執行 \`optimize-images\``;
       if (GITHUB_TOKEN) {
         const slug = slugify(pending.title);
+        const commitMsg = status === "overwritten" ? `feat: 覆寫作品「${pending.title}」` : `feat: 新增作品「${pending.title}」`;
         if (GITHUB_PUSH_DIRECT) {
           await update(`${resultMsg}\n正在 push…`);
-          const ok = pushDirectToCurrentBranch(pending.title, slug);
-          resultMsg += ok ? "\n已 **push** 到目前分支，部署會自動進行。" : "\n（push 失敗，請手動 push）";
+          const { ok, error } = pushDirectToCurrentBranch(pending.title, slug, commitMsg);
+          resultMsg += ok
+            ? "\n已 **push** 到目前分支，部署會自動進行。"
+            : `\n（push 失敗：${(error || "未知原因").slice(0, 180)}）`;
         } else {
           await update(`${resultMsg}\n正在開 PR…`);
           try {
-            const { prUrl, manualPrUrl } = await createPrAndReply(pending.title, slug);
+            const { prUrl, manualPrUrl } = await createPrAndReply(pending.title, slug, commitMsg);
             resultMsg += prUrl
               ? `\n**PR：** ${prUrl}`
               : manualPrUrl
@@ -378,7 +436,11 @@ client.on("messageCreate", async (message) => {
       await update(resultMsg);
     } catch (err) {
       console.error(err);
-      await update(`❌ 建立失敗：${err.message}`);
+      const hint =
+        /圖片壓縮|optimize-images|sharp/.test(err.message)
+          ? "\n\n💡 若為圖片壓縮失敗，可在**本地**於專案根目錄執行 `pnpm optimize-images` 後再 push。"
+          : "";
+      await update(`❌ 建立失敗：${err.message}${hint}`);
     }
     return;
   }
@@ -407,26 +469,31 @@ client.on("messageCreate", async (message) => {
     images: images.map((a) => ({ url: a.url, alt: a.name || undefined })),
     videos: videos.map((a) => ({ url: a.url })),
     hoverVideoIndex: 0,
+    overwrite: true,
   };
 
   const reply = await message.reply("正在建立專案…").catch(() => null);
   const update = (text) => reply?.edit(text).catch(() => {});
 
   try {
-    await runCreateProject(payload);
-    await update(`✅ 已建立專案：\`${title}\`\n正在優化圖片…`);
+    const { status } = await runCreateProject(payload);
+    const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
+    await update(`✅ ${statusLabel}：\`${title}\`\n正在優化圖片…`);
     await runOptimizeImages();
-    let resultMsg = `✅ 已建立專案：\`${title}\`，已執行 \`optimize-images\``;
+    let resultMsg = `✅ ${statusLabel}：\`${title}\`，已執行 \`optimize-images\``;
     if (GITHUB_TOKEN) {
       const slug = slugify(title);
+      const commitMsg = status === "overwritten" ? `feat: 覆寫作品「${title}」` : `feat: 新增作品「${title}」`;
       if (GITHUB_PUSH_DIRECT) {
         await update(`${resultMsg}\n正在 push…`);
-        const ok = pushDirectToCurrentBranch(title, slug);
-        resultMsg += ok ? "\n已 **push** 到目前分支，部署會自動進行。" : "\n（push 失敗，請手動 push）";
+        const { ok, error } = pushDirectToCurrentBranch(title, slug, commitMsg);
+        resultMsg += ok
+          ? "\n已 **push** 到目前分支，部署會自動進行。"
+          : `\n（push 失敗：${(error || "未知原因").slice(0, 180)}）`;
       } else {
         await update(`${resultMsg}\n正在開 PR…`);
         try {
-          const { prUrl, manualPrUrl } = await createPrAndReply(title, slug);
+          const { prUrl, manualPrUrl } = await createPrAndReply(title, slug, commitMsg);
           resultMsg += prUrl
             ? `\n**PR：** ${prUrl}`
             : manualPrUrl
@@ -443,11 +510,114 @@ client.on("messageCreate", async (message) => {
     await update(resultMsg);
   } catch (err) {
     console.error(err);
-    await update(`❌ 建立失敗：${err.message}`);
+    const hint =
+      /圖片壓縮|optimize-images|sharp/.test(err.message)
+        ? "\n\n💡 若為圖片壓縮失敗，可在**本地**於專案根目錄執行 `pnpm optimize-images` 後再 push。"
+        : "";
+    await update(`❌ 建立失敗：${err.message}${hint}`);
+  }
+});
+
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (interaction.isChatInputCommand() && interaction.commandName === "修改作品") {
+    const modal = new ModalBuilder()
+      .setCustomId("edit_project_modal")
+      .setTitle("修改作品內文")
+      .addComponents(
+        new ActionRowBuilder().addComponents(
+          new TextInputBuilder()
+            .setCustomId("title")
+            .setLabel("作品標題（與現有專案一致）")
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder("用來對應要修改的專案")
+            .setRequired(true)
+            .setMaxLength(256)
+        ),
+        new ActionRowBuilder().addComponents(
+          new TextInputBuilder()
+            .setCustomId("body")
+            .setLabel("內文（Markdown）")
+            .setStyle(TextInputStyle.Paragraph)
+            .setPlaceholder("新的內文，會完整取代原內文")
+            .setRequired(true)
+            .setMaxLength(4000)
+        ),
+        new ActionRowBuilder().addComponents(
+          new TextInputBuilder()
+            .setCustomId("description")
+            .setLabel("描述（選填，留空不改）")
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder("一句話描述")
+            .setRequired(false)
+            .setMaxLength(256)
+        ),
+        new ActionRowBuilder().addComponents(
+          new TextInputBuilder()
+            .setCustomId("tags")
+            .setLabel("標籤（選填，留空不改，逗號分隔）")
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder("tag1, tag2")
+            .setRequired(false)
+            .setMaxLength(256)
+        )
+      );
+    await interaction.showModal(modal);
+    return;
+  }
+
+  if (interaction.isModalSubmit() && interaction.customId === "edit_project_modal") {
+    const title = interaction.fields.getTextInputValue("title").trim() || "";
+    const body = interaction.fields.getTextInputValue("body").trim() || "";
+    const descriptionRaw = interaction.fields.getTextInputValue("description")?.trim() || "";
+    const tagsRaw = interaction.fields.getTextInputValue("tags")?.trim() || "";
+    if (!title) {
+      await interaction.reply({ content: "請填寫作品標題以對應專案。", ephemeral: true }).catch(() => {});
+      return;
+    }
+    const slug = slugify(title);
+    const payload = {
+      onlyUpdateBody: true,
+      slug,
+      title,
+      body,
+      ...(descriptionRaw && { description: descriptionRaw }),
+      ...(tagsRaw && { tags: parseTags(tagsRaw) }),
+    };
+    await interaction.deferReply({ ephemeral: true }).catch(() => {});
+    const editReply = (text) => interaction.editReply(text).catch(() => {});
+    try {
+      const { status } = await runCreateProject(payload);
+      if (status !== "updated") {
+        await editReply(`❌ 無法更新（請確認標題與現有專案一致）：\`${title}\``);
+        return;
+      }
+      let resultMsg = `✅ 已更新專案內文：\`${title}\``;
+      if (GITHUB_TOKEN) {
+        const commitMsg = `docs: 更新作品「${title}」內文`;
+        if (GITHUB_PUSH_DIRECT) {
+          await editReply(`${resultMsg}\n正在 push…`);
+          const { ok, error } = pushDirectToCurrentBranch(title, slug, commitMsg);
+          resultMsg += ok ? "\n已 **push** 到目前分支。" : `\n（push 失敗：${(error || "").slice(0, 120)}）`;
+        } else {
+          await editReply(`${resultMsg}\n正在開 PR…`);
+          try {
+            const { prUrl, manualPrUrl } = await createPrAndReply(title, slug, commitMsg);
+            resultMsg += prUrl ? `\n**PR：** ${prUrl}` : manualPrUrl ? `\n**手動開 PR：** ${manualPrUrl}` : "\n（開 PR 失敗）";
+          } catch (e) {
+            resultMsg += "\n（開 PR 失敗）";
+          }
+        }
+      }
+      await editReply(resultMsg);
+    } catch (err) {
+      console.error(err);
+      await editReply(`❌ 更新失敗：${err.message}`).catch(() => {});
+    }
+    return;
   }
 });
 
 client.login(DISCORD_BOT_TOKEN).catch((err) => {
-  console.error("登入失敗：", err.message);
+  console.error("[啟動失敗] 登入 Discord 失敗：", err.message);
   process.exit(1);
 });
