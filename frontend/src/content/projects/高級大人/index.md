@@ -20,7 +20,7 @@ video:
 hoverVideo:
   src: "/projects/高級大人/video_0.mp4"
 pubDate: 2026-02-19
-tags: ["👶"]
+tags: ["金屬", "手繪特效", "3D", "👶"]
 ---
 
 Lv26 初級大人的幾日過年行程：

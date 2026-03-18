@@ -28,7 +28,7 @@ video:
 hoverVideo:
   src: "/projects/尷尬/video_0.mp4"
 pubDate: 2023-10-25
-tags: ["awkward","😬"]
+tags: ["awkward", "執事排", "3D", "😬"]
 ---
 
 尷尬好像是種很社會化的情緒ㄋ，\

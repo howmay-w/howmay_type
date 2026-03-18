@@ -24,7 +24,7 @@ video:
 hoverVideo:
   src: "/projects/諧/video_0.mp4"
 pubDate: 2022-10-06
-tags: ["homophonie","metallic","3dtype","balloontype","🎈"]
+tags: ["homophonie", "metallic", "balloon", "手繪特效", "3D", "🎈"]
 ---
 
 挑戰用 procreate 製造假 3D，\

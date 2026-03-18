@@ -20,7 +20,7 @@ video:
 hoverVideo:
   src: "/projects/期中地獄/video_0.mp4"
 pubDate: 2022-11-02
-tags: ["期末地獄","hell","點字","😵"]
+tags: ["期末地獄", "hell", "點字", "特效", "3D", "😵"]
 ---
 
 期中還沒走，期末就要來ㄌ。\

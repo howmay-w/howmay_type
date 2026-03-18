@@ -16,7 +16,7 @@ video:
 hoverVideo:
   src: "/projects/沒幹嘛/video_0.mp4"
 pubDate: 2023-04-29
-tags: ["nothing","🫤"]
+tags: ["nothing", "3D", "🫤"]
 ---
 
 就沒幹嘛，試試看以拉的 3D 效果。

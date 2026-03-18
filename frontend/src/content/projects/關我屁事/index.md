@@ -14,7 +14,7 @@ video:
 hoverVideo:
   src: "/projects/關我屁事/video_0.mp4"
 pubDate: 2022-09-24
-tags: ["noneofmybusiness","😇"]
+tags: ["noneofmybusiness", "金屬", "特效", "3D", "😇"]
 ---
 
 突如其來ㄉ特效，有影片ㄛ！

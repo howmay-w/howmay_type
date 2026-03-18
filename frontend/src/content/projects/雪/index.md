@@ -24,7 +24,7 @@ video:
 hoverVideo:
   src: "/projects/雪/video_0.mp4"
 pubDate: 2023-03-02
-tags: ["snow","ゆき","☃️"]
+tags: ["snow", "ゆき", "特效", "☃️"]
 ---
 
 貼文發出來的時候，我應該已經在北海道、\

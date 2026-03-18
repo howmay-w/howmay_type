@@ -29,7 +29,7 @@ videos:
 hoverVideo:
   src: "/projects/花/video_0.mp4"
 pubDate: 2023-03-16
-tags: ["flower","はな","🌷"]
+tags: ["flower", "はな", "手繪特效", "3D", "🌷"]
 ---
 
 今天洗澡時突然想試試看，\

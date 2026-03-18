@@ -16,7 +16,17 @@ video:
 hoverVideo:
   src: "/projects/應援/video_0.mp4"
 pubDate: 2026-03-02
-tags: ["whatzurtype", "字字字設計串連", "字戀小聚", "Support", "加油", "🏅"]
+tags:
+  [
+    "whatzurtype",
+    "字字字設計串連",
+    "字戀小聚",
+    "Support",
+    "加油",
+    "特效",
+    "3D",
+    "🏅",
+  ]
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是加油主題，就以明天的字戀小聚標題投稿⋯！這次嘗試先畫字（參考 2025 職棒各隊主視覺），再用 Adobe Firefly 速成金屬效果再修圖改色，看起來應該很有一回事？

@@ -24,7 +24,17 @@ video:
 hoverVideo:
   src: "/projects/兔年即貓年/video_0.mp4"
 pubDate: 2023-01-21
-tags: ["yearoftherabbit","yearofthecat","whatzurtype","字字字設計串連","🐇🐈"]
+tags:
+  [
+    "yearoftherabbit",
+    "yearofthecat",
+    "whatzurtype",
+    "字字字設計串連",
+    "特效",
+    "3D",
+    "🐇",
+    "🐈",
+  ]
 ---
 
 冷知識：越南的兔年是貓年ㄛ！\
@@ -33,8 +43,7 @@ tags: ["yearoftherabbit","yearofthecat","whatzurtype","字字字設計串連","�
 
 Ai的新3D可以即時調整不會卡卡，好猛（第三張有轉動效果）
 
-
-[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype)  [@justfont](https://www.instagram.com/justfont/)
+[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) [@justfont](https://www.instagram.com/justfont/)
 
 ---
 
