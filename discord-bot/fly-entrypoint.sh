@@ -11,4 +11,6 @@ if [ -n "$GITHUB_TOKEN" ]; then
   fi
   git pull origin main 2>/dev/null || true
 fi
+# 映像內可能帶入本機 .git 的超大 http.postBuffer（例如 1GB），push 會一次 malloc 同尺寸 → 512MB VM OOM
+git config http.postBuffer 52428800 2>/dev/null || true
 exec node discord-bot/index.mjs
