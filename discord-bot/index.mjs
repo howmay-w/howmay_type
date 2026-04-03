@@ -122,6 +122,42 @@ function runOptimizeImages() {
   });
 }
 
+const GIT_PACK_MEM = "-c pack.windowMemory=128m -c pack.deltaCacheSize=128m";
+
+/** 與 origin 同步。需在「工作區乾淨」時呼叫（例如 commit 後再 push 前），或建立專案檔之前。 */
+function pullRebaseOrigin(branch) {
+  execSync(`git ${GIT_PACK_MEM} pull --rebase origin ${branch}`, { cwd: REPO_ROOT });
+}
+
+/**
+ * 在寫入專案檔之前與 origin 對齊（Fly 容器專用）。
+ * 使用 fetch + reset --hard，避免 stash 與 node_modules 衝突；會丟棄本機未 push 的 commit 與已追蹤變更。
+ */
+function syncOriginBeforeLocalChanges() {
+  const remote = execSync("git config --get remote.origin.url", { cwd: REPO_ROOT, encoding: "utf8" }).trim();
+  const match = remote.match(/github\.com[:/]([\w.-]+\/[\w.-]+?)(?:\.git)?$/);
+  const repo = match ? match[1].replace(/\.git$/, "") : null;
+  if (!repo || !GITHUB_TOKEN) return { ok: true };
+  let branch;
+  try {
+    branch = execSync("git rev-parse --abbrev-ref HEAD", { cwd: REPO_ROOT, encoding: "utf8" }).trim();
+  } catch {
+    return { ok: false, error: "無法取得目前分支" };
+  }
+  const originUrl = remote;
+  const authUrl = `https://x-access-token:${GITHUB_TOKEN}@github.com/${repo}.git`;
+  try {
+    execSync(`git remote set-url origin ${authUrl}`, { cwd: REPO_ROOT });
+    execSync(`git ${GIT_PACK_MEM} fetch origin`, { cwd: REPO_ROOT });
+    execSync(`git reset --hard origin/${branch}`, { cwd: REPO_ROOT });
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e?.message || String(e)).trim().slice(0, 400) };
+  } finally {
+    execSync(`git remote set-url origin ${originUrl}`, { cwd: REPO_ROOT });
+  }
+}
+
 /** 直接 push 到目前分支（不開新分支、不開 PR）。回傳 { ok, error? }。commitMsg 可選。 */
 function pushDirectToCurrentBranch(title, slug, commitMsg) {
   const projectPath = `frontend/src/content/projects/${slug}`;
@@ -162,11 +198,8 @@ function pushDirectToCurrentBranch(title, slug, commitMsg) {
       const detail = (commitResult.stderr || commitResult.stdout || "git commit 失敗").trim().slice(0, 400);
       return { ok: false, error: detail };
     }
-    // 限制 pack 記憶體，避免 push 時 OOM（1048576000 bytes）
-    execSync(
-      `git -c pack.windowMemory=128m -c pack.deltaCacheSize=128m push origin ${currentBranch}`,
-      { cwd: REPO_ROOT }
-    );
+    pullRebaseOrigin(currentBranch);
+    execSync(`git ${GIT_PACK_MEM} push origin ${currentBranch}`, { cwd: REPO_ROOT });
     return { ok: true };
   } catch (e) {
     const msg = (e?.message || String(e)).trim().slice(0, 400);
@@ -215,10 +248,9 @@ async function createPrAndReply(title, slug, commitMsg) {
       }
     );
     if (commitResult.status !== 0) throw new Error(commitResult.stderr || commitResult.stdout || "git commit 失敗");
-    execSync(
-      `git -c pack.windowMemory=128m -c pack.deltaCacheSize=128m push -u origin ${branchName}`,
-      { cwd: REPO_ROOT }
-    );
+    execSync(`git ${GIT_PACK_MEM} fetch origin`, { cwd: REPO_ROOT });
+    execSync(`git ${GIT_PACK_MEM} rebase origin/${currentBranch}`, { cwd: REPO_ROOT });
+    execSync(`git ${GIT_PACK_MEM} push -u origin ${branchName}`, { cwd: REPO_ROOT });
   } finally {
     execSync(`git checkout ${currentBranch}`, { cwd: REPO_ROOT });
     execSync(`git remote set-url origin ${originUrl}`, { cwd: REPO_ROOT });
@@ -404,6 +436,13 @@ client.on("messageCreate", async (message) => {
     const reply = await message.reply("正在建立專案…").catch(() => null);
     const update = (text) => reply?.edit(text).catch(() => {});
     try {
+      if (GITHUB_TOKEN) {
+        const sync = syncOriginBeforeLocalChanges();
+        if (!sync.ok) {
+          await update(`❌ 無法與 GitHub 同步：${sync.error}`);
+          return;
+        }
+      }
       const { status } = await runCreateProject(payload);
       const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
       if (SKIP_OPTIMIZE_IMAGES) {
@@ -484,6 +523,13 @@ client.on("messageCreate", async (message) => {
   const update = (text) => reply?.edit(text).catch(() => {});
 
   try {
+    if (GITHUB_TOKEN) {
+      const sync = syncOriginBeforeLocalChanges();
+      if (!sync.ok) {
+        await update(`❌ 無法與 GitHub 同步：${sync.error}`);
+        return;
+      }
+    }
     const { status } = await runCreateProject(payload);
     const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
     if (SKIP_OPTIMIZE_IMAGES) {
@@ -600,6 +646,13 @@ client.on(Events.InteractionCreate, async (interaction) => {
     await interaction.deferReply({ ephemeral: true }).catch(() => {});
     const editReply = (text) => interaction.editReply(text).catch(() => {});
     try {
+      if (GITHUB_TOKEN) {
+        const sync = syncOriginBeforeLocalChanges();
+        if (!sync.ok) {
+          await editReply(`❌ 無法與 GitHub 同步：${sync.error}`);
+          return;
+        }
+      }
       const { status } = await runCreateProject(payload);
       if (status !== "updated") {
         await editReply(`❌ 無法更新（請確認標題與現有專案一致）：\`${title}\``);
