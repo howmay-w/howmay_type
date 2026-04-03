@@ -9,7 +9,7 @@ if [ -n "$GITHUB_TOKEN" ]; then
       git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}.git"
     fi
   fi
-  git pull origin main 2>/dev/null || true
+  git pull --rebase origin main 2>/dev/null || true
 fi
 # 映像內可能帶入本機 .git 的超大 http.postBuffer（例如 1GB），push 會一次 malloc 同尺寸 → 512MB VM OOM
 git config http.postBuffer 52428800 2>/dev/null || true
