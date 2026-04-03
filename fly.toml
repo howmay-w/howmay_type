@@ -8,6 +8,8 @@ app = "howmay-type-bot"
 
 [env]
   PORT = "8080"
+  # 不在 Fly 跑 sharp，改由 GitHub Actions 壓縮，可降 VM 記憶體
+  SKIP_OPTIMIZE_IMAGES = "true"
 
 [http_service]
   internal_port = 8080
@@ -18,7 +20,7 @@ app = "howmay-type-bot"
   processes = ["app"]
 
 [[vm]]
-  # 圖片壓縮（sharp）+ git push 會嘗試分配約 1GB，需 2GB 才有餘裕
-  memory = "2gb"
+  # 壓縮改由 GitHub Actions；此處僅 Bot + git push。若 push 出現 OOM，改回 1gb
+  memory = "512mb"
   cpu_kind = "shared"
   cpus = 1

@@ -34,6 +34,8 @@ const DISCORD_GUILD_ID = process.env.DISCORD_GUILD_ID;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 /** 設為 true 時直接 push 到目前分支（如 main），不開新分支與 PR */
 const GITHUB_PUSH_DIRECT = process.env.GITHUB_PUSH_DIRECT === "true" || process.env.GITHUB_PUSH_DIRECT === "1";
+/** Fly 等小記憶體環境：不在容器內跑 sharp，改由 GitHub Actions 壓縮（見 .github/workflows/optimize-images.yml） */
+const SKIP_OPTIMIZE_IMAGES = process.env.SKIP_OPTIMIZE_IMAGES === "true" || process.env.SKIP_OPTIMIZE_IMAGES === "1";
 
 if (!DISCORD_BOT_TOKEN) {
   console.error("[啟動失敗] 請設定環境變數 DISCORD_BOT_TOKEN（在 Discord 開發者後台 Bot 頁面取得）");
@@ -404,9 +406,15 @@ client.on("messageCreate", async (message) => {
     try {
       const { status } = await runCreateProject(payload);
       const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
-      await update(`✅ ${statusLabel}：\`${pending.title}\`\n正在優化圖片…`);
-      await runOptimizeImages();
-      let resultMsg = `✅ ${statusLabel}：\`${pending.title}\`，已執行 \`optimize-images\``;
+      if (SKIP_OPTIMIZE_IMAGES) {
+        await update(`✅ ${statusLabel}：\`${pending.title}\`\n正在處理 push…（圖片壓縮由 GitHub Actions 執行）`);
+      } else {
+        await update(`✅ ${statusLabel}：\`${pending.title}\`\n正在優化圖片…`);
+        await runOptimizeImages();
+      }
+      let resultMsg = SKIP_OPTIMIZE_IMAGES
+        ? `✅ ${statusLabel}：\`${pending.title}\`，已 push；GitHub Actions 將自動轉 WebP`
+        : `✅ ${statusLabel}：\`${pending.title}\`，已執行 \`optimize-images\``;
       if (GITHUB_TOKEN) {
         const slug = slugify(pending.title);
         const commitMsg = status === "overwritten" ? `feat: 覆寫作品「${pending.title}」` : `feat: 新增作品「${pending.title}」`;
@@ -478,9 +486,15 @@ client.on("messageCreate", async (message) => {
   try {
     const { status } = await runCreateProject(payload);
     const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
-    await update(`✅ ${statusLabel}：\`${title}\`\n正在優化圖片…`);
-    await runOptimizeImages();
-    let resultMsg = `✅ ${statusLabel}：\`${title}\`，已執行 \`optimize-images\``;
+    if (SKIP_OPTIMIZE_IMAGES) {
+      await update(`✅ ${statusLabel}：\`${title}\`\n正在處理 push…（圖片壓縮由 GitHub Actions 執行）`);
+    } else {
+      await update(`✅ ${statusLabel}：\`${title}\`\n正在優化圖片…`);
+      await runOptimizeImages();
+    }
+    let resultMsg = SKIP_OPTIMIZE_IMAGES
+      ? `✅ ${statusLabel}：\`${title}\`，已 push；GitHub Actions 將自動轉 WebP`
+      : `✅ ${statusLabel}：\`${title}\`，已執行 \`optimize-images\``;
     if (GITHUB_TOKEN) {
       const slug = slugify(title);
       const commitMsg = status === "overwritten" ? `feat: 覆寫作品「${title}」` : `feat: 新增作品「${title}」`;

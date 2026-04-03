@@ -33,6 +33,10 @@
 
 Discord Bot 安裝、環境變數與使用方式見 **[discord-bot/README.md](discord-bot/README.md)**。
 
+### 圖片壓縮（GitHub Actions）
+
+若 Bot 部署在 Fly 等環境並設定 **`SKIP_OPTIMIZE_IMAGES=true`**，投稿後會先 push 原始圖，再由 **[.github/workflows/optimize-images.yml](.github/workflows/optimize-images.yml)** 在 `main` 上自動執行 `pnpm optimize-images` 並提交 WebP（無須開本機）。
+
 ---
 
 ## 致謝 / Credits

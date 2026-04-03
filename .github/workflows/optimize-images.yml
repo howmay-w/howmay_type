@@ -1,0 +1,54 @@
+# Discord Bot 在 Fly 上略過本機壓縮時，由 CI 自動將 projects 內圖片轉 WebP
+name: Optimize project images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "frontend/src/content/projects/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: optimize-images-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run optimize-images
+        run: pnpm run optimize-images
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontend/src/content/projects
+          if git diff --staged --quiet; then
+            echo "No changes from optimize-images"
+            exit 0
+          fi
+          git commit -m "chore(ci): optimize project images"
+          git push

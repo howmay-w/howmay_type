@@ -65,7 +65,11 @@ pnpm start
 
 在該頻道發一則訊息，第一行當標題、下面寫內文，並附上圖片或影片；Bot 會依內文與附件建立專案（同上，第一段當 description，標籤含 #whatzurtype 會加投稿資訊）。
 
-**自動化**：建立專案後 Bot 會自動執行 `pnpm optimize-images`。若在 `.env` 設定 **GITHUB_TOKEN**（GitHub Personal access token，權限勾選 `repo`），會再自動 commit、push 新分支並**開 PR**，你只要到 GitHub 合併即可部署。
+**自動化與圖片壓縮**：
+
+- 若在 `.env` 設定 **GITHUB_TOKEN**（權限勾選 `repo`），建立專案後會自動 commit、push（依 `GITHUB_PUSH_DIRECT` 決定直推 main 或開 PR）。
+- **Fly 等小記憶體環境**：建議設 **`SKIP_OPTIMIZE_IMAGES=true`**（與根目錄 `fly.toml` 一致），Bot **不**在容器內跑 `optimize-images`，改由 **[GitHub Actions](../.github/workflows/optimize-images.yml)** 在 push 到 `main` 後自動壓縮 `frontend/src/content/projects/` 內圖片並再 commit；可省 Fly VM 記憶體與費用。
+- **本機開發**：不設 `SKIP_OPTIMIZE_IMAGES`（或設為 false）時，行為與以往相同，建立專案後會在本地執行 `pnpm optimize-images`。
 
 **24/7 雲端運行**：若希望 Bot 不需開著電腦也能隨時運作，可部署到 Fly.io 或 Railway，見 [docs/discord-bot-deploy.md](../docs/discord-bot-deploy.md)。
 

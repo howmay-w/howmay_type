@@ -60,6 +60,7 @@ fly deploy
 
 - Fly 免費額度有限（約 3 台 256MB 小型 VM），超出會計費；可到 [Fly 定價](https://fly.io/docs/about/pricing/) 查看。
 - 若 app 名稱 `howmay-type-bot` 已被佔用，在專案根目錄的 `fly.toml` 裡改 `app = "你的名稱"`，並先 `fly apps create 你的名稱`。
+- 根目錄 `fly.toml` 預設 **`SKIP_OPTIMIZE_IMAGES=true`**、VM **512MB**：不在 Fly 容器內跑圖片壓縮，改由 **GitHub Actions** 壓縮。若 **`git push` 出現 OOM**（malloc failed），請把 `[[vm]]` 的 `memory` 改為 `1gb` 再 deploy。若需在本機 Bot 流程內壓圖，可設 `SKIP_OPTIMIZE_IMAGES=false` 並調高 VM 記憶體。
 
 ---
 
