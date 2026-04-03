@@ -20,7 +20,7 @@ app = "howmay-type-bot"
   processes = ["app"]
 
 [[vm]]
-  # 壓縮改由 GitHub Actions；此處僅 Bot + git push。若 push 出現 OOM，改回 1gb
-  memory = "512mb"
+  # 壓縮改由 GitHub Actions；若 git push 或程序 OOM，可改回 512mb
+  memory = "256mb"
   cpu_kind = "shared"
   cpus = 1

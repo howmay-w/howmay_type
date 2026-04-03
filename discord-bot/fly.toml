@@ -19,6 +19,6 @@ app = "howmay-type-bot"
   processes = ["app"]
 
 [[vm]]
-  memory = "512mb"
+  memory = "256mb"
   cpu_kind = "shared"
   cpus = 1
