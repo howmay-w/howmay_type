@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "frontend/src/content/projects/**"
+      - ".github/workflows/optimize-images.yml"
   workflow_dispatch:
 
 permissions:
