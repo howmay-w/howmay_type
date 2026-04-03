@@ -19,9 +19,19 @@ import tasaExplorerWoff2 from "@fontsource-variable/tasa-explorer/files/tasa-exp
 type Props = {
 	title: string;
 	description?: string;
+	/** 社群分享預覽圖：以 / 開頭的站內路徑或完整 https URL；未指定時用預設網站圖示 */
+	ogImage?: string;
+	ogImageAlt?: string;
 };
 
-const { title, description = "皓梅的畫字創作頻道" } = Astro.props;
+const { title, description = "皓梅的畫字創作頻道", ogImage, ogImageAlt } = Astro.props;
+
+const defaultOgPath = "/favicon/apple-touch-icon.png";
+const rawOgImage = ogImage ?? defaultOgPath;
+const ogImageUrl = /^https?:\/\//i.test(rawOgImage)
+	? rawOgImage
+	: new URL(rawOgImage.startsWith("/") ? rawOgImage : `/${rawOgImage}`, Astro.site ?? Astro.url).href;
+const resolvedOgAlt = ogImageAlt ?? (ogImage ? title : description);
 
 // Current page value (/home, /about, /404 ...)
 const currentPage =
@@ -38,9 +48,22 @@ const currentPage =
       openGraph={{
         basic: {
           title: title,
-          type: "image/png",
-          image: "/favicon/apple-touch-icon.png",
+          type: "website",
+          image: ogImageUrl,
         },
+        optional: {
+          description: description,
+        },
+        image: {
+          alt: resolvedOgAlt,
+        },
+      }}
+      twitter={{
+        card: "summary_large_image",
+        title: title,
+        description: description,
+        image: ogImageUrl,
+        imageAlt: resolvedOgAlt,
       }}
       extend={{
         // extending the default link tags

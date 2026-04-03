@@ -24,7 +24,7 @@ type Props = {
 };
 
 const { project } = Astro.props;
-const { title, description, image, video, videos, images, pubDate, tags } = project.data;
+const { title, description, image, video, videos, images, pubDate, tags, thumbnail } = project.data;
 // video（單部）與 videos（多部）統一合併成陣列，只取第一部放在第二張
 const allVideos = videos ?? (video ? [video] : []);
 const firstVideo = allVideos[0];
@@ -33,6 +33,11 @@ const firstVideo = allVideos[0];
 const carouselImages = images?.filter((img): img is { src: string; alt?: string } => Boolean(img.src)) ?? [];
 const hasCarousel = carouselImages.length > 0;
 const heroImage = hasCarousel ? carouselImages[0] : image;
+
+// 與首頁 ProjectCard 一致：分享預覽圖用專屬縮圖／首圖；僅影片時用 poster
+const shareThumb = thumbnail ?? (images?.length ? images[0] : image);
+const shareImageSrc = shareThumb?.src ?? firstVideo?.poster;
+const shareImageAlt = shareThumb?.alt ?? title;
 
 // 合併媒體：第一張圖、第二張影片（若有）、其餘圖片；無多張圖時則為 [圖, 影片] 或單一媒體
 type MediaItem = { type: "image"; src: string; alt?: string } | { type: "video"; src: string; poster?: string };
@@ -93,7 +98,7 @@ const fromLatest = Astro.url.searchParams.get("from") === "latest";
 const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fromLatest ? "/?from=latest" : "/";
 ---
 
-<BaseLayout title={title} description={seoDescription}>
+<BaseLayout title={title} description={seoDescription} ogImage={shareImageSrc} ogImageAlt={shareImageAlt}>
 	<section>
 		<header class="title-header">
 			<h2>{title}</h2>
