@@ -14,7 +14,7 @@ hoverVideo:
   src: "/projects/無糖少冰/video_0.mp4"
 hoverVideoFit: contain
 pubDate: 2024-11-27
-tags: ["FLUX","beambox","reels"]
+tags: ["FLUX", "beambox", "reels"]
 ---
 
 ✨ 客製化自由！用 Beambox II 雷射切割機輕鬆將設計商品化
@@ -31,28 +31,8 @@ FLUX 是成立第 10 年的台灣自造工具品牌，最新推出的這台 Beam
 
 我覺得 Beambox II 是一台功能強大、自由度高又能快速有精緻產出的的客製化、商品化工具。推薦給喜歡動手做、把點子實踐的設計創意工作者或工作室～！私心多許個願，敝校要是能引進就太好了QWQ
 
-【Beambox II 的優點】
-
-內建自動對焦：按一個鍵就不用來回對焦煩惱\
-55W 大功率：最大可一刀切過 18mm 檜木或 20mm 壓克力，守備範圍更廣\
-900mm/s 超高速雕刻：大量客製化超省時\
-600 x 375mm 大工作範圍：可雕更大的板材、或一次加工多個商品\
-快速相機預覽＋紅光預覽：精準的雙重對位不浪費板材\
-外觀俐落好看不笨重（這點是我自己加的🙂‍↕️）
-
-【軟體 Beam Studio】
-
-免費多平臺：可於網頁、桌機電腦、平板、手機使用\
-支援多種檔案：SVG/PNG/JPG/DXF/PDF/AI\
-自動對位：把圖片放到材料上\
-智慧排版：自動將圖形貼緊省材料\
-材質參數：預設多種材質，節省測試材料與時間
-
-【Beambox II 早鳥優惠】
-
-市價 $89,900，早鳥價優惠 $74,900 ，即日至 12/23（一）
-
 更多資訊請到 [@fluxinctaiwan](https://www.instagram.com/fluxinctaiwan/) 了解✨
 
 ---
+
 有音樂的 Reel 版本在[這裡](https://www.instagram.com/howmay__/reel/DC4DtBaTLS7/)。
