@@ -1,6 +1,6 @@
 ---
 title: "燈"
-description: "🏮 二月 #whatzurtype 是火部的字，想到燈。"
+description: "🏮 二月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是火部的字，想到燈。"
 image:
   src: "/projects/燈/media_0.webp"
   alt: "🏮"

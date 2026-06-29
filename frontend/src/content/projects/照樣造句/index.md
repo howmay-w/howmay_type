@@ -1,6 +1,6 @@
 ---
 title: "照樣造句"
-description: "本次 #whatzurtype 與宜蘭藝術自造季 @chccp_yilan 串聯，題目是以「造」造詞，我選的是「造樣造句」。"
+description: "本次 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 與宜蘭藝術自造季 [@chccp_yilan](https://www.instagram.com/chccp_yilan/) 串聯，題目是以「造」造詞，我選的是「造樣造句」。"
 image:
   src: "/projects/照樣造句/media_0.webp"
   alt: "照樣造句"

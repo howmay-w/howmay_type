@@ -1,6 +1,6 @@
 ---
 title: "龜吼漁港"
-description: "🦀 這個月的 #whatzurtype 主題是港，因為家人喜歡吃海鮮，每次出遊常常把漁港排進景點。"
+description: "🦀 這個月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是港，因為家人喜歡吃海鮮，每次出遊常常把漁港排進景點。"
 image:
   src: "/projects/龜吼漁港/media_0.webp"
   alt: "🦀"

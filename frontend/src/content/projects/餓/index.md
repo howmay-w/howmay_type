@@ -1,6 +1,6 @@
 ---
 title: "餓"
-description: "😵 #餓 #hungry #procreate #procreatelettering #handdrawntype #illustration #lettering #type #typedesign #typeface #typefac"
+description: "好餓，餓扁扁動畫字體"
 image:
   src: "/projects/餓/media_0.webp"
   alt: "😵"
@@ -9,5 +9,5 @@ video:
 hoverVideo:
   src: "/projects/餓/video_0.mp4"
 pubDate: 2022-08-27
-tags: ["hungry","😵"]
+tags: ["hungry", "😵"]
 ---

@@ -32,7 +32,7 @@ tags: ["whatzurtype","字字字設計串連","台語","🌿"]
 
 （？）（本文中沒有任何貓受到傷害）
 
-3/21是世界森林日，本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是台灣植物，好久沒去爬山走走了ㄛ。
+3/21 是世界森林日，本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是台灣植物，好久沒去爬山走走了ㄛ。
 
 ---
 

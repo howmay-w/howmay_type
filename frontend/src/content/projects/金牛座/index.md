@@ -1,6 +1,6 @@
 ---
 title: "金牛座"
-description: "用 Rhythm 的筆畫拼出金牛座♉️ 本月 #whatzurtype 挑戰抽到 14 號 Rhythm ，風情萬種又有趣，覺得寬筆畫中間有裝飾線的版本非常可愛。"
+description: "用 Rhythm 的筆畫拼出金牛座♉️ 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 挑戰抽到 14 號 Rhythm ，風情萬種又有趣，覺得寬筆畫中間有裝飾線的版本非常可愛。"
 image:
   src: "/projects/金牛座/media_0.webp"
   alt: "金牛座"

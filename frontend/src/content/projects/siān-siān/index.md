@@ -1,6 +1,6 @@
 ---
 title: "𤺪𤺪"
-description: "今年送男友的生日禮物是點字+訂做手機殼。𤺪𤺪 siān-siān是膩、厭煩ㄉ意思（辭典發音影片在限動），他很喜歡。"
+description: "今年送男友的生日禮物是點字+訂做手機殼。𤺪𤺪 siān-siān 是膩、厭煩ㄉ意思（辭典發音影片在限動），他很喜歡。"
 images:
   - src: "/projects/siān-siān/media_0.webp"
     alt: "圖 1"

@@ -1,6 +1,6 @@
 ---
 title: "驚"
-description: "😲 本月 #whatzurtype 主題是有「馬」部件的字，選了「驚」。"
+description: "😲 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是有「馬」部件的字，選了「驚」。"
 thumbnail:
   src: "/projects/驚/thumb.webp"
   alt: "驚"

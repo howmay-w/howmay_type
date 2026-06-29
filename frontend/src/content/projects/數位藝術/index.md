@@ -1,6 +1,6 @@
 ---
 title: "數位藝術"
-description: "純手繪數位藝術。（真的純用手，因為忘了帶Apple Pencil）Handrawing “Digital Art” on my iPad, cause I forgot to bring the Pencil."
+description: "純手繪數位藝術。（真的純用手，因為忘了帶 Apple Pencil）Handrawing “Digital Art” on my iPad, cause I forgot to bring the Pencil."
 image:
   src: "/projects/數位藝術/media_0.webp"
   alt: "數位藝術"
@@ -17,7 +17,7 @@ pubDate: 2024-05-11
 tags: ["digitalart","fingerpainting","reels"]
 ---
 
-純手繪數位藝術。（真的純用手，因為忘了帶Apple Pencil）
+純手繪數位藝術。（真的純用手，因為忘了帶 Apple Pencil）
 
 Handrawing “Digital Art” on my iPad, cause I forgot to bring the Pencil.
 

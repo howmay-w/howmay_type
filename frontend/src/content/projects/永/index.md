@@ -19,7 +19,7 @@ tags: ["whatzurtype", "字字字設計串連", "實體", "蛋", "🥚", "🍳"]
 
 十月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 玩法是用[#拉霸機](（http://slot.miario.com/machines/184683）抽出奇形怪狀ㄉ創作限制，並自己隨意解讀，在限制內完成「永」字。
 
-我抽到的是「233秒」。\
+我抽到的是「233 秒」。\
 想來想去，決定認真計時，在秒數內煎個蛋。
 
 至於成果，雖然好看不好看見仁見智，但跟各位保證，真的很香。

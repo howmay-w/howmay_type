@@ -1,6 +1,6 @@
 ---
 title: 儲存空間不足
-description: 太久沒整理檔案⋯ 剛剛發現procreate 因為空間不足被釋出⋯ 以為載不下來小嚇到，還好處理一下弄好了⋯⋯
+description: "太久沒整理檔案⋯ 剛剛發現 procreate 因為空間不足被釋出⋯ 以為載不下來小嚇到，還好處理一下弄好了⋯⋯"
 pubDate: 2026-04-19
 tags: ["💾", "Procreate"]
 image:
@@ -24,7 +24,7 @@ hoverVideo:
 ---
 
 太久沒整理檔案⋯
-剛剛發現procreate 因為空間不足被釋出⋯
+剛剛發現 Procreate 因為空間不足被釋出⋯
 以為載不下來小嚇到，還好處理一下弄好了⋯⋯
 
 大家沒事要乖乖整理檔案備份ㄛ

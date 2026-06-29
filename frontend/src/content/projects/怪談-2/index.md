@@ -28,15 +28,14 @@ video:
 hoverVideo:
   src: "/projects/怪談-2/video_0.mp4"
 pubDate: 2023-08-05
-tags: ["whatzurtype","字字字設計串連","鬼故事","🕯️"]
+tags: ["whatzurtype", "字字字設計串連", "鬼故事", "🕯️"]
 ---
 
 本月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是「怪談」，農曆七月也快到ㄌ，充滿故事的時節。
 
 有時候生活鬼故事、職場鬼故事聽多了，好像比真的鬼故事還可怕。
 
-這次挑戰試著在 procreate 裡自己做了平頭筆刷，寫起來能自然產生許多造型。歐文常見的平筆造型寫成漢字所產生的違和感，或許剛好很適合描述怪談？
-
+這次挑戰試著在 Procreate 裡自己做了平頭筆刷，寫起來能自然產生許多造型。歐文常見的平筆造型寫成漢字所產生的違和感，或許剛好很適合描述怪談？
 
 ---
 

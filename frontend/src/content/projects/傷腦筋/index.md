@@ -1,6 +1,6 @@
 ---
 title: "傷腦筋"
-description: "明天就要25歲了，傷腦筋😵‍💫 就，挺突然的。"
+description: "明天就要 25 歲了，傷腦筋😵‍💫 就，挺突然的。"
 image:
   src: "/projects/傷腦筋/media_0.webp"
   alt: "傷腦筋"
@@ -17,7 +17,7 @@ pubDate: 2024-05-15
 tags: ["knotty","animation","reels"]
 ---
 
-明天就要25歲了，傷腦筋😵‍💫
+明天就要 25 歲了，傷腦筋😵‍💫
 
 就，挺突然的。\
 怎麼一下就到了彷彿是個大人ㄉ年紀了ㄋ？

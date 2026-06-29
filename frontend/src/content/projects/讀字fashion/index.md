@@ -1,6 +1,6 @@
 ---
 title: "讀字fashion"
-description: "😎 遲到的一月 #whatzurtype "
+description: "😎 遲到的一月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) "
 image:
   src: "/projects/讀字fashion/media_0.webp"
   alt: "😎"

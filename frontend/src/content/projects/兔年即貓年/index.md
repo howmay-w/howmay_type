@@ -41,7 +41,7 @@ tags:
 所以我其實是屬貓啦，謝謝，謝謝。\
 各位新年快樂！
 
-Ai的新3D可以即時調整不會卡卡，好猛（第三張有轉動效果）
+Ai 的新 3D 可以即時調整不會卡卡，好猛（第三張有轉動效果）
 
 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) [@justfont](https://www.instagram.com/justfont/)
 

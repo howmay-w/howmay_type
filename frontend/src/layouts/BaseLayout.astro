@@ -10,7 +10,6 @@ import Header from "../components/Header.astro";
 import SmoothScroll from "../components/SmoothScroll.astro";
 
 import "@fontsource-variable/tasa-explorer";
-import "@fontsource/zen-kaku-gothic-new/300.css";
 import "@fontsource/zen-kaku-gothic-new/400.css";
 import "@fontsource/zen-kaku-gothic-new/500.css";
 import "@fontsource/zen-kaku-gothic-new/700.css";
@@ -68,6 +67,11 @@ const currentPage =
       extend={{
         // extending the default link tags
         link: [
+          {
+            rel: "preconnect",
+            href: "https://font.emtech.cc",
+            crossorigin: "anonymous",
+          },
           {
             rel: "stylesheet",
             href: "https://font.emtech.cc/css/GenKiGothicTW",

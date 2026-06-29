@@ -22,8 +22,8 @@ video:
 hoverVideo:
   src: "/projects/不妥/video_0.mp4"
 pubDate: 2024-03-18
-tags: ["inappropriate","🤚"]
+tags: ["inappropriate", "🤚"]
 ---
 
-文雅委婉版本的「不好、不要、不可以、不ok」，覺得聽起來很高級。\
+文雅委婉版本的「不好、不要、不可以、不 ok」，覺得聽起來很高級。\
 推薦給各位日常使用。

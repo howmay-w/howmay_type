@@ -2,6 +2,8 @@
  * 方案 C + 表單：/新作品 開 Modal 填標題、標籤、內文；
  * 送出後請在同一頻道發一則帶圖/影片的訊息即建立專案。
  * description 自動從內文第一段擷取；若標籤含 #whatzurtype 則自動加投稿資訊。
+ * 內文中的 @帳號、#標籤 會自動轉成 Instagram Markdown 連結；
+ * 中文與英數字相鄰時會自動補空格（中英混排）。
  */
 
 import "dotenv/config";
@@ -92,6 +94,89 @@ function hasWhatzurtype(tags) {
 function fixDiscordDashes(text) {
   if (!text) return text;
   return text.replace(/—-/g, "---").replace(/——/g, "----");
+}
+
+function igProfileUrl(username) {
+  return `https://www.instagram.com/${username}/`;
+}
+
+function igHashtagUrl(tag) {
+  return `https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(`#${tag}`)}`;
+}
+
+/** 從內文擷取尚未成為 Markdown 連結的 #標籤（去重） */
+function extractHashtags(text) {
+  if (!text) return [];
+  return mergeTags([...text.matchAll(/(?<!\[)#([\p{L}\p{N}_]+)/gu)].map((m) => m[1]));
+}
+
+function mergeTags(...lists) {
+  const seen = new Set();
+  const out = [];
+  for (const list of lists) {
+    for (const tag of list) {
+      const key = String(tag).toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      out.push(String(tag));
+    }
+  }
+  return out;
+}
+
+/** 中文與英數字相鄰時補空格（中英混排）；特殊用法先保護不處理 */
+const SPACING_PROTECT = [
+  [/圖\d+/g, "FIG"],
+  [/不ok/g, "BOK"],
+  [/讀字fashion/g, "RFASH"],
+  [/白水商號X橋/g, "BXQ"],
+  [/的me:/g, "ME"],
+  [/(?<=[\u4e00-\u9fff])qwq/gi, "QWQ"],
+  [/(?<=[\u4e00-\u9fff])qq/gi, "QQ"],
+  [/KLG快樂雞/g, "KLG"],
+  [/館C728/g, "C728"],
+];
+
+function protectSpacing(text) {
+  const map = new Map();
+  let i = 0;
+  for (const [re, prefix] of SPACING_PROTECT) {
+    text = text.replace(re, (m) => {
+      const key = `__${prefix}${i++}__`;
+      map.set(key, m);
+      return key;
+    });
+  }
+  return { text, map };
+}
+
+function unprotectSpacing(text, map) {
+  for (const [key, val] of map) text = text.replaceAll(key, val);
+  return text;
+}
+
+function fixCjkLatinSpacing(text) {
+  if (!text) return text;
+  const { text: protectedText, map } = protectSpacing(text);
+  let out = protectedText.replace(/([\u4e00-\u9fff])([A-Za-z0-9])/g, "$1 $2");
+  out = out.replace(/([A-Za-z0-9])([\u4e00-\u9fff])/g, "$1 $2");
+  return unprotectSpacing(out, map);
+}
+
+function normalizeBodyText(text) {
+  return fixCjkLatinSpacing(fixDiscordDashes(text));
+}
+
+/** 將 plain @帳號、#標籤 轉成 IG Markdown 連結（已是連結的不再處理） */
+function linkifyInstagram(text) {
+  if (!text) return text;
+  let out = text.replace(/(?<!\[)@([a-zA-Z0-9._]+)/g, (_, user) => `[@${user}](${igProfileUrl(user)})`);
+  out = out.replace(/(?<!\[)#([\p{L}\p{N}_]+)/gu, (_, tag) => `[#${tag}](${igHashtagUrl(tag)})`);
+  return out;
+}
+
+function prepareBody(text) {
+  return linkifyInstagram(normalizeBodyText(text));
 }
 
 function descriptionFromBody(body) {
@@ -387,7 +472,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
             .setCustomId("body")
             .setLabel("內文（支援 Markdown，如 --- 分隔線）")
             .setStyle(TextInputStyle.Paragraph)
-            .setPlaceholder("第一段會自動當作 description")
+            .setPlaceholder("第一段會自動當 description；@ # 會變 IG 連結，中英混排自動補空格")
             .setRequired(false)
             .setMaxLength(4000)
         )
@@ -399,9 +484,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
   if (interaction.isModalSubmit() && interaction.customId === "new_project_modal") {
     const title = interaction.fields.getTextInputValue("title").trim() || "未命名作品";
     const tagsRaw = interaction.fields.getTextInputValue("tags")?.trim() || "";
-    const body = fixDiscordDashes(interaction.fields.getTextInputValue("body")?.trim() || "");
+    const rawBody = interaction.fields.getTextInputValue("body")?.trim() || "";
+    const normalizedBody = normalizeBodyText(rawBody);
+    const body = linkifyInstagram(normalizedBody);
     const tags = parseTags(tagsRaw);
-    const description = descriptionFromBody(body);
+    const description = descriptionFromBody(normalizedBody);
     const pubDate = new Date().toISOString().slice(0, 10);
     const key = `${interaction.channelId}_${interaction.user.id}`;
     pendingByChannelUser.set(key, { title, tags, body, description, pubDate });
@@ -507,8 +594,9 @@ client.on("messageCreate", async (message) => {
   const firstLine = content.split("\n")[0]?.trim() || "";
   const rest = content.slice(firstLine.length).trim();
   const title = firstLine || "未命名作品";
-  const tags = (content.match(/#(\S+)/g) || []).map((s) => s.replace(/^#/, "").trim()).filter(Boolean);
-  let body = rest;
+  const tags = extractHashtags(content);
+  const normalizedRest = normalizeBodyText(rest);
+  let body = linkifyInstagram(normalizedRest);
   if (hasWhatzurtype(tags)) {
     const pubDate = new Date().toISOString().slice(0, 10);
     const [y, m] = pubDate.split("-");
@@ -516,7 +604,7 @@ client.on("messageCreate", async (message) => {
   }
   const payload = {
     title,
-    description: descriptionFromBody(rest),
+    description: descriptionFromBody(normalizedRest),
     body,
     tags: tags.length ? tags : undefined,
     pubDate: new Date().toISOString().slice(0, 10),
@@ -634,7 +722,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
   if (interaction.isModalSubmit() && interaction.customId === "edit_project_modal") {
     const title = interaction.fields.getTextInputValue("title").trim() || "";
-    const body = fixDiscordDashes(interaction.fields.getTextInputValue("body").trim() || "");
+    const rawBody = interaction.fields.getTextInputValue("body").trim() || "";
+    const body = prepareBody(rawBody);
     const descriptionRaw = interaction.fields.getTextInputValue("description")?.trim() || "";
     const tagsRaw = interaction.fields.getTextInputValue("tags")?.trim() || "";
     if (!title) {

@@ -1,6 +1,6 @@
 ---
 title: "應援"
-description: "本月 #whatzurtype 是加油主題，以字戀小聚標題投稿，用 Adobe Firefly 做金屬效果。"
+description: "本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是加油主題，以字戀小聚標題投稿，用 Adobe Firefly 做金屬效果。"
 image:
   src: "/projects/應援/media_0.webp"
   alt: "應援"
@@ -43,4 +43,4 @@ WBC 台灣的四場預賽打完啦！感動的比賽😭
 
 ---
 
-本作品投稿 2026 年 2 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。
+本作品投稿 2026 年 3 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。

@@ -1,6 +1,6 @@
 ---
 title: "循環"
-description: "🔃 #循環 #cycle #loop #procreate #procreatelettering #handdrawntype #illustration #lettering #type #typedesign #typeface #t"
+description: "循環四方連續字體"
 image:
   src: "/projects/循環/media_0.webp"
   alt: "🔃"
@@ -16,5 +16,5 @@ video:
 hoverVideo:
   src: "/projects/循環/video_0.mp4"
 pubDate: 2022-08-29
-tags: ["cycle","loop","🔃"]
+tags: ["cycle", "loop", "🔃"]
 ---

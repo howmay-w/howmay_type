@@ -1,6 +1,6 @@
 ---
 title: "仙草"
-description: "以仙草搭配 @traditional_label_lab 老師的奶茶！補上個月#whatzurtype ，題目是從抽到的飲料延伸接力配料。"
+description: "以仙草搭配 [@traditional_label_lab](https://www.instagram.com/traditional_label_lab/) 老師的奶茶！補上個月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) ，題目是從抽到的飲料延伸接力配料。"
 image:
   src: "/projects/仙草/media_0.webp"
   alt: "仙草"

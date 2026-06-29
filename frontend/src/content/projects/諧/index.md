@@ -27,5 +27,5 @@ pubDate: 2022-10-06
 tags: ["homophonie", "metallic", "balloon", "手繪特效", "3D", "🎈"]
 ---
 
-挑戰用 procreate 製造假 3D，\
+挑戰用 Procreate 製造假 3D，\
 詳情可以看第二張ㄉ縮時！

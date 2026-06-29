@@ -1,6 +1,6 @@
 ---
 title: "藍銅礦"
-description: "藍銅礦很漂亮，大家去查照片！10 月#whatzurtype 主題是礦物，我選的是藍銅礦。"
+description: "藍銅礦很漂亮，大家去查照片！10 月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是礦物，我選的是藍銅礦。"
 image:
   src: "/projects/藍銅礦/media_0.webp"
   alt: "藍銅礦"
