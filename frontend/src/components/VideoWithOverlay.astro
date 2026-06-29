@@ -143,10 +143,12 @@ const { src, poster, class: className = "" } = Astro.props;
 			else video.pause();
 		}
 
-		// 沒有 poster 時 seek 到 0.1 秒顯示縮圖（開頭通常已緩衝）
+		// 沒有 poster 時 seek 到最後 0.1 秒顯示縮圖
 		if (!video.getAttribute("poster")) {
 			video.addEventListener("loadedmetadata", () => {
-				if (video.paused) video.currentTime = 0.1;
+				if (video.paused && Number.isFinite(video.duration) && video.duration > 0.1) {
+					video.currentTime = video.duration - 0.1;
+				}
 			}, { once: true });
 		}
 
