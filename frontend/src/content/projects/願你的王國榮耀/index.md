@@ -16,5 +16,7 @@ video:
 hoverVideo:
   src: "/projects/願你的王國榮耀/video_0.mp4"
 pubDate: 2022-09-30
-tags: ["昏鴉","TheMurkyCrows","⚜️"]
+tags: ["昏鴉", "TheMurkyCrows", "⚜️"]
 ---
+
+[好聽](https://youtu.be/zmsnipltJTM)，與各位分享。
