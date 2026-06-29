@@ -1,6 +1,6 @@
 ---
 title: "容貌焦慮"
-description: "😶‍🌫️ 前陣 AI 算圖工具 Midjourney 推出新版本 V6，主打可以算出更真的人像——透過加入更不完美、不漂亮的人類特徵，反而創造真實感。"
+description: "😶‍🌫️ 前陣子 AI 算圖工具 Midjourney 推出新版本 V6，主打可以算出更真的人像——透過加入更不完美、不漂亮的人類特徵，反而創造真實感。"
 image:
   src: "/projects/容貌焦慮/media_0.webp"
   alt: "😶‍🌫️"
@@ -28,9 +28,9 @@ video:
 hoverVideo:
   src: "/projects/容貌焦慮/video_0.mp4"
 pubDate: 2024-01-16
-tags: ["appearanceanxiety","😶‍🌫️"]
+tags: ["appearanceanxiety", "😶‍🌫️"]
 ---
 
-前陣 AI 算圖工具 Midjourney 推出新版本 V6，主打可以算出更真的人像——透過加入更不完美、不漂亮的人類特徵，反而創造真實感。
+前陣子 AI 算圖工具 Midjourney 推出新版本 V6，主打可以算出更真的人像——透過加入更不完美、不漂亮的人類特徵，反而創造真實感。
 
 人類有時寧願選擇虛假的美，但人工智慧卻開始追求不完美的真。有趣。

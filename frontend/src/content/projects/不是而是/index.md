@@ -22,7 +22,7 @@ hoverVideo:
   src: "/projects/不是而是/video_0.mp4"
 hoverVideoFit: contain
 pubDate: 2025-08-24
-tags: ["AIcopywriting","🥱"]
+tags: ["AIcopywriting", "🥱"]
 ---
 
 最近好常好常看到明顯的 AI 文案或是影片旁白，千篇一律的「不是⋯⋯而是⋯⋯」的，除了膩，也有點傷心，尤其看到這樣的內容來自我喜歡創作者。
