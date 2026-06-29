@@ -143,6 +143,16 @@ const { src, poster, class: className = "" } = Astro.props;
 			else video.pause();
 		}
 
+		// 沒有 poster 時 seek 到接近結尾的位置顯示縮圖
+		if (!video.getAttribute("poster")) {
+			video.addEventListener("loadedmetadata", () => {
+				if (video.paused && Number.isFinite(video.duration) && video.duration > 0) {
+					// 最後 0.5 秒；若影片不足 1 秒則取中間
+					video.currentTime = Math.max(video.duration - 0.5, video.duration / 2);
+				}
+			}, { once: true });
+		}
+
 		video.addEventListener("play", updateUI);
 		video.addEventListener("pause", updateUI);
 		video.addEventListener("timeupdate", updateUI);
