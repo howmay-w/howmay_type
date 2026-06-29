@@ -28,7 +28,7 @@ const loadImages = () => {
     const imgLoad = imagesLoaded(aboveFoldImgs);
     imgLoad.on("done", resolve);
     imgLoad.on("fail", resolve);
-    setTimeout(resolve, 4000);
+    setTimeout(resolve, 2000);
   });
 };
 

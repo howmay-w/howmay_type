@@ -42,7 +42,7 @@ body {
   line-height: 1;
   font-family:
     "TASA Explorer Variable", "Zen Kaku Gothic New", "GenKiGothicTW", sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   font-variant-ligatures: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -141,7 +141,7 @@ button {
   cursor: pointer;
   font-family: inherit;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 500;
   color: inherit;
   fill: currentColor;
   transition: color 0.3s;
