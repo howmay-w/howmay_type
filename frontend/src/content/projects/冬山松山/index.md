@@ -15,6 +15,7 @@ images:
     alt: "圖 4"
 videos:
   - src: "/projects/冬山松山/video_0.mp4"
+    poster: "/projects/冬山松山/media_1.webp"
   - src: "/projects/冬山松山/video_1.mp4"
 hoverVideo:
   src: "/projects/冬山松山/video_0.mp4"
