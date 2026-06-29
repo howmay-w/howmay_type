@@ -9,7 +9,7 @@ images:
     alt: "圖 1"
 video:
   src: "/projects/金牛座/video_0.mp4"
-  poster: "/projects/金牛座/video_0_poster.jpg"
+  poster: "/projects/金牛座/video_0_poster.webp"
 hoverVideo:
   src: "/projects/金牛座/video_0.mp4"
 hoverVideoFit: contain

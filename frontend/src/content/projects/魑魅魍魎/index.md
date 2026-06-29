@@ -9,7 +9,7 @@ images:
     alt: "圖 1"
 video:
   src: "/projects/魑魅魍魎/video_0.mp4"
-  poster: "/projects/魑魅魍魎/video_0_poster.jpg"
+  poster: "/projects/魑魅魍魎/video_0_poster.webp"
 hoverVideo:
   src: "/projects/魑魅魍魎/video_0.mp4"
 pubDate: 2023-08-16

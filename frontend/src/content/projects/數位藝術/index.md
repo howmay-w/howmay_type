@@ -9,7 +9,7 @@ images:
     alt: "圖 1"
 video:
   src: "/projects/數位藝術/video_0.mp4"
-  poster: "/projects/數位藝術/video_0_poster.jpg"
+  poster: "/projects/數位藝術/video_0_poster.webp"
 hoverVideo:
   src: "/projects/數位藝術/video_0.mp4"
 hoverVideoFit: contain

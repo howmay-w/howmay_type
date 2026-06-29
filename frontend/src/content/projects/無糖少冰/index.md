@@ -9,7 +9,7 @@ images:
     alt: "圖 1"
 video:
   src: "/projects/無糖少冰/video_0.mp4"
-  poster: "/projects/無糖少冰/video_0_poster.jpg"
+  poster: "/projects/無糖少冰/video_0_poster.webp"
 hoverVideo:
   src: "/projects/無糖少冰/video_0.mp4"
 hoverVideoFit: contain

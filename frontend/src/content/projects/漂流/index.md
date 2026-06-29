@@ -9,7 +9,7 @@ images:
     alt: "圖 1"
 video:
   src: "/projects/漂流/video_0.mp4"
-  poster: "/projects/漂流/video_0_poster.jpg"
+  poster: "/projects/漂流/video_0_poster.webp"
 hoverVideo:
   src: "/projects/漂流/video_0.mp4"
 pubDate: 2025-02-24

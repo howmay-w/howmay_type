@@ -6,7 +6,7 @@ image:
   alt: "富源"
 video:
   src: "/projects/富源/video_0.mp4"
-  poster: "/projects/富源/video_0_poster.jpg"
+  poster: "/projects/富源/video_0_poster.webp"
 hoverVideo:
   src: "/projects/富源/video_0.mp4"
 pubDate: 2024-04-17

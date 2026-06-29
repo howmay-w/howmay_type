@@ -24,7 +24,7 @@ images:
     alt: "圖 10"
 videos:
   - src: "/projects/漂釀/video_0.mp4"
-    poster: "/projects/漂釀/video_0_poster.jpg"
+    poster: "/projects/漂釀/video_0_poster.webp"
   - src: "/projects/漂釀/video_1.mp4"
 hoverVideo:
   src: "/projects/漂釀/video_0.mp4"
