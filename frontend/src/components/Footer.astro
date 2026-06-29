@@ -23,6 +23,12 @@ import Separator from "../components/Separator.astro";
     justify-content: space-between;
     align-items: baseline;
   }
+  :global(html[data-page="about"]) footer,
+  :global(html[data-page="contact"]) footer {
+    margin-top: 0;
+    padding-top: 0.75rem;
+    padding-bottom: 1rem;
+  }
   p {
     margin: 0;
     font-weight: 500;

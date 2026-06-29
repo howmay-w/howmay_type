@@ -228,6 +228,44 @@ img {
   }
 }
 
+html[data-page="about"] body,
+html[data-page="contact"] body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+html[data-page="about"] body > header,
+html[data-page="contact"] body > header,
+html[data-page="about"] body > hr,
+html[data-page="contact"] body > hr,
+html[data-page="about"] body > footer,
+html[data-page="contact"] body > footer {
+  flex-shrink: 0;
+}
+
+html[data-page="about"] .content--page,
+html[data-page="contact"] .content--page {
+  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3rem;
+  font-weight: 500;
+  min-height: 0;
+  padding: 2.25rem 0 2.75rem;
+}
+
+html[data-page="about"] .content--page {
+  max-width: 34rem;
+}
+
+@media screen and (min-width: 50em) {
+  html[data-page="about"] .content--page,
+  html[data-page="contact"] .content--page {
+    padding: 3.5rem 1rem 3.5rem 1rem;
+  }
+}
+
 /* 區塊本身左右置中（404、搜尋無結果等） */
 .content--page--center {
   margin-inline: auto;
