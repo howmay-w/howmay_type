@@ -132,7 +132,7 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 								<VideoWithOverlay
 									src={firstVideo.src}
 									poster={firstVideo.poster}
-									class="project-video-wrap"
+									class="project-video-wrap project-video-wrap--reels"
 								/>
 							)}
 							{reelsCarouselItems.length > 1 ? (
@@ -317,6 +317,10 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 	.project-video-wrap {
 		display: block;
 		margin-top: 0.5rem;
+	}
+	/* Reels 影片固定 9:16，讓瀏覽器 metadata 載入前就預留正確高度 */
+	.project-video-wrap--reels :global(.video-with-overlay__video) {
+		aspect-ratio: 9 / 16;
 	}
 	.project-video-wrap :global(.video-with-overlay__video) {
 		height: auto;
