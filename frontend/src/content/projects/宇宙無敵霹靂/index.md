@@ -2,7 +2,7 @@
 title: 宇宙無敵霹靂
 description: 最近以前的流行不知不覺地重新出現在身邊？
 pubDate: 2026-06-28
-tags: ["💥", "死語復興運動"]
+tags: ["死語復興運動", "💥"]
 image:
   src: "/projects/宇宙無敵霹靂/media_0.webp"
   alt: "IMG_8281.jpg"
