@@ -75,9 +75,10 @@ bodyHtml = bodyHtml.replace(
 	'<a href="$1" target="_blank" rel="noopener noreferrer"$2>',
 );
 
-// SEO 描述：優先用 frontmatter description，否則從內文第一段抽取（最多 160 字）
-const bodyText = bodyHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
-const seoDescription = description ?? (bodyText || undefined);
+// SEO 描述：優先用 frontmatter description，否則從內文第一段抽取（最多 130 字）再補關鍵字後綴
+const bodyText = bodyHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 130);
+const seoBase = description ?? (bodyText || "");
+const seoDescription = seoBase ? `${seoBase}　— 皓梅 Howmay 漢字美術字 Lettering` : undefined;
 
 // 上一篇 / 下一篇：依 pubDate 升冪排序（越新越後）
 const allProjects = await getCollection("projects");
@@ -99,6 +100,21 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 ---
 
 <BaseLayout title={title} description={seoDescription} ogImage={shareImageSrc} ogImageAlt={shareImageAlt}>
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "CreativeWork",
+		"name": title,
+		"description": seoDescription,
+		"creator": {
+			"@type": "Person",
+			"name": "皓梅 Howmay",
+			"url": "https://howmaywang.com"
+		},
+		"url": `https://howmaywang.com/projects/${currentSlug}`,
+		...(shareImageSrc ? { "image": shareImageSrc.startsWith("http") ? shareImageSrc : `https://howmaywang.com${shareImageSrc}` } : {}),
+		...(pubDate ? { "datePublished": new Date(pubDate).toISOString().slice(0, 10) } : {}),
+		...(tags?.length ? { "keywords": tags.join(", ") } : {})
+	})} />
 	<section>
 		<header class="title-header">
 			<h2>{title}</h2>
@@ -297,6 +313,10 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 	.project-video-wrap {
 		width: 100%;
 		max-width: 100%;
+	}
+	.project-image {
+		aspect-ratio: 1 / 1;
+		object-fit: contain;
 	}
 	.project-video-wrap {
 		display: block;
