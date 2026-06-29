@@ -12,9 +12,10 @@ const allProjects = (await getCollection("projects")).sort((a, b) => {
 });
 const projectsTotal = allProjects.length;
 const title = "howmay_ Lettering & Logotype";
+const description = "皓梅 Howmay，台灣漢字美術字（Lettering）與標準字（Logotype）設計師。以漢字創作為主，記錄日常字型練習與作品。";
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={title} description={description}>
 	<Preloader />
 	<ProjectGridHeader projectsTotal={projectsTotal} />
 	<ProjectGrid projects={allProjects} />
