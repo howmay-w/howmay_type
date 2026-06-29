@@ -1,13 +1,11 @@
 /**
  * Hover Video Preview
  * Desktop  – mouseenter / mouseleave
- * Mobile   – 長按 400ms 顯示影片，放開隱藏（不觸發導航）
+ * Mobile   – 右下角播放按鈕 tap 切換影片（避免與 iOS Haptic Touch 衝突）
  */
 
 const FADE_MS = 200;
 const DEBOUNCE_MS = 100;
-const LONG_PRESS_MS = 400;
-const MOVE_THRESHOLD = 10;
 /** 區間倍速；Safari 對 >2x 支援不佳會卡頓，上限 2x */
 const SAFARI_MAX_RATE = 2;
 const isSafari =
@@ -35,29 +33,13 @@ class HoverVideo {
     this._enterTimers = new Map();
     this._leaveTimers = new Map();
     this._videos = new Map();
-    this._pressTimers = new Map();
-    this._pressActive = new Set();
-    this._touchStart = new Map();
 
     this.handleEnter = this._handleEnter.bind(this);
     this.handleLeave = this._handleLeave.bind(this);
-    this.handleTouchStart = this._handleTouchStart.bind(this);
-    this.handleTouchMove = this._handleTouchMove.bind(this);
-    this.handleTouchEnd = this._handleTouchEnd.bind(this);
-    this.handleContextMenu = this._handleContextMenu.bind(this);
 
     for (const card of this.cards) {
       card.addEventListener("mouseenter", this.handleEnter);
       card.addEventListener("mouseleave", this.handleLeave);
-      card.addEventListener("touchstart", this.handleTouchStart, {
-        passive: true,
-      });
-      card.addEventListener("touchmove", this.handleTouchMove, {
-        passive: true,
-      });
-      card.addEventListener("touchend", this.handleTouchEnd);
-      card.addEventListener("touchcancel", this.handleTouchEnd);
-      card.addEventListener("contextmenu", this.handleContextMenu);
     }
   }
 
@@ -94,75 +76,6 @@ class HoverVideo {
     }
 
     this._fadeOutVideo(card);
-  }
-
-  // ── Touch ────────────────────────────────────────────────────────────────
-
-  _handleTouchStart(e) {
-    const card = e.currentTarget;
-    const src = card.getAttribute("data-hover-video");
-    if (!src) return;
-
-    const touch = e.touches[0];
-    this._touchStart.set(card, { x: touch.clientX, y: touch.clientY });
-
-    const timer = setTimeout(() => {
-      this._pressTimers.delete(card);
-      this._pressActive.add(card);
-
-      if (this._videos.has(card)) {
-        this._resumeVideo(card);
-      } else {
-        this._createVideo(card, src);
-      }
-    }, LONG_PRESS_MS);
-
-    this._pressTimers.set(card, timer);
-  }
-
-  _handleTouchMove(e) {
-    const card = e.currentTarget;
-    const start = this._touchStart.get(card);
-    if (!start) return;
-
-    const touch = e.touches[0];
-    const dx = Math.abs(touch.clientX - start.x);
-    const dy = Math.abs(touch.clientY - start.y);
-
-    if (dx > MOVE_THRESHOLD || dy > MOVE_THRESHOLD) {
-      const timer = this._pressTimers.get(card);
-      if (timer) {
-        clearTimeout(timer);
-        this._pressTimers.delete(card);
-      }
-      this._touchStart.delete(card);
-    }
-  }
-
-  _handleTouchEnd(e) {
-    const card = e.currentTarget;
-
-    const timer = this._pressTimers.get(card);
-    if (timer) {
-      clearTimeout(timer);
-      this._pressTimers.delete(card);
-    }
-    this._touchStart.delete(card);
-
-    if (this._pressActive.has(card)) {
-      this._pressActive.delete(card);
-      this._fadeOutVideo(card);
-      // 長按結束 → 阻止 click 觸發連結導航
-      e.preventDefault();
-    }
-  }
-
-  _handleContextMenu(e) {
-    // 長按期間或影片顯示時，阻止 iOS/Android 的預設右鍵選單
-    const card = e.currentTarget;
-    if (this._pressActive.has(card) || this._pressTimers.has(card)) {
-      e.preventDefault();
-    }
   }
 
   // ── Shared helpers ───────────────────────────────────────────────────────
@@ -265,9 +178,21 @@ class HoverVideo {
         }
       })
       .catch(() => {
-        requestAnimationFrame(() => {
-          video.style.opacity = "1";
-        });
+        // play() 被 reject（常見於手機尚未解碼首幀）→ 若無畫面資料就移除，避免黑色方塊
+        if (video.readyState >= 2) {
+          requestAnimationFrame(() => {
+            if (this._leaveTimers.has(card)) return;
+            if (this._videos.get(card) !== video) return;
+            video.style.opacity = "1";
+            if (img) {
+              img.style.transition = `opacity ${FADE_MS}ms ease`;
+              img.style.opacity = "0";
+            }
+          });
+        } else {
+          video.remove();
+          this._videos.delete(card);
+        }
       });
   }
 
@@ -294,18 +219,11 @@ class HoverVideo {
     for (const card of this.cards) {
       card.removeEventListener("mouseenter", this.handleEnter);
       card.removeEventListener("mouseleave", this.handleLeave);
-      card.removeEventListener("touchstart", this.handleTouchStart);
-      card.removeEventListener("touchmove", this.handleTouchMove);
-      card.removeEventListener("touchend", this.handleTouchEnd);
-      card.removeEventListener("touchcancel", this.handleTouchEnd);
-      card.removeEventListener("contextmenu", this.handleContextMenu);
 
       const et = this._enterTimers.get(card);
       if (et) clearTimeout(et);
       const lt = this._leaveTimers.get(card);
       if (lt) clearTimeout(lt);
-      const pt = this._pressTimers.get(card);
-      if (pt) clearTimeout(pt);
 
       const video = this._videos.get(card);
       if (video) {
@@ -316,9 +234,6 @@ class HoverVideo {
     this._enterTimers.clear();
     this._leaveTimers.clear();
     this._videos.clear();
-    this._pressTimers.clear();
-    this._pressActive.clear();
-    this._touchStart.clear();
     this.cards = [];
   }
 }

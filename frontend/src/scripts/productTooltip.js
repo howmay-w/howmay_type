@@ -21,6 +21,9 @@ class Tooltip {
 
     if (!this.grid.querySelector("[data-project-title]")) return;
 
+    // 觸控裝置沒有 hover，不初始化 tooltip（避免 tap 後卡住）
+    if (window.matchMedia("(hover: none)").matches) return;
+
     this.tooltip = document.querySelector(".tooltip");
     this.OFFSET_X = 20;
     this.OFFSET_Y = -60;
@@ -176,6 +179,7 @@ class Tooltip {
   }
 
   destroy() {
+    if (!this.rowTimelines) return; // 觸控裝置提早 return，無需清理
     if (this.scaleDownTimeline) this.scaleDownTimeline.kill();
     for (const timeline of Object.values(this.rowTimelines)) {
       timeline?.kill();

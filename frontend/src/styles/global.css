@@ -7,6 +7,11 @@
   }
 }
 
+/* 防止手機雙擊放大（保留雙指縮放） */
+html {
+  touch-action: manipulation;
+}
+
 /* 移除手機點擊時預設的圓角灰底（tap highlight） */
 a,
 button {

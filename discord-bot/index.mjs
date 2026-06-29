@@ -87,6 +87,13 @@ function hasWhatzurtype(tags) {
   return tags.some((t) => /whatzurtype/i.test(t));
 }
 
+// Discord 的輸入框會把 -- 自動轉成 —，導致 --- 變成 —-
+// 這裡還原回標準 Markdown 分隔線
+function fixDiscordDashes(text) {
+  if (!text) return text;
+  return text.replace(/—-/g, "---").replace(/——/g, "----");
+}
+
 function descriptionFromBody(body) {
   if (!body || !String(body).trim()) return undefined;
   const first = String(body).split(/\n\n/)[0];
@@ -392,7 +399,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   if (interaction.isModalSubmit() && interaction.customId === "new_project_modal") {
     const title = interaction.fields.getTextInputValue("title").trim() || "未命名作品";
     const tagsRaw = interaction.fields.getTextInputValue("tags")?.trim() || "";
-    const body = interaction.fields.getTextInputValue("body")?.trim() || "";
+    const body = fixDiscordDashes(interaction.fields.getTextInputValue("body")?.trim() || "");
     const tags = parseTags(tagsRaw);
     const description = descriptionFromBody(body);
     const pubDate = new Date().toISOString().slice(0, 10);
@@ -627,7 +634,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
   if (interaction.isModalSubmit() && interaction.customId === "edit_project_modal") {
     const title = interaction.fields.getTextInputValue("title").trim() || "";
-    const body = interaction.fields.getTextInputValue("body").trim() || "";
+    const body = fixDiscordDashes(interaction.fields.getTextInputValue("body").trim() || "");
     const descriptionRaw = interaction.fields.getTextInputValue("description")?.trim() || "";
     const tagsRaw = interaction.fields.getTextInputValue("tags")?.trim() || "";
     if (!title) {

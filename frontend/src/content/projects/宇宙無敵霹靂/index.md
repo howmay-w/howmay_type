@@ -16,7 +16,9 @@ images:
   - src: "/projects/宇宙無敵霹靂/media_3.webp"
     alt: "IMG_8283.jpg"
   - src: "/projects/宇宙無敵霹靂/media_4.webp"
-    alt: "IMG_8284.jpg"
+    alt: "圖 5"
+  - src: "/projects/宇宙無敵霹靂/media_5.webp"
+    alt: "圖 6"
 video:
   src: "/projects/宇宙無敵霹靂/video_0.mp4"
 hoverVideo:

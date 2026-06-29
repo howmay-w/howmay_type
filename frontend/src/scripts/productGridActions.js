@@ -306,6 +306,14 @@ const filterGrid = (searchValue, options = {}) => {
   if (toAnimate.length) {
     if (skipAnimation) {
       gsap.set(toAnimate, { yPercent: 0, autoAlpha: 1 });
+    } else if (isSearching) {
+      // 搜尋模式：全部同時淡入，不用 stagger
+      // fromTo + stagger 會把所有 items 先設成 autoAlpha:0，後段 items 長時間透明 → 看起來消失
+      gsap.fromTo(
+        toAnimate,
+        { yPercent: 15, autoAlpha: 0 },
+        { yPercent: 0, autoAlpha: 1, duration: 0.45, ease: "power2.out" },
+      );
     } else {
       appearCards(toAnimate);
     }
