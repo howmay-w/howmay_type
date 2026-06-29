@@ -264,6 +264,12 @@ const filterGrid = (searchValue, options = {}) => {
         const wasHidden =
           item.style.display === "none" || item.hasAttribute("data-deferred");
         item.style.display = "block";
+        // deferred 項目被搜尋顯示時，強制立即載入圖片（lazy 在 display:none 時不會載入）
+        if (item.hasAttribute("data-deferred")) {
+          item.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+            img.loading = "eager";
+          });
+        }
         if (wasHidden) {
           toAnimate.push(item);
         } else {
