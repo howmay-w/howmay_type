@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/可疑/wordmark.webp"
   source: "auto"
   ink: 0.256
+  redo: true
 ---
 
 有時事情太過順利，反而會有點可疑🤔

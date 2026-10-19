@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/怪談/wordmark.webp"
   source: "cutout"
   ink: 0.361
+  redo: true
 ---
 
 今天去看了關於我和鬼變成家人的那件事（好長），也算是種有趣的怪談ㄅ。

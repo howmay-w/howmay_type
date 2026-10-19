@@ -18,6 +18,8 @@ tags: ["whitepaperrevolution","A4revolution","📄"]
 wordmark:
   src: "/projects/白紙/wordmark.webp"
   source: "auto"
-  hidden: true
   ink: 0.862
+  scale: 1.1
+  hidden: true
+  redo: true
 ---

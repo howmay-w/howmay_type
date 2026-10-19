@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/天冷不適合做設計/wordmark.webp"
   source: "cutout"
   ink: 0.547
+  scale: 0.9
+  reviewed: true
 ---
 
 冷到打字跟用滑鼠都不太順利，\

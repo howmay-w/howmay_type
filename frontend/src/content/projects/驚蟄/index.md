@@ -24,6 +24,8 @@ wordmark:
   source: "auto"
   accent: "#f5faae"
   ink: 0.254
+  scale: 1.05
+  reviewed: true
 ---
 
 說好ㄉ回暖ㄋ？！

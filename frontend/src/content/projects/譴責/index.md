@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/譴責/wordmark.webp"
   source: "cutout"
   ink: 0.494
+  reviewed: true
 ---
 
 前幾天說好要約會，結果男友沒有設定鬧鐘，\

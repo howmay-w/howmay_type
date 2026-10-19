@@ -35,6 +35,8 @@ wordmark:
   source: "auto"
   accent: "#eacd43"
   ink: 0.6
+  scale: 0.95
+  reviewed: true
 ---
 
 我做了一個大家都可以玩ㄉ點陣字工具！

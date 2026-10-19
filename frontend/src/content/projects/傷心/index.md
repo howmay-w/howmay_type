@@ -19,6 +19,8 @@ wordmark:
   src: "/projects/傷心/wordmark.webp"
   source: "auto"
   ink: 0.178
+  scale: 1.05
+  reviewed: true
 ---
 
 試著用限動做字✨

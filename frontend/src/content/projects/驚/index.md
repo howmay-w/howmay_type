@@ -27,6 +27,8 @@ wordmark:
   src: "/projects/驚/wordmark.webp"
   source: "auto"
   ink: 0.357
+  scale: 1.6
+  reviewed: true
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是有「馬」部件的字，選了「驚」。

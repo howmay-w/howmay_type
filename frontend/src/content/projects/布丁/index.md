@@ -14,6 +14,7 @@ wordmark:
   src: "/projects/布丁/wordmark.webp"
   source: "auto"
   ink: 0.433
+  redo: true
 ---
 
 好吃

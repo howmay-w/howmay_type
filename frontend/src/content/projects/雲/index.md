@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/雲/wordmark.webp"
   source: "auto"
   ink: 0.589
+  redo: true
 ---
 
 小時候好想捏捏看雲，以為會軟綿綿的。\

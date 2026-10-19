@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/打雷了/wordmark.webp"
   source: "cutout"
   ink: 0.474
+  reviewed: true
 ---
 
 剛剛是不是今年第一次打雷啊？\

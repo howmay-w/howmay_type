@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/風景/wordmark.webp"
   source: "cutout"
   ink: 0.243
+  redo: true
 ---
 
 大學畢業以後反而學了很多新東西，\

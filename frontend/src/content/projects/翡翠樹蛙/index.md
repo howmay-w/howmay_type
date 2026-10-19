@@ -24,6 +24,8 @@ wordmark:
   source: "auto"
   accent: "#020502"
   ink: 0.338
+  scale: 0.9
+  reviewed: true
 ---
 
 8 月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是台灣特有種，決定畫翡翠樹蛙！

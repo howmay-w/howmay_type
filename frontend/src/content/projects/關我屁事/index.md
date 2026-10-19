@@ -20,6 +20,7 @@ wordmark:
   source: "auto"
   accent: "#a8b4e4"
   ink: 0.225
+  redo: true
 ---
 
 突如其來ㄉ特效，有影片ㄛ！

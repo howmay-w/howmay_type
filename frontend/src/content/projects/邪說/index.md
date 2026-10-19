@@ -22,6 +22,8 @@ wordmark:
   source: "cutout"
   accent: "#7e1f0d"
   ink: 0.111
+  scale: 1.45
+  reviewed: true
 ---
 
 「你要不要聽聽看你在說什麼🙃」\

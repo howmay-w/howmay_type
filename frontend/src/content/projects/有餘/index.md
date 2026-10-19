@@ -30,6 +30,7 @@ wordmark:
   source: "cutout"
   accent: "#d2ae25"
   ink: 0.505
+  redo: true
 ---
 
 其實是新年期許：希望能當個游刃有餘的人！\

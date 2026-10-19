@@ -26,6 +26,8 @@ wordmark:
   source: "cutout"
   accent: "#765957"
   ink: 0.118
+  scale: 1.1
+  reviewed: true
 ---
 
 最近睡覺都被蚊子煩到快死亡，\

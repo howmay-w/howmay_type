@@ -23,6 +23,7 @@ wordmark:
   src: "/projects/拿後/wordmark.webp"
   source: "cutout"
   ink: 0.525
+  redo: true
 ---
 
 比起「然後」，其實比較常聽到別人講「拿後」。\

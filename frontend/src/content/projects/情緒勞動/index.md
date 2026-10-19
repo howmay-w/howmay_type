@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/情緒勞動/wordmark.webp"
   source: "auto"
   ink: 0.396
+  redo: true
 ---
 
 第一次認識「情緒勞動」概念時頗為震撼，突然為某些特別疲累或不滿的時刻找到解釋，理解感受從何而來。

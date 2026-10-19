@@ -28,6 +28,8 @@ wordmark:
   source: "cutout"
   accent: "#ecbc39"
   ink: 0.307
+  scale: 0.9
+  reviewed: true
 ---
 
 看到這篇貼文的人！你很棒ㄛ！\

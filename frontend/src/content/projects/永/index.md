@@ -18,9 +18,10 @@ tags: ["whatzurtype", "字字字設計串連", "實體", "蛋", "🥚", "🍳"]
 wordmark:
   src: "/projects/永/wordmark.webp"
   source: "auto"
-  hidden: true
   accent: "#eca208"
   ink: 0.26
+  hidden: true
+  redo: true
 ---
 
 十月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 玩法是用[#拉霸機](（http://slot.miario.com/machines/184683）抽出奇形怪狀ㄉ創作限制，並自己隨意解讀，在限制內完成「永」字。

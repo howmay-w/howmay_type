@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#ebc6bc"
   ink: 0.22
+  redo: true
 ---
 
 遲到的一月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 

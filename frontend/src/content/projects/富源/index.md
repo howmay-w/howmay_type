@@ -14,9 +14,10 @@ tags: ["whatzurtype","字字字設計串連","瑞穗","台鐵","reels"]
 wordmark:
   src: "/projects/富源/wordmark.webp"
   source: "auto"
-  hidden: true
   accent: "#839370"
   ink: 0.251
+  hidden: true
+  redo: true
 ---
 
 ### 富源🚇

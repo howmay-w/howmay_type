@@ -34,6 +34,8 @@ wordmark:
   source: "auto"
   accent: "#2a3543"
   ink: 0.579
+  scale: 1.05
+  reviewed: true
 ---
 
 來自最近諸事不順ㄉ朋朋的點字，辛苦ㄌQQ

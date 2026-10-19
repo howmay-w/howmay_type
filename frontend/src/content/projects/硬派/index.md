@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/硬派/wordmark.webp"
   source: "auto"
   ink: 0.465
+  scale: 1.1
+  reviewed: true
 ---
 
 明天開始要參加一個很硬派ㄉ（？）的活動，過來人有警告是人生最累體驗之一，緊張刺激。

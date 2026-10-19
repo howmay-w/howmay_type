@@ -24,6 +24,7 @@ wordmark:
   source: "auto"
   accent: "#a97a45"
   ink: 0.145
+  redo: true
 ---
 
 四月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) （拖好久才發）主題是宗教場所，決定研究一下身邊最熟悉的松山慈祐宮。

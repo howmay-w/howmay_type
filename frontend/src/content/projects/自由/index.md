@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#2d4005"
   ink: 0.506
+  redo: true
 ---
 
 長大ㄌ以後好自由ㄛ！\

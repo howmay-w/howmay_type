@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/蛤/wordmark.webp"
   source: "auto"
   ink: 0.452
+  reviewed: true
 ---
 
 本日要聞。\

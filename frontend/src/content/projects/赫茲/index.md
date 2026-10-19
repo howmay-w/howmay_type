@@ -28,6 +28,8 @@ wordmark:
   source: "cutout"
   accent: "#314039"
   ink: 0.419
+  scale: 1.15
+  reviewed: true
 ---
 
 這次 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 的主題是從大家出題的音樂中抽出一首，試著用字表達出來。

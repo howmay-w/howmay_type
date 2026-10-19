@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/政治不歸政治/wordmark.webp"
   source: "cutout"
   ink: 0.549
+  redo: true
 ---
 
 「＿＿歸＿＿，政治歸政治」，\

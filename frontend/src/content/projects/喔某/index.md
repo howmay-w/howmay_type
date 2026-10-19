@@ -28,6 +28,8 @@ wordmark:
   source: "cutout"
   accent: "#065670"
   ink: 0.395
+  scale: 1.15
+  reviewed: true
 ---
 
 最近莫名很常看到，但我韓劇好像看太少ㄌ，還特別去查才知道意思🥲

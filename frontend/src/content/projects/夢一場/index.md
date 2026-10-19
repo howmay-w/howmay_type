@@ -30,6 +30,8 @@ wordmark:
   source: "cutout"
   accent: "#c475db"
   ink: 0.338
+  scale: 1.05
+  reviewed: true
 ---
 
 最近好常做夢哇，\

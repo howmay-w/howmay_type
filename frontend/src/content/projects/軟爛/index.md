@@ -34,6 +34,8 @@ wordmark:
   source: "auto"
   accent: "#e3a8e7"
   ink: 0.429
+  scale: 1.1
+  reviewed: true
 ---
 
 到家了以後，就什摸都不想做 (´・ω・`)

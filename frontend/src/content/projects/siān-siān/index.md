@@ -16,6 +16,7 @@ wordmark:
   src: "/projects/siān-siān/wordmark.webp"
   source: "cutout"
   ink: 0.386
+  reviewed: true
 ---
 
 今年送男友的生日禮物是點字＋訂做手機殼。

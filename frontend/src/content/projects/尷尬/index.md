@@ -34,6 +34,7 @@ wordmark:
   source: "auto"
   accent: "#e9943d"
   ink: 0.465
+  redo: true
 ---
 
 尷尬好像是種很社會化的情緒ㄋ，\

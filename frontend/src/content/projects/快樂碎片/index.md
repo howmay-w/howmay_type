@@ -24,6 +24,8 @@ wordmark:
   source: "cutout"
   accent: "#1d2030"
   ink: 0.304
+  scale: 1.05
+  reviewed: true
 ---
 
 有時覺得生活中的快樂像碎片，\

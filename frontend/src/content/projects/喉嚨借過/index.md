@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/喉嚨借過/wordmark.webp"
   source: "auto"
   ink: 0.506
+  redo: true
 ---
 
 第一次知道「喉嚨借過」是跟同事聚餐喝啤酒ㄉ時候，覺得這個詞很可愛。

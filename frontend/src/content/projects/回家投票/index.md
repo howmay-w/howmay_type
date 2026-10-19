@@ -22,6 +22,7 @@ wordmark:
   source: "cutout"
   accent: "#b0220b"
   ink: 0.297
+  reviewed: true
 ---
 
 兩個禮拜以後～要回家投票ㄛ～\

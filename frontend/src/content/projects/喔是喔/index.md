@@ -28,6 +28,7 @@ wordmark:
   source: "cutout"
   accent: "#c89eb3"
   ink: 0.335
+  redo: true
 ---
 
 有時唸作 Also。

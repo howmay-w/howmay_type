@@ -21,6 +21,8 @@ wordmark:
   src: "/projects/人生的歌/wordmark.webp"
   source: "cutout"
   ink: 0.112
+  scale: 1.1
+  reviewed: true
 ---
 
 苦情歌好讚，適合在浴室大唱特唱。

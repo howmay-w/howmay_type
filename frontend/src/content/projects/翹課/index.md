@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/翹課/wordmark.webp"
   source: "cutout"
   ink: 0.392
+  redo: true
 ---
 
 明天⋯不可能⋯\

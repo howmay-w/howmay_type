@@ -30,6 +30,7 @@ wordmark:
   source: "auto"
   accent: "#040203"
   ink: 0.197
+  reviewed: true
 ---
 
 想做的事情好多，\

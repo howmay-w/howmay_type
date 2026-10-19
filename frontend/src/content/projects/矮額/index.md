@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/矮額/wordmark.webp"
   source: "cutout"
   ink: 0.764
+  scale: 1.3
+  reviewed: true
 ---
 
 喜歡這種大家都會說，\

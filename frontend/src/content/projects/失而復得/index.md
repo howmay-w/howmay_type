@@ -34,6 +34,7 @@ wordmark:
   source: "auto"
   accent: "#0e5c5c"
   ink: 0.526
+  reviewed: true
 ---
 
 失而復得，是世界上最美好的感受之一。

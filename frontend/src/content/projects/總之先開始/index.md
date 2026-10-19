@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/總之先開始/wordmark.webp"
   source: "cutout"
   ink: 0.369
+  reviewed: true
 ---
 
 開始更新創作後常被問到「要如何學習做字？」

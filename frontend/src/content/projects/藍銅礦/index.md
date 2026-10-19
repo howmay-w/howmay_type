@@ -20,6 +20,7 @@ wordmark:
   source: "auto"
   accent: "#020ed0"
   ink: 0.473
+  redo: true
 ---
 
 藍銅礦很漂亮，大家去查照片！

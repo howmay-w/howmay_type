@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/熬夜/wordmark.webp"
   source: "cutout"
   ink: 0.204
+  reviewed: true
 ---
 
 清晨五點半才睡😇\

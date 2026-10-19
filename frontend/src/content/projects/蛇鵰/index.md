@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/蛇鵰/wordmark.webp"
   source: "cutout"
   ink: 0.608
+  redo: true
 ---
 
 本月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 延續上次在松菸對談聊到「鳥」很難做的話題，題目是「有鳥部件的字」，我抽到鵰，決定做大冠鷲的俗稱之一的「蛇鵰」。

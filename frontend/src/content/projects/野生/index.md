@@ -19,6 +19,7 @@ wordmark:
   src: "/projects/野生/wordmark.webp"
   source: "cutout"
   ink: 0.612
+  reviewed: true
 ---
 
 喜歡在路邊看到野生、不修邊幅而充滿活力的設計。\

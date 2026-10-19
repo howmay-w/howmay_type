@@ -23,6 +23,8 @@ wordmark:
   src: "/projects/瓦解/wordmark.webp"
   source: "auto"
   ink: 0.425
+  scale: 1.05
+  reviewed: true
 ---
 
 聽學術倫理講座時畫ㄉ\

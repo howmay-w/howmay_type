@@ -26,6 +26,7 @@ wordmark:
   source: "auto"
   accent: "#91a25a"
   ink: 0.396
+  redo: true
 ---
 
 太久沒整理檔案⋯

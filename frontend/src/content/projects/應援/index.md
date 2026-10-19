@@ -32,6 +32,8 @@ wordmark:
   source: "cutout"
   accent: "#b98978"
   ink: 0.355
+  scale: 1.6
+  reviewed: true
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是加油主題，就以明天的字戀小聚標題投稿⋯！這次嘗試先畫字（參考 2025 職棒各隊主視覺），再用 Adobe Firefly 速成金屬效果再修圖改色，看起來應該很有一回事？

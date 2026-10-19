@@ -26,6 +26,7 @@ wordmark:
   source: "auto"
   accent: "#f1a073"
   ink: 0.342
+  redo: true
 ---
 
 今天補班，全公司去校外教學。\

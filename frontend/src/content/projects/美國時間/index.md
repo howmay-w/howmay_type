@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/美國時間/wordmark.webp"
   source: "auto"
   ink: 0.348
+  scale: 1.1
+  reviewed: true
 ---
 
 感謝 TypeCon，度過了非常精彩愉快的美國時間！

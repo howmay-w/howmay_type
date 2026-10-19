@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/搶救/wordmark.webp"
   source: "auto"
   ink: 0.269
+  redo: true
 ---
 
 最近很常看到的字。\

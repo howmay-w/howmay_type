@@ -33,6 +33,8 @@ wordmark:
   src: "/projects/撞牆期/wordmark.webp"
   source: "cutout"
   ink: 0.482
+  scale: 0.9
+  reviewed: true
 ---
 
 最近身陷撞牆期，好困擾。

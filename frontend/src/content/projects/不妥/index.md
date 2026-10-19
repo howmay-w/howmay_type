@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/不妥/wordmark.webp"
   source: "auto"
   ink: 0.633
+  reviewed: true
 ---
 
 文雅委婉版本的「不好、不要、不可以、不 ok」，覺得聽起來很高級。\

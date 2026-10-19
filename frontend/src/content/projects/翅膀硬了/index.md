@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#f58384"
   ink: 0.534
+  redo: true
 ---
 
 不管幾歲在媽媽眼裡都是孩子，\

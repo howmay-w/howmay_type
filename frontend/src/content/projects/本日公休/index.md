@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/本日公休/wordmark.webp"
   source: "auto"
   ink: 0.571
+  reviewed: true
 ---
 
 最近好忙好忙，好想公休ㄛ。\

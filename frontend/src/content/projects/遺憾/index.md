@@ -30,6 +30,7 @@ wordmark:
   source: "cutout"
   accent: "#050307"
   ink: 0.502
+  reviewed: true
 ---
 
 即便仍然會遺憾，\

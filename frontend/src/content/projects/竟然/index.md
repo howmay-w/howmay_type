@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/竟然/wordmark.webp"
   source: "auto"
   ink: 0.542
+  scale: 1.2
+  reviewed: true
 ---
 
 ‼️\

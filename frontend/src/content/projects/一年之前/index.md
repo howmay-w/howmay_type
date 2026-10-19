@@ -33,6 +33,8 @@ wordmark:
   src: "/projects/一年之前/wordmark.webp"
   source: "auto"
   ink: 0.343
+  scale: 0.8
+  reviewed: true
 ---
 
 一年之前，終於下定決心把畫的字都貼到這分享；一年之後，發了 120 篇文，也見到了許多意想不到的風景。謝謝持續收看著這些字與心情的你們🌼

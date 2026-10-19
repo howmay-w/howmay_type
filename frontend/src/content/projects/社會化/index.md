@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/社會化/wordmark.webp"
   source: "auto"
   ink: 0.348
+  reviewed: true
 ---
 
 來自一位不具名現役高中教師的怒吼。

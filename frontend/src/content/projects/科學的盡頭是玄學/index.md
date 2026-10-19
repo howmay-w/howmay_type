@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/科學的盡頭是玄學/wordmark.webp"
   source: "auto"
   ink: 0.425
+  scale: 0.75
+  reviewed: true
 ---
 
 雖然知道不一定是這樣，

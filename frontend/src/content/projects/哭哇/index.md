@@ -34,6 +34,8 @@ wordmark:
   source: "cutout"
   accent: "#cfbd8d"
   ink: 0.817
+  scale: 1.25
+  reviewed: true
 ---
 
 年前想說「過完年再說」的事，\

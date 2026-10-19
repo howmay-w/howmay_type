@@ -15,6 +15,7 @@ wordmark:
   source: "cutout"
   accent: "#aeb7e1"
   ink: 0.255
+  reviewed: true
 ---
 
 選障的朋朋站出來👀\

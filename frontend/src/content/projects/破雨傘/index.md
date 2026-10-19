@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/破雨傘/wordmark.webp"
   source: "cutout"
   ink: 0.645
+  reviewed: true
 ---
 
 「破雨傘」其實是台灣常見漁獲雨傘旗魚的俗稱之一，看照片就能明白為什麼這麼叫。

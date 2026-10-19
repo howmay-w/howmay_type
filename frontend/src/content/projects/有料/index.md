@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/有料/wordmark.webp"
   source: "auto"
   ink: 0.788
+  reviewed: true
 ---
 
 想大力稱讚，但又怕多講多錯時，就可以使用「有料」。\

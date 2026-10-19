@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/高級大人/wordmark.webp"
   source: "auto"
   ink: 0.206
+  reviewed: true
 ---
 
 Lv26 初級大人的幾日過年行程：

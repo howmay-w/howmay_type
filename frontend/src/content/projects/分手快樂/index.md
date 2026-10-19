@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#c65d85"
   ink: 0.294
+  redo: true
 ---
 
 某位觀眾的點字，\

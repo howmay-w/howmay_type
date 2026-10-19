@@ -33,6 +33,8 @@ wordmark:
   src: "/projects/我跟你講/wordmark.webp"
   source: "auto"
   ink: 0.074
+  scale: 0.9
+  reviewed: true
 ---
 
 當某人不自覺想要在對話中教育你的時候：

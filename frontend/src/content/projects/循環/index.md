@@ -21,4 +21,6 @@ wordmark:
   src: "/projects/循環/wordmark.webp"
   source: "cutout"
   ink: 0.46
+  scale: 1.15
+  reviewed: true
 ---

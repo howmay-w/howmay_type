@@ -27,6 +27,8 @@ wordmark:
   src: "/projects/換氣/wordmark.webp"
   source: "cutout"
   ink: 0.561
+  scale: 1.1
+  reviewed: true
 ---
 
 大家！忙碌久了記得要起來換氣ㄛ！\

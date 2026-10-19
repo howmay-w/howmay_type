@@ -28,6 +28,7 @@ wordmark:
   source: "cutout"
   accent: "#363f9c"
   ink: 0.685
+  redo: true
 ---
 
 獻給週一ㄉ你。

@@ -28,6 +28,8 @@ wordmark:
   source: "cutout"
   accent: "#3f2193"
   ink: 0.401
+  scale: 0.95
+  reviewed: true
 ---
 
 嘗試了噴漆模板字，也順便做看看金屬板跟噴漆出來的感覺。\

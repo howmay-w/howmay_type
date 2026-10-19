@@ -34,6 +34,8 @@ wordmark:
   source: "auto"
   accent: "#f15d5e"
   ink: 0.368
+  scale: 1.15
+  reviewed: true
 ---
 
 最近在準備考英文檢定，好難喔🥲

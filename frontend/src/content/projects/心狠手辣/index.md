@@ -34,6 +34,7 @@ wordmark:
   source: "auto"
   accent: "#e14e82"
   ink: 0.553
+  redo: true
 ---
 
 過年啦。

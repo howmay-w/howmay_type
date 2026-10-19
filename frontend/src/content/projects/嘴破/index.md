@@ -24,6 +24,7 @@ wordmark:
   source: "cutout"
   accent: "#db5e87"
   ink: 0.307
+  redo: true
 ---
 
 Q：有什麼比嘴吧破了個洞還要痛苦ㄉ？\

@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/戲劇化/wordmark.webp"
   source: "auto"
   ink: 0.259
+  scale: 1.05
+  reviewed: true
 ---
 
 最近台北ㄉ天氣有點戲劇化🫠

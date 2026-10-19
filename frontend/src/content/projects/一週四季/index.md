@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/一週四季/wordmark.webp"
   source: "auto"
   ink: 0.323
+  scale: 0.8
+  reviewed: true
 ---
 
 五月台北，一週四季。

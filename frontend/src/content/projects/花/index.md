@@ -33,9 +33,11 @@ tags: ["flower", "はな", "手繪特效", "3D", "🌷"]
 wordmark:
   src: "/projects/花/wordmark.webp"
   source: "auto"
-  hidden: true
   accent: "#8d8bca"
   ink: 0.082
+  scale: 1.55
+  hidden: true
+  redo: true
 ---
 
 今天洗澡時突然想試試看，\

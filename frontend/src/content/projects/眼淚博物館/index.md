@@ -23,6 +23,7 @@ wordmark:
   src: "/projects/眼淚博物館/wordmark.webp"
   source: "cutout"
   ink: 0.473
+  reviewed: true
 ---
 
 🎶不是每次低潮的來去，都與挫折有關🎶\

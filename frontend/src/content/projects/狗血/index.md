@@ -27,6 +27,8 @@ wordmark:
   src: "/projects/狗血/wordmark.webp"
   source: "auto"
   ink: 0.499
+  scale: 1.1
+  reviewed: true
 ---
 
 隨著長大見識越來越多，\

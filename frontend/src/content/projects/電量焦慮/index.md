@@ -23,6 +23,7 @@ wordmark:
   src: "/projects/電量焦慮/wordmark.webp"
   source: "auto"
   ink: 0.434
+  reviewed: true
 ---
 
 最近發現跟男友非常不同的價值觀/習慣是有沒有電量焦慮。

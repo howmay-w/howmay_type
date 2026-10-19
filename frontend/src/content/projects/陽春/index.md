@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/陽春/wordmark.webp"
   source: "cutout"
   ink: 0.115
+  scale: 1.25
+  reviewed: true
 ---
 
 很喜歡以「陽春」取代基本甚至簡陋的用法。優雅而不失禮貌。

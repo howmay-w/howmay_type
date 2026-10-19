@@ -27,6 +27,8 @@ wordmark:
   src: "/projects/還行/wordmark.webp"
   source: "auto"
   ink: 0.376
+  scale: 1.2
+  reviewed: true
 ---
 
 普普通通ㄉ狀態，\

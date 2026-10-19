@@ -33,6 +33,8 @@ wordmark:
   src: "/projects/慘兮兮/wordmark.webp"
   source: "cutout"
   ink: 0.112
+  scale: 1.35
+  reviewed: true
 ---
 
 年假旅遊時突然中標腸胃炎，慘兮兮。

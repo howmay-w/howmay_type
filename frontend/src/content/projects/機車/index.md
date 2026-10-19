@@ -30,6 +30,7 @@ wordmark:
   src: "/projects/機車/wordmark.webp"
   source: "auto"
   ink: 0.43
+  reviewed: true
 ---
 
 應是死語但我最近好愛講，\

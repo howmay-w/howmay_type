@@ -26,6 +26,8 @@ wordmark:
   source: "cutout"
   accent: "#0e1c99"
   ink: 0.38
+  scale: 1.05
+  reviewed: true
 ---
 
 其實我不太常被靜電電到ㄋ。\

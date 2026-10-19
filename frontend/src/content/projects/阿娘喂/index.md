@@ -28,9 +28,10 @@ tags: ["死語","台語","omg","😱"]
 wordmark:
   src: "/projects/阿娘喂/wordmark.webp"
   source: "auto"
-  hidden: true
   accent: "#000617"
   ink: 0.184
+  hidden: true
+  redo: true
 ---
 
 死語復興運動

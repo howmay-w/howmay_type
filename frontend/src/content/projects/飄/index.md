@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/飄/wordmark.webp"
   source: "cutout"
   ink: 0.16
+  scale: 1.6
+  reviewed: true
 ---
 
 一直覺得「貼文飄出去了。」實在是頗貼切又可愛的說法。

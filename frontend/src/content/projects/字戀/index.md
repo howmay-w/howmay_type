@@ -15,6 +15,7 @@ wordmark:
   source: "cutout"
   accent: "#504636"
   ink: 0.23
+  redo: true
 ---
 
 其實畫了兩張ㄛ！

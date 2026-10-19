@@ -34,6 +34,8 @@ wordmark:
   source: "auto"
   accent: "#776033"
   ink: 0.332
+  scale: 1.15
+  reviewed: true
 ---
 
 本月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是「怪談」，農曆七月也快到ㄌ，充滿故事的時節。

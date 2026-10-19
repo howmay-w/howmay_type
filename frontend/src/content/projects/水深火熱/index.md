@@ -27,6 +27,8 @@ wordmark:
   src: "/projects/水深火熱/wordmark.webp"
   source: "auto"
   ink: 0.367
+  scale: 0.9
+  reviewed: true
 ---
 
 最近是忙碌ㄉ日子，水深不深不曉得，但肯定很熱。\

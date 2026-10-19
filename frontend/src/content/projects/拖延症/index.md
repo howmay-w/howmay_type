@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/拖延症/wordmark.webp"
   source: "cutout"
   ink: 0.727
+  redo: true
 ---
 
 經（個人）實驗證實，\

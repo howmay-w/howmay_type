@@ -23,6 +23,7 @@ wordmark:
   source: "auto"
   accent: "#dfb0b5"
   ink: 0.123
+  redo: true
 ---
 
 🎶曖～昧～讓人受盡～委屈～🎶\

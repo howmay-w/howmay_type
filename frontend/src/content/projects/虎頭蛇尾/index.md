@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/虎頭蛇尾/wordmark.webp"
   source: "cutout"
   ink: 0.482
+  reviewed: true
 ---
 
 總是對新鮮事充滿熱情的me:

@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/我還好/wordmark.webp"
   source: "auto"
   ink: 0.396
+  redo: true
 ---
 
 成熟的大人不說「不喜歡」，\

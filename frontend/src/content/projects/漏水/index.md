@@ -28,6 +28,7 @@ wordmark:
   source: "auto"
   accent: "#14491e"
   ink: 0.563
+  redo: true
 ---
 
 祝福大家一輩子都不要再遇到

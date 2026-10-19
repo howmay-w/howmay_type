@@ -19,6 +19,8 @@ wordmark:
   src: "/projects/數位藝術/wordmark.webp"
   source: "auto"
   ink: 0.585
+  scale: 1.05
+  reviewed: true
 ---
 
 純手繪數位藝術。（真的純用手，因為忘了帶 Apple Pencil）

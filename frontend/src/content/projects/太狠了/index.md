@@ -17,6 +17,7 @@ wordmark:
   src: "/projects/太狠了/wordmark.webp"
   source: "auto"
   ink: 0.424
+  reviewed: true
 ---
 
 注意看，

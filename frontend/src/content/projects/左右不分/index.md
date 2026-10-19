@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/左右不分/wordmark.webp"
   source: "cutout"
   ink: 0.575
+  scale: 0.95
+  reviewed: true
 ---
 
 最近大家應該都很混亂，\

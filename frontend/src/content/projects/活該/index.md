@@ -31,6 +31,8 @@ wordmark:
   src: "/projects/活該/wordmark.webp"
   source: "auto"
   ink: 0.433
+  scale: 1.05
+  reviewed: true
 ---
 
 跟大家分享男友的活該故事：

@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#1f5618"
   ink: 0.557
+  redo: true
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是飲料／甜品基底，下個月再來加料。無糖茶派的我選了四季春。

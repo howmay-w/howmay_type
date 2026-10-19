@@ -28,6 +28,7 @@ wordmark:
   source: "auto"
   accent: "#fba325"
   ink: 0.441
+  redo: true
 ---
 
 身為一個台北人：

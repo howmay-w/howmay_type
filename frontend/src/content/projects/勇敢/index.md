@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#e0b4a4"
   ink: 0.285
+  redo: true
 ---
 
 台灣的 metoo 來得太晚。每天看到新的故事，又有人揭開舊的傷口。

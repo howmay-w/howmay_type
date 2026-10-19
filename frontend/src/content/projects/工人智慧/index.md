@@ -30,6 +30,7 @@ wordmark:
   source: "auto"
   accent: "#6d51ef"
   ink: 0.611
+  reviewed: true
 ---
 
 「哦這個是我們用工人智慧做的！」

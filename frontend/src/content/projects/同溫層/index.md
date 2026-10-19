@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#e4a6e2"
   ink: 0.392
+  redo: true
 ---
 
 一直待在同溫層雖然可恥，但舒適。

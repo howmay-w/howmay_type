@@ -30,6 +30,7 @@ wordmark:
   source: "auto"
   accent: "#2811b2"
   ink: 0.714
+  redo: true
 ---
 
 這幾天人在花蓮！趁最後一晚把 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 花蓮限定主題第三篇發完，也正式實體展出了（最後一張）！朦朧圓潤巨大神秘的抹香鯨。

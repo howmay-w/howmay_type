@@ -14,4 +14,6 @@ wordmark:
   src: "/projects/餓/wordmark.webp"
   source: "auto"
   ink: 0.273
+  scale: 1.05
+  reviewed: true
 ---

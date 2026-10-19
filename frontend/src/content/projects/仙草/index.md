@@ -18,6 +18,7 @@ wordmark:
   src: "/projects/仙草/wordmark.webp"
   source: "auto"
   ink: 0.507
+  reviewed: true
 ---
 
 以仙草搭配 [@traditional_label_lab](https://www.instagram.com/traditional_label_lab/) 老師的奶茶！

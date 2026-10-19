@@ -31,6 +31,8 @@ wordmark:
   src: "/projects/監控/wordmark.webp"
   source: "cutout"
   ink: 0.258
+  scale: 1.15
+  reviewed: true
 ---
 
 我家的貓貓 be like:

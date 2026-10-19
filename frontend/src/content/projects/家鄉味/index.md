@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/家鄉味/wordmark.webp"
   source: "cutout"
   ink: 0.437
+  redo: true
 ---
 
 家的味道如果用字呈現，那或許是柑仔蜜。

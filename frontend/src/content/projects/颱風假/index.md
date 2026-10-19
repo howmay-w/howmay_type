@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/颱風假/wordmark.webp"
   source: "cutout"
   ink: 0.711
+  redo: true
 ---
 
 突然獲得兩天颱風假令人心情複雜。

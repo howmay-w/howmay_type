@@ -27,6 +27,8 @@ wordmark:
   src: "/projects/視力檢查/wordmark.webp"
   source: "cutout"
   ink: 0.248
+  scale: 0.9
+  reviewed: true
 ---
 
 這週去文博會！\

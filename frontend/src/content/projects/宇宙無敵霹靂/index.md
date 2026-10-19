@@ -28,6 +28,8 @@ wordmark:
   source: "auto"
   accent: "#ba9254"
   ink: 0.332
+  scale: 0.8
+  reviewed: true
 ---
 
 最近以前的流行不知不覺地重新出現在身邊？

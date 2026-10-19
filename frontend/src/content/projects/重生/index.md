@@ -23,6 +23,8 @@ wordmark:
   src: "/projects/重生/wordmark.webp"
   source: "auto"
   ink: 0.327
+  scale: 1.35
+  reviewed: true
 ---
 
 冷天洗完熱水澡ㄉ感覺：

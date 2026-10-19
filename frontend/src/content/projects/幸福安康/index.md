@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#c39368"
   ink: 0.365
+  reviewed: true
 ---
 
 過年持續說好話（？\

@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/吃壞肚子/wordmark.webp"
   source: "auto"
   ink: 0.324
+  reviewed: true
 ---
 
 中午好像吃壞肚子嗚嗚\

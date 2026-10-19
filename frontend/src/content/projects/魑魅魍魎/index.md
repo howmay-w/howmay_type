@@ -18,6 +18,7 @@ wordmark:
   src: "/projects/魑魅魍魎/wordmark.webp"
   source: "auto"
   ink: 0.518
+  reviewed: true
 ---
 
 你的手機應該沒有壞掉，應該📺\

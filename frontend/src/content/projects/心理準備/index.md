@@ -30,6 +30,7 @@ wordmark:
   source: "auto"
   accent: "#d25d79"
   ink: 0.45
+  reviewed: true
 ---
 
 對於 2024 不到幾週就要到來，\

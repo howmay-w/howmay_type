@@ -21,6 +21,7 @@ wordmark:
   source: "cutout"
   accent: "#2d2618"
   ink: 0.287
+  reviewed: true
 ---
 
 用 Rhythm 的筆畫拼出金牛座！

@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/熱浪/wordmark.webp"
   source: "cutout"
   ink: 0.329
+  scale: 1.1
+  reviewed: true
 ---
 
 怎麼記得小時候氣溫超過 30°C 就算是新聞ㄌ？

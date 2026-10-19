@@ -30,6 +30,8 @@ wordmark:
   source: "auto"
   accent: "#115544"
   ink: 0.464
+  scale: 1.05
+  reviewed: true
 ---
 
 覺得「免洗」這個詞相當厲害。

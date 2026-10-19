@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/爸比/wordmark.webp"
   source: "auto"
   ink: 0.417
+  reviewed: true
 ---
 
 今年 24 歲，依然叫我爸「爸比」。

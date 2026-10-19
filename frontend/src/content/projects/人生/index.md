@@ -26,6 +26,7 @@ wordmark:
   source: "auto"
   accent: "#868dbb"
   ink: 0.102
+  redo: true
 ---
 
 點字時大家投票想看黑暗ㄉ人生，\

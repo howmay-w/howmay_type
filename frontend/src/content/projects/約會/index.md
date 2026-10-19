@@ -26,6 +26,7 @@ wordmark:
   source: "auto"
   accent: "#e7a1e8"
   ink: 0.562
+  redo: true
 ---
 
 跟男友交往（差一個月）滿十年，\

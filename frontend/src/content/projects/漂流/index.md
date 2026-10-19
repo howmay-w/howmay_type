@@ -18,6 +18,8 @@ wordmark:
   src: "/projects/漂流/wordmark.webp"
   source: "cutout"
   ink: 0.261
+  scale: 1.4
+  reviewed: true
 ---
 
 漂流，讓聲音和視覺帶領著感受。

@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/EMO/wordmark.webp"
   source: "auto"
   ink: 0.605
+  scale: 1.25
+  reviewed: true
 ---
 
 又下雨ㄌ

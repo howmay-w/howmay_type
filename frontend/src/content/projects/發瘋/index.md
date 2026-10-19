@@ -31,6 +31,8 @@ wordmark:
   src: "/projects/發瘋/wordmark.webp"
   source: "auto"
   ink: 0.604
+  scale: 1.1
+  reviewed: true
 ---
 
 這個溫度真的發瘋⋯⋯\

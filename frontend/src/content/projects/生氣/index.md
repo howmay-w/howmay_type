@@ -26,6 +26,8 @@ wordmark:
   source: "auto"
   accent: "#291601"
   ink: 0.2
+  scale: 1.35
+  redo: true
 ---
 
 發個積欠已久的 5 月 whatzurtype

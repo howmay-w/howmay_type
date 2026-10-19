@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/毛很多/wordmark.webp"
   source: "auto"
   ink: 0.335
+  redo: true
 ---
 
 吸貓心得。

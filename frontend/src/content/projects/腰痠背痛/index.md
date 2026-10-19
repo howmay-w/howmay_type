@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/腰痠背痛/wordmark.webp"
   source: "auto"
   ink: 0.462
+  redo: true
 ---
 
 🔔二十五歲溫馨提醒🔔\

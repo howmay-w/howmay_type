@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/下雨/wordmark.webp"
   source: "auto"
   ink: 0.816
+  redo: true
 ---
 
 下班又忘記帶傘ㄌ，傷腦筋。\

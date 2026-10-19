@@ -22,6 +22,7 @@ wordmark:
   source: "auto"
   accent: "#42090a"
   ink: 0.426
+  redo: true
 ---
 
 又來到和平紀念日，不一樣的是，最近有越來越多人開始補課台灣史。

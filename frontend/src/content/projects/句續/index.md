@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/句續/wordmark.webp"
   source: "auto"
   ink: 0.48
+  reviewed: true
 ---
 
 感覺比起「繼續」，更常聽到大家講「句續」。

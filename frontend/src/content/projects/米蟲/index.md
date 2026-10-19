@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/米蟲/wordmark.webp"
   source: "cutout"
   ink: 0.734
+  scale: 1.4
+  reviewed: true
 ---
 
 人生總有些時候只想當米蟲，例如現在。

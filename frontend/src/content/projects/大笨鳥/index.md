@@ -20,6 +20,7 @@ wordmark:
   source: "auto"
   accent: "#23262c"
   ink: 0.398
+  reviewed: true
 ---
 
 沒人教，但全世界都叫他大笨鳥。

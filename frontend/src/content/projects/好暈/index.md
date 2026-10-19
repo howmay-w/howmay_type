@@ -28,6 +28,7 @@ wordmark:
   source: "cutout"
   accent: "#100406"
   ink: 0.228
+  reviewed: true
 ---
 
 暈好多天ㄌ，好暈好暈\

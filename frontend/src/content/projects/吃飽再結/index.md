@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/吃飽再結/wordmark.webp"
   source: "auto"
   ink: 0.614
+  reviewed: true
 ---
 
 最近去幾家小吃店，老闆都說「吃飽再結」。

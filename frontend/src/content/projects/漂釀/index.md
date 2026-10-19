@@ -34,6 +34,7 @@ wordmark:
   src: "/projects/漂釀/wordmark.webp"
   source: "cutout"
   ink: 0.295
+  reviewed: true
 ---
 
 Adobe Firefly 已經可以上傳底稿來生成圖像，還可以挑選視覺風格、色調、光影甚至相機角度⋯⋯，可控程度大大超過現階段ㄉMidjourney ㄋ。

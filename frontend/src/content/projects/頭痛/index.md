@@ -14,4 +14,5 @@ wordmark:
   src: "/projects/頭痛/wordmark.webp"
   source: "auto"
   ink: 0.609
+  reviewed: true
 ---

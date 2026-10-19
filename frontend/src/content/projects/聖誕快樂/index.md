@@ -28,6 +28,7 @@ wordmark:
   source: "auto"
   accent: "#322320"
   ink: 0.322
+  redo: true
 ---
 
 🎄快閃抽獎∣已截止🎄\

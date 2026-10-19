@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/期中地獄/wordmark.webp"
   source: "cutout"
   ink: 0.356
+  scale: 1.05
+  reviewed: true
 ---
 
 期中還沒走，期末就要來ㄌ。\

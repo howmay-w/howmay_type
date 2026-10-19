@@ -26,6 +26,7 @@ wordmark:
   source: "auto"
   accent: "#282320"
   ink: 0.644
+  reviewed: true
 ---
 
 長大以後才發現別人家的湯匙都不叫做「調羹」，大驚訝:o

@@ -24,6 +24,7 @@ wordmark:
   source: "cutout"
   accent: "#2a251d"
   ink: 0.593
+  reviewed: true
 ---
 
 一直覺得陰德是ㄍ有趣的概念，是大家都能理解的、不可見的價值系統。\

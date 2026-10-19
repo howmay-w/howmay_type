@@ -31,6 +31,8 @@ wordmark:
   src: "/projects/菜雞/wordmark.webp"
   source: "auto"
   ink: 0.399
+  scale: 1.1
+  reviewed: true
 ---
 
 Me.

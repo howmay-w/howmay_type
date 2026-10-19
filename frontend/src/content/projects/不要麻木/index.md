@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/不要麻木/wordmark.webp"
   source: "auto"
   ink: 0.469
+  scale: 0.95
+  reviewed: true
 ---
 
 「請不要移開雙眼、不要停止思考、不要麻木不仁。」

@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/民生社區/wordmark.webp"
   source: "cutout"
   ink: 0.717
+  redo: true
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是用字介紹自己的家，試著畫了飽滿圓潤而有點年代感的字。

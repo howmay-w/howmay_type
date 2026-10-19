@@ -19,6 +19,8 @@ wordmark:
   src: "/projects/困擾/wordmark.webp"
   source: "cutout"
   ink: 0.471
+  scale: 1.15
+  reviewed: true
 ---
 
 有些事情並不討厭，但很困擾。\

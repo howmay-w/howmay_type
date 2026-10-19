@@ -34,6 +34,7 @@ wordmark:
   source: "auto"
   accent: "#322162"
   ink: 0.615
+  reviewed: true
 ---
 
 讓商品變得吸引人的魔法🪄

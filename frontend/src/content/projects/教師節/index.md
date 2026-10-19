@@ -21,4 +21,6 @@ wordmark:
   src: "/projects/教師節/wordmark.webp"
   source: "cutout"
   ink: 0.616
+  scale: 0.9
+  reviewed: true
 ---

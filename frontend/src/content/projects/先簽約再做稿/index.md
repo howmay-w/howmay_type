@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/先簽約再做稿/wordmark.webp"
   source: "auto"
   ink: 0.332
+  redo: true
 ---
 
 接案鬼故事聽多了，有句箴言想跟大家分享：「先簽約，再做稿。」

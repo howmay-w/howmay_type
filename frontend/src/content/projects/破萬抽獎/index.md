@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#010100"
   ink: 0.198
+  redo: true
 ---
 
 ☘️自己賀破萬！來抽獎☘️

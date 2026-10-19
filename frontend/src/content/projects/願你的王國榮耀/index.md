@@ -22,6 +22,7 @@ wordmark:
   source: "cutout"
   accent: "#d2aa38"
   ink: 0.445
+  redo: true
 ---
 
 [好聽](https://youtu.be/zmsnipltJTM)，與各位分享。

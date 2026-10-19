@@ -30,9 +30,10 @@ tags: ["whatzurtype","字字字設計串連","keelungriver","🏞️"]
 wordmark:
   src: "/projects/基隆河/wordmark.webp"
   source: "auto"
-  hidden: true
   accent: "#0498fb"
   ink: 0.138
+  hidden: true
+  redo: true
 ---
 
 這次 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 的挑戰是認領一條河！

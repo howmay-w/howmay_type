@@ -30,6 +30,7 @@ wordmark:
   source: "auto"
   accent: "#656686"
   ink: 0.071
+  redo: true
 ---
 
 午覺睡不著算是一種失眠ㄇ？

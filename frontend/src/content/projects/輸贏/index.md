@@ -30,6 +30,8 @@ wordmark:
   source: "cutout"
   accent: "#42332b"
   ink: 0.436
+  scale: 1.25
+  reviewed: true
 ---
 
 「輸贏」有種「誰怕誰ㄚ！」的幼稚感，覺得莫名可愛。

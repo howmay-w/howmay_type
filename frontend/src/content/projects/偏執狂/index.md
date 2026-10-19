@@ -30,6 +30,8 @@ wordmark:
   source: "cutout"
   accent: "#db5d5f"
   ink: 0.16
+  scale: 1.05
+  reviewed: true
 ---
 
 送給提案這三個字給我ㄉ朋

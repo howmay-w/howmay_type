@@ -34,6 +34,7 @@ wordmark:
   source: "auto"
   accent: "#1c1e24"
   ink: 0.464
+  redo: true
 ---
 
 就好冷。冷到什麼事都做不太好。大家保重。

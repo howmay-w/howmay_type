@@ -28,6 +28,8 @@ wordmark:
   source: "auto"
   accent: "#673419"
   ink: 0.336
+  scale: 1.35
+  reviewed: true
 ---
 
 來自在英國闖蕩ㄉ厲害學妹點字：「因為遭遇各種困難，覺得這兩個字很有意思。」

@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/急需冷氣/wordmark.webp"
   source: "auto"
   ink: 0.458
+  redo: true
 ---
 
 今年初夏，房間的冷氣突然打不開，經搶救宣告不治。\

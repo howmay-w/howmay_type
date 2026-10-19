@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/錯覺/wordmark.webp"
   source: "cutout"
   ink: 0.28
+  redo: true
 ---
 
 如果你看到字了，那可能是錯覺ㄅ。\

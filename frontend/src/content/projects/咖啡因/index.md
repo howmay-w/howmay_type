@@ -26,6 +26,8 @@ wordmark:
   source: "cutout"
   accent: "#d3c566"
   ink: 0.236
+  scale: 1.25
+  reviewed: true
 ---
 
 每天睡前都很期待明天早上可以喝茶或咖啡。算是成癮ㄅ。

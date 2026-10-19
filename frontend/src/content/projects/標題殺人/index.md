@@ -32,8 +32,10 @@ tags: ["clickbait","📰"]
 wordmark:
   src: "/projects/標題殺人/wordmark.webp"
   source: "auto"
-  hidden: true
   ink: 0.446
+  scale: 0.95
+  hidden: true
+  redo: true
 ---
 
 俗諺說筆比劍更有力量，\

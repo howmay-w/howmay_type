@@ -33,6 +33,8 @@ wordmark:
   src: "/projects/顏文字/wordmark.webp"
   source: "auto"
   ink: 0.132
+  scale: 0.85
+  reviewed: true
 ---
 
 ( ´•̥̥̥ω•̥̥̥` ) (;´༎ຶД༎ຶ`)\

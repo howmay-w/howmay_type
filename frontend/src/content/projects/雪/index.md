@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/雪/wordmark.webp"
   source: "cutout"
   ink: 0.799
+  scale: 0.65
+  reviewed: true
 ---
 
 貼文發出來的時候，我應該已經在北海道、\

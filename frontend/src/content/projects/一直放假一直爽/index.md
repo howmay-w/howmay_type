@@ -25,6 +25,8 @@ wordmark:
   src: "/projects/一直放假一直爽/wordmark.webp"
   source: "auto"
   ink: 0.39
+  scale: 0.9
+  reviewed: true
 ---
 
 一時放假一時爽，

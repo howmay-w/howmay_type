@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/學測就上/wordmark.webp"
   source: "cutout"
   ink: 0.432
+  redo: true
 ---
 
 學測倒數一個月了，緊張刺激。\

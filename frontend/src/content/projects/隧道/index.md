@@ -21,6 +21,7 @@ wordmark:
   src: "/projects/隧道/wordmark.webp"
   source: "auto"
   ink: 0.212
+  redo: true
 ---
 
 日子飛快，太快

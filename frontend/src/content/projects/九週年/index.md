@@ -26,6 +26,7 @@ wordmark:
   source: "auto"
   accent: "#fae6b8"
   ink: 0.218
+  redo: true
 ---
 
 前幾天跟男友交往滿九週年！

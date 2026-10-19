@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#070908"
   ink: 0.227
+  reviewed: true
 ---
 
 用途廣泛ㄉ詞，但還是不要太常遇到比較好🫠

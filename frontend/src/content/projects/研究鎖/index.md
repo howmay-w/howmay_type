@@ -19,4 +19,6 @@ wordmark:
   src: "/projects/研究鎖/wordmark.webp"
   source: "cutout"
   ink: 0.392
+  scale: 0.95
+  reviewed: true
 ---

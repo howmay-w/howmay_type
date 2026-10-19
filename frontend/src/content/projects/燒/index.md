@@ -34,6 +34,8 @@ wordmark:
   source: "cutout"
   accent: "#c74627"
   ink: 0.303
+  scale: 1.6
+  reviewed: true
 ---
 
 用「燒」來比喻容易點燃、也有會忽然熄滅的購物慾，\

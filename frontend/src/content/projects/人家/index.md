@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/人家/wordmark.webp"
   source: "cutout"
   ink: 0.576
+  reviewed: true
 ---
 
 覺得「人家」也是個有趣的詞。\

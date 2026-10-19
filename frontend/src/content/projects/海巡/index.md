@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/海巡/wordmark.webp"
   source: "auto"
   ink: 0.071
+  redo: true
 ---
 
 颱風平安。

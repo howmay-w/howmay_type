@@ -30,6 +30,7 @@ wordmark:
   source: "auto"
   accent: "#243ba1"
   ink: 0.112
+  redo: true
 ---
 
 今天月經來第二天，好痛哦😖

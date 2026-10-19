@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/忙碌/wordmark.webp"
   source: "auto"
   ink: 0.694
+  scale: 1.05
+  reviewed: true
 ---
 
 最近少發文，因為真的好忙好忙ㄛ。

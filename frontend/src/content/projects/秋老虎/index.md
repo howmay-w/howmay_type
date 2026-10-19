@@ -34,6 +34,8 @@ wordmark:
   source: "cutout"
   accent: "#dfcfb4"
   ink: 0.391
+  scale: 1.55
+  reviewed: true
 ---
 
 快熱死，不是十月了ㄇ⋯\

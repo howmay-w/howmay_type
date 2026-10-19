@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/被盜/wordmark.webp"
   source: "auto"
   ink: 0.151
+  scale: 1.05
+  reviewed: true
 ---
 
 跟大家說一件前陣子有點心煩的事情，\

@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/枕頭成癮/wordmark.webp"
   source: "auto"
   ink: 0.379
+  reviewed: true
 ---
 
 又好冷，早上起不來🫠

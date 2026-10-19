@@ -27,6 +27,8 @@ wordmark:
   src: "/projects/盤子/wordmark.webp"
   source: "auto"
   ink: 0.27
+  scale: 1.2
+  reviewed: true
 ---
 
 在日本ㄉ我即便是盤子，也是一枚快樂幸福ㄉ盤子！

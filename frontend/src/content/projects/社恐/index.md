@@ -27,6 +27,8 @@ wordmark:
   src: "/projects/社恐/wordmark.webp"
   source: "cutout"
   ink: 0.618
+  scale: 1.1
+  reviewed: true
 ---
 
 覺得社恐比起一種性格，\

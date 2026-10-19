@@ -28,9 +28,10 @@ tags: ["whatzurtype","Kukhang","字字字設計串連","🦀"]
 wordmark:
   src: "/projects/龜吼漁港/wordmark.webp"
   source: "auto"
-  hidden: true
   accent: "#b58769"
   ink: 0.279
+  hidden: true
+  redo: true
 ---
 
 這個月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是港，因為家人喜歡吃海鮮，每次出遊常常把漁港排進景點。

@@ -19,6 +19,8 @@ wordmark:
   src: "/projects/傷腦筋/wordmark.webp"
   source: "auto"
   ink: 0.363
+  scale: 1.15
+  reviewed: true
 ---
 
 明天就要 25 歲了，傷腦筋😵‍💫

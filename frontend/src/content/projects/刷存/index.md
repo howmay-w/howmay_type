@@ -32,6 +32,7 @@ wordmark:
   source: "auto"
   accent: "#9ea9d1"
   ink: 0.279
+  redo: true
 ---
 
 會需要刷存，\
