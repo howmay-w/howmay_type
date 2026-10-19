@@ -16,7 +16,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const contentProjects = path.resolve(__dirname, "../content/projects");
 const pageFile = path.join(__dirname, "wordmark-admin.html");
-const EDITABLE = new Set(["reviewed", "hidden", "scale", "chars", "redo"]);
+const EDITABLE = new Set(["reviewed", "hidden", "scale", "chars", "redo", "needsImage"]);
 // 待重新去背的原圖匯出到這裡，檔名 = 作品資料夾名稱，wut-collage-tool 匯出時會變成「名稱_white.png」
 const REDO_DIR = path.join(os.homedir(), "Desktop", "字牆重新去背");
 
@@ -51,7 +51,7 @@ function readWordmark(md) {
   return out;
 }
 function writeWordmark(md, fields) {
-  const order = ["src", "source", "accent", "ink", "chars", "size", "scale", "hidden", "redo", "reviewed"];
+  const order = ["src", "source", "accent", "ink", "chars", "size", "scale", "hidden", "redo", "needsImage", "reviewed"];
   const keys = [...order.filter((k) => k in fields), ...Object.keys(fields).filter((k) => !order.includes(k))];
   const block = `wordmark:\n${keys.map((k) => `  ${k}: ${JSON.stringify(fields[k])}\n`).join("")}`;
   if (BLOCK_RE.test(md)) return md.replace(BLOCK_RE, block);
@@ -112,6 +112,18 @@ export function wordmarkAdminPlugin() {
     configureServer(server) {
       server.middlewares.use("/__wordmarks", async (req, res) => {
         try {
+          // 讓本機的 wut-collage-tool（字牆模式）可以直接讀清單、送回換圖；只接受 localhost 來源
+          const origin = req.headers.origin;
+          if (origin && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+            res.setHeader("Access-Control-Allow-Origin", origin);
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            res.setHeader("Vary", "Origin");
+          }
+          if (req.method === "OPTIONS") {
+            res.statusCode = 204;
+            return res.end();
+          }
           const url = new URL(req.url ?? "/", "http://localhost");
           if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
             return send(res, 200, fs.readFileSync(pageFile, "utf8"), "text/html; charset=utf-8");
@@ -153,6 +165,7 @@ export function wordmarkAdminPlugin() {
             if (Number.isFinite(ink)) current.ink = Math.round(ink * 1000) / 1000;
             delete current.hidden;
             delete current.redo;
+            delete current.needsImage;
             delete current.reviewed;
             fs.writeFileSync(mdFile, writeWordmark(md, current));
             return send(res, 200, { ok: true, wordmark: current });

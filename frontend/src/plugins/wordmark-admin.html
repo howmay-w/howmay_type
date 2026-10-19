@@ -18,7 +18,8 @@
   .count b.todo { color: var(--accent); }
   .progress { display: flex; width: 160px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
   .progress span:first-child { background: var(--ok); }
-  .progress span:last-child { background: var(--warn); }
+  #pRedo { background: var(--warn); }
+  #pSwap { background: var(--bad); }
   .seg { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
   .seg button { border: 0; border-radius: 0; }
   .seg button + button { border-left: 1px solid var(--line); }
@@ -67,13 +68,14 @@
 <body>
 <header>
   <h1>字圖管理</h1>
-  <span class="count">待分類 <b class="todo" id="cTodo">–</b> ／ 已分類 <b id="cClassified">–</b>（確認 <b id="cDone">–</b>、待重新去背 <b id="cRedo">–</b>）／ 隱藏 <b id="cHidden">–</b> ／ 共 <b id="cAll">–</b></span>
-  <span class="progress" aria-hidden="true"><span id="pDone"></span><span id="pRedo"></span></span>
+  <span class="count">待分類 <b class="todo" id="cTodo">–</b> ／ 已分類 <b id="cClassified">–</b>（確認 <b id="cDone">–</b>、待重新去背 <b id="cRedo">–</b>、需要換圖 <b id="cSwap">–</b>）／ 隱藏 <b id="cHidden">–</b> ／ 共 <b id="cAll">–</b></span>
+  <span class="progress" aria-hidden="true"><span id="pDone"></span><span id="pRedo"></span><span id="pSwap"></span></span>
   <div class="seg" id="filter">
     <button data-f="todo" class="on">待分類</button>
     <button data-f="done">已確認</button>
     <button data-f="hidden">隱藏</button>
     <button data-f="redo">待重新去背</button>
+    <button data-f="swap">需要換圖</button>
     <button data-f="all">全部</button>
   </div>
   <select id="sort" aria-label="排序">
@@ -113,6 +115,7 @@ function flagsOf(p) {
   if (wm.reviewed) f.push(["ok", "已確認"]);
   if (wm.hidden) f.push(["bad", "隱藏中"]);
   if (wm.redo) f.push(["warn", "待重新去背"]);
+  if (wm.needsImage) f.push(["bad", "需要換圖"]);
   f.push(wm.source === "auto" ? ["warn", "自動去背"] : ["", "手作去背"]);
   if (aspect < 0.35 || aspect > 3.5) f.push(["warn", "長寬比極端"]);
   if ((wm.ink ?? 0.3) < 0.1) f.push(["warn", "墨量很少"]);
@@ -141,11 +144,14 @@ function counts() {
   // 已分類 = 確認過，或標記了「待重新去背」（之後換圖會自動回到待分類）
   const done = all.filter((p) => p.wordmark.reviewed).length;
   const redo = all.filter((p) => !p.wordmark.reviewed && p.wordmark.redo).length;
-  $("cTodo").textContent = all.length - done - redo;
+  const swap = all.filter((p) => !p.wordmark.reviewed && !p.wordmark.redo && p.wordmark.needsImage).length;
+  $("cTodo").textContent = all.length - done - redo - swap;
   $("cDone").textContent = done;
-  $("cClassified").textContent = done + redo;
+  $("cSwap").textContent = swap;
+  $("cClassified").textContent = done + redo + swap;
   $("pDone").style.width = `${(done / Math.max(1, all.length)) * 100}%`;
   $("pRedo").style.width = `${(redo / Math.max(1, all.length)) * 100}%`;
+  $("pSwap").style.width = `${(swap / Math.max(1, all.length)) * 100}%`;
   $("cHidden").textContent = all.filter((p) => p.wordmark.hidden).length;
   $("cRedo").textContent = all.filter((p) => p.wordmark.redo).length;
   $("exportRedo").textContent = `匯出待重新去背原圖（${all.filter((p) => p.wordmark.redo).length}）`;
@@ -154,7 +160,7 @@ function render(keepSlug) {
   counts();
   const q = $("q").value.trim();
   view = all.filter((p) =>
-    (filter === "all" || (filter === "todo" && !p.wordmark.reviewed && !p.wordmark.redo) || (filter === "done" && p.wordmark.reviewed) || (filter === "hidden" && p.wordmark.hidden) || (filter === "redo" && p.wordmark.redo)) &&
+    (filter === "all" || (filter === "todo" && !p.wordmark.reviewed && !p.wordmark.redo && !p.wordmark.needsImage) || (filter === "done" && p.wordmark.reviewed) || (filter === "hidden" && p.wordmark.hidden) || (filter === "redo" && p.wordmark.redo) || (filter === "swap" && p.wordmark.needsImage)) &&
     (!q || p.title.includes(q) || p.slug.includes(q)));
   const s = $("sort").value;
   view.sort(s === "date" ? (a, b) => b.date.localeCompare(a.date) : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date));

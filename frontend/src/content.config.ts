@@ -66,6 +66,9 @@ const projects = defineCollection({
         hidden: z.boolean().optional(),
         // 已在字圖管理頁確認過；換圖後會自動變回未確認
         reviewed: z.boolean().optional(),
+        // 管理頁的分類標記：待重新去背、需要換圖（去背救不回來，要找別的圖）
+        redo: z.boolean().optional(),
+        needsImage: z.boolean().optional(),
       })
       .optional(),
     pubDate: z.coerce.date().optional(),
