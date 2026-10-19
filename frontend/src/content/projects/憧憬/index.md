@@ -25,7 +25,8 @@ tags: ["relish","🍁"]
 wordmark:
   src: "/projects/憧憬/wordmark.webp"
   source: "auto"
-  accent: "#d89290"
+  accent: "#d99391"
+  ink: 0.299
 ---
 
 擁有憧憬，是最美好的一種心情。

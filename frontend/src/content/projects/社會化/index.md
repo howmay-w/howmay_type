@@ -24,7 +24,7 @@ tags: ["plz","Socialization","🤦‍♂️"]
 wordmark:
   src: "/projects/社會化/wordmark.webp"
   source: "auto"
-  accent: "#131210"
+  ink: 0.348
 ---
 
 來自一位不具名現役高中教師的怒吼。

@@ -26,7 +26,8 @@ tags: ["leak","💧"]
 wordmark:
   src: "/projects/漏水/wordmark.webp"
   source: "auto"
-  accent: "#13481d"
+  accent: "#14491e"
+  ink: 0.563
 ---
 
 祝福大家一輩子都不要再遇到

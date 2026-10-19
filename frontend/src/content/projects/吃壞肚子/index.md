@@ -26,7 +26,7 @@ tags: ["🤢"]
 wordmark:
   src: "/projects/吃壞肚子/wordmark.webp"
   source: "auto"
-  accent: "#dcdcdc"
+  ink: 0.324
 ---
 
 中午好像吃壞肚子嗚嗚\

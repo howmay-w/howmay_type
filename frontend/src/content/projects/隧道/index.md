@@ -20,7 +20,7 @@ tags: ["tunnel","穿越","🚇"]
 wordmark:
   src: "/projects/隧道/wordmark.webp"
   source: "auto"
-  accent: "#e9efe3"
+  ink: 0.212
 ---
 
 日子飛快，太快

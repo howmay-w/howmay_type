@@ -24,7 +24,8 @@ hoverVideo:
 wordmark:
   src: "/projects/儲存空間不足/wordmark.webp"
   source: "auto"
-  accent: "#91a259"
+  accent: "#91a25a"
+  ink: 0.396
 ---
 
 太久沒整理檔案⋯

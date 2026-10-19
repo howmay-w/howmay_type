@@ -24,7 +24,8 @@ tags: ["staticelectricity","⚡"]
 wordmark:
   src: "/projects/靜電/wordmark.webp"
   source: "cutout"
-  accent: "#0f1d99"
+  accent: "#0e1c99"
+  ink: 0.38
 ---
 
 其實我不太常被靜電電到ㄋ。\

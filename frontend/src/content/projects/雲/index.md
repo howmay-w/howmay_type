@@ -28,7 +28,7 @@ tags: ["floating","cloud","☁️"]
 wordmark:
   src: "/projects/雲/wordmark.webp"
   source: "auto"
-  accent: "#eff0f9"
+  ink: 0.589
 ---
 
 小時候好想捏捏看雲，以為會軟綿綿的。\

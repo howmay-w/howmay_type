@@ -24,7 +24,8 @@ tags: ["湯匙","spoon","🥄"]
 wordmark:
   src: "/projects/調羹/wordmark.webp"
   source: "auto"
-  accent: "#292420"
+  accent: "#282320"
+  ink: 0.644
 ---
 
 長大以後才發現別人家的湯匙都不叫做「調羹」，大驚訝:o

@@ -24,7 +24,7 @@ tags: ["金屬", "手繪特效", "3D", "👶"]
 wordmark:
   src: "/projects/高級大人/wordmark.webp"
   source: "auto"
-  accent: "#afb2bf"
+  ink: 0.206
 ---
 
 Lv26 初級大人的幾日過年行程：

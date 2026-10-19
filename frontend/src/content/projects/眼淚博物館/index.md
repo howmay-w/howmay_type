@@ -22,7 +22,7 @@ tags: ["museumoftears","鄭興","💧"]
 wordmark:
   src: "/projects/眼淚博物館/wordmark.webp"
   source: "cutout"
-  accent: "#e2e2e2"
+  ink: 0.473
 ---
 
 🎶不是每次低潮的來去，都與挫折有關🎶\

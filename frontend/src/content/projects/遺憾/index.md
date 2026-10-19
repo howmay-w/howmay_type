@@ -28,7 +28,8 @@ tags: ["regret","🥲"]
 wordmark:
   src: "/projects/遺憾/wordmark.webp"
   source: "cutout"
-  accent: "#08070c"
+  accent: "#050307"
+  ink: 0.502
 ---
 
 即便仍然會遺憾，\

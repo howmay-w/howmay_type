@@ -24,7 +24,8 @@ hoverVideo:
 wordmark:
   src: "/projects/生氣/wordmark.webp"
   source: "auto"
-  accent: "#ee6353"
+  accent: "#291601"
+  ink: 0.2
 ---
 
 發個積欠已久的 5 月 whatzurtype

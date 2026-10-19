@@ -30,7 +30,8 @@ tags: ["whatzurtype","字字字設計串連","stroll","🚶"]
 wordmark:
   src: "/projects/散步/wordmark.webp"
   source: "cutout"
-  accent: "#cebba3"
+  accent: "#cfbda6"
+  ink: 0.339
 ---
 
 這次的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是以大家投稿的字型散步照片（字體版路上觀察？）為靈感重現。

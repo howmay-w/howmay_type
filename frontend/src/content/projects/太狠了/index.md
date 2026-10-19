@@ -16,7 +16,7 @@ tags: ["badass","注意看","☠️"]
 wordmark:
   src: "/projects/太狠了/wordmark.webp"
   source: "auto"
-  accent: "#f3f3f3"
+  ink: 0.424
 ---
 
 注意看，

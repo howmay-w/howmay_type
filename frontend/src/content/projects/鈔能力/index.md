@@ -30,7 +30,7 @@ tags: ["whatzurtype","噴錢","moneytalks","字字字設計串連","💵"]
 wordmark:
   src: "/projects/鈔能力/wordmark.webp"
   source: "auto"
-  accent: "#2d2e2b"
+  ink: 0.307
 ---
 
 應該是今年最後一篇！\

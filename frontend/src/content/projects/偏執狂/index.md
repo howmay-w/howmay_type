@@ -28,7 +28,8 @@ tags: ["Paranoia","🃏"]
 wordmark:
   src: "/projects/偏執狂/wordmark.webp"
   source: "cutout"
-  accent: "#db5d5e"
+  accent: "#db5d5f"
+  ink: 0.16
 ---
 
 送給提案這三個字給我ㄉ朋

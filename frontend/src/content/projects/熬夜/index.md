@@ -32,7 +32,7 @@ tags: ["stayup","😵"]
 wordmark:
   src: "/projects/熬夜/wordmark.webp"
   source: "cutout"
-  accent: "#98949b"
+  ink: 0.204
 ---
 
 清晨五點半才睡😇\

@@ -28,7 +28,8 @@ tags: ["Insomnia","點字","🥱"]
 wordmark:
   src: "/projects/失眠/wordmark.webp"
   source: "auto"
-  accent: "#343051"
+  accent: "#656686"
+  ink: 0.071
 ---
 
 午覺睡不著算是一種失眠ㄇ？

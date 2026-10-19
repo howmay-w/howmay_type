@@ -32,7 +32,8 @@ tags: ["toohot","whatzurtype","字字字設計串連","🥵"]
 wordmark:
   src: "/projects/秋老虎/wordmark.webp"
   source: "cutout"
-  accent: "#d18776"
+  accent: "#dfcfb4"
+  ink: 0.391
 ---
 
 快熱死，不是十月了ㄇ⋯\

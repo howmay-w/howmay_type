@@ -24,7 +24,8 @@ tags: ["itsmylife","life","點字","🗺"]
 wordmark:
   src: "/projects/人生/wordmark.webp"
   source: "auto"
-  accent: "#7a80af"
+  accent: "#868dbb"
+  ink: 0.102
 ---
 
 點字時大家投票想看黑暗ㄉ人生，\

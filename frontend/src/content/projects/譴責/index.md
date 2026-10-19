@@ -30,7 +30,7 @@ tags: ["criticize","😊"]
 wordmark:
   src: "/projects/譴責/wordmark.webp"
   source: "cutout"
-  accent: "#464245"
+  ink: 0.494
 ---
 
 前幾天說好要約會，結果男友沒有設定鬧鐘，\

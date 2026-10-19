@@ -20,7 +20,8 @@ tags: ["loveletter","💌","cmyk"]
 wordmark:
   src: "/projects/情書/wordmark.webp"
   source: "auto"
-  accent: "#392108"
+  accent: "#1b0800"
+  ink: 0.2
 ---
 
 這個時代還有情書嗎？訊息不算的話\

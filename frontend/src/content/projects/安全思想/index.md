@@ -18,7 +18,8 @@ tags: ["dystopia", "👁️", "👁️‍🗨️"]
 wordmark:
   src: "/projects/安全思想/wordmark.webp"
   source: "cutout"
-  accent: "#c72728"
+  accent: "#c62424"
+  ink: 0.392
 ---
 
 試想像一個人人只能有順從想法、只能無動於衷的反烏托邦國度裡，牆上會噴漆什麼樣的標語。

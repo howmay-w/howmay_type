@@ -30,7 +30,7 @@ tags: ["expectation","🌄"]
 wordmark:
   src: "/projects/期待/wordmark.webp"
   source: "auto"
-  accent: "#f2f3f3"
+  ink: 0.518
 ---
 
 聽別人說過「期待是一種詛咒」。別人給的是壓力，自己給的會放大失落。

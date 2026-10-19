@@ -28,7 +28,7 @@ tags: ["Eww","🤮"]
 wordmark:
   src: "/projects/矮額/wordmark.webp"
   source: "cutout"
-  accent: "#272728"
+  ink: 0.764
 ---
 
 喜歡這種大家都會說，\

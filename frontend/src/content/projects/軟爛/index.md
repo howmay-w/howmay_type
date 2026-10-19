@@ -32,7 +32,8 @@ tags: ["vegout","🫠"]
 wordmark:
   src: "/projects/軟爛/wordmark.webp"
   source: "auto"
-  accent: "#e2a7e6"
+  accent: "#e3a8e7"
+  ink: 0.429
 ---
 
 到家了以後，就什摸都不想做 (´・ω・`)

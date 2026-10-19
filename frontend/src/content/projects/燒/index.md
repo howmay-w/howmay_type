@@ -32,7 +32,8 @@ tags: ["Burning","🔥"]
 wordmark:
   src: "/projects/燒/wordmark.webp"
   source: "cutout"
-  accent: "#b22412"
+  accent: "#c74627"
+  ink: 0.303
 ---
 
 用「燒」來比喻容易點燃、也有會忽然熄滅的購物慾，\

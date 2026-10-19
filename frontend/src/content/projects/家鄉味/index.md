@@ -32,7 +32,7 @@ tags: ["柑仔蜜", "kamabit", "番茄", "🍅"]
 wordmark:
   src: "/projects/家鄉味/wordmark.webp"
   source: "cutout"
-  accent: "#d4dad7"
+  ink: 0.437
 ---
 
 家的味道如果用字呈現，那或許是柑仔蜜。

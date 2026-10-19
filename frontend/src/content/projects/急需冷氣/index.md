@@ -26,7 +26,7 @@ tags: ["toohot","❤️‍🔥"]
 wordmark:
   src: "/projects/急需冷氣/wordmark.webp"
   source: "auto"
-  accent: "#ece8e6"
+  ink: 0.458
 ---
 
 今年初夏，房間的冷氣突然打不開，經搶救宣告不治。\

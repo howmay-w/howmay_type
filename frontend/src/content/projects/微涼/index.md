@@ -18,7 +18,7 @@ tags: ["feelingcold","點字","🤧"]
 wordmark:
   src: "/projects/微涼/wordmark.webp"
   source: "auto"
-  accent: "#f5f2f9"
+  ink: 0.14
 ---
 
 問答點字的「微涼」\

@@ -30,7 +30,8 @@ tags: ["indeed","🪶"]
 wordmark:
   src: "/projects/雀食/wordmark.webp"
   source: "cutout"
-  accent: "#d19d52"
+  accent: "#e9c074"
+  ink: 0.565
 ---
 
 圖文無關但\

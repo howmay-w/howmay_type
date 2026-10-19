@@ -26,7 +26,7 @@ tags: ["itsokay","まあまあ","🉑"]
 wordmark:
   src: "/projects/還行/wordmark.webp"
   source: "auto"
-  accent: "#c8cbb8"
+  ink: 0.376
 ---
 
 普普通通ㄉ狀態，\

@@ -24,7 +24,7 @@ hoverVideo:
 wordmark:
   src: "/projects/科學的盡頭是玄學/wordmark.webp"
   source: "auto"
-  accent: "#d9d8d5"
+  ink: 0.425
 ---
 
 雖然知道不一定是這樣，

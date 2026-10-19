@@ -24,7 +24,7 @@ tags: ["Procrastination","🫥"]
 wordmark:
   src: "/projects/拖延症/wordmark.webp"
   source: "cutout"
-  accent: "#f8f8f8"
+  ink: 0.727
 ---
 
 經（個人）實驗證實，\

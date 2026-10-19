@@ -22,7 +22,7 @@ tags: ["cheeky","🥸"]
 wordmark:
   src: "/projects/厚臉皮/wordmark.webp"
   source: "cutout"
-  accent: "#e9eae9"
+  ink: 0.654
 ---
 
 厚臉皮雖然很恥，但大多時候有用。\

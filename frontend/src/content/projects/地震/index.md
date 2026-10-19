@@ -13,8 +13,8 @@ tags: ["地震", "抖爆嗚嗚嗚", "earthquake", "😖"]
 wordmark:
   src: "/projects/地震/wordmark.webp"
   source: "auto"
-  accent: "#fcf8f4"
   hidden: true
+  ink: 0.404
 ---
 
 願大家平安

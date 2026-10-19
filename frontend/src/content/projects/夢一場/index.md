@@ -28,7 +28,8 @@ tags: ["dream","ゆめ","😴"]
 wordmark:
   src: "/projects/夢一場/wordmark.webp"
   source: "cutout"
-  accent: "#c474db"
+  accent: "#c475db"
+  ink: 0.338
 ---
 
 最近好常做夢哇，\

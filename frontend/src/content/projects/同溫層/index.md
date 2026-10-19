@@ -30,7 +30,8 @@ tags: ["echochamber","🥴"]
 wordmark:
   src: "/projects/同溫層/wordmark.webp"
   source: "auto"
-  accent: "#c098a6"
+  accent: "#e4a6e2"
+  ink: 0.392
 ---
 
 一直待在同溫層雖然可恥，但舒適。

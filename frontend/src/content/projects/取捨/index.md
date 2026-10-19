@@ -28,7 +28,8 @@ tags: ["tradeoff","💱"]
 wordmark:
   src: "/projects/取捨/wordmark.webp"
   source: "auto"
-  accent: "#e35045"
+  accent: "#040203"
+  ink: 0.197
 ---
 
 想做的事情好多，\

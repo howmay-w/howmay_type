@@ -32,8 +32,8 @@ tags: ["clickbait","📰"]
 wordmark:
   src: "/projects/標題殺人/wordmark.webp"
   source: "auto"
-  accent: "#282828"
   hidden: true
+  ink: 0.446
 ---
 
 俗諺說筆比劍更有力量，\

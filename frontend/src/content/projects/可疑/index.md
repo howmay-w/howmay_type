@@ -28,7 +28,7 @@ tags: ["suspicious","sus","🤨"]
 wordmark:
   src: "/projects/可疑/wordmark.webp"
   source: "auto"
-  accent: "#4c4847"
+  ink: 0.256
 ---
 
 有時事情太過順利，反而會有點可疑🤔

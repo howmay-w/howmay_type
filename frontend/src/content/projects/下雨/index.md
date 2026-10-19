@@ -32,7 +32,7 @@ tags: ["雨","rain","🌧️"]
 wordmark:
   src: "/projects/下雨/wordmark.webp"
   source: "auto"
-  accent: "#c6b2bf"
+  ink: 0.816
 ---
 
 下班又忘記帶傘ㄌ，傷腦筋。\

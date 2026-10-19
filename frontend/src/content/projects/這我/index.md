@@ -22,7 +22,8 @@ tags: ["根本我","totallyme","👉👈"]
 wordmark:
   src: "/projects/這我/wordmark.webp"
   source: "cutout"
-  accent: "#4dd532"
+  accent: "#cb4292"
+  ink: 0.253
 ---
 
 精妙ㄉ一詞，想讓人看見那個沒人在意ㄉ自己\

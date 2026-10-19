@@ -26,7 +26,7 @@ tags: ["AddictedToPillow","🛌"]
 wordmark:
   src: "/projects/枕頭成癮/wordmark.webp"
   source: "auto"
-  accent: "#434444"
+  ink: 0.379
 ---
 
 又好冷，早上起不來🫠

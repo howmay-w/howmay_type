@@ -24,7 +24,8 @@ tags: ["9thAnniversary","9️⃣"]
 wordmark:
   src: "/projects/九週年/wordmark.webp"
   source: "auto"
-  accent: "#f5d696"
+  accent: "#fae6b8"
+  ink: 0.218
 ---
 
 前幾天跟男友交往滿九週年！

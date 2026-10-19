@@ -28,7 +28,7 @@ tags: ["繼續","👀"]
 wordmark:
   src: "/projects/句續/wordmark.webp"
   source: "auto"
-  accent: "#3b3b3a"
+  ink: 0.48
 ---
 
 感覺比起「繼續」，更常聽到大家講「句續」。

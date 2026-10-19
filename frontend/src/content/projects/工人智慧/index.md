@@ -28,7 +28,8 @@ tags: ["workerintelligence","stencil","💪"]
 wordmark:
   src: "/projects/工人智慧/wordmark.webp"
   source: "auto"
-  accent: "#6d52ef"
+  accent: "#6d51ef"
+  ink: 0.611
 ---
 
 「哦這個是我們用工人智慧做的！」

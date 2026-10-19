@@ -26,7 +26,7 @@ tags: ["unbelievable","🥹"]
 wordmark:
   src: "/projects/不可能/wordmark.webp"
   source: "auto"
-  accent: "#e3e1df"
+  ink: 0.284
 ---
 
 這幾天天氣也太好ㄌ⋯！\

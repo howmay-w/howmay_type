@@ -13,7 +13,8 @@ tags: ["PlacesIveNeverBeen","🗺️"]
 wordmark:
   src: "/projects/沒去過的地方/wordmark.webp"
   source: "auto"
-  accent: "#010202"
+  accent: "#000101"
+  ink: 0.444
 ---
 
 可能是奇幻的世界。

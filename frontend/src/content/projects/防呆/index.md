@@ -25,7 +25,7 @@ tags: ["🤦"]
 wordmark:
   src: "/projects/防呆/wordmark.webp"
   source: "auto"
-  accent: "#d8f0db"
+  ink: 0.611
 ---
 
 一直很欣賞有做防呆設計的任何事物，為整個世界減少了許多時間的浪費與不必要的挫折。\

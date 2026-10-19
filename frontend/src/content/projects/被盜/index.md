@@ -28,7 +28,7 @@ tags: ["盜版", "侵權", "piracy", "🙄"]
 wordmark:
   src: "/projects/被盜/wordmark.webp"
   source: "auto"
-  accent: "#ad4c4d"
+  ink: 0.151
 ---
 
 跟大家說一件前陣子有點心煩的事情，\

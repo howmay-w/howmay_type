@@ -13,7 +13,7 @@ tags: ["Pudding","🍮"]
 wordmark:
   src: "/projects/布丁/wordmark.webp"
   source: "auto"
-  accent: "#010100"
+  ink: 0.433
 ---
 
 好吃

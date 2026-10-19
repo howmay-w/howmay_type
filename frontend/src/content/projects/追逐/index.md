@@ -13,5 +13,5 @@ tags: ["chasing","活著就是","🏃🏻"]
 wordmark:
   src: "/projects/追逐/wordmark.webp"
   source: "auto"
-  accent: "#fafafa"
+  ink: 0.264
 ---

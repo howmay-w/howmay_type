@@ -22,7 +22,8 @@ tags: ["Awakening","whatzurtype","字字字設計串連","🐞"]
 wordmark:
   src: "/projects/驚蟄/wordmark.webp"
   source: "auto"
-  accent: "#f5f9ac"
+  accent: "#f5faae"
+  ink: 0.254
 ---
 
 說好ㄉ回暖ㄋ？！

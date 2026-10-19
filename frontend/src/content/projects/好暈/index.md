@@ -26,7 +26,8 @@ tags: ["dizzy","😵‍💫"]
 wordmark:
   src: "/projects/好暈/wordmark.webp"
   source: "cutout"
-  accent: "#dfcfd6"
+  accent: "#100406"
+  ink: 0.228
 ---
 
 暈好多天ㄌ，好暈好暈\

@@ -18,7 +18,7 @@ tags: ["digitalart","fingerpainting","reels"]
 wordmark:
   src: "/projects/數位藝術/wordmark.webp"
   source: "auto"
-  accent: "#dbdbdb"
+  ink: 0.585
 ---
 
 純手繪數位藝術。（真的純用手，因為忘了帶 Apple Pencil）

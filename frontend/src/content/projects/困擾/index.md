@@ -18,7 +18,7 @@ tags: ["bother","🤧"]
 wordmark:
   src: "/projects/困擾/wordmark.webp"
   source: "cutout"
-  accent: "#dde0e7"
+  ink: 0.471
 ---
 
 有些事情並不討厭，但很困擾。\

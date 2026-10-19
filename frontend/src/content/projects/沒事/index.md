@@ -22,7 +22,8 @@ tags: ["nothing","nevermind","🙃"]
 wordmark:
   src: "/projects/沒事/wordmark.webp"
   source: "cutout"
-  accent: "#589f89"
+  accent: "#58a089"
+  ink: 0.399
 ---
 
 一詞多義的典範。\

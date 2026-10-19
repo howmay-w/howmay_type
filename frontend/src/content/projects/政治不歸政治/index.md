@@ -28,7 +28,7 @@ tags: ["govote","🛤️"]
 wordmark:
   src: "/projects/政治不歸政治/wordmark.webp"
   source: "cutout"
-  accent: "#cecdcc"
+  ink: 0.549
 ---
 
 「＿＿歸＿＿，政治歸政治」，\

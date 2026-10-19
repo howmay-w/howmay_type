@@ -20,7 +20,7 @@ tags: ["台灣","taiwan","青鳥","🧳"]
 wordmark:
   src: "/projects/民主富二代/wordmark.webp"
   source: "auto"
-  accent: "#e2e2e2"
+  ink: 0.395
 ---
 
 現在享有，因為曾有人以命相搏。

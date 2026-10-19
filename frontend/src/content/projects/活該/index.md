@@ -30,7 +30,7 @@ tags: ["學不乖","🤡"]
 wordmark:
   src: "/projects/活該/wordmark.webp"
   source: "auto"
-  accent: "#e4e3e4"
+  ink: 0.433
 ---
 
 跟大家分享男友的活該故事：

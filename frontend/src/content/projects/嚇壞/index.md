@@ -24,7 +24,7 @@ tags: ["freakout","😱"]
 wordmark:
   src: "/projects/嚇壞/wordmark.webp"
   source: "auto"
-  accent: "#c4c0c7"
+  ink: 0.421
 ---
 
 世界總是充滿驚奇，例如前幾天看到的 AI 文字生成影片。

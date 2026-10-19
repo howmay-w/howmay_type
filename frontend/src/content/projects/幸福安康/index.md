@@ -30,7 +30,8 @@ tags: ["點字","🧧"]
 wordmark:
   src: "/projects/幸福安康/wordmark.webp"
   source: "auto"
-  accent: "#c29166"
+  accent: "#c39368"
+  ink: 0.365
 ---
 
 過年持續說好話（？\

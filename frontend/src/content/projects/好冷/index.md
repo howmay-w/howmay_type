@@ -32,7 +32,8 @@ tags: ["freezing","🥶"]
 wordmark:
   src: "/projects/好冷/wordmark.webp"
   source: "auto"
-  accent: "#252835"
+  accent: "#1c1e24"
+  ink: 0.464
 ---
 
 就好冷。冷到什麼事都做不太好。大家保重。

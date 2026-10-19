@@ -28,7 +28,7 @@ tags: ["whatzurtype","journey","字字字設計串連","✈️"]
 wordmark:
   src: "/projects/旅行/wordmark.webp"
   source: "cutout"
-  accent: "#e4e7e8"
+  ink: 0.239
 ---
 
 這個月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 題目很有趣ㄛ！要先抽選大家出題的特色歐文字型，以它為靈感來創作漢字。\

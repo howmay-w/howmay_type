@@ -26,7 +26,8 @@ tags: ["happynewyear", "2023", "字字字設計串連", "whatzurtype", "3D", "�
 wordmark:
   src: "/projects/邁向2023/wordmark.webp"
   source: "cutout"
-  accent: "#ab315d"
+  accent: "#3f2193"
+  ink: 0.401
 ---
 
 嘗試了噴漆模板字，也順便做看看金屬板跟噴漆出來的感覺。\

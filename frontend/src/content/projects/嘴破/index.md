@@ -22,7 +22,8 @@ tags: ["mouthulcers","ithurts","🫦"]
 wordmark:
   src: "/projects/嘴破/wordmark.webp"
   source: "cutout"
-  accent: "#d95886"
+  accent: "#db5e87"
+  ink: 0.307
 ---
 
 Q：有什麼比嘴吧破了個洞還要痛苦ㄉ？\

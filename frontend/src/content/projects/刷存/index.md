@@ -30,7 +30,8 @@ tags: ["刷存在","🙋"]
 wordmark:
   src: "/projects/刷存/wordmark.webp"
   source: "auto"
-  accent: "#8b93c5"
+  accent: "#9ea9d1"
+  ink: 0.279
 ---
 
 會需要刷存，\

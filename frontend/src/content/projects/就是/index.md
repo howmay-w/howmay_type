@@ -28,7 +28,7 @@ tags: ["well","🔄"]
 wordmark:
   src: "/projects/就是/wordmark.webp"
   source: "cutout"
-  accent: "#6d5bad"
+  ink: 0.219
 ---
 
 腦袋中詞語還沒排列好的時候，會先出來扛一下ㄉ擋箭牌。\

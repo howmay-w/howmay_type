@@ -22,7 +22,7 @@ tags: ["rebirth","點字","😌"]
 wordmark:
   src: "/projects/重生/wordmark.webp"
   source: "auto"
-  accent: "#99b2aa"
+  ink: 0.327
 ---
 
 冷天洗完熱水澡ㄉ感覺：

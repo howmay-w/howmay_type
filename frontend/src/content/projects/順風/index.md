@@ -28,8 +28,8 @@ tags: ["tailwind","🎐"]
 wordmark:
   src: "/projects/順風/wordmark.webp"
   source: "auto"
-  accent: "#ffffff"
   hidden: true
+  ink: 0.436
 ---
 
 「順風」一直是我很喜歡的祝福說法，帶著相信實力或準備已然足夠的從容，只祈好的機緣推動。

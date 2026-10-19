@@ -26,7 +26,7 @@ tags: ["颱風","hong-thai","typhoon","🌀"]
 wordmark:
   src: "/projects/風颱/wordmark.webp"
   source: "auto"
-  accent: "#e4e5e5"
+  ink: 0.713
 ---
 
 今年颱風好多，明明都十月ㄌ。\

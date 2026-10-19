@@ -13,7 +13,8 @@ tags: ["選障","decidophobia","👉👈"]
 wordmark:
   src: "/projects/選擇障礙/wordmark.webp"
   source: "cutout"
-  accent: "#8e98cd"
+  accent: "#aeb7e1"
+  ink: 0.255
 ---
 
 選障的朋朋站出來👀\

@@ -24,7 +24,7 @@ tags: ["cutclass","點字","😶‍🌫️"]
 wordmark:
   src: "/projects/翹課/wordmark.webp"
   source: "cutout"
-  accent: "#6a986f"
+  ink: 0.392
 ---
 
 明天⋯不可能⋯\

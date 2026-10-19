@@ -28,7 +28,7 @@ tags: ["becool","🎂"]
 wordmark:
   src: "/projects/瀟灑/wordmark.webp"
   source: "auto"
-  accent: "#e5e7e7"
+  ink: 0.401
 ---
 
 我今天生日ㄛ！\

@@ -26,7 +26,8 @@ tags: ["whatzurtype", "年貨大街", "字字字設計串連", "mulletroe", "�
 wordmark:
   src: "/projects/烏魚子/wordmark.webp"
   source: "auto"
-  accent: "#b68f3b"
+  accent: "#b8923e"
+  ink: 0.281
 ---
 
 沒吃到烏魚子，就好像沒過到年。

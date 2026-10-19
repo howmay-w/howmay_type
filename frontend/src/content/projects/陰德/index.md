@@ -22,7 +22,8 @@ tags: ["cedit","fortune","⚖️"]
 wordmark:
   src: "/projects/陰德/wordmark.webp"
   source: "cutout"
-  accent: "#2b251d"
+  accent: "#2a251d"
+  ink: 0.593
 ---
 
 一直覺得陰德是ㄍ有趣的概念，是大家都能理解的、不可見的價值系統。\

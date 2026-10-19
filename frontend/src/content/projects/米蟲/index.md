@@ -28,7 +28,7 @@ tags: ["ricebug", "doingnothing", "🪲"]
 wordmark:
   src: "/projects/米蟲/wordmark.webp"
   source: "cutout"
-  accent: "#151515"
+  ink: 0.734
 ---
 
 人生總有些時候只想當米蟲，例如現在。

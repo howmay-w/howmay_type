@@ -30,7 +30,7 @@ tags: ["weirdtales","關於我和鬼變成家人的那件事","👻"]
 wordmark:
   src: "/projects/怪談/wordmark.webp"
   source: "cutout"
-  accent: "#838699"
+  ink: 0.361
 ---
 
 今天去看了關於我和鬼變成家人的那件事（好長），也算是種有趣的怪談ㄅ。

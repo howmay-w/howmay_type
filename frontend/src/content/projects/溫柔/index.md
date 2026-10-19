@@ -32,7 +32,7 @@ tags: ["優しい","gentle","點字","🎗️"]
 wordmark:
   src: "/projects/溫柔/wordmark.webp"
   source: "cutout"
-  accent: "#ecd6b0"
+  ink: 0.359
 ---
 
 溫柔很多種樣貌，\

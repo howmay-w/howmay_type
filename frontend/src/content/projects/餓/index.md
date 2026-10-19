@@ -13,5 +13,5 @@ tags: ["hungry", "😵"]
 wordmark:
   src: "/projects/餓/wordmark.webp"
   source: "auto"
-  accent: "#fffefe"
+  ink: 0.273
 ---

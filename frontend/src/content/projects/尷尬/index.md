@@ -32,7 +32,8 @@ tags: ["awkward", "執事排", "3D", "😬"]
 wordmark:
   src: "/projects/尷尬/wordmark.webp"
   source: "auto"
-  accent: "#e07e30"
+  accent: "#e9943d"
+  ink: 0.465
 ---
 
 尷尬好像是種很社會化的情緒ㄋ，\

@@ -24,7 +24,8 @@ tags: ["tense","⚾️"]
 wordmark:
   src: "/projects/刺激/wordmark.webp"
   source: "cutout"
-  accent: "#222820"
+  accent: "#20271f"
+  ink: 0.348
 ---
 
 今天兩場都這麼刺激合理嗎？\

@@ -24,7 +24,7 @@ hoverVideo:
 wordmark:
   src: "/projects/海巡/wordmark.webp"
   source: "auto"
-  accent: "#1f89ce"
+  ink: 0.071
 ---
 
 颱風平安。

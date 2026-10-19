@@ -18,7 +18,8 @@ tags: ["whatzurtype", "Azurite", "大地瑰寶", "字字字設計串連", "reels
 wordmark:
   src: "/projects/藍銅礦/wordmark.webp"
   source: "auto"
-  accent: "#0214d0"
+  accent: "#020ed0"
+  ink: 0.473
 ---
 
 藍銅礦很漂亮，大家去查照片！

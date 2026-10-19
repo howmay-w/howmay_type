@@ -30,7 +30,7 @@ tags: ["surveillance","👁️"]
 wordmark:
   src: "/projects/監控/wordmark.webp"
   source: "cutout"
-  accent: "#a9a9a9"
+  ink: 0.258
 ---
 
 我家的貓貓 be like:

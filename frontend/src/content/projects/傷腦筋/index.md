@@ -18,7 +18,7 @@ tags: ["knotty","animation","reels"]
 wordmark:
   src: "/projects/傷腦筋/wordmark.webp"
   source: "auto"
-  accent: "#fffffe"
+  ink: 0.363
 ---
 
 明天就要 25 歲了，傷腦筋😵‍💫

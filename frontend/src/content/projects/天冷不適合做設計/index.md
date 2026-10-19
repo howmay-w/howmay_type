@@ -24,7 +24,7 @@ tags: ["toocold","🥶"]
 wordmark:
   src: "/projects/天冷不適合做設計/wordmark.webp"
   source: "cutout"
-  accent: "#babcbc"
+  ink: 0.547
 ---
 
 冷到打字跟用滑鼠都不太順利，\

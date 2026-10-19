@@ -38,7 +38,8 @@ tags: ["淚體，","還能流淚","tearfont","💧"]
 wordmark:
   src: "/projects/還能流淚/wordmark.webp"
   source: "cutout"
-  accent: "#b4bff5"
+  accent: "#b5c0f5"
+  ink: 0.154
 ---
 
 還能流淚，代表仍有感覺。\

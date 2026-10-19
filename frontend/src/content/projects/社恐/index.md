@@ -26,7 +26,7 @@ tags: ["社交恐懼","socialphobia","コミュ障","🥸"]
 wordmark:
   src: "/projects/社恐/wordmark.webp"
   source: "cutout"
-  accent: "#e4e4e4"
+  ink: 0.618
 ---
 
 覺得社恐比起一種性格，\

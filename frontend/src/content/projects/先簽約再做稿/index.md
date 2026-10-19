@@ -28,7 +28,7 @@ tags: ["學籽", "法律知識", "📜"]
 wordmark:
   src: "/projects/先簽約再做稿/wordmark.webp"
   source: "auto"
-  accent: "#898c96"
+  ink: 0.332
 ---
 
 接案鬼故事聽多了，有句箴言想跟大家分享：「先簽約，再做稿。」

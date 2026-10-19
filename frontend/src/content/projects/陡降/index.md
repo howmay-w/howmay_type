@@ -32,7 +32,7 @@ tags: ["suddendrop", "📉"]
 wordmark:
   src: "/projects/陡降/wordmark.webp"
   source: "auto"
-  accent: "#bbe0c9"
+  ink: 0.408
 ---
 
 雖然有沒有到真的很冷，但總覺得氣溫降ㄉ太突然ㄌ，身體反應不過來🥲

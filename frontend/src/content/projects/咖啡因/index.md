@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/咖啡因/wordmark.webp"
   source: "cutout"
   accent: "#d3c566"
+  ink: 0.236
 ---
 
 每天睡前都很期待明天早上可以喝茶或咖啡。算是成癮ㄅ。

@@ -28,7 +28,8 @@ tags: ["mentallyprepared","🫨"]
 wordmark:
   src: "/projects/心理準備/wordmark.webp"
   source: "auto"
-  accent: "#d35e7c"
+  accent: "#d25d79"
+  ink: 0.45
 ---
 
 對於 2024 不到幾週就要到來，\

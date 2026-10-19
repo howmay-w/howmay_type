@@ -32,7 +32,7 @@ tags: ["emoticon","點字"]
 wordmark:
   src: "/projects/顏文字/wordmark.webp"
   source: "auto"
-  accent: "#eeecea"
+  ink: 0.132
 ---
 
 ( ´•̥̥̥ω•̥̥̥` ) (;´༎ຶД༎ຶ`)\

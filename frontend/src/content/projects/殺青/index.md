@@ -32,7 +32,8 @@ tags: ["wrap","🍅"]
 wordmark:
   src: "/projects/殺青/wordmark.webp"
   source: "cutout"
-  accent: "#d44e5e"
+  accent: "#d84f5d"
+  ink: 0.223
 ---
 
 2025.01.15 新字體【柑仔蜜】出貨。

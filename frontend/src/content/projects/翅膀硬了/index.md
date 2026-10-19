@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/翅膀硬了/wordmark.webp"
   source: "auto"
   accent: "#f58384"
+  ink: 0.534
 ---
 
 不管幾歲在媽媽眼裡都是孩子，\

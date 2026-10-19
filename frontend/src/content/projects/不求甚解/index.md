@@ -32,7 +32,8 @@ tags: ["skimming","👀"]
 wordmark:
   src: "/projects/不求甚解/wordmark.webp"
   source: "cutout"
-  accent: "#dbacc6"
+  accent: "#dcacc7"
+  ink: 0.504
 ---
 
 小時候學到「好讀書，不求甚解」時，完全覺得這我。（當然，當時並沒有「這我」這種用法😇)

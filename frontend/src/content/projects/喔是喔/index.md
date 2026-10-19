@@ -26,6 +26,8 @@ tags: ["😌"]
 wordmark:
   src: "/projects/喔是喔/wordmark.webp"
   source: "cutout"
+  accent: "#c89eb3"
+  ink: 0.335
 ---
 
 有時唸作 Also。

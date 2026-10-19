@@ -32,7 +32,8 @@ tags: ["limited","期間限定","🈺"]
 wordmark:
   src: "/projects/限定/wordmark.webp"
   source: "auto"
-  accent: "#433272"
+  accent: "#322162"
+  ink: 0.615
 ---
 
 讓商品變得吸引人的魔法🪄

@@ -28,7 +28,8 @@ tags: ["落湯鷄","drownedrat","🐓"]
 wordmark:
   src: "/projects/落湯雞/wordmark.webp"
   source: "cutout"
-  accent: "#28307c"
+  accent: "#252d7a"
+  ink: 0.468
 ---
 
 最近ㄉ大雨都令人措手不及，剛放晴又下，好難搞。\

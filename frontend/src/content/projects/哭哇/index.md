@@ -32,7 +32,8 @@ tags: ["cry","哭","🥲"]
 wordmark:
   src: "/projects/哭哇/wordmark.webp"
   source: "cutout"
-  accent: "#492003"
+  accent: "#cfbd8d"
+  ink: 0.817
 ---
 
 年前想說「過完年再說」的事，\

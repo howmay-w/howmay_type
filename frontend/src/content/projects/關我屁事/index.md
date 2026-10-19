@@ -18,7 +18,8 @@ tags: ["noneofmybusiness", "金屬", "特效", "3D", "😇"]
 wordmark:
   src: "/projects/關我屁事/wordmark.webp"
   source: "auto"
-  accent: "#91a3da"
+  accent: "#a8b4e4"
+  ink: 0.225
 ---
 
 突如其來ㄉ特效，有影片ㄛ！

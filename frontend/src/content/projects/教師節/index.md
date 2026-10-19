@@ -20,5 +20,5 @@ tags: ["節","teachersday","🏫"]
 wordmark:
   src: "/projects/教師節/wordmark.webp"
   source: "cutout"
-  accent: "#c5d0ca"
+  ink: 0.616
 ---

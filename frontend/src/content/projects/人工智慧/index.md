@@ -24,6 +24,7 @@ tags: ["whatzurtype","字字字設計串連","智慧","AI","🤖"]
 wordmark:
   src: "/projects/人工智慧/wordmark.webp"
   source: "cutout"
+  ink: 0.281
 ---
 
 可算是人類與人工智慧一起創作的文字。

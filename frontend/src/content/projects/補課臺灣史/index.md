@@ -20,7 +20,8 @@ tags: ["台灣史", "228", "和平紀念日", "🕯️"]
 wordmark:
   src: "/projects/補課臺灣史/wordmark.webp"
   source: "auto"
-  accent: "#450b0c"
+  accent: "#42090a"
+  ink: 0.426
 ---
 
 又來到和平紀念日，不一樣的是，最近有越來越多人開始補課台灣史。

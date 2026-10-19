@@ -22,7 +22,8 @@ hoverVideo:
 wordmark:
   src: "/projects/翡翠樹蛙/wordmark.webp"
   source: "auto"
-  accent: "#060805"
+  accent: "#020502"
+  ink: 0.338
 ---
 
 8 月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是台灣特有種，決定畫翡翠樹蛙！

@@ -28,7 +28,8 @@ tags: ["typodesign","🥡"]
 wordmark:
   src: "/projects/免洗/wordmark.webp"
   source: "auto"
-  accent: "#125545"
+  accent: "#115544"
+  ink: 0.464
 ---
 
 覺得「免洗」這個詞相當厲害。

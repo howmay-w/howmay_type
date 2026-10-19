@@ -32,7 +32,7 @@ tags: ["talkingcrap","🙂‍↕️"]
 wordmark:
   src: "/projects/幹話/wordmark.webp"
   source: "cutout"
-  accent: "#e7e7e7"
+  ink: 0.795
 ---
 
 幹話在生活中不可或缺，無論聽或說。有默契、能一句句互相傳接幹話，更是日常ㄉ幸福時刻。

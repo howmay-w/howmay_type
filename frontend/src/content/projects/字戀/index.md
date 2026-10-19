@@ -13,7 +13,8 @@ tags: ["whatzurtype","字字字設計串連","LoveFont","💖"]
 wordmark:
   src: "/projects/字戀/wordmark.webp"
   source: "cutout"
-  accent: "#d7b711"
+  accent: "#504636"
+  ink: 0.23
 ---
 
 其實畫了兩張ㄛ！

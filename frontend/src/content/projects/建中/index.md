@@ -20,7 +20,8 @@ tags: ["Kiàntiong","love","🎂"]
 wordmark:
   src: "/projects/建中/wordmark.webp"
   source: "auto"
-  accent: "#a18c52"
+  accent: "#c8bc88"
+  ink: 0.224
 ---
 
 歡迎大家祝我男友生日快樂（是本名）（對ㄉ，他也剛好有從建中畢業）

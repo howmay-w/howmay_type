@@ -28,7 +28,7 @@ tags: ["busy","😵"]
 wordmark:
   src: "/projects/忙碌/wordmark.webp"
   source: "auto"
-  accent: "#222222"
+  ink: 0.694
 ---
 
 最近少發文，因為真的好忙好忙ㄛ。

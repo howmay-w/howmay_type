@@ -22,7 +22,8 @@ tags: ["✨"]
 wordmark:
   src: "/projects/快樂碎片/wordmark.webp"
   source: "cutout"
-  accent: "#232638"
+  accent: "#1d2030"
+  ink: 0.304
 ---
 
 有時覺得生活中的快樂像碎片，\

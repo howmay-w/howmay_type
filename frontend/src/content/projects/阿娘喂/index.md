@@ -29,6 +29,8 @@ wordmark:
   src: "/projects/阿娘喂/wordmark.webp"
   source: "auto"
   hidden: true
+  accent: "#000617"
+  ink: 0.184
 ---
 
 死語復興運動

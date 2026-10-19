@@ -32,7 +32,7 @@ tags: ["miserable", "金屬", "手繪特效", "🤢"]
 wordmark:
   src: "/projects/慘兮兮/wordmark.webp"
   source: "cutout"
-  accent: "#626765"
+  ink: 0.112
 ---
 
 年假旅遊時突然中標腸胃炎，慘兮兮。

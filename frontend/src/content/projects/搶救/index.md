@@ -24,7 +24,7 @@ tags: ["help","💥"]
 wordmark:
   src: "/projects/搶救/wordmark.webp"
   source: "auto"
-  accent: "#a21107"
+  ink: 0.269
 ---
 
 最近很常看到的字。\

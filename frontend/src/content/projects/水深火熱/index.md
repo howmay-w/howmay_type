@@ -26,7 +26,7 @@ tags: ["indirestraits","toohot","🥵"]
 wordmark:
   src: "/projects/水深火熱/wordmark.webp"
   source: "auto"
-  accent: "#d5d3d3"
+  ink: 0.367
 ---
 
 最近是忙碌ㄉ日子，水深不深不曉得，但肯定很熱。\

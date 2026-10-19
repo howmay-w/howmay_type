@@ -28,7 +28,7 @@ tags: ["Payaftermeal","🍱"]
 wordmark:
   src: "/projects/吃飽再結/wordmark.webp"
   source: "auto"
-  accent: "#faf6f4"
+  ink: 0.614
 ---
 
 最近去幾家小吃店，老闆都說「吃飽再結」。

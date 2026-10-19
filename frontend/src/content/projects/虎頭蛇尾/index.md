@@ -30,7 +30,7 @@ tags: ["🐯"]
 wordmark:
   src: "/projects/虎頭蛇尾/wordmark.webp"
   source: "cutout"
-  accent: "#e5e7e8"
+  ink: 0.482
 ---
 
 總是對新鮮事充滿熱情的me:

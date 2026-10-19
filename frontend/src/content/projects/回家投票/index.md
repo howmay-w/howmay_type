@@ -20,7 +20,8 @@ tags: ["18歲公民權","govote","字字字設計串連","whatzurtype","🗳️"
 wordmark:
   src: "/projects/回家投票/wordmark.webp"
   source: "cutout"
-  accent: "#b0220c"
+  accent: "#b0220b"
+  ink: 0.297
 ---
 
 兩個禮拜以後～要回家投票ㄛ～\

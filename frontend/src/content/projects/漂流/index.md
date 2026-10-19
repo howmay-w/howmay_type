@@ -17,6 +17,7 @@ tags: ["蘇打綠","flow","喵的奇幻漂流","wave","reels"]
 wordmark:
   src: "/projects/漂流/wordmark.webp"
   source: "cutout"
+  ink: 0.261
 ---
 
 漂流，讓聲音和視覺帶領著感受。

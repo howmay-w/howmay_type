@@ -13,5 +13,5 @@ tags: ["Headache","💥"]
 wordmark:
   src: "/projects/頭痛/wordmark.webp"
   source: "auto"
-  accent: "#000000"
+  ink: 0.609
 ---

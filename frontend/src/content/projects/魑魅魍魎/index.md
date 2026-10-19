@@ -17,7 +17,7 @@ tags: ["鬼門開", "glitch", "specialeffects", "reels"]
 wordmark:
   src: "/projects/魑魅魍魎/wordmark.webp"
   source: "auto"
-  accent: "#eeedee"
+  ink: 0.518
 ---
 
 你的手機應該沒有壞掉，應該📺\

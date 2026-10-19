@@ -32,7 +32,7 @@ tags: ["plateau","🤕"]
 wordmark:
   src: "/projects/撞牆期/wordmark.webp"
   source: "cutout"
-  accent: "#dfdedb"
+  ink: 0.482
 ---
 
 最近身陷撞牆期，好困擾。

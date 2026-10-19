@@ -13,7 +13,7 @@ tags: ["Autumn", "中秋", "Moon Festival", "🌛"]
 wordmark:
   src: "/projects/秋/wordmark.webp"
   source: "auto"
-  accent: "#a8a3a6"
+  ink: 0.334
 ---
 
 中秋節快樂！

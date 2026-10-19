@@ -30,7 +30,8 @@ tags: ["分手","happybreakup","點字","❤️‍🩹"]
 wordmark:
   src: "/projects/分手快樂/wordmark.webp"
   source: "auto"
-  accent: "#c14886"
+  accent: "#c65d85"
+  ink: 0.294
 ---
 
 某位觀眾的點字，\

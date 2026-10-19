@@ -22,7 +22,8 @@ hoverVideo:
 wordmark:
   src: "/projects/客服萬難/wordmark.webp"
   source: "auto"
-  accent: "#2a0b04"
+  accent: "#180400"
+  ink: 0.294
 ---
 
 客服⋯⋯萬難⋯⋯

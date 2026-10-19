@@ -28,7 +28,7 @@ tags: ["magicstage","💖"]
 wordmark:
   src: "/projects/魔幻舞台/wordmark.webp"
   source: "auto"
-  accent: "#e7e7e7"
+  ink: 0.466
 ---
 
 敬魔幻舞台

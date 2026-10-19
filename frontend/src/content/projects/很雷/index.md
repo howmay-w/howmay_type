@@ -30,7 +30,8 @@ tags: ["slacker","⚡"]
 wordmark:
   src: "/projects/很雷/wordmark.webp"
   source: "auto"
-  accent: "#06dcda"
+  accent: "#070908"
+  ink: 0.227
 ---
 
 用途廣泛ㄉ詞，但還是不要太常遇到比較好🫠

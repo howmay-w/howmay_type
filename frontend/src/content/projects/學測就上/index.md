@@ -26,7 +26,7 @@ tags: ["頑張れ","點字","⛽"]
 wordmark:
   src: "/projects/學測就上/wordmark.webp"
   source: "cutout"
-  accent: "#ffffff"
+  ink: 0.432
 ---
 
 學測倒數一個月了，緊張刺激。\

@@ -26,7 +26,7 @@ tags: ["BeginItNow", "二棲知學", "motioner", "🚶‍➡️"]
 wordmark:
   src: "/projects/總之先開始/wordmark.webp"
   source: "cutout"
-  accent: "#383737"
+  ink: 0.369
 ---
 
 開始更新創作後常被問到「要如何學習做字？」

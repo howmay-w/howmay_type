@@ -21,7 +21,8 @@ tags: ["暈船","chemistry","😳"]
 wordmark:
   src: "/projects/曖昧/wordmark.webp"
   source: "auto"
-  accent: "#ddaab1"
+  accent: "#dfb0b5"
+  ink: 0.123
 ---
 
 🎶曖～昧～讓人受盡～委屈～🎶\

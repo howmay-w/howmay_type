@@ -32,7 +32,7 @@ tags: ["Lonely", "😶"]
 wordmark:
   src: "/projects/孤獨/wordmark.webp"
   source: "cutout"
-  accent: "#edeeef"
+  ink: 0.552
 ---
 
 有時會不自覺想到，人生就是趟會不斷失去心愛人事物的旅程，好孤獨ㄛ。

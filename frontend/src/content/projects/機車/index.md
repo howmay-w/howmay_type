@@ -29,7 +29,7 @@ tags: ["死語復興運動","🛵"]
 wordmark:
   src: "/projects/機車/wordmark.webp"
   source: "auto"
-  accent: "#fefbe7"
+  ink: 0.43
 ---
 
 應是死語但我最近好愛講，\

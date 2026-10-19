@@ -30,7 +30,7 @@ tags: ["韭菜","novice","newbie","🐣"]
 wordmark:
   src: "/projects/菜雞/wordmark.webp"
   source: "auto"
-  accent: "#c2bfbf"
+  ink: 0.399
 ---
 
 Me.

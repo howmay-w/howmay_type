@@ -26,7 +26,8 @@ tags: ["sotired","クタクタ","🫠"]
 wordmark:
   src: "/projects/好累/wordmark.webp"
   source: "cutout"
-  accent: "#37409d"
+  accent: "#363f9c"
+  ink: 0.685
 ---
 
 獻給週一ㄉ你。

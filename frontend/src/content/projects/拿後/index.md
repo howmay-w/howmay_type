@@ -22,7 +22,7 @@ tags: ["然後","andthen","👂"]
 wordmark:
   src: "/projects/拿後/wordmark.webp"
   source: "cutout"
-  accent: "#e3e3e3"
+  ink: 0.525
 ---
 
 比起「然後」，其實比較常聽到別人講「拿後」。\

@@ -26,7 +26,7 @@ tags: ["drama","🥃"]
 wordmark:
   src: "/projects/狗血/wordmark.webp"
   source: "auto"
-  accent: "#2f3131"
+  ink: 0.499
 ---
 
 隨著長大見識越來越多，\

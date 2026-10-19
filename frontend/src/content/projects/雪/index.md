@@ -28,7 +28,7 @@ tags: ["snow", "ゆき", "特效", "☃️"]
 wordmark:
   src: "/projects/雪/wordmark.webp"
   source: "cutout"
-  accent: "#97b7fd"
+  ink: 0.799
 ---
 
 貼文發出來的時候，我應該已經在北海道、\

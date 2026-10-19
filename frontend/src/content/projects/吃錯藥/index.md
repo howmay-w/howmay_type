@@ -26,7 +26,7 @@ tags: ["whatswrongwithyou","🤗"]
 wordmark:
   src: "/projects/吃錯藥/wordmark.webp"
   source: "cutout"
-  accent: "#212221"
+  ink: 0.731
 ---
 
 今天台北的天氣：

@@ -28,7 +28,8 @@ tags: ["homophonie", "metallic", "balloon", "手繪特效", "3D", "🎈"]
 wordmark:
   src: "/projects/諧/wordmark.webp"
   source: "auto"
-  accent: "#eab0a3"
+  accent: "#815716"
+  ink: 0.182
 ---
 
 挑戰用 Procreate 製造假 3D，\

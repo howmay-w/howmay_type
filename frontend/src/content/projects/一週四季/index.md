@@ -24,7 +24,7 @@ tags: ["SeasonsInAWeek","🌧️☀️⚡️"]
 wordmark:
   src: "/projects/一週四季/wordmark.webp"
   source: "auto"
-  accent: "#ebebea"
+  ink: 0.323
 ---
 
 五月台北，一週四季。

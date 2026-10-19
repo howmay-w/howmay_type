@@ -28,7 +28,7 @@ tags: ["blowup", "🌬️"]
 wordmark:
   src: "/projects/飄/wordmark.webp"
   source: "cutout"
-  accent: "#ece8e0"
+  ink: 0.16
 ---
 
 一直覺得「貼文飄出去了。」實在是頗貼切又可愛的說法。

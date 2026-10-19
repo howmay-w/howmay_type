@@ -18,7 +18,8 @@ tags: ["黑冠麻鷺","地瓜鳥","山暗光","MalayanNightHeron","reels"]
 wordmark:
   src: "/projects/大笨鳥/wordmark.webp"
   source: "auto"
-  accent: "#26282d"
+  accent: "#23262c"
+  ink: 0.398
 ---
 
 沒人教，但全世界都叫他大笨鳥。

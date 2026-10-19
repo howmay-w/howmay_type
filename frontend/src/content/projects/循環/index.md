@@ -20,5 +20,5 @@ tags: ["cycle", "loop", "🔃"]
 wordmark:
   src: "/projects/循環/wordmark.webp"
   source: "cutout"
-  accent: "#fff4f5"
+  ink: 0.46
 ---

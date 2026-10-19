@@ -24,7 +24,8 @@ tags: ["distressed","哭","😵‍💫"]
 wordmark:
   src: "/projects/狼狽/wordmark.webp"
   source: "cutout"
-  accent: "#6d4f4e"
+  accent: "#765957"
+  ink: 0.118
 ---
 
 最近睡覺都被蚊子煩到快死亡，\

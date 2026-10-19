@@ -28,7 +28,8 @@ tags: ["cramps","🫠"]
 wordmark:
   src: "/projects/經痛/wordmark.webp"
   source: "auto"
-  accent: "#a38d94"
+  accent: "#243ba1"
+  ink: 0.112
 ---
 
 今天月經來第二天，好痛哦😖

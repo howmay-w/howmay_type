@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/心狠手辣/wordmark.webp"
   source: "auto"
   accent: "#e14e82"
+  ink: 0.553
 ---
 
 過年啦。

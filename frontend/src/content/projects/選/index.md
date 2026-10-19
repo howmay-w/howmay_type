@@ -32,7 +32,7 @@ tags: ["choose","vote","🗳️"]
 wordmark:
   src: "/projects/選/wordmark.webp"
   source: "cutout"
-  accent: "#f1f1f1"
+  ink: 0.677
 ---
 
 總是要做決定。\

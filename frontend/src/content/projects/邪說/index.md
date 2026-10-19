@@ -20,7 +20,8 @@ instagramReels:
 wordmark:
   src: "/projects/邪說/wordmark.webp"
   source: "cutout"
-  accent: "#92210c"
+  accent: "#7e1f0d"
+  ink: 0.111
 ---
 
 「你要不要聽聽看你在說什麼🙃」\

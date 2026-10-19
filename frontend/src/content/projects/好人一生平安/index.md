@@ -30,7 +30,7 @@ tags: ["Allthebest","🙏"]
 wordmark:
   src: "/projects/好人一生平安/wordmark.webp"
   source: "cutout"
-  accent: "#1d201d"
+  ink: 0.447
 ---
 
 感謝所有為世界帶來美好的好人：\

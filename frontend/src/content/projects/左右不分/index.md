@@ -24,7 +24,7 @@ tags: ["dizzy","😵‍💫"]
 wordmark:
   src: "/projects/左右不分/wordmark.webp"
   source: "cutout"
-  accent: "#323232"
+  ink: 0.575
 ---
 
 最近大家應該都很混亂，\

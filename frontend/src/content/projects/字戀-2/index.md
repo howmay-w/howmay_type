@@ -13,7 +13,7 @@ tags: ["whatzurtype","字字字設計串連","LoveFont","💟"]
 wordmark:
   src: "/projects/字戀-2/wordmark.webp"
   source: "auto"
-  accent: "#e5cdf5"
+  ink: 0.259
 ---
 
 投稿看看

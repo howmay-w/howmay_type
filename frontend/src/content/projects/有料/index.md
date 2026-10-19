@@ -32,7 +32,7 @@ tags: ["reallysomething","🧋"]
 wordmark:
   src: "/projects/有料/wordmark.webp"
   source: "auto"
-  accent: "#dddddc"
+  ink: 0.788
 ---
 
 想大力稱讚，但又怕多講多錯時，就可以使用「有料」。\

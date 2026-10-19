@@ -24,7 +24,7 @@ tags: ["連假","longweekend","🏕️"]
 wordmark:
   src: "/projects/一直放假一直爽/wordmark.webp"
   source: "auto"
-  accent: "#e7e0cc"
+  ink: 0.39
 ---
 
 一時放假一時爽，

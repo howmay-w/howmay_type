@@ -28,7 +28,7 @@ tags: ["havenomanners","🤗"]
 wordmark:
   src: "/projects/沒禮貌/wordmark.webp"
   source: "cutout"
-  accent: "#2c2a2b"
+  ink: 0.553
 ---
 
 講話沒禮貌的朋友，常常是真正的好朋友。\

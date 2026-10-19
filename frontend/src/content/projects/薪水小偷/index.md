@@ -28,7 +28,7 @@ tags: ["clockwatcher","點字","🚔"]
 wordmark:
   src: "/projects/薪水小偷/wordmark.webp"
   source: "auto"
-  accent: "#ececea"
+  ink: 0.284
 ---
 
 年末ㄌ，你各位心是不是都飛走了ㄚ！\

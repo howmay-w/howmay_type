@@ -18,7 +18,7 @@ tags: ["whatzurtype", "臺北文學季特展", "sad", "字字字設計串連", "
 wordmark:
   src: "/projects/傷心/wordmark.webp"
   source: "auto"
-  accent: "#ffffff"
+  ink: 0.178
 ---
 
 試著用限動做字✨

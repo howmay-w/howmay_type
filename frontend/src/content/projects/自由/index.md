@@ -30,7 +30,8 @@ tags: ["freedom","🪁"]
 wordmark:
   src: "/projects/自由/wordmark.webp"
   source: "auto"
-  accent: "#2e4106"
+  accent: "#2d4005"
+  ink: 0.506
 ---
 
 長大ㄌ以後好自由ㄛ！\

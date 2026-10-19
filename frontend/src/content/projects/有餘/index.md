@@ -28,7 +28,8 @@ tags: ["typowordchain23，","takethingsinyourstride","🈶"]
 wordmark:
   src: "/projects/有餘/wordmark.webp"
   source: "cutout"
-  accent: "#d1ad25"
+  accent: "#d2ae25"
+  ink: 0.505
 ---
 
 其實是新年期許：希望能當個游刃有餘的人！\

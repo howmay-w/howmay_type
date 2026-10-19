@@ -19,7 +19,8 @@ tags:
 wordmark:
   src: "/projects/金牛座/wordmark.webp"
   source: "cutout"
-  accent: "#332b1d"
+  accent: "#2d2618"
+  ink: 0.287
 ---
 
 用 Rhythm 的筆畫拼出金牛座！

@@ -32,7 +32,8 @@ tags: ["sodifficult","sohard","🙈"]
 wordmark:
   src: "/projects/好難/wordmark.webp"
   source: "auto"
-  accent: "#f26061"
+  accent: "#f15d5e"
+  ink: 0.368
 ---
 
 最近在準備考英文檢定，好難喔🥲

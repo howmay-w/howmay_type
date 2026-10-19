@@ -24,7 +24,7 @@ tags: ["clam","台灣文蛤","蛤蜊","🆕"]
 wordmark:
   src: "/projects/蛤/wordmark.webp"
   source: "auto"
-  accent: "#464747"
+  ink: 0.452
 ---
 
 本日要聞。\

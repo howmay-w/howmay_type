@@ -30,7 +30,7 @@ tags: ["daddy","fathersday","🐲"]
 wordmark:
   src: "/projects/爸比/wordmark.webp"
   source: "auto"
-  accent: "#e0e1e1"
+  ink: 0.417
 ---
 
 今年 24 歲，依然叫我爸「爸比」。

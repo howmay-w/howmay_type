@@ -24,7 +24,8 @@ tags: ["date","✨"]
 wordmark:
   src: "/projects/約會/wordmark.webp"
   source: "auto"
-  accent: "#e7a0e7"
+  accent: "#e7a1e8"
+  ink: 0.562
 ---
 
 跟男友交往（差一個月）滿十年，\

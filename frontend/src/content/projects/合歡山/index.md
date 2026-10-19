@@ -30,7 +30,7 @@ tags: ["whatzurtype","字字字設計串連","hehuanshan","🏔️"]
 wordmark:
   src: "/projects/合歡山/wordmark.webp"
   source: "cutout"
-  accent: "#20211f"
+  ink: 0.615
 ---
 
 近壓線投稿本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是山！其實不是常常爬，跟台灣的山們不算熟，但每次去山裡總是能帶回美好的記憶。

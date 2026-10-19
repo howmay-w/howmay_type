@@ -24,6 +24,7 @@ tags: ["emo","🙂"]
 wordmark:
   src: "/projects/EMO/wordmark.webp"
   source: "auto"
+  ink: 0.605
 ---
 
 又下雨ㄌ

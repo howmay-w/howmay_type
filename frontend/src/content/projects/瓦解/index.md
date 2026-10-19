@@ -22,7 +22,7 @@ tags: ["collapse","gif","loop","🔨"]
 wordmark:
   src: "/projects/瓦解/wordmark.webp"
   source: "auto"
-  accent: "#fefdfe"
+  ink: 0.425
 ---
 
 聽學術倫理講座時畫ㄉ\

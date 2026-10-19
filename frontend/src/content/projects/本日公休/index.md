@@ -30,7 +30,7 @@ tags: ["dayoff","🏖️"]
 wordmark:
   src: "/projects/本日公休/wordmark.webp"
   source: "auto"
-  accent: "#f2f2f1"
+  ink: 0.571
 ---
 
 最近好忙好忙，好想公休ㄛ。\

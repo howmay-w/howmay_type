@@ -30,7 +30,7 @@ tags: ["highmaintenance.","🐱"]
 wordmark:
   src: "/projects/毛很多/wordmark.webp"
   source: "auto"
-  accent: "#e8e7e7"
+  ink: 0.335
 ---
 
 吸貓心得。

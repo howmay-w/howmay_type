@@ -32,7 +32,8 @@ tags: ["whatzurtype", "字字字設計串連", "鬼故事", "🕯️"]
 wordmark:
   src: "/projects/怪談-2/wordmark.webp"
   source: "auto"
-  accent: "#765f33"
+  accent: "#776033"
+  ink: 0.332
 ---
 
 本月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是「怪談」，農曆七月也快到ㄌ，充滿故事的時節。

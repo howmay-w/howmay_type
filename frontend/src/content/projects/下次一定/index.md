@@ -26,7 +26,8 @@ hoverVideo:
 wordmark:
   src: "/projects/下次一定/wordmark.webp"
   source: "auto"
-  accent: "#f98923"
+  accent: "#fba325"
+  ink: 0.441
 ---
 
 身為一個台北人：

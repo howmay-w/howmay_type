@@ -24,7 +24,8 @@ tags: ["感恩ㄉ心","grateful","💝"]
 wordmark:
   src: "/projects/感恩的心/wordmark.webp"
   source: "auto"
-  accent: "#eb816f"
+  accent: "#f1a073"
+  ink: 0.342
 ---
 
 今天補班，全公司去校外教學。\

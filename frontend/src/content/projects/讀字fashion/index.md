@@ -30,7 +30,8 @@ tags: ["whatzurtype","台北國際書展","字字字設計串連","😎"]
 wordmark:
   src: "/projects/讀字fashion/wordmark.webp"
   source: "auto"
-  accent: "#e8c3b9"
+  accent: "#ebc6bc"
+  ink: 0.22
 ---
 
 遲到的一月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 

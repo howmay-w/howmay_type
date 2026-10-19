@@ -26,7 +26,7 @@ tags: ["whatzurtype","字字字設計串連","diary","📔"]
 wordmark:
   src: "/projects/寫日記/wordmark.webp"
   source: "cutout"
-  accent: "#383837"
+  ink: 0.611
 ---
 
 這個月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 題目是「習慣」。我唯一比較自豪的習慣，是從高一開始，每天睡前都會花幾分鐘寫日記。

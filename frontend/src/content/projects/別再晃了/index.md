@@ -32,7 +32,7 @@ tags: ["QQ","地震","🫨"]
 wordmark:
   src: "/projects/別再晃了/wordmark.webp"
   source: "cutout"
-  accent: "#f4f3f2"
+  ink: 0.299
 ---
 
 晚上震半夜震早上又震，\

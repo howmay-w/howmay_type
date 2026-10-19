@@ -18,6 +18,6 @@ tags: ["whitepaperrevolution","A4revolution","📄"]
 wordmark:
   src: "/projects/白紙/wordmark.webp"
   source: "auto"
-  accent: "#dee2e1"
   hidden: true
+  ink: 0.862
 ---

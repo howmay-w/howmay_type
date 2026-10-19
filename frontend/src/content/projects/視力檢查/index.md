@@ -26,7 +26,7 @@ tags: ["whatzurtype","eyetest","文博會","字字字設計串連","👓"]
 wordmark:
   src: "/projects/視力檢查/wordmark.webp"
   source: "cutout"
-  accent: "#363636"
+  ink: 0.248
 ---
 
 這週去文博會！\

@@ -32,7 +32,8 @@ tags: ["recover","👛"]
 wordmark:
   src: "/projects/失而復得/wordmark.webp"
   source: "auto"
-  accent: "#0f5e5d"
+  accent: "#0e5c5c"
+  ink: 0.526
 ---
 
 失而復得，是世界上最美好的感受之一。

@@ -30,7 +30,7 @@ tags: ["OMG","🤯"]
 wordmark:
   src: "/projects/發瘋/wordmark.webp"
   source: "auto"
-  accent: "#1e1e1e"
+  ink: 0.604
 ---
 
 這個溫度真的發瘋⋯⋯\

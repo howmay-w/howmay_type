@@ -26,7 +26,7 @@ tags: ["illusion","🥴"]
 wordmark:
   src: "/projects/錯覺/wordmark.webp"
   source: "cutout"
-  accent: "#fefefd"
+  ink: 0.28
 ---
 
 如果你看到字了，那可能是錯覺ㄅ。\

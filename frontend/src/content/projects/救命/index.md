@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/救命/wordmark.webp"
   source: "auto"
   accent: "#2a3543"
+  ink: 0.579
 ---
 
 來自最近諸事不順ㄉ朋朋的點字，辛苦ㄌQQ

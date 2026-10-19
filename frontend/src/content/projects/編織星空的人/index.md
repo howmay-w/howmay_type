@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/編織星空的人/wordmark.webp"
   source: "auto"
   hidden: true
+  ink: 0.088
 ---
 
 🎶用一顆孩子的心，在大人世界生存🎶\

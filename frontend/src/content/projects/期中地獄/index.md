@@ -24,7 +24,7 @@ tags: ["期末地獄", "hell", "點字", "特效", "3D", "😵"]
 wordmark:
   src: "/projects/期中地獄/wordmark.webp"
   source: "cutout"
-  accent: "#b1aab2"
+  ink: 0.356
 ---
 
 期中還沒走，期末就要來ㄌ。\

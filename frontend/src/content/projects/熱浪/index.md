@@ -28,7 +28,7 @@ tags: ["heatwave","🫠"]
 wordmark:
   src: "/projects/熱浪/wordmark.webp"
   source: "cutout"
-  accent: "#ebebec"
+  ink: 0.329
 ---
 
 怎麼記得小時候氣溫超過 30°C 就算是新聞ㄌ？

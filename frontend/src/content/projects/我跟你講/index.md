@@ -32,7 +32,7 @@ tags: ["LetMeTellYou","🤗"]
 wordmark:
   src: "/projects/我跟你講/wordmark.webp"
   source: "auto"
-  accent: "#d255a7"
+  ink: 0.074
 ---
 
 當某人不自覺想要在對話中教育你的時候：

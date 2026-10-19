@@ -28,7 +28,8 @@ tags: ["whatzurtype","字字字設計串連","台語","🌿"]
 wordmark:
   src: "/projects/蕨貓/wordmark.webp"
   source: "cutout"
-  accent: "#114a17"
+  accent: "#104917"
+  ink: 0.251
 ---
 
 蕨貓 kueh-niau\
