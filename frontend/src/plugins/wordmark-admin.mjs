@@ -1,0 +1,186 @@
+/**
+ * 字圖管理頁（只在 dev server 提供，build 不會包含）：
+ * - GET  /__wordmarks             管理頁
+ * - GET  /__wordmarks/api/list    所有作品的字圖資料
+ * - POST /__wordmarks/api/update  修改 wordmark 欄位（reviewed / hidden / scale / chars）
+ * - POST /__wordmarks/api/replace?slug=&ink=  上傳處理好的 webp，取代 wordmark.webp
+ * - POST /__wordmarks/api/export-redo  把標記「重新去背」的作品原圖複製到桌面資料夾，交給 wut-collage-tool 處理
+ * 寫回的是 src/content/projects/<slug>/index.md 的 wordmark 區塊與同資料夾的 wordmark.webp。
+ */
+import { execFile } from "node:child_process";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const contentProjects = path.resolve(__dirname, "../content/projects");
+const pageFile = path.join(__dirname, "wordmark-admin.html");
+const EDITABLE = new Set(["reviewed", "hidden", "scale", "chars", "redo"]);
+// 待重新去背的原圖匯出到這裡，檔名 = 作品資料夾名稱，wut-collage-tool 匯出時會變成「名稱_white.png」
+const REDO_DIR = path.join(os.homedir(), "Desktop", "字牆重新去背");
+
+function webpSize(file) {
+  const b = fs.readFileSync(file);
+  if (b.length < 30 || b.toString("ascii", 0, 4) !== "RIFF") return null;
+  const chunk = b.toString("ascii", 12, 16);
+  if (chunk === "VP8X") return { width: 1 + b.readUIntLE(24, 3), height: 1 + b.readUIntLE(27, 3) };
+  if (chunk === "VP8L") {
+    const bits = b.readUInt32LE(21);
+    return { width: 1 + (bits & 0x3fff), height: 1 + ((bits >> 14) & 0x3fff) };
+  }
+  if (chunk === "VP8 ") return { width: b.readUInt16LE(26) & 0x3fff, height: b.readUInt16LE(28) & 0x3fff };
+  return null;
+}
+
+// 解析 / 寫回 index.md 裡的 wordmark 區塊（每行「  key: JSON 值」）
+const BLOCK_RE = /^wordmark:\n((?:[ \t]+.*\n)*)/m;
+function readWordmark(md) {
+  const m = md.match(BLOCK_RE);
+  if (!m) return null;
+  const out = {};
+  for (const line of m[1].split("\n")) {
+    const kv = line.match(/^\s+(\w+):\s*(.*)$/);
+    if (!kv) continue;
+    try {
+      out[kv[1]] = JSON.parse(kv[2]);
+    } catch {
+      out[kv[1]] = kv[2];
+    }
+  }
+  return out;
+}
+function writeWordmark(md, fields) {
+  const order = ["src", "source", "accent", "ink", "chars", "size", "scale", "hidden", "redo", "reviewed"];
+  const keys = [...order.filter((k) => k in fields), ...Object.keys(fields).filter((k) => !order.includes(k))];
+  const block = `wordmark:\n${keys.map((k) => `  ${k}: ${JSON.stringify(fields[k])}\n`).join("")}`;
+  if (BLOCK_RE.test(md)) return md.replace(BLOCK_RE, block);
+  const end = md.indexOf("\n---", 4);
+  return `${md.slice(0, end + 1)}${block}${md.slice(end + 1)}`;
+}
+const frontValue = (md, key) => md.match(new RegExp(`^${key}:\\s*"?(.*?)"?\\s*$`, "m"))?.[1];
+const firstImage = (md) =>
+  md.match(/^(?:thumbnail|image):\s*\n\s+src:\s*"?([^"\n]+)"?/m)?.[1] ??
+  md.match(/^images:\s*\n\s+-\s+src:\s*"?([^"\n]+)"?/m)?.[1];
+
+function listProjects() {
+  return fs
+    .readdirSync(contentProjects, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && fs.existsSync(path.join(contentProjects, d.name, "index.md")))
+    .map((d) => {
+      const slug = d.name;
+      const md = fs.readFileSync(path.join(contentProjects, slug, "index.md"), "utf8");
+      const wordmark = readWordmark(md);
+      const file = path.join(contentProjects, slug, "wordmark.webp");
+      const exists = fs.existsSync(file);
+      return {
+        slug,
+        title: frontValue(md, "title") ?? slug,
+        date: frontValue(md, "pubDate") ?? "",
+        post: firstImage(md) ?? null,
+        wordmark,
+        size: exists ? webpSize(file) : null,
+        mtime: exists ? fs.statSync(file).mtimeMs : 0,
+      };
+    });
+}
+
+const readBody = (req) =>
+  new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on("data", (c) => chunks.push(c));
+    req.on("end", () => resolve(Buffer.concat(chunks)));
+    req.on("error", reject);
+  });
+const send = (res, status, body, type = "application/json") => {
+  res.statusCode = status;
+  res.setHeader("Content-Type", type);
+  res.setHeader("Cache-Control", "no-store");
+  res.end(typeof body === "string" || Buffer.isBuffer(body) ? body : JSON.stringify(body));
+};
+// 只接受實際存在的作品資料夾名稱，避免路徑跳出 content/projects
+const projectDir = (slug) => {
+  if (!slug || slug.includes("/") || slug.includes("\\") || slug.startsWith(".")) return null;
+  const dir = path.join(contentProjects, slug);
+  return fs.existsSync(path.join(dir, "index.md")) ? dir : null;
+};
+
+export function wordmarkAdminPlugin() {
+  return {
+    name: "wordmark-admin",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use("/__wordmarks", async (req, res) => {
+        try {
+          const url = new URL(req.url ?? "/", "http://localhost");
+          if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
+            return send(res, 200, fs.readFileSync(pageFile, "utf8"), "text/html; charset=utf-8");
+          }
+          if (req.method === "GET" && url.pathname === "/api/list") return send(res, 200, listProjects());
+
+          if (req.method === "POST" && url.pathname === "/api/update") {
+            const { slug, fields } = JSON.parse((await readBody(req)).toString("utf8"));
+            const dir = projectDir(slug);
+            if (!dir) return send(res, 404, { error: "找不到作品" });
+            const mdFile = path.join(dir, "index.md");
+            const md = fs.readFileSync(mdFile, "utf8");
+            const current = readWordmark(md);
+            if (!current) return send(res, 400, { error: "這件作品還沒有字圖" });
+            for (const [k, v] of Object.entries(fields ?? {})) {
+              if (!EDITABLE.has(k)) continue;
+              if (v === null || v === false || (k === "scale" && v === 1)) delete current[k];
+              else current[k] = v;
+            }
+            fs.writeFileSync(mdFile, writeWordmark(md, current));
+            return send(res, 200, { ok: true, wordmark: current });
+          }
+
+          if (req.method === "POST" && url.pathname === "/api/replace") {
+            const slug = url.searchParams.get("slug");
+            const dir = projectDir(slug);
+            if (!dir) return send(res, 404, { error: "找不到作品" });
+            const body = await readBody(req);
+            if (body.toString("ascii", 0, 4) !== "RIFF" || body.toString("ascii", 8, 12) !== "WEBP") {
+              return send(res, 400, { error: "需要 webp 圖檔" });
+            }
+            fs.writeFileSync(path.join(dir, "wordmark.webp"), body);
+            const mdFile = path.join(dir, "index.md");
+            const md = fs.readFileSync(mdFile, "utf8");
+            const current = readWordmark(md) ?? {};
+            current.src = `/projects/${slug}/wordmark.webp`;
+            current.source = "cutout";
+            const ink = parseFloat(url.searchParams.get("ink") ?? "");
+            if (Number.isFinite(ink)) current.ink = Math.round(ink * 1000) / 1000;
+            delete current.hidden;
+            delete current.redo;
+            delete current.reviewed;
+            fs.writeFileSync(mdFile, writeWordmark(md, current));
+            return send(res, 200, { ok: true, wordmark: current });
+          }
+          if (req.method === "POST" && url.pathname === "/api/export-redo") {
+            fs.mkdirSync(REDO_DIR, { recursive: true });
+            const files = [];
+            const missing = [];
+            for (const p of listProjects()) {
+              if (!p.wordmark?.redo) continue;
+              // 貼文原圖的網址是 /projects/<slug>/<檔名>，實際檔案在作品資料夾裡
+              const src = p.post && path.join(contentProjects, p.slug, path.basename(p.post));
+              if (!src || !fs.existsSync(src)) {
+                missing.push(p.slug);
+                continue;
+              }
+              const name = `${p.slug}${path.extname(src)}`;
+              fs.copyFileSync(src, path.join(REDO_DIR, name));
+              files.push(name);
+            }
+            if (url.searchParams.get("open") !== "0") execFile("open", [REDO_DIR], () => {});
+            return send(res, 200, { dir: REDO_DIR, files, missing });
+          }
+          send(res, 404, { error: "not found" });
+        } catch (err) {
+          send(res, 500, { error: String(err) });
+        }
+      });
+    },
+  };
+}

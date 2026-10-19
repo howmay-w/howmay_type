@@ -61,7 +61,11 @@ const projects = defineCollection({
         // 圖上的字數；沒填就從標題推算
         chars: z.number().optional(),
         size: z.enum(["s", "m", "l"]).optional(),
+        // 細部大小調整（倍率，1 = 預設），在字圖管理頁用滑桿設定
+        scale: z.number().optional(),
         hidden: z.boolean().optional(),
+        // 已在字圖管理頁確認過；換圖後會自動變回未確認
+        reviewed: z.boolean().optional(),
       })
       .optional(),
     pubDate: z.coerce.date().optional(),

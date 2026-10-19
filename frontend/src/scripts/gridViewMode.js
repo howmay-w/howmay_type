@@ -47,7 +47,9 @@ const bandOf = (W) => BANDS.reduce((d, b) => (W >= b ? b : d), BANDS[0]);
 const metrics = (el) => {
   const aspect = parseFloat(el.dataset.wmAspect) || 1;
   // 面積和字數不完全成正比（0.8 次方），且至少 1.6 個字的面積：單字作品整體才不會顯得太小
-  const mass = Math.max(1.6, (parseFloat(el.dataset.wmMass) || 1) ** 0.8);
+  // 手動倍率最後才乘：寬度 × scale，所以面積 × scale²
+  const scale = parseFloat(el.dataset.wmScale) || 1;
+  const mass = Math.max(1.6, (parseFloat(el.dataset.wmMass) || 1) ** 0.8) * scale ** 2;
   return { aspect, mass };
 };
 const unitOf = (D) => (D < 480 ? 62 : Math.min(130, Math.max(68, D * 0.074)));
@@ -66,7 +68,7 @@ const FLEX = 0.1;
 
 const packColumns = (items, D) => {
   const unit = unitOf(D);
-  const gap = unit * 0.34;
+  const gap = unit * 0.374; // 字與字的間距（原 0.34，加大 10%）
   const N = D < 480 ? 8 : 16;
   const colW = (D - gap * (N - 1)) / N;
   const pitch = colW + gap;
@@ -158,7 +160,23 @@ const packColumns = (items, D) => {
     const spanW = spanOf(k);
     const spanX = c0 * pitch;
     const x = c0 === 0 ? spanX : c0 + k === N ? spanX + spanW - w : spanX + (spanW - w) / 2;
-    placed.push({ el: it.el, x, y: r0 * STEP, w, h });
+    placed.push({ el: it.el, x, y: r0 * STEP, w, h, r0, ch, c0, k });
+  }
+  // 排完後的置中調整：不貼左右邊界的作品，移到它左右兩側實際空著的範圍正中央，
+  // 讓放不進東西的空白平均分到兩側，而不是全部堆在右邊
+  for (const p of placed) {
+    if (p.c0 === 0 || p.c0 + p.k === N) continue;
+    let left = Infinity;
+    let right = Infinity;
+    for (let rr = p.r0; rr < p.r0 + p.ch; rr++) {
+      let l = 0;
+      for (let c = p.c0 - 1; c >= 0 && occ[rr * N + c] !== 1; c--) l++;
+      let r = 0;
+      for (let c = p.c0 + p.k; c < N && occ[rr * N + c] !== 1; c++) r++;
+      left = Math.min(left, l);
+      right = Math.min(right, r);
+    }
+    p.x += ((right - left) / 2) * pitch;
   }
   const height = placed.reduce((mx, p) => Math.max(mx, p.y + p.h), 0) || 1;
   return { placed, height };
