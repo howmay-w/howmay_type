@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/抹香鯨/video_0.mp4"
 pubDate: 2024-10-09
 tags: ["whatzurtype", "字字字設計串連", "台灣字造：小屋裡的字體展", "🐋"]
+wordmark:
+  src: "/projects/抹香鯨/wordmark.webp"
+  source: "auto"
+  accent: "#2811b2"
 ---
 
 這幾天人在花蓮！趁最後一晚把 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 花蓮限定主題第三篇發完，也正式實體展出了（最後一張）！朦朧圓潤巨大神秘的抹香鯨。

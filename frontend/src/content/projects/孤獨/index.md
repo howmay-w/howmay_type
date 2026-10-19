@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/孤獨/video_0.mp4"
 pubDate: 2024-03-09
 tags: ["Lonely", "😶"]
+wordmark:
+  src: "/projects/孤獨/wordmark.webp"
+  source: "cutout"
+  accent: "#edeeef"
 ---
 
 有時會不自覺想到，人生就是趟會不斷失去心愛人事物的旅程，好孤獨ㄛ。

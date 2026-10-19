@@ -10,4 +10,8 @@ hoverVideo:
   src: "/projects/頭痛/video_0.mp4"
 pubDate: 2022-08-20
 tags: ["Headache","💥"]
+wordmark:
+  src: "/projects/頭痛/wordmark.webp"
+  source: "auto"
+  accent: "#000000"
 ---

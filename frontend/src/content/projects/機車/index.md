@@ -26,6 +26,10 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-12-07
 tags: ["死語復興運動","🛵"]
+wordmark:
+  src: "/projects/機車/wordmark.webp"
+  source: "auto"
+  accent: "#fefbe7"
 ---
 
 應是死語但我最近好愛講，\

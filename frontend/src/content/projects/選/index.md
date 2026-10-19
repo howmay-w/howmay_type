@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/選/video_0.mp4"
 pubDate: 2024-01-12
 tags: ["choose","vote","🗳️"]
+wordmark:
+  src: "/projects/選/wordmark.webp"
+  source: "cutout"
+  accent: "#f1f1f1"
 ---
 
 總是要做決定。\

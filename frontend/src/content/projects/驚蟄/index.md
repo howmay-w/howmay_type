@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/驚蟄/video_0.mp4"
 pubDate: 2023-02-16
 tags: ["Awakening","whatzurtype","字字字設計串連","🐞"]
+wordmark:
+  src: "/projects/驚蟄/wordmark.webp"
+  source: "auto"
+  accent: "#f5f9ac"
 ---
 
 說好ㄉ回暖ㄋ？！

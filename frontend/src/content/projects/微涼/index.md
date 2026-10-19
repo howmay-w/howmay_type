@@ -15,6 +15,10 @@ hoverVideo:
   src: "/projects/微涼/video_0.mp4"
 pubDate: 2022-10-10
 tags: ["feelingcold","點字","🤧"]
+wordmark:
+  src: "/projects/微涼/wordmark.webp"
+  source: "auto"
+  accent: "#f5f2f9"
 ---
 
 問答點字的「微涼」\

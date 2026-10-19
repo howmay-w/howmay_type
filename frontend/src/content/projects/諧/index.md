@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/諧/video_0.mp4"
 pubDate: 2022-10-06
 tags: ["homophonie", "metallic", "balloon", "手繪特效", "3D", "🎈"]
+wordmark:
+  src: "/projects/諧/wordmark.webp"
+  source: "auto"
+  accent: "#eab0a3"
 ---
 
 挑戰用 Procreate 製造假 3D，\

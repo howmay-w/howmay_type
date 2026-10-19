@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/熬夜-2/video_0.mp4"
 pubDate: 2023-07-06
 tags: ["熬","stayup","👁️"]
+wordmark:
+  src: "/projects/熬夜-2/wordmark.webp"
+  source: "cutout"
+  accent: "#9b56d8"
 ---
 
 大學同學說過：熬夜使人心靈脆弱。所言甚是。\

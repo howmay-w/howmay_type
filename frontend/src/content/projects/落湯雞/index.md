@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/落湯雞/video_0.mp4"
 pubDate: 2023-08-12
 tags: ["落湯鷄","drownedrat","🐓"]
+wordmark:
+  src: "/projects/落湯雞/wordmark.webp"
+  source: "cutout"
+  accent: "#28307c"
 ---
 
 最近ㄉ大雨都令人措手不及，剛放晴又下，好難搞。\

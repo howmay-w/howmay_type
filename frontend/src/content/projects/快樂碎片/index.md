@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/快樂碎片/video_0.mp4"
 pubDate: 2026-02-13
 tags: ["✨"]
+wordmark:
+  src: "/projects/快樂碎片/wordmark.webp"
+  source: "cutout"
+  accent: "#232638"
 ---
 
 有時覺得生活中的快樂像碎片，\

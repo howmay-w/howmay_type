@@ -17,4 +17,8 @@ hoverVideo:
   src: "/projects/循環/video_0.mp4"
 pubDate: 2022-08-29
 tags: ["cycle", "loop", "🔃"]
+wordmark:
+  src: "/projects/循環/wordmark.webp"
+  source: "cutout"
+  accent: "#fff4f5"
 ---

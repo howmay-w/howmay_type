@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/偏執狂/video_0.mp4"
 pubDate: 2023-03-30
 tags: ["Paranoia","🃏"]
+wordmark:
+  src: "/projects/偏執狂/wordmark.webp"
+  source: "cutout"
+  accent: "#db5d5e"
 ---
 
 送給提案這三個字給我ㄉ朋

@@ -15,6 +15,10 @@ hoverVideo:
   src: "/projects/困擾/video_0.mp4"
 pubDate: 2022-10-31
 tags: ["bother","🤧"]
+wordmark:
+  src: "/projects/困擾/wordmark.webp"
+  source: "cutout"
+  accent: "#dde0e7"
 ---
 
 有些事情並不討厭，但很困擾。\

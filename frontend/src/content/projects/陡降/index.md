@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/陡降/video_0.mp4"
 pubDate: 2023-12-01
 tags: ["suddendrop", "📉"]
+wordmark:
+  src: "/projects/陡降/wordmark.webp"
+  source: "auto"
+  accent: "#bbe0c9"
 ---
 
 雖然有沒有到真的很冷，但總覺得氣溫降ㄉ太突然ㄌ，身體反應不過來🥲

@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/畢業快樂/video_0.mp4"
 pubDate: 2023-05-28
 tags: ["tobeornottobe","graduation","畢業","🎓"]
+wordmark:
+  src: "/projects/畢業快樂/wordmark.webp"
+  source: "auto"
+  accent: "#53321c"
 ---
 
 其實還沒有要畢業，只是昨天先參加了畢業典禮🥵\

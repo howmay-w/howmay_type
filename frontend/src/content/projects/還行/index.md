@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/還行/video_0.mp4"
 pubDate: 2023-03-24
 tags: ["itsokay","まあまあ","🉑"]
+wordmark:
+  src: "/projects/還行/wordmark.webp"
+  source: "auto"
+  accent: "#c8cbb8"
 ---
 
 普普通通ㄉ狀態，\

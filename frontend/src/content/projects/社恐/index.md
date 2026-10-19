@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/社恐/video_0.mp4"
 pubDate: 2023-09-23
 tags: ["社交恐懼","socialphobia","コミュ障","🥸"]
+wordmark:
+  src: "/projects/社恐/wordmark.webp"
+  source: "cutout"
+  accent: "#e4e4e4"
 ---
 
 覺得社恐比起一種性格，\

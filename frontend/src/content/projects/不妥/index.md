@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/不妥/video_0.mp4"
 pubDate: 2024-03-18
 tags: ["inappropriate", "🤚"]
+wordmark:
+  src: "/projects/不妥/wordmark.webp"
+  source: "auto"
+  accent: "#1d1d1d"
 ---
 
 文雅委婉版本的「不好、不要、不可以、不 ok」，覺得聽起來很高級。\

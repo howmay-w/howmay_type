@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/一直放假一直爽/video_0.mp4"
 pubDate: 2023-04-03
 tags: ["連假","longweekend","🏕️"]
+wordmark:
+  src: "/projects/一直放假一直爽/wordmark.webp"
+  source: "auto"
+  accent: "#e7e0cc"
 ---
 
 一時放假一時爽，

@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/撞牆期/video_0.mp4"
 pubDate: 2023-09-10
 tags: ["plateau","🤕"]
+wordmark:
+  src: "/projects/撞牆期/wordmark.webp"
+  source: "cutout"
+  accent: "#dfdedb"
 ---
 
 最近身陷撞牆期，好困擾。

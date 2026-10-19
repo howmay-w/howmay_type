@@ -25,6 +25,10 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-07-24
 tags: ["govote","🛤️"]
+wordmark:
+  src: "/projects/政治不歸政治/wordmark.webp"
+  source: "cutout"
+  accent: "#cecdcc"
 ---
 
 「＿＿歸＿＿，政治歸政治」，\

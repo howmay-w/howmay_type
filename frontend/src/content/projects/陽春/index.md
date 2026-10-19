@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/陽春/video_0.mp4"
 pubDate: 2024-06-16
 tags: ["spring","plain","🌻"]
+wordmark:
+  src: "/projects/陽春/wordmark.webp"
+  source: "cutout"
+  accent: "#ebeee8"
 ---
 
 很喜歡以「陽春」取代基本甚至簡陋的用法。優雅而不失禮貌。

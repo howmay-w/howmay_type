@@ -30,6 +30,11 @@ hoverVideo:
   src: "/projects/花/video_0.mp4"
 pubDate: 2023-03-16
 tags: ["flower", "はな", "手繪特效", "3D", "🌷"]
+wordmark:
+  src: "/projects/花/wordmark.webp"
+  source: "auto"
+  accent: "#918fcf"
+  hidden: true
 ---
 
 今天洗澡時突然想試試看，\

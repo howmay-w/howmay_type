@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/沒禮貌/video_0.mp4"
 pubDate: 2023-12-11
 tags: ["havenomanners","🤗"]
+wordmark:
+  src: "/projects/沒禮貌/wordmark.webp"
+  source: "cutout"
+  accent: "#2c2a2b"
 ---
 
 講話沒禮貌的朋友，常常是真正的好朋友。\

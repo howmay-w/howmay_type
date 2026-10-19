@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/眼淚博物館/video_0.mp4"
 pubDate: 2022-10-24
 tags: ["museumoftears","鄭興","💧"]
+wordmark:
+  src: "/projects/眼淚博物館/wordmark.webp"
+  source: "cutout"
+  accent: "#e2e2e2"
 ---
 
 🎶不是每次低潮的來去，都與挫折有關🎶\

@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/搶救/video_0.mp4"
 pubDate: 2022-11-24
 tags: ["help","💥"]
+wordmark:
+  src: "/projects/搶救/wordmark.webp"
+  source: "auto"
+  accent: "#a21107"
 ---
 
 最近很常看到的字。\

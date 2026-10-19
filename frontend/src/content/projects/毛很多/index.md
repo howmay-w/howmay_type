@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/毛很多/video_0.mp4"
 pubDate: 2023-11-02
 tags: ["highmaintenance.","🐱"]
+wordmark:
+  src: "/projects/毛很多/wordmark.webp"
+  source: "auto"
+  accent: "#e8e7e7"
 ---
 
 吸貓心得。

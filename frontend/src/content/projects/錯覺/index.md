@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/錯覺/video_0.mp4"
 pubDate: 2022-12-05
 tags: ["illusion","🥴"]
+wordmark:
+  src: "/projects/錯覺/wordmark.webp"
+  source: "cutout"
+  accent: "#fefefd"
 ---
 
 如果你看到字了，那可能是錯覺ㄅ。\

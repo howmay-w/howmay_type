@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/失而復得/video_0.mp4"
 pubDate: 2024-10-15
 tags: ["recover","👛"]
+wordmark:
+  src: "/projects/失而復得/wordmark.webp"
+  source: "auto"
+  accent: "#0f5e5d"
 ---
 
 失而復得，是世界上最美好的感受之一。

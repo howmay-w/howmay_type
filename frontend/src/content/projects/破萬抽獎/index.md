@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/破萬抽獎/video_0.mp4"
 pubDate: 2023-06-05
 tags: ["好累", "拖延症", "賀", "抽獎"]
+wordmark:
+  src: "/projects/破萬抽獎/wordmark.webp"
+  source: "auto"
+  accent: "#e9e8e8"
 ---
 
 ☘️自己賀破萬！來抽獎☘️

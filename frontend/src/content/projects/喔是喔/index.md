@@ -23,6 +23,9 @@ hoverVideo:
   src: "/projects/喔是喔/video_0.mp4"
 pubDate: 2026-01-07
 tags: ["😌"]
+wordmark:
+  src: "/projects/喔是喔/wordmark.webp"
+  source: "cutout"
 ---
 
 有時唸作 Also。

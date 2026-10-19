@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/總之先開始/video_0.mp4"
 pubDate: 2024-06-26
 tags: ["BeginItNow", "二棲知學", "motioner", "🚶‍➡️"]
+wordmark:
+  src: "/projects/總之先開始/wordmark.webp"
+  source: "cutout"
+  accent: "#383737"
 ---
 
 開始更新創作後常被問到「要如何學習做字？」

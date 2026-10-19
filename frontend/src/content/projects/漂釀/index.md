@@ -30,6 +30,10 @@ hoverVideo:
   src: "/projects/漂釀/video_0.mp4"
 pubDate: 2024-06-11
 tags: ["漂亮","beautiful","AI","ML","reels"]
+wordmark:
+  src: "/projects/漂釀/wordmark.webp"
+  source: "cutout"
+  accent: "#e8e2e9"
 ---
 
 Adobe Firefly 已經可以上傳底稿來生成圖像，還可以挑選視覺風格、色調、光影甚至相機角度⋯⋯，可控程度大大超過現階段ㄉMidjourney ㄋ。

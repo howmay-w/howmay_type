@@ -15,6 +15,10 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2024-09-03
 tags: ["whatzurtype","台灣","Taiwan","字字字設計串連","reels"]
+wordmark:
+  src: "/projects/臺灣/wordmark.webp"
+  source: "cutout"
+  accent: "#e8e9e9"
 ---
 
 美麗而多山的島，稱為家。

@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/腰痠背痛/video_0.mp4"
 pubDate: 2024-09-12
 tags: ["backpain","🩻"]
+wordmark:
+  src: "/projects/腰痠背痛/wordmark.webp"
+  source: "auto"
+  accent: "#242320"
 ---
 
 🔔二十五歲溫馨提醒🔔\

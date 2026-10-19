@@ -19,6 +19,10 @@ video:
   src: "/projects/消失保存/video_0.mp4"
 hoverVideo:
   src: "/projects/消失保存/video_0.mp4"
+wordmark:
+  src: "/projects/消失保存/wordmark.webp"
+  source: "auto"
+  accent: "#4e4731"
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 與松山文創園區 [@song_shan_cultural_park](https://www.instagram.com/song_shan_cultural_park/) 的 [#原創基地節](https://www.instagram.com/explore/search/keyword/?q=%23%E5%8E%9F%E5%89%B5%E5%9F%BA%E5%9C%B0%E7%AF%80) 合作，主題是歷史的變遷，以及其中的「消失與保存」。

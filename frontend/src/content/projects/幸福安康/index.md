@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/幸福安康/video_0.mp4"
 pubDate: 2023-01-24
 tags: ["點字","🧧"]
+wordmark:
+  src: "/projects/幸福安康/wordmark.webp"
+  source: "auto"
+  accent: "#c29166"
 ---
 
 過年持續說好話（？\

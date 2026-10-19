@@ -35,6 +35,10 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2023-05-23
 tags: ["淚體，","還能流淚","tearfont","💧"]
+wordmark:
+  src: "/projects/還能流淚/wordmark.webp"
+  source: "cutout"
+  accent: "#b4bff5"
 ---
 
 還能流淚，代表仍有感覺。\

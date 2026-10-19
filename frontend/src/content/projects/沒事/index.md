@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/沒事/video_0.mp4"
 pubDate: 2022-12-02
 tags: ["nothing","nevermind","🙃"]
+wordmark:
+  src: "/projects/沒事/wordmark.webp"
+  source: "cutout"
+  accent: "#589f89"
 ---
 
 一詞多義的典範。\

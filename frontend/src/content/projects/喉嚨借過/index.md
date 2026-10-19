@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/喉嚨借過/video_0.mp4"
 pubDate: 2023-09-14
 tags: ["shotgun","理性飲酒","🍻"]
+wordmark:
+  src: "/projects/喉嚨借過/wordmark.webp"
+  source: "auto"
+  accent: "#dddbdb"
 ---
 
 第一次知道「喉嚨借過」是跟同事聚餐喝啤酒ㄉ時候，覺得這個詞很可愛。

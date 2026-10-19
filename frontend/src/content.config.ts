@@ -50,6 +50,16 @@ const projects = defineCollection({
         })
       )
       .optional(),
+    // 單色字牆用：白字透明背景的字圖（cutout = 手作去背、auto = 從貼文圖自動提取）
+    wordmark: z
+      .object({
+        src: z.string(),
+        source: z.enum(["cutout", "auto", "ai"]).optional(),
+        accent: z.string().optional(),
+        size: z.enum(["s", "m", "l"]).optional(),
+        hidden: z.boolean().optional(),
+      })
+      .optional(),
     pubDate: z.coerce.date().optional(),
     tags: z.array(z.string()).optional(),
   }),

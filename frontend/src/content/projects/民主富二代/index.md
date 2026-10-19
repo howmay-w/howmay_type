@@ -17,6 +17,10 @@ hoverVideo:
   src: "/projects/民主富二代/video_0.mp4"
 pubDate: 2024-06-01
 tags: ["台灣","taiwan","青鳥","🧳"]
+wordmark:
+  src: "/projects/民主富二代/wordmark.webp"
+  source: "auto"
+  accent: "#e2e2e2"
 ---
 
 現在享有，因為曾有人以命相搏。

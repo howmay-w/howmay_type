@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/戲劇化/video_0.mp4"
 pubDate: 2024-06-23
 tags: ["dramatic","🎭"]
+wordmark:
+  src: "/projects/戲劇化/wordmark.webp"
+  source: "auto"
+  accent: "#474e93"
 ---
 
 最近台北ㄉ天氣有點戲劇化🫠

@@ -10,6 +10,10 @@ hoverVideo:
   src: "/projects/字戀-2/video_0.mp4"
 pubDate: 2022-09-22
 tags: ["whatzurtype","字字字設計串連","LoveFont","💟"]
+wordmark:
+  src: "/projects/字戀-2/wordmark.webp"
+  source: "auto"
+  accent: "#e5cdf5"
 ---
 
 投稿看看

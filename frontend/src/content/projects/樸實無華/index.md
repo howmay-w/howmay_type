@@ -21,6 +21,10 @@ video:
   src: "/projects/樸實無華/video_0.mp4"
 hoverVideo:
   src: "/projects/樸實無華/video_0.mp4"
+wordmark:
+  src: "/projects/樸實無華/wordmark.webp"
+  source: "auto"
+  accent: "#e3e3e3"
 ---
 
 這幾天翻了一些十多年前的書，

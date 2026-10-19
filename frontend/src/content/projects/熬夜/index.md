@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/熬夜/video_0.mp4"
 pubDate: 2024-07-05
 tags: ["stayup","😵"]
+wordmark:
+  src: "/projects/熬夜/wordmark.webp"
+  source: "cutout"
+  accent: "#98949b"
 ---
 
 清晨五點半才睡😇\

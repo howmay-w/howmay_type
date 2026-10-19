@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/同溫層/video_0.mp4"
 pubDate: 2023-10-29
 tags: ["echochamber","🥴"]
+wordmark:
+  src: "/projects/同溫層/wordmark.webp"
+  source: "auto"
+  accent: "#c098a6"
 ---
 
 一直待在同溫層雖然可恥，但舒適。

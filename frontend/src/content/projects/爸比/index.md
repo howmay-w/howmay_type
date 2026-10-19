@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/爸比/video_0.mp4"
 pubDate: 2023-08-08
 tags: ["daddy","fathersday","🐲"]
+wordmark:
+  src: "/projects/爸比/wordmark.webp"
+  source: "auto"
+  accent: "#e0e1e1"
 ---
 
 今年 24 歲，依然叫我爸「爸比」。

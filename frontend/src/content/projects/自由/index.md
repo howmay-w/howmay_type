@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/自由/video_0.mp4"
 pubDate: 2022-11-11
 tags: ["freedom","🪁"]
+wordmark:
+  src: "/projects/自由/wordmark.webp"
+  source: "auto"
+  accent: "#2e4106"
 ---
 
 長大ㄌ以後好自由ㄛ！\

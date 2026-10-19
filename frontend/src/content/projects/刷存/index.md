@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/刷存/video_0.mp4"
 pubDate: 2023-04-22
 tags: ["刷存在","🙋"]
+wordmark:
+  src: "/projects/刷存/wordmark.webp"
+  source: "auto"
+  accent: "#8b93c5"
 ---
 
 會需要刷存，\

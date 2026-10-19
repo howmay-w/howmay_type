@@ -22,6 +22,10 @@ hoverVideo:
 pubDate: 2024-10-04
 tags:
   ["whatzurtype", "字字字設計串連", "台灣字造：小屋裡的字體展", "飛烏虎", "👻"]
+wordmark:
+  src: "/projects/鬼頭刀/wordmark.webp"
+  source: "auto"
+  accent: "#80a4c7"
 ---
 
 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 花蓮常見漁獲第二彈。\

@@ -15,4 +15,9 @@ hoverVideo:
   src: "/projects/白紙/video_0.mp4"
 pubDate: 2022-11-28
 tags: ["whitepaperrevolution","A4revolution","📄"]
+wordmark:
+  src: "/projects/白紙/wordmark.webp"
+  source: "auto"
+  accent: "#dee2e1"
+  hidden: true
 ---

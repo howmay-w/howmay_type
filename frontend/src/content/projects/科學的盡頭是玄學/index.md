@@ -21,6 +21,10 @@ video:
   src: "/projects/科學的盡頭是玄學/video_0.mp4"
 hoverVideo:
   src: "/projects/科學的盡頭是玄學/video_0.mp4"
+wordmark:
+  src: "/projects/科學的盡頭是玄學/wordmark.webp"
+  source: "auto"
+  accent: "#d9d8d5"
 ---
 
 雖然知道不一定是這樣，

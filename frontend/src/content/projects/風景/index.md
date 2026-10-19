@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/風景/video_0.mp4"
 pubDate: 2023-05-02
 tags: ["Scenery","けしき","🌄"]
+wordmark:
+  src: "/projects/風景/wordmark.webp"
+  source: "cutout"
+  accent: "#e3e3e3"
 ---
 
 大學畢業以後反而學了很多新東西，\

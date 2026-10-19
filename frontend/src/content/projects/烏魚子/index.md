@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/烏魚子/video_0.mp4"
 pubDate: 2024-02-11
 tags: ["whatzurtype", "年貨大街", "字字字設計串連", "mulletroe", "🧧"]
+wordmark:
+  src: "/projects/烏魚子/wordmark.webp"
+  source: "auto"
+  accent: "#b68f3b"
 ---
 
 沒吃到烏魚子，就好像沒過到年。

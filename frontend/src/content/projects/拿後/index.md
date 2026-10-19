@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/拿後/video_0.mp4"
 pubDate: 2023-01-10
 tags: ["然後","andthen","👂"]
+wordmark:
+  src: "/projects/拿後/wordmark.webp"
+  source: "cutout"
+  accent: "#e3e3e3"
 ---
 
 比起「然後」，其實比較常聽到別人講「拿後」。\

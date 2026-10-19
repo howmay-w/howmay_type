@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/換氣/video_0.mp4"
 pubDate: 2023-05-13
 tags: ["takeabreath","🏊"]
+wordmark:
+  src: "/projects/換氣/wordmark.webp"
+  source: "cutout"
+  accent: "#dedede"
 ---
 
 大家！忙碌久了記得要起來換氣ㄛ！\

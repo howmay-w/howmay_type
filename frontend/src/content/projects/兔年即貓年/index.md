@@ -35,6 +35,10 @@ tags:
     "🐇",
     "🐈",
   ]
+wordmark:
+  src: "/projects/兔年即貓年/wordmark.webp"
+  source: "cutout"
+  accent: "#d287a2"
 ---
 
 冷知識：越南的兔年是貓年ㄛ！\

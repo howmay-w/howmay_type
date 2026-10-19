@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/雲/video_0.mp4"
 pubDate: 2022-12-08
 tags: ["floating","cloud","☁️"]
+wordmark:
+  src: "/projects/雲/wordmark.webp"
+  source: "auto"
+  accent: "#eff0f9"
 ---
 
 小時候好想捏捏看雲，以為會軟綿綿的。\

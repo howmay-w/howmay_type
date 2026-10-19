@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/九週年/video_0.mp4"
 pubDate: 2024-03-23
 tags: ["9thAnniversary","9️⃣"]
+wordmark:
+  src: "/projects/九週年/wordmark.webp"
+  source: "auto"
+  accent: "#f5d696"
 ---
 
 前幾天跟男友交往滿九週年！

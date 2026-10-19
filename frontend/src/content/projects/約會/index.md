@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/約會/video_0.mp4"
 pubDate: 2025-02-14
 tags: ["date","✨"]
+wordmark:
+  src: "/projects/約會/wordmark.webp"
+  source: "auto"
+  accent: "#e7a0e7"
 ---
 
 跟男友交往（差一個月）滿十年，\

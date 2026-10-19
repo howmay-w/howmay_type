@@ -16,6 +16,10 @@ hoverVideoFit: contain
 pubDate: 2026-01-11
 tags:
   ["whatzurtype", "字字字設計串連", "拉丁字符轉譯", "logotype", "♉️", "reels"]
+wordmark:
+  src: "/projects/金牛座/wordmark.webp"
+  source: "cutout"
+  accent: "#332b1d"
 ---
 
 用 Rhythm 的筆畫拼出金牛座！

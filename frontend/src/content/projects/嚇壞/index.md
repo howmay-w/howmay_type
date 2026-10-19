@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/嚇壞/video_0.mp4"
 pubDate: 2024-02-19
 tags: ["freakout","😱"]
+wordmark:
+  src: "/projects/嚇壞/wordmark.webp"
+  source: "auto"
+  accent: "#c4c0c7"
 ---
 
 世界總是充滿驚奇，例如前幾天看到的 AI 文字生成影片。

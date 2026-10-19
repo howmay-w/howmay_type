@@ -15,6 +15,10 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2024-05-15
 tags: ["knotty","animation","reels"]
+wordmark:
+  src: "/projects/傷腦筋/wordmark.webp"
+  source: "auto"
+  accent: "#fffffe"
 ---
 
 明天就要 25 歲了，傷腦筋😵‍💫

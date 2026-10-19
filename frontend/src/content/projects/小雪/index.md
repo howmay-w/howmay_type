@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/小雪/video_0.mp4"
 pubDate: 2024-12-07
 tags: ["whatzurtype","MinorSnow","字字字設計串連","❄️"]
+wordmark:
+  src: "/projects/小雪/wordmark.webp"
+  source: "cutout"
+  accent: "#c0b4d6"
 ---
 
 賺到好幾天好天氣，今天才開始感覺到涼意。剛好適合上個月遲發的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) ：小雪。

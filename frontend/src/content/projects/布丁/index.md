@@ -10,6 +10,10 @@ hoverVideo:
   src: "/projects/布丁/video_0.mp4"
 pubDate: 2022-08-20
 tags: ["Pudding","🍮"]
+wordmark:
+  src: "/projects/布丁/wordmark.webp"
+  source: "auto"
+  accent: "#010100"
 ---
 
 好吃

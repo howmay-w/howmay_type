@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/我跟你講/video_0.mp4"
 pubDate: 2024-02-15
 tags: ["LetMeTellYou","🤗"]
+wordmark:
+  src: "/projects/我跟你講/wordmark.webp"
+  source: "auto"
+  accent: "#d255a7"
 ---
 
 當某人不自覺想要在對話中教育你的時候：

@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/發瘋/video_0.mp4"
 pubDate: 2023-11-17
 tags: ["OMG","🤯"]
+wordmark:
+  src: "/projects/發瘋/wordmark.webp"
+  source: "auto"
+  accent: "#1e1e1e"
 ---
 
 這個溫度真的發瘋⋯⋯\

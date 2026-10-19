@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/吃錯藥/video_0.mp4"
 pubDate: 2023-05-31
 tags: ["whatswrongwithyou","🤗"]
+wordmark:
+  src: "/projects/吃錯藥/wordmark.webp"
+  source: "cutout"
+  accent: "#212221"
 ---
 
 今天台北的天氣：

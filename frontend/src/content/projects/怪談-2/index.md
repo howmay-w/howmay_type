@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/怪談-2/video_0.mp4"
 pubDate: 2023-08-05
 tags: ["whatzurtype", "字字字設計串連", "鬼故事", "🕯️"]
+wordmark:
+  src: "/projects/怪談-2/wordmark.webp"
+  source: "auto"
+  accent: "#765f33"
 ---
 
 本月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是「怪談」，農曆七月也快到ㄌ，充滿故事的時節。

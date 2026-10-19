@@ -19,6 +19,10 @@ video:
   src: "/projects/錫口媽祖宮/video_0.mp4"
 hoverVideo:
   src: "/projects/錫口媽祖宮/video_0.mp4"
+wordmark:
+  src: "/projects/錫口媽祖宮/wordmark.webp"
+  source: "auto"
+  accent: "#a87943"
 ---
 
 四月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) （拖好久才發）主題是宗教場所，決定研究一下身邊最熟悉的松山慈祐宮。

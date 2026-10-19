@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/破雨傘/video_0.mp4"
 pubDate: 2024-09-30
 tags: ["whatzurtype","台灣字造：小屋裡的字體展","雨傘旗魚","雨笠仔","☔️"]
+wordmark:
+  src: "/projects/破雨傘/wordmark.webp"
+  source: "cutout"
+  accent: "#eeeeee"
 ---
 
 「破雨傘」其實是台灣常見漁獲雨傘旗魚的俗稱之一，看照片就能明白為什麼這麼叫。

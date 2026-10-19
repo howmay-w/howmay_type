@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/咖啡因/video_0.mp4"
 pubDate: 2022-11-26
 tags: ["caffeine","coffee","コーヒー","☕"]
+wordmark:
+  src: "/projects/咖啡因/wordmark.webp"
+  source: "cutout"
+  accent: "#d3c566"
 ---
 
 每天睡前都很期待明天早上可以喝茶或咖啡。算是成癮ㄅ。

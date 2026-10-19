@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/重生/video_0.mp4"
 pubDate: 2023-01-03
 tags: ["rebirth","點字","😌"]
+wordmark:
+  src: "/projects/重生/wordmark.webp"
+  source: "auto"
+  accent: "#99b2aa"
 ---
 
 冷天洗完熱水澡ㄉ感覺：

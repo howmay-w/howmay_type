@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/好暈/video_0.mp4"
 pubDate: 2023-04-30
 tags: ["dizzy","😵‍💫"]
+wordmark:
+  src: "/projects/好暈/wordmark.webp"
+  source: "cutout"
+  accent: "#dfcfd6"
 ---
 
 暈好多天ㄌ，好暈好暈\

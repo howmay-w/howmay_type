@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/狼狽/video_0.mp4"
 pubDate: 2023-04-18
 tags: ["distressed","哭","😵‍💫"]
+wordmark:
+  src: "/projects/狼狽/wordmark.webp"
+  source: "cutout"
+  accent: "#6d4f4e"
 ---
 
 最近睡覺都被蚊子煩到快死亡，\

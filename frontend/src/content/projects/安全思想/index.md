@@ -15,6 +15,10 @@ hoverVideo:
   src: "/projects/安全思想/video_0.mp4"
 pubDate: 2024-12-21
 tags: ["dystopia", "👁️", "👁️‍🗨️"]
+wordmark:
+  src: "/projects/安全思想/wordmark.webp"
+  source: "cutout"
+  accent: "#c72728"
 ---
 
 試想像一個人人只能有順從想法、只能無動於衷的反烏托邦國度裡，牆上會噴漆什麼樣的標語。

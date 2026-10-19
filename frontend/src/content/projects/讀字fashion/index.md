@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/讀字fashion/video_0.mp4"
 pubDate: 2025-02-03
 tags: ["whatzurtype","台北國際書展","字字字設計串連","😎"]
+wordmark:
+  src: "/projects/讀字fashion/wordmark.webp"
+  source: "auto"
+  accent: "#e8c3b9"
 ---
 
 遲到的一月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 

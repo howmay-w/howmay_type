@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/燒/video_0.mp4"
 pubDate: 2023-09-26
 tags: ["Burning","🔥"]
+wordmark:
+  src: "/projects/燒/wordmark.webp"
+  source: "cutout"
+  accent: "#b22412"
 ---
 
 用「燒」來比喻容易點燃、也有會忽然熄滅的購物慾，\

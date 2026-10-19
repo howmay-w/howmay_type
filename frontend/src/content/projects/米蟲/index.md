@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/米蟲/video_0.mp4"
 pubDate: 2023-07-17
 tags: ["ricebug", "doingnothing", "🪲"]
+wordmark:
+  src: "/projects/米蟲/wordmark.webp"
+  source: "cutout"
+  accent: "#151515"
 ---
 
 人生總有些時候只想當米蟲，例如現在。

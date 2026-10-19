@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/陰德/video_0.mp4"
 pubDate: 2023-02-19
 tags: ["cedit","fortune","⚖️"]
+wordmark:
+  src: "/projects/陰德/wordmark.webp"
+  source: "cutout"
+  accent: "#2b251d"
 ---
 
 一直覺得陰德是ㄍ有趣的概念，是大家都能理解的、不可見的價值系統。\

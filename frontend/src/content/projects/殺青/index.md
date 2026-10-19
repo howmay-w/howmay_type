@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/殺青/video_0.mp4"
 pubDate: 2025-01-16
 tags: ["wrap","🍅"]
+wordmark:
+  src: "/projects/殺青/wordmark.webp"
+  source: "cutout"
+  accent: "#d44e5e"
 ---
 
 2025.01.15 新字體【柑仔蜜】出貨。

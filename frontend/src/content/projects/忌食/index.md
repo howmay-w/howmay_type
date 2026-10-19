@@ -15,6 +15,10 @@ hoverVideo:
   src: "/projects/忌食/video_0.mp4"
 pubDate: 2022-10-20
 tags: ["diet","me","🤐"]
+wordmark:
+  src: "/projects/忌食/wordmark.webp"
+  source: "cutout"
+  accent: "#dfcdce"
 ---
 
 看完醫生或是量完身體組成以後的 me\

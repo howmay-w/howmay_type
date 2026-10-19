@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/人家/video_0.mp4"
 pubDate: 2024-01-07
 tags: ["あたし","💁"]
+wordmark:
+  src: "/projects/人家/wordmark.webp"
+  source: "cutout"
+  accent: "#242525"
 ---
 
 覺得「人家」也是個有趣的詞。\

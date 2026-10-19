@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/夢一場/video_0.mp4"
 pubDate: 2023-03-27
 tags: ["dream","ゆめ","😴"]
+wordmark:
+  src: "/projects/夢一場/wordmark.webp"
+  source: "cutout"
+  accent: "#c474db"
 ---
 
 最近好常做夢哇，\

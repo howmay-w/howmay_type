@@ -21,6 +21,10 @@ video:
   src: "/projects/圈起來打一個問號/video_0.mp4"
 hoverVideo:
   src: "/projects/圈起來打一個問號/video_0.mp4"
+wordmark:
+  src: "/projects/圈起來打一個問號/wordmark.webp"
+  source: "auto"
+  accent: "#a195e5"
 ---
 
 很喜歡「圈起來打一個問號」跟「我是打一個問號」這種略顯復古的用法，很有禮貌地沒禮貌。

@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/不求甚解/video_0.mp4"
 pubDate: 2024-03-01
 tags: ["skimming","👀"]
+wordmark:
+  src: "/projects/不求甚解/wordmark.webp"
+  source: "cutout"
+  accent: "#dbacc6"
 ---
 
 小時候學到「好讀書，不求甚解」時，完全覺得這我。（當然，當時並沒有「這我」這種用法😇)

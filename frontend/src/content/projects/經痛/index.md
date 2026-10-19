@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/經痛/video_0.mp4"
 pubDate: 2024-03-14
 tags: ["cramps","🫠"]
+wordmark:
+  src: "/projects/經痛/wordmark.webp"
+  source: "auto"
+  accent: "#a38d94"
 ---
 
 今天月經來第二天，好痛哦😖

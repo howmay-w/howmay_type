@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/隨緣/video_0.mp4"
 pubDate: 2022-12-10
 tags: ["gowiththeflow", "letitbe", "點字", "🍃"]
+wordmark:
+  src: "/projects/隨緣/wordmark.webp"
+  source: "auto"
+  accent: "#69351a"
 ---
 
 來自在英國闖蕩ㄉ厲害學妹點字：「因為遭遇各種困難，覺得這兩個字很有意思。」

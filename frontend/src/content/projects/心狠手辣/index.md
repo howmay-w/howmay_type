@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/心狠手辣/video_0.mp4"
 pubDate: 2025-01-28
 tags: ["merciless","🧧"]
+wordmark:
+  src: "/projects/心狠手辣/wordmark.webp"
+  source: "auto"
+  accent: "#e14e82"
 ---
 
 過年啦。

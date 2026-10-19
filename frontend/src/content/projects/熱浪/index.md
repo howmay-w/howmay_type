@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/熱浪/video_0.mp4"
 pubDate: 2023-07-21
 tags: ["heatwave","🫠"]
+wordmark:
+  src: "/projects/熱浪/wordmark.webp"
+  source: "cutout"
+  accent: "#ebebec"
 ---
 
 怎麼記得小時候氣溫超過 30°C 就算是新聞ㄌ？

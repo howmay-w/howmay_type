@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/竟然/video_0.mp4"
 pubDate: 2023-09-29
 tags: ["OMG","thanks"]
+wordmark:
+  src: "/projects/竟然/wordmark.webp"
+  source: "auto"
+  accent: "#eeeae9"
 ---
 
 ‼️\

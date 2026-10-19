@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/顏文字/video_0.mp4"
 pubDate: 2023-11-09
 tags: ["emoticon","點字"]
+wordmark:
+  src: "/projects/顏文字/wordmark.webp"
+  source: "auto"
+  accent: "#eeecea"
 ---
 
 ( ´•̥̥̥ω•̥̥̥` ) (;´༎ຶД༎ຶ`)\

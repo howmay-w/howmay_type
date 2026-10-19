@@ -23,6 +23,10 @@ video:
   src: "/projects/宇宙無敵霹靂/video_0.mp4"
 hoverVideo:
   src: "/projects/宇宙無敵霹靂/video_0.mp4"
+wordmark:
+  src: "/projects/宇宙無敵霹靂/wordmark.webp"
+  source: "auto"
+  accent: "#b68e4f"
 ---
 
 最近以前的流行不知不覺地重新出現在身邊？

@@ -10,6 +10,10 @@ hoverVideo:
   src: "/projects/沒去過的地方/video_0.mp4"
 pubDate: 2022-08-20
 tags: ["PlacesIveNeverBeen","🗺️"]
+wordmark:
+  src: "/projects/沒去過的地方/wordmark.webp"
+  source: "auto"
+  accent: "#010202"
 ---
 
 可能是奇幻的世界。

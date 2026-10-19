@@ -14,6 +14,10 @@ hoverVideo:
   src: "/projects/仙草/video_0.mp4"
 pubDate: 2025-10-06
 tags: ["whatzurtype","奶茶","髭文字","字字字設計串連","reels"]
+wordmark:
+  src: "/projects/仙草/wordmark.webp"
+  source: "auto"
+  accent: "#e2e2e2"
 ---
 
 以仙草搭配 [@traditional_label_lab](https://www.instagram.com/traditional_label_lab/) 老師的奶茶！

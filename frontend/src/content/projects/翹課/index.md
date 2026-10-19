@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/翹課/video_0.mp4"
 pubDate: 2023-01-06
 tags: ["cutclass","點字","😶‍🌫️"]
+wordmark:
+  src: "/projects/翹課/wordmark.webp"
+  source: "cutout"
+  accent: "#6a986f"
 ---
 
 明天⋯不可能⋯\

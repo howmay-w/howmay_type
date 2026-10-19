@@ -21,6 +21,10 @@ video:
   src: "/projects/美國時間/video_0.mp4"
 hoverVideo:
   src: "/projects/美國時間/video_0.mp4"
+wordmark:
+  src: "/projects/美國時間/wordmark.webp"
+  source: "auto"
+  accent: "#ced5d8"
 ---
 
 感謝 TypeCon，度過了非常精彩愉快的美國時間！

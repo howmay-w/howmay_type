@@ -29,6 +29,11 @@ hoverVideo:
   src: "/projects/標題殺人/video_0.mp4"
 pubDate: 2023-10-10
 tags: ["clickbait","📰"]
+wordmark:
+  src: "/projects/標題殺人/wordmark.webp"
+  source: "auto"
+  accent: "#282828"
+  hidden: true
 ---
 
 俗諺說筆比劍更有力量，\

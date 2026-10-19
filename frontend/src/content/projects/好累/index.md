@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/好累/video_0.mp4"
 pubDate: 2022-11-21
 tags: ["sotired","クタクタ","🫠"]
+wordmark:
+  src: "/projects/好累/wordmark.webp"
+  source: "cutout"
+  accent: "#37409d"
 ---
 
 獻給週一ㄉ你。

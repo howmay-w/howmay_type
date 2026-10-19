@@ -10,6 +10,10 @@ hoverVideo:
   src: "/projects/秋/video_0.mp4"
 pubDate: 2022-09-10
 tags: ["Autumn", "中秋", "Moon Festival", "🌛"]
+wordmark:
+  src: "/projects/秋/wordmark.webp"
+  source: "auto"
+  accent: "#a8a3a6"
 ---
 
 中秋節快樂！

@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/本日公休/video_0.mp4"
 pubDate: 2024-01-30
 tags: ["dayoff","🏖️"]
+wordmark:
+  src: "/projects/本日公休/wordmark.webp"
+  source: "auto"
+  accent: "#f2f2f1"
 ---
 
 最近好忙好忙，好想公休ㄛ。\

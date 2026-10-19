@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/意外/video_0.mp4"
 pubDate: 2025-03-20
 tags: ["Serendipity","🧳"]
+wordmark:
+  src: "/projects/意外/wordmark.webp"
+  source: "auto"
+  accent: "#f1e2dc"
 ---
 
 最近以慶祝十週年的名義，首度跟男友單獨出國玩。

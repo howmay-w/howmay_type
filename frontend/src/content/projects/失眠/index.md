@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/失眠/video_0.mp4"
 pubDate: 2023-06-13
 tags: ["Insomnia","點字","🥱"]
+wordmark:
+  src: "/projects/失眠/wordmark.webp"
+  source: "auto"
+  accent: "#343051"
 ---
 
 午覺睡不著算是一種失眠ㄇ？

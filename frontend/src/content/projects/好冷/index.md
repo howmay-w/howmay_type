@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/好冷/video_0.mp4"
 pubDate: 2024-01-23
 tags: ["freezing","🥶"]
+wordmark:
+  src: "/projects/好冷/wordmark.webp"
+  source: "auto"
+  accent: "#252835"
 ---
 
 就好冷。冷到什麼事都做不太好。大家保重。

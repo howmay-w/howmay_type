@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/好人一生平安/video_0.mp4"
 pubDate: 2024-05-06
 tags: ["Allthebest","🙏"]
+wordmark:
+  src: "/projects/好人一生平安/wordmark.webp"
+  source: "cutout"
+  accent: "#1d201d"
 ---
 
 感謝所有為世界帶來美好的好人：\

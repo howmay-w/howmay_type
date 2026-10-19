@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/有料/video_0.mp4"
 pubDate: 2024-01-03
 tags: ["reallysomething","🧋"]
+wordmark:
+  src: "/projects/有料/wordmark.webp"
+  source: "auto"
+  accent: "#dddddc"
 ---
 
 想大力稱讚，但又怕多講多錯時，就可以使用「有料」。\

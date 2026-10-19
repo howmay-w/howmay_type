@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/嘴破/video_0.mp4"
 pubDate: 2022-10-28
 tags: ["mouthulcers","ithurts","🫦"]
+wordmark:
+  src: "/projects/嘴破/wordmark.webp"
+  source: "cutout"
+  accent: "#d95886"
 ---
 
 Q：有什麼比嘴吧破了個洞還要痛苦ㄉ？\

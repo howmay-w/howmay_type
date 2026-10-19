@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/左右不分/video_0.mp4"
 pubDate: 2023-06-22
 tags: ["dizzy","😵‍💫"]
+wordmark:
+  src: "/projects/左右不分/wordmark.webp"
+  source: "cutout"
+  accent: "#323232"
 ---
 
 最近大家應該都很混亂，\

@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/吃飽再結/video_0.mp4"
 pubDate: 2024-07-20
 tags: ["Payaftermeal","🍱"]
+wordmark:
+  src: "/projects/吃飽再結/wordmark.webp"
+  source: "auto"
+  accent: "#faf6f4"
 ---
 
 最近去幾家小吃店，老闆都說「吃飽再結」。

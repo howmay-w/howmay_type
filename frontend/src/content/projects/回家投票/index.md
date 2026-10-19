@@ -17,6 +17,10 @@ hoverVideo:
   src: "/projects/回家投票/video_0.mp4"
 pubDate: 2022-11-13
 tags: ["18歲公民權","govote","字字字設計串連","whatzurtype","🗳️"]
+wordmark:
+  src: "/projects/回家投票/wordmark.webp"
+  source: "cutout"
+  accent: "#b0220c"
 ---
 
 兩個禮拜以後～要回家投票ㄛ～\

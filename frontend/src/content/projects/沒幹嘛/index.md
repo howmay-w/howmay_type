@@ -17,6 +17,9 @@ hoverVideo:
   src: "/projects/沒幹嘛/video_0.mp4"
 pubDate: 2023-04-29
 tags: ["nothing", "3D", "🫤"]
+wordmark:
+  src: "/projects/沒幹嘛/wordmark.webp"
+  source: "cutout"
 ---
 
 就沒幹嘛，試試看以拉的 3D 效果。

@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/颱風假/video_0.mp4"
 pubDate: 2024-07-25
 tags: ["typhoondayoff","🌀"]
+wordmark:
+  src: "/projects/颱風假/wordmark.webp"
+  source: "cutout"
+  accent: "#1f1e1c"
 ---
 
 突然獲得兩天颱風假令人心情複雜。

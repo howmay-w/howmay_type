@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/虎頭蛇尾/video_0.mp4"
 pubDate: 2024-10-24
 tags: ["🐯"]
+wordmark:
+  src: "/projects/虎頭蛇尾/wordmark.webp"
+  source: "cutout"
+  accent: "#e5e7e8"
 ---
 
 總是對新鮮事充滿熱情的me:

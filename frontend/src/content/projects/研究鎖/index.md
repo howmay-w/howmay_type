@@ -15,4 +15,8 @@ hoverVideo:
   src: "/projects/研究鎖/video_0.mp4"
 pubDate: 2022-09-16
 tags: ["開學了","🔒"]
+wordmark:
+  src: "/projects/研究鎖/wordmark.webp"
+  source: "cutout"
+  accent: "#020201"
 ---

@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/菸酒生/video_0.mp4"
 pubDate: 2023-11-13
 tags: ["gradstudent","研究生","🚬"]
+wordmark:
+  src: "/projects/菸酒生/wordmark.webp"
+  source: "cutout"
+  accent: "#a29724"
 ---
 
 邁入研究生生涯第三年的 me 🥲\

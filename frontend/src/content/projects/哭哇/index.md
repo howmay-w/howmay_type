@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/哭哇/video_0.mp4"
 pubDate: 2023-01-31
 tags: ["cry","哭","🥲"]
+wordmark:
+  src: "/projects/哭哇/wordmark.webp"
+  source: "cutout"
+  accent: "#492003"
 ---
 
 年前想說「過完年再說」的事，\

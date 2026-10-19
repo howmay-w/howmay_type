@@ -19,6 +19,10 @@ hoverVideo:
   src: "/projects/這我/video_0.mp4"
 pubDate: 2022-10-14
 tags: ["根本我","totallyme","👉👈"]
+wordmark:
+  src: "/projects/這我/wordmark.webp"
+  source: "cutout"
+  accent: "#4dd532"
 ---
 
 精妙ㄉ一詞，想讓人看見那個沒人在意ㄉ自己\

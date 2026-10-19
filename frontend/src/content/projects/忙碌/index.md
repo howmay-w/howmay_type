@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/忙碌/video_0.mp4"
 pubDate: 2024-08-22
 tags: ["busy","😵"]
+wordmark:
+  src: "/projects/忙碌/wordmark.webp"
+  source: "auto"
+  accent: "#222222"
 ---
 
 最近少發文，因為真的好忙好忙ㄛ。

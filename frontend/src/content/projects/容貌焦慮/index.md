@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/容貌焦慮/video_0.mp4"
 pubDate: 2024-01-16
 tags: ["appearanceanxiety", "😶‍🌫️"]
+wordmark:
+  src: "/projects/容貌焦慮/wordmark.webp"
+  source: "auto"
+  accent: "#d83ade"
 ---
 
 前陣子 AI 算圖工具 Midjourney 推出新版本 V6，主打可以算出更真的人像——透過加入更不完美、不漂亮的人類特徵，反而創造真實感。

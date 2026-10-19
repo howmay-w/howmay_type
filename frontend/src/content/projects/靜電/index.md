@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/靜電/video_0.mp4"
 pubDate: 2023-03-09
 tags: ["staticelectricity","⚡"]
+wordmark:
+  src: "/projects/靜電/wordmark.webp"
+  source: "cutout"
+  accent: "#0f1d99"
 ---
 
 其實我不太常被靜電電到ㄋ。\

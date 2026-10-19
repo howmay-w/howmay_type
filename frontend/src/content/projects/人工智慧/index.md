@@ -21,6 +21,9 @@ hoverVideo:
   src: "/projects/人工智慧/video_0.mp4"
 pubDate: 2024-06-30
 tags: ["whatzurtype","字字字設計串連","智慧","AI","🤖"]
+wordmark:
+  src: "/projects/人工智慧/wordmark.webp"
+  source: "cutout"
 ---
 
 可算是人類與人工智慧一起創作的文字。

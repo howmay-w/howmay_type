@@ -23,6 +23,10 @@ hoverVideo:
   src: "/projects/學測就上/video_0.mp4"
 pubDate: 2022-12-12
 tags: ["頑張れ","點字","⛽"]
+wordmark:
+  src: "/projects/學測就上/wordmark.webp"
+  source: "cutout"
+  accent: "#ffffff"
 ---
 
 學測倒數一個月了，緊張刺激。\

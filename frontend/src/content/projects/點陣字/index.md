@@ -30,6 +30,10 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2023-01-27
 tags: ["點陣字工具", "p5.js", "bitmap", "dotmatrix", "💻"]
+wordmark:
+  src: "/projects/點陣字/wordmark.webp"
+  source: "auto"
+  accent: "#eacd42"
 ---
 
 我做了一個大家都可以玩ㄉ點陣字工具！

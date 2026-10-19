@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/薪水小偷/video_0.mp4"
 pubDate: 2022-12-26
 tags: ["clockwatcher","點字","🚔"]
+wordmark:
+  src: "/projects/薪水小偷/wordmark.webp"
+  source: "auto"
+  accent: "#ececea"
 ---
 
 年末ㄌ，你各位心是不是都飛走了ㄚ！\

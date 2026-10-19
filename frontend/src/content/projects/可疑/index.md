@@ -25,6 +25,10 @@ hoverVideo:
   src: "/projects/可疑/video_0.mp4"
 pubDate: 2023-12-20
 tags: ["suspicious","sus","🤨"]
+wordmark:
+  src: "/projects/可疑/wordmark.webp"
+  source: "auto"
+  accent: "#4c4847"
 ---
 
 有時事情太過順利，反而會有點可疑🤔

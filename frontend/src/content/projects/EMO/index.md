@@ -21,6 +21,9 @@ hoverVideo:
   src: "/projects/EMO/video_0.mp4"
 pubDate: 2022-10-22
 tags: ["emo","🙂"]
+wordmark:
+  src: "/projects/EMO/wordmark.webp"
+  source: "auto"
 ---
 
 又下雨ㄌ

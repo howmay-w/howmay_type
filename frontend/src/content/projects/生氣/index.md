@@ -21,6 +21,10 @@ video:
   src: "/projects/生氣/video_0.mp4"
 hoverVideo:
   src: "/projects/生氣/video_0.mp4"
+wordmark:
+  src: "/projects/生氣/wordmark.webp"
+  source: "auto"
+  accent: "#ee6353"
 ---
 
 發個積欠已久的 5 月 whatzurtype

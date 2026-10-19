@@ -25,6 +25,10 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-09-25
 tags: ["死語","台語","omg","😱"]
+wordmark:
+  src: "/projects/阿娘喂/wordmark.webp"
+  source: "auto"
+  hidden: true
 ---
 
 死語復興運動

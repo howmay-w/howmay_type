@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/我還好/video_0.mp4"
 pubDate: 2024-08-29
 tags: ["nothanks","☺️"]
+wordmark:
+  src: "/projects/我還好/wordmark.webp"
+  source: "auto"
+  accent: "#cdcbc9"
 ---
 
 成熟的大人不說「不喜歡」，\

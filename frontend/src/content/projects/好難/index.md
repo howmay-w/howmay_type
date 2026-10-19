@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/好難/video_0.mp4"
 pubDate: 2023-11-06
 tags: ["sodifficult","sohard","🙈"]
+wordmark:
+  src: "/projects/好難/wordmark.webp"
+  source: "auto"
+  accent: "#f26061"
 ---
 
 最近在準備考英文檢定，好難喔🥲

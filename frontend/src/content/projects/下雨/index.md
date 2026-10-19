@@ -29,6 +29,10 @@ hoverVideo:
   src: "/projects/下雨/video_0.mp4"
 pubDate: 2023-08-30
 tags: ["雨","rain","🌧️"]
+wordmark:
+  src: "/projects/下雨/wordmark.webp"
+  source: "auto"
+  accent: "#c6b2bf"
 ---
 
 下班又忘記帶傘ㄌ，傷腦筋。\

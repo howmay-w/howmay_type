@@ -15,6 +15,10 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2024-11-27
 tags: ["FLUX", "beambox", "reels"]
+wordmark:
+  src: "/projects/無糖少冰/wordmark.webp"
+  source: "auto"
+  accent: "#333230"
 ---
 
 ✨ 客製化自由！用 Beambox II 雷射切割機輕鬆將設計商品化

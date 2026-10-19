@@ -27,6 +27,10 @@ hoverVideo:
   src: "/projects/分手快樂/video_0.mp4"
 pubDate: 2022-12-14
 tags: ["分手","happybreakup","點字","❤️‍🩹"]
+wordmark:
+  src: "/projects/分手快樂/wordmark.webp"
+  source: "auto"
+  accent: "#c14886"
 ---
 
 某位觀眾的點字，\

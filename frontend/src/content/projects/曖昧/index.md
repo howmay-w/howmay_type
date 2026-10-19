@@ -18,6 +18,10 @@ hoverVideo:
   src: "/projects/曖昧/video_0.mp4"
 pubDate: 2022-10-07
 tags: ["暈船","chemistry","😳"]
+wordmark:
+  src: "/projects/曖昧/wordmark.webp"
+  source: "auto"
+  accent: "#ddaab1"
 ---
 
 🎶曖～昧～讓人受盡～委屈～🎶\

@@ -21,6 +21,10 @@ hoverVideo:
   src: "/projects/蛤/video_0.mp4"
 pubDate: 2023-04-11
 tags: ["clam","台灣文蛤","蛤蜊","🆕"]
+wordmark:
+  src: "/projects/蛤/wordmark.webp"
+  source: "auto"
+  accent: "#464747"
 ---
 
 本日要聞。\

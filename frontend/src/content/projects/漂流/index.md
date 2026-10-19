@@ -14,6 +14,9 @@ hoverVideo:
   src: "/projects/漂流/video_0.mp4"
 pubDate: 2025-02-24
 tags: ["蘇打綠","flow","喵的奇幻漂流","wave","reels"]
+wordmark:
+  src: "/projects/漂流/wordmark.webp"
+  source: "cutout"
 ---
 
 漂流，讓聲音和視覺帶領著感受。
