@@ -40,9 +40,34 @@ const { projectsTotal } = Astro.props;
 		gap: 1rem;
 		margin: 0;
 		padding: 0;
+		min-width: 0;
+	}
+	button[data-sort],
+	button[data-shuffle],
+	.clear {
+		flex-shrink: 0;
 	}
 	div:has(> .search) {
 		position: relative;
+		flex: 0 1 auto;
+	}
+	.search {
+		min-width: 0;
+		flex: 1 1 auto;
+		overflow: hidden;
+	}
+	/* TextSlider 的 .oh 會隨文字變寬；限制在按鈕內，過長時省略 */
+	.search :global(.oh) {
+		display: block;
+		min-width: 0;
+		flex: 1 1 auto;
+		overflow: hidden;
+	}
+	.search :global(.oh__inner) {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	div:has(> .search--active) {
 		margin-left: 1rem;

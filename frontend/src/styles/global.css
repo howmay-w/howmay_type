@@ -348,6 +348,7 @@ dd {
 .title-header--initial > div {
   grid-column: 1 / -1;
   grid-row: 2;
+  min-width: 0;
 }
 
 @media screen and (max-width: 49.99em) {

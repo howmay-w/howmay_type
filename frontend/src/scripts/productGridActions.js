@@ -62,13 +62,22 @@ const clearSearchState = () => {
     );
   appearCards(visible);
   toggleClearButton();
-  searchContent.innerHTML = searchContentOriginal;
+  setSearchToolbarLabel("");
   searchInput.value = "";
   searchButton.classList.remove("search--active");
   try {
     sessionStorage.removeItem(GRID_SEARCH_KEY);
     sessionStorage.setItem(GRID_VIEW_MODE_KEY, "random");
   } catch (_) {}
+};
+
+// 工具列顯示搜尋字。過長時由 CSS 省略，title 保留完整字串。
+const setSearchToolbarLabel = (term) => {
+  if (!searchContent) return;
+  searchContent.innerHTML = term ? term : searchContentOriginal;
+  if (!searchButton) return;
+  if (term) searchButton.title = term;
+  else searchButton.removeAttribute("title");
 };
 
 // Clear search: reset the filter and clear the input.
@@ -78,8 +87,7 @@ const handleSearchClearClick = () => clearSearchState();
 const handleSearchInput = (e) => {
   const searchTerm = e.target.value;
   filterGrid(searchTerm);
-  searchContent.innerHTML =
-    searchTerm === "" ? searchContentOriginal : searchTerm;
+  setSearchToolbarLabel(searchTerm);
   toggleClearButton(searchTerm);
   searchButton.classList.toggle("search--active", searchTerm !== "");
   try {
@@ -396,7 +404,7 @@ const applyTagFromUrl = () => {
   filterGrid(tag);
   toggleClearButton(tag);
   searchButton?.classList.add("search--active");
-  if (searchContent) searchContent.innerHTML = tag;
+  setSearchToolbarLabel(tag);
   if (searchInput) searchInput.value = tag;
   try {
     sessionStorage.setItem(GRID_SEARCH_KEY, tag);
@@ -434,7 +442,7 @@ const applySearchFromSession = () => {
   filterGrid(term);
   toggleClearButton(term);
   searchButton?.classList.add("search--active");
-  if (searchContent) searchContent.innerHTML = term;
+  setSearchToolbarLabel(term);
   if (searchInput) searchInput.value = term;
   if (fromUrl) {
     const url = new URL(window.location.href);
