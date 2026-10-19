@@ -31,11 +31,10 @@ pubDate: 2023-10-10
 tags: ["clickbait","📰"]
 wordmark:
   src: "/projects/標題殺人/wordmark.webp"
-  source: "auto"
-  ink: 0.446
+  source: "cutout"
+  ink: 0.373
   scale: 0.95
-  hidden: true
-  redo: true
+  reviewed: true
 ---
 
 俗諺說筆比劍更有力量，\

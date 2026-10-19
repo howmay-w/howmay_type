@@ -24,8 +24,8 @@ tags: ["cutclass","點字","😶‍🌫️"]
 wordmark:
   src: "/projects/翹課/wordmark.webp"
   source: "cutout"
-  ink: 0.392
-  redo: true
+  ink: 0.114
+  reviewed: true
 ---
 
 明天⋯不可能⋯\

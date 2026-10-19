@@ -33,7 +33,8 @@ wordmark:
   src: "/projects/溫柔/wordmark.webp"
   source: "cutout"
   ink: 0.359
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 溫柔很多種樣貌，\

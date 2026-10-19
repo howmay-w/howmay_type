@@ -23,7 +23,8 @@ wordmark:
   src: "/projects/預防針/wordmark.webp"
   source: "auto"
   ink: 0.564
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 不知道是因為工作類型的關係，還是隨著見過的世面越來越多，總覺得自己已經越來越習慣在發言時先打預防針，再說原本要表達的事。

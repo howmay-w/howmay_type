@@ -22,7 +22,6 @@ wordmark:
   source: "auto"
   accent: "#e9bf03"
   ink: 0.13
-  hidden: true
   redo: true
 ---
 

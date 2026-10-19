@@ -26,7 +26,7 @@ wordmark:
   accent: "#e1903b"
   ink: 0.277
   hidden: true
-  redo: true
+  needsImage: true
 ---
 
 🚂松山與冬山是我最常出沒的兩個火車站。名字剛好很接近，卻各有風景。

@@ -23,10 +23,10 @@ pubDate: 2022-11-15
 tags: ["itsmylife","life","點字","🗺"]
 wordmark:
   src: "/projects/人生/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#868dbb"
-  ink: 0.102
-  redo: true
+  ink: 0.132
+  reviewed: true
 ---
 
 點字時大家投票想看黑暗ㄉ人生，\

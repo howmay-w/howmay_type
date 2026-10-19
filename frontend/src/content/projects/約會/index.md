@@ -23,10 +23,10 @@ pubDate: 2025-02-14
 tags: ["date","✨"]
 wordmark:
   src: "/projects/約會/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#e7a1e8"
-  ink: 0.562
-  redo: true
+  ink: 0.369
+  reviewed: true
 ---
 
 跟男友交往（差一個月）滿十年，\

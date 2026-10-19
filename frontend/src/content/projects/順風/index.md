@@ -30,7 +30,7 @@ wordmark:
   source: "auto"
   ink: 0.436
   hidden: true
-  redo: true
+  needsImage: true
 ---
 
 「順風」一直是我很喜歡的祝福說法，帶著相信實力或準備已然足夠的從容，只祈好的機緣推動。

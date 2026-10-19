@@ -23,9 +23,9 @@ pubDate: 2024-08-29
 tags: ["nothanks","☺️"]
 wordmark:
   src: "/projects/我還好/wordmark.webp"
-  source: "auto"
-  ink: 0.396
-  redo: true
+  source: "cutout"
+  ink: 0.237
+  reviewed: true
 ---
 
 成熟的大人不說「不喜歡」，\

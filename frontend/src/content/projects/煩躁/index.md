@@ -24,8 +24,8 @@ tags: ["fretful","🤬"]
 wordmark:
   src: "/projects/煩躁/wordmark.webp"
   source: "cutout"
-  ink: 0.609
-  redo: true
+  ink: 0.385
+  reviewed: true
 ---
 
 喉嚨⋯痛痛ㄉ⋯⋯\

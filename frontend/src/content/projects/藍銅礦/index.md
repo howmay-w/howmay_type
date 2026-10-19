@@ -17,10 +17,10 @@ pubDate: 2025-11-09
 tags: ["whatzurtype", "Azurite", "大地瑰寶", "字字字設計串連", "reels"]
 wordmark:
   src: "/projects/藍銅礦/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#020ed0"
-  ink: 0.473
-  redo: true
+  ink: 0.383
+  reviewed: true
 ---
 
 藍銅礦很漂亮，大家去查照片！

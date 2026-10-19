@@ -29,7 +29,8 @@ wordmark:
   src: "/projects/旅行/wordmark.webp"
   source: "cutout"
   ink: 0.239
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 這個月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 題目很有趣ㄛ！要先抽選大家出題的特色歐文字型，以它為靈感來創作漢字。\

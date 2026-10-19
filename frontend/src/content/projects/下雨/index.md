@@ -31,9 +31,9 @@ pubDate: 2023-08-30
 tags: ["雨","rain","🌧️"]
 wordmark:
   src: "/projects/下雨/wordmark.webp"
-  source: "auto"
-  ink: 0.816
-  redo: true
+  source: "cutout"
+  ink: 0.42
+  reviewed: true
 ---
 
 下班又忘記帶傘ㄌ，傷腦筋。\

@@ -24,10 +24,10 @@ tags:
   ["whatzurtype", "字字字設計串連", "台灣字造：小屋裡的字體展", "飛烏虎", "👻"]
 wordmark:
   src: "/projects/鬼頭刀/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#88aacc"
-  ink: 0.087
-  redo: true
+  ink: 0.268
+  reviewed: true
 ---
 
 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 花蓮常見漁獲第二彈。\

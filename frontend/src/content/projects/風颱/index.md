@@ -27,7 +27,8 @@ wordmark:
   src: "/projects/風颱/wordmark.webp"
   source: "auto"
   ink: 0.713
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 今年颱風好多，明明都十月ㄌ。\

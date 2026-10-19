@@ -25,9 +25,9 @@ pubDate: 2025-04-13
 tags: ["airplane","✈️"]
 wordmark:
   src: "/projects/艾爾普蘭星/wordmark.webp"
-  source: "auto"
-  ink: 0.139
-  redo: true
+  source: "cutout"
+  ink: 0.241
+  reviewed: true
 ---
 
 小時候聽同學說，那種在天上跑得很快、一閃一閃的星星叫「艾爾普蘭星」，很認真的相信了一陣子。

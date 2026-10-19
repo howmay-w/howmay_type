@@ -23,10 +23,10 @@ hoverVideo:
   src: "/projects/儲存空間不足/video_0.mp4"
 wordmark:
   src: "/projects/儲存空間不足/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#91a25a"
-  ink: 0.396
-  redo: true
+  ink: 0.273
+  reviewed: true
 ---
 
 太久沒整理檔案⋯

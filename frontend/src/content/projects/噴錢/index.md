@@ -27,7 +27,8 @@ wordmark:
   src: "/projects/噴錢/wordmark.webp"
   source: "cutout"
   ink: 0.53
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 年尾總是花錢如瀑布，\

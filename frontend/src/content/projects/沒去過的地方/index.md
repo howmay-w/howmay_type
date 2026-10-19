@@ -17,6 +17,7 @@ wordmark:
   ink: 0.444
   scale: 0.85
   hidden: true
+  reviewed: true
 ---
 
 可能是奇幻的世界。

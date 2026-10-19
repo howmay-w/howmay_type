@@ -12,9 +12,9 @@ pubDate: 2022-08-20
 tags: ["Pudding","🍮"]
 wordmark:
   src: "/projects/布丁/wordmark.webp"
-  source: "auto"
-  ink: 0.433
-  redo: true
+  source: "cutout"
+  ink: 0.427
+  reviewed: true
 ---
 
 好吃

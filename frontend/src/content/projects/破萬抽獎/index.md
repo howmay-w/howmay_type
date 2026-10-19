@@ -29,10 +29,10 @@ pubDate: 2023-06-05
 tags: ["好累", "拖延症", "賀", "抽獎"]
 wordmark:
   src: "/projects/破萬抽獎/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#010100"
-  ink: 0.198
-  redo: true
+  ink: 0.401
+  reviewed: true
 ---
 
 ☘️自己賀破萬！來抽獎☘️

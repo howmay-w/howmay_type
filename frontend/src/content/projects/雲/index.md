@@ -27,9 +27,9 @@ pubDate: 2022-12-08
 tags: ["floating","cloud","☁️"]
 wordmark:
   src: "/projects/雲/wordmark.webp"
-  source: "auto"
-  ink: 0.589
-  redo: true
+  source: "cutout"
+  ink: 0.45
+  reviewed: true
 ---
 
 小時候好想捏捏看雲，以為會軟綿綿的。\

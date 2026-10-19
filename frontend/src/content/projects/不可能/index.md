@@ -27,7 +27,8 @@ wordmark:
   src: "/projects/不可能/wordmark.webp"
   source: "auto"
   ink: 0.284
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 這幾天天氣也太好ㄌ⋯！\

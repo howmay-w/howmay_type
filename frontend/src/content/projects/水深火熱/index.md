@@ -27,7 +27,7 @@ wordmark:
   src: "/projects/水深火熱/wordmark.webp"
   source: "auto"
   ink: 0.367
-  scale: 0.9
+  scale: 1.05
   reviewed: true
 ---
 

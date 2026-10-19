@@ -20,10 +20,10 @@ pubDate: 2022-10-07
 tags: ["暈船","chemistry","😳"]
 wordmark:
   src: "/projects/曖昧/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#dfb0b5"
-  ink: 0.123
-  redo: true
+  ink: 0.096
+  reviewed: true
 ---
 
 🎶曖～昧～讓人受盡～委屈～🎶\

@@ -14,7 +14,8 @@ wordmark:
   src: "/projects/字戀-2/wordmark.webp"
   source: "auto"
   ink: 0.259
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 投稿看看

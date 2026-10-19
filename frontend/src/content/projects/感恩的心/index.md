@@ -23,10 +23,10 @@ pubDate: 2023-02-04
 tags: ["感恩ㄉ心","grateful","💝"]
 wordmark:
   src: "/projects/感恩的心/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#f1a073"
-  ink: 0.342
-  redo: true
+  ink: 0.343
+  reviewed: true
 ---
 
 今天補班，全公司去校外教學。\

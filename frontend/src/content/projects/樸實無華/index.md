@@ -25,7 +25,7 @@ wordmark:
   src: "/projects/樸實無華/wordmark.webp"
   source: "auto"
   ink: 0.634
-  scale: 0.6
+  scale: 1.05
   reviewed: true
 ---
 

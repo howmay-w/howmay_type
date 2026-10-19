@@ -27,9 +27,9 @@ pubDate: 2025-01-02
 tags: ["timeflies","🕝"]
 wordmark:
   src: "/projects/飛逝/wordmark.webp"
-  source: "auto"
-  ink: 0.411
-  redo: true
+  source: "cutout"
+  ink: 0.303
+  reviewed: true
 ---
 
 今天才有 2024 已經過去的真實感，但接下來應該還是會不小心寫錯年份好幾次。

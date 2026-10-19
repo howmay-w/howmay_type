@@ -23,10 +23,10 @@ pubDate: 2024-03-23
 tags: ["9thAnniversary","9️⃣"]
 wordmark:
   src: "/projects/九週年/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#fae6b8"
-  ink: 0.218
-  redo: true
+  ink: 0.23
+  reviewed: true
 ---
 
 前幾天跟男友交往滿九週年！

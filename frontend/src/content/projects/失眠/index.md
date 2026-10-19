@@ -27,10 +27,10 @@ pubDate: 2023-06-13
 tags: ["Insomnia","點字","🥱"]
 wordmark:
   src: "/projects/失眠/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#656686"
-  ink: 0.071
-  redo: true
+  ink: 0.051
+  reviewed: true
 ---
 
 午覺睡不著算是一種失眠ㄇ？

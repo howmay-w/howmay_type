@@ -29,10 +29,10 @@ pubDate: 2023-04-22
 tags: ["刷存在","🙋"]
 wordmark:
   src: "/projects/刷存/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#9ea9d1"
-  ink: 0.279
-  redo: true
+  ink: 0.306
+  reviewed: true
 ---
 
 會需要刷存，\

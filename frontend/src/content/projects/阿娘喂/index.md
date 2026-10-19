@@ -31,7 +31,7 @@ wordmark:
   accent: "#000617"
   ink: 0.184
   hidden: true
-  redo: true
+  needsImage: true
 ---
 
 死語復興運動

@@ -33,7 +33,6 @@ wordmark:
   src: "/projects/我跟你講/wordmark.webp"
   source: "auto"
   ink: 0.074
-  scale: 0.9
   reviewed: true
 ---
 

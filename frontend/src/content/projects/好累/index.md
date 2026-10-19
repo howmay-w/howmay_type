@@ -27,8 +27,8 @@ wordmark:
   src: "/projects/好累/wordmark.webp"
   source: "cutout"
   accent: "#363f9c"
-  ink: 0.685
-  redo: true
+  ink: 0.504
+  reviewed: true
 ---
 
 獻給週一ㄉ你。

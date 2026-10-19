@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/高級大人/wordmark.webp"
   source: "auto"
   ink: 0.206
+  scale: 1.1
   reviewed: true
 ---
 

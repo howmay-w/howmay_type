@@ -12,10 +12,9 @@ pubDate: 2022-09-19
 tags: ["地震", "抖爆嗚嗚嗚", "earthquake", "😖"]
 wordmark:
   src: "/projects/地震/wordmark.webp"
-  source: "auto"
-  ink: 0.404
-  hidden: true
-  redo: true
+  source: "cutout"
+  ink: 0.389
+  reviewed: true
 ---
 
 願大家平安

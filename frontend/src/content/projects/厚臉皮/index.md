@@ -22,8 +22,8 @@ tags: ["cheeky","🥸"]
 wordmark:
   src: "/projects/厚臉皮/wordmark.webp"
   source: "cutout"
-  ink: 0.654
-  redo: true
+  ink: 0.525
+  reviewed: true
 ---
 
 厚臉皮雖然很恥，但大多時候有用。\

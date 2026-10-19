@@ -26,8 +26,8 @@ tags: ["Scenery","けしき","🌄"]
 wordmark:
   src: "/projects/風景/wordmark.webp"
   source: "cutout"
-  ink: 0.243
-  redo: true
+  ink: 0.172
+  reviewed: true
 ---
 
 大學畢業以後反而學了很多新東西，\

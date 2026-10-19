@@ -22,7 +22,8 @@ wordmark:
   source: "auto"
   accent: "#1b0800"
   ink: 0.2
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 這個時代還有情書嗎？訊息不算的話\

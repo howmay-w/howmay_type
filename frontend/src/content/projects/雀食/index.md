@@ -33,7 +33,8 @@ wordmark:
   accent: "#e9c074"
   ink: 0.565
   scale: 1.1
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 圖文無關但\

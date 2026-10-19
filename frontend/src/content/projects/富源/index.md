@@ -17,7 +17,7 @@ wordmark:
   accent: "#839370"
   ink: 0.251
   hidden: true
-  redo: true
+  needsImage: true
 ---
 
 ### 富源🚇

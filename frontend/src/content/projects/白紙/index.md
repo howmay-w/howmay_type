@@ -17,9 +17,8 @@ pubDate: 2022-11-28
 tags: ["whitepaperrevolution","A4revolution","📄"]
 wordmark:
   src: "/projects/白紙/wordmark.webp"
-  source: "auto"
-  ink: 0.862
+  source: "cutout"
+  ink: 0.692
   scale: 1.1
-  hidden: true
-  redo: true
+  reviewed: true
 ---

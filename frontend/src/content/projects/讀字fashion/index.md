@@ -29,10 +29,10 @@ pubDate: 2025-02-03
 tags: ["whatzurtype","台北國際書展","字字字設計串連","😎"]
 wordmark:
   src: "/projects/讀字fashion/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#ebc6bc"
-  ink: 0.22
-  redo: true
+  ink: 0.216
+  reviewed: true
 ---
 
 遲到的一月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 

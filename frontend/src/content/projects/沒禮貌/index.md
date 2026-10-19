@@ -28,8 +28,8 @@ tags: ["havenomanners","🤗"]
 wordmark:
   src: "/projects/沒禮貌/wordmark.webp"
   source: "cutout"
-  ink: 0.553
-  redo: true
+  ink: 0.444
+  reviewed: true
 ---
 
 講話沒禮貌的朋友，常常是真正的好朋友。\

@@ -34,7 +34,8 @@ wordmark:
   source: "cutout"
   accent: "#a69c23"
   ink: 0.578
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 邁入研究生生涯第三年的 me 🥲\

@@ -30,7 +30,8 @@ wordmark:
   source: "auto"
   accent: "#0b1506"
   ink: 0.074
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 之前參加競賽型活動，被家人提醒「不要得失心太重。」才雄雄想起來，啊，原來這種焦慮叫做得失心。

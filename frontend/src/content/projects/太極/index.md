@@ -24,8 +24,8 @@ tags: ["taichi","點字","☯️"]
 wordmark:
   src: "/projects/太極/wordmark.webp"
   source: "cutout"
-  ink: 0.196
-  redo: true
+  ink: 0.239
+  reviewed: true
 ---
 
 太極，有一說的是天地未分的渾沌態。\

@@ -19,7 +19,8 @@ wordmark:
   src: "/projects/微涼/wordmark.webp"
   source: "auto"
   ink: 0.14
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 問答點字的「微涼」\

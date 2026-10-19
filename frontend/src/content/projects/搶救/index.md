@@ -23,9 +23,9 @@ pubDate: 2022-11-24
 tags: ["help","💥"]
 wordmark:
   src: "/projects/搶救/wordmark.webp"
-  source: "auto"
-  ink: 0.269
-  redo: true
+  source: "cutout"
+  ink: 0.186
+  reviewed: true
 ---
 
 最近很常看到的字。\

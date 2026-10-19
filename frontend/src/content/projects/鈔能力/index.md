@@ -31,7 +31,8 @@ wordmark:
   src: "/projects/鈔能力/wordmark.webp"
   source: "auto"
   ink: 0.307
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 應該是今年最後一篇！\

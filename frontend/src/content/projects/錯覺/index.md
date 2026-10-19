@@ -26,8 +26,8 @@ tags: ["illusion","🥴"]
 wordmark:
   src: "/projects/錯覺/wordmark.webp"
   source: "cutout"
-  ink: 0.28
-  redo: true
+  ink: 0.27
+  reviewed: true
 ---
 
 如果你看到字了，那可能是錯覺ㄅ。\

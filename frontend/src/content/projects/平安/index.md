@@ -29,8 +29,8 @@ wordmark:
   src: "/projects/平安/wordmark.webp"
   source: "cutout"
   accent: "#783946"
-  ink: 0.66
-  redo: true
+  ink: 0.576
+  reviewed: true
 ---
 
 一整天都心神不寧，才發現面對無可預測的天災人會多麼無助。

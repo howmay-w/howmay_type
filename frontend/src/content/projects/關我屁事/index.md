@@ -17,10 +17,10 @@ pubDate: 2022-09-24
 tags: ["noneofmybusiness", "金屬", "特效", "3D", "😇"]
 wordmark:
   src: "/projects/關我屁事/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#a8b4e4"
-  ink: 0.225
-  redo: true
+  ink: 0.14
+  reviewed: true
 ---
 
 突如其來ㄉ特效，有影片ㄛ！

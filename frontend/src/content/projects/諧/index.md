@@ -30,7 +30,8 @@ wordmark:
   source: "auto"
   accent: "#815716"
   ink: 0.182
-  redo: true
+  hidden: true
+  needsImage: true
 ---
 
 挑戰用 Procreate 製造假 3D，\

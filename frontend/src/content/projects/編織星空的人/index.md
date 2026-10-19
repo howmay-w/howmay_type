@@ -27,7 +27,7 @@ wordmark:
   ink: 0.088
   scale: 0.8
   hidden: true
-  redo: true
+  needsImage: true
 ---
 
 🎶用一顆孩子的心，在大人世界生存🎶\

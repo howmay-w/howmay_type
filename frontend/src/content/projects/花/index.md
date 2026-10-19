@@ -37,7 +37,7 @@ wordmark:
   ink: 0.082
   scale: 1.55
   hidden: true
-  redo: true
+  needsImage: true
 ---
 
 今天洗澡時突然想試試看，\
