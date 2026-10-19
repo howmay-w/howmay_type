@@ -112,4 +112,82 @@ const grid = "projects";
 	.search-no-results-wrap.hidden {
 		display: none !important;
 	}
+
+	/* ── 字牆模式（html[data-view="type"]，由 gridViewMode.js 切換）── */
+	:global(html[data-view="type"]) {
+		--color-text: #eee;
+		--color-text-alt: #8a8a8a;
+		--color-bg: #111;
+		--border-color: #333;
+		--color-link: #eee;
+		--color-link-hover: #777;
+		--color-placeholder: transparent;
+		--wm-color: #f2f2f2;
+		background: var(--color-bg);
+		transition: background-color 0.4s;
+	}
+	:global(html[data-view="type"]) .project-grid {
+		/* 位置與尺寸由 gridViewMode.js 寫入百分比 --x / --y / --w，整面牆用長寬比隨寬度等比例縮放 */
+		display: block;
+		height: auto;
+		aspect-ratio: var(--wall-ratio, auto);
+		margin-top: clamp(2rem, 5vw, 4rem);
+		margin-bottom: 1rem;
+		overflow: visible;
+	}
+	/* 沒有字圖（或標成 hidden）的作品不出現在字牆；!important 是為了蓋過搜尋時寫入的 inline display */
+	:global(html[data-view="type"] .project-grid > a:not([data-wordmark])) {
+		display: none !important;
+	}
+	:global(html[data-view="type"] .project-grid > a[data-wordmark]) {
+		position: absolute;
+		left: var(--x, 0);
+		top: var(--y, 0);
+		width: var(--w, 120px);
+		height: auto;
+		aspect-ratio: var(--a);
+		overflow: visible;
+		background: none;
+	}
+	/* 視窗寬度跨過分段、重新排版時，讓字滑到新位置而不是瞬間跳動 */
+	:global(html[data-view="type"] .project-grid.wall--glide > a[data-wordmark]) {
+		transition:
+			left 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			top 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	:global(html[data-view="type"] .project-grid .project-card__img-wrap) {
+		display: none;
+	}
+	:global(html[data-view="type"] .project-grid .project-card__wordmark) {
+		position: absolute;
+		inset: 0;
+		display: block;
+		background-color: var(--wm-color);
+		-webkit-mask: var(--wm) center / contain no-repeat;
+		mask: var(--wm) center / contain no-repeat;
+		transition: background-color 0.35s;
+	}
+	/* hover 時字變回原作的顏色；太暗的顏色在卡片端已換成網站強調色 */
+	@media (hover: hover) {
+		:global(html[data-view="type"] .project-grid > a:hover .project-card__wordmark) {
+			background-color: var(--accent, var(--color-link-underline));
+		}
+	}
+	/* 黑底上黑色提示框看不出來，改成淺色 */
+	:global(html[data-view="type"] .tooltip) {
+		background: #f2f2f2 !important;
+		box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+	}
+	:global(html[data-view="type"] .tooltip .oh__inner),
+	:global(html[data-view="type"] .tooltip .tooltip__year) {
+		color: #111 !important;
+	}
+	:global(html[data-view="type"] .tooltip .tooltip__row--muted .oh__inner) {
+		color: #666 !important;
+	}
+	:global(html[data-view="type"] .project-grid > a:focus-visible) {
+		outline: 1px solid var(--wm-color);
+		outline-offset: 0.5rem;
+	}
 </style>

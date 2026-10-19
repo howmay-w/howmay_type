@@ -14,6 +14,11 @@ const { projectsTotal } = Astro.props;
 <header class="title-header title-header--initial">
 	<h2><TextSlider content="Works" /></h2>
 	<div>
+		<div class="view-toggle" role="group" aria-label="瀏覽方式">
+			<button data-view-option="image" aria-pressed="true" aria-label="圖片"><TextSlider content="圖" /></button>
+			<span aria-hidden="true">/</span>
+			<button data-view-option="type" aria-pressed="false" aria-label="單色字"><TextSlider content="字" /></button>
+		</div>
 		<button data-sort><TextSlider content="最新" /></button>
 		<button data-shuffle><TextSlider content="隨機" /></button>
 		<div>
@@ -46,6 +51,20 @@ const { projectsTotal } = Astro.props;
 	button[data-shuffle],
 	.clear {
 		flex-shrink: 0;
+	}
+	.view-toggle {
+		flex-shrink: 0;
+		gap: 0.35rem;
+	}
+	.view-toggle span {
+		opacity: 0.35;
+	}
+	[data-view-option][aria-pressed="false"] {
+		opacity: 0.35;
+		transition: opacity 0.3s;
+	}
+	[data-view-option][aria-pressed="false"]:hover {
+		opacity: 1;
 	}
 	div:has(> .search) {
 		position: relative;
@@ -91,3 +110,4 @@ const { projectsTotal } = Astro.props;
 </style>
 
 <script src="../scripts/productGridActions.js"></script>
+<script src="../scripts/gridViewMode.js"></script>

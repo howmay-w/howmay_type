@@ -56,6 +56,10 @@ const projects = defineCollection({
         src: z.string(),
         source: z.enum(["cutout", "auto", "ai"]).optional(),
         accent: z.string().optional(),
+        // 字圖不透明像素比例，用來平衡粗細字的量感
+        ink: z.number().optional(),
+        // 圖上的字數；沒填就從標題推算
+        chars: z.number().optional(),
         size: z.enum(["s", "m", "l"]).optional(),
         hidden: z.boolean().optional(),
       })
