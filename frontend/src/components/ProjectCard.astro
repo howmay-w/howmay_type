@@ -1,4 +1,6 @@
 ---
+import { createHash } from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
 import type { CollectionEntry } from "astro:content";
 import { getWebpSize } from "../utils/webpSize";
@@ -35,7 +37,9 @@ function getWordmark(slug: string, title: string, wordmark: CollectionEntry<"pro
 	}
 	// 手動倍率最後才乘在寬度上（見 gridViewMode.js），×2 就是兩倍寬，不受單字面積下限影響
 	const scale = wordmark.scale ?? 1;
-	return { src: wordmark.src, aspect: aspect.toFixed(4), mass: mass.toFixed(3), scale: String(scale), accent };
+	// 換圖時檔名不變，用內容雜湊當版本號，瀏覽器才不會一直顯示快取裡的舊字圖
+	const version = createHash("md5").update(new Uint8Array(fs.readFileSync(file))).digest("hex").slice(0, 8);
+	return { src: `${wordmark.src}?v=${version}`, aspect: aspect.toFixed(4), mass: mass.toFixed(3), scale: String(scale), accent };
 }
 
 type Props = {
