@@ -25,9 +25,9 @@ pubDate: 2026-02-01
 tags: ["whatzurtype","字字字設計串連","😲"]
 wordmark:
   src: "/projects/驚/wordmark.webp"
-  source: "auto"
-  ink: 0.357
-  scale: 1.6
+  source: "cutout"
+  ink: 0.308
+  scale: 1.25
   reviewed: true
 ---
 

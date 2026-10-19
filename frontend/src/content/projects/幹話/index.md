@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/幹話/wordmark.webp"
   source: "cutout"
   ink: 0.795
+  scale: 1.35
   reviewed: true
 ---
 

@@ -17,10 +17,9 @@ pubDate: 2024-05-15
 tags: ["knotty","animation","reels"]
 wordmark:
   src: "/projects/傷腦筋/wordmark.webp"
-  source: "auto"
-  ink: 0.363
-  scale: 1.15
-  reviewed: true
+  source: "cutout"
+  ink: 0.337
+  scale: 1.25
 ---
 
 明天就要 25 歲了，傷腦筋😵‍💫

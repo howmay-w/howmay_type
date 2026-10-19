@@ -29,7 +29,6 @@ wordmark:
   src: "/projects/腰痠背痛/wordmark.webp"
   source: "cutout"
   ink: 0.325
-  reviewed: true
 ---
 
 🔔二十五歲溫馨提醒🔔\

@@ -19,6 +19,7 @@ wordmark:
   src: "/projects/野生/wordmark.webp"
   source: "cutout"
   ink: 0.612
+  scale: 1.2
   reviewed: true
 ---
 

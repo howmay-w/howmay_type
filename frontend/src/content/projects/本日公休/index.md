@@ -29,9 +29,8 @@ pubDate: 2024-01-30
 tags: ["dayoff","🏖️"]
 wordmark:
   src: "/projects/本日公休/wordmark.webp"
-  source: "auto"
-  ink: 0.571
-  reviewed: true
+  source: "cutout"
+  ink: 0.577
 ---
 
 最近好忙好忙，好想公休ㄛ。\

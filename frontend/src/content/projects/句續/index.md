@@ -27,9 +27,9 @@ pubDate: 2024-09-21
 tags: ["繼續","👀"]
 wordmark:
   src: "/projects/句續/wordmark.webp"
-  source: "auto"
-  ink: 0.48
-  reviewed: true
+  source: "cutout"
+  ink: 0.478
+  scale: 1.2
 ---
 
 感覺比起「繼續」，更常聽到大家講「句續」。

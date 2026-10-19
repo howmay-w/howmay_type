@@ -17,9 +17,9 @@ pubDate: 2024-11-27
 tags: ["FLUX", "beambox", "reels"]
 wordmark:
   src: "/projects/無糖少冰/wordmark.webp"
-  source: "auto"
-  ink: 0.339
-  reviewed: true
+  source: "cutout"
+  ink: 0.292
+  scale: 1.3
 ---
 
 ✨ 客製化自由！用 Beambox II 雷射切割機輕鬆將設計商品化

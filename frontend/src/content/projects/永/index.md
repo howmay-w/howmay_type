@@ -20,7 +20,7 @@ wordmark:
   source: "cutout"
   accent: "#eca208"
   ink: 0.172
-  reviewed: true
+  scale: 1.55
 ---
 
 十月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 玩法是用[#拉霸機](（http://slot.miario.com/machines/184683）抽出奇形怪狀ㄉ創作限制，並自己隨意解讀，在限制內完成「永」字。

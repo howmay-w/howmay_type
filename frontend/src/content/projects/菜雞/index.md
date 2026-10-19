@@ -29,10 +29,9 @@ pubDate: 2024-04-12
 tags: ["韭菜","novice","newbie","🐣"]
 wordmark:
   src: "/projects/菜雞/wordmark.webp"
-  source: "auto"
-  ink: 0.399
+  source: "cutout"
+  ink: 0.419
   scale: 1.1
-  reviewed: true
 ---
 
 Me.

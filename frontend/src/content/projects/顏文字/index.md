@@ -31,10 +31,9 @@ pubDate: 2023-11-09
 tags: ["emoticon","點字"]
 wordmark:
   src: "/projects/顏文字/wordmark.webp"
-  source: "auto"
-  ink: 0.132
+  source: "cutout"
+  ink: 0.126
   scale: 0.85
-  reviewed: true
 ---
 
 ( ´•̥̥̥ω•̥̥̥` ) (;´༎ຶД༎ຶ`)\

@@ -31,8 +31,7 @@ wordmark:
   src: "/projects/讀字fashion/wordmark.webp"
   source: "cutout"
   accent: "#ebc6bc"
-  ink: 0.216
-  reviewed: true
+  ink: 0.161
 ---
 
 遲到的一月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 

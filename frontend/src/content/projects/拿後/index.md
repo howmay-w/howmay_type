@@ -23,6 +23,7 @@ wordmark:
   src: "/projects/拿後/wordmark.webp"
   source: "cutout"
   ink: 0.415
+  scale: 1.2
   reviewed: true
 ---
 

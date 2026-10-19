@@ -31,10 +31,10 @@ pubDate: 2023-11-06
 tags: ["sodifficult","sohard","🙈"]
 wordmark:
   src: "/projects/好難/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#f15d5e"
-  ink: 0.368
-  scale: 1.15
+  ink: 0.128
+  scale: 1.65
   reviewed: true
 ---
 

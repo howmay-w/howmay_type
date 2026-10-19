@@ -21,9 +21,9 @@ hoverVideo:
   src: "/projects/客服萬難/video_0.mp4"
 wordmark:
   src: "/projects/客服萬難/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#180400"
-  ink: 0.294
+  ink: 0.289
   reviewed: true
 ---
 

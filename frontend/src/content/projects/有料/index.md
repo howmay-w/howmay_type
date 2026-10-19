@@ -31,8 +31,9 @@ pubDate: 2024-01-03
 tags: ["reallysomething","🧋"]
 wordmark:
   src: "/projects/有料/wordmark.webp"
-  source: "auto"
-  ink: 0.788
+  source: "cutout"
+  ink: 0.69
+  scale: 1.2
   reviewed: true
 ---
 

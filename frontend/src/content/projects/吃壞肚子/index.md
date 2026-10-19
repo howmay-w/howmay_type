@@ -25,8 +25,9 @@ pubDate: 2026-01-26
 tags: ["🤢"]
 wordmark:
   src: "/projects/吃壞肚子/wordmark.webp"
-  source: "auto"
-  ink: 0.324
+  source: "cutout"
+  ink: 0.31
+  scale: 1.15
   reviewed: true
 ---
 

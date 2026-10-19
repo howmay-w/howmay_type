@@ -25,10 +25,10 @@ pubDate: 2024-02-11
 tags: ["whatzurtype", "年貨大街", "字字字設計串連", "mulletroe", "🧧"]
 wordmark:
   src: "/projects/烏魚子/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#b8923e"
-  ink: 0.281
-  reviewed: true
+  ink: 0.226
+  scale: 1.1
 ---
 
 沒吃到烏魚子，就好像沒過到年。

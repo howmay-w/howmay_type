@@ -23,7 +23,7 @@ wordmark:
   src: "/projects/瓦解/wordmark.webp"
   source: "auto"
   ink: 0.425
-  scale: 1.05
+  scale: 1.25
   reviewed: true
 ---
 

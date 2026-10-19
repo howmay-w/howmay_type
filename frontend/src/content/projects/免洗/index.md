@@ -27,10 +27,10 @@ pubDate: 2026-02-09
 tags: ["typodesign","🥡"]
 wordmark:
   src: "/projects/免洗/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#115544"
-  ink: 0.464
-  scale: 1.05
+  ink: 0.384
+  scale: 1.2
   reviewed: true
 ---
 

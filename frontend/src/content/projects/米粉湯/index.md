@@ -25,10 +25,9 @@ pubDate: 2024-05-26
 tags: ["whatzurtype", "日花", "字字字設計串連", "BíHúnThng", "🥣"]
 wordmark:
   src: "/projects/米粉湯/wordmark.webp"
-  source: "auto"
-  ink: 0.369
+  source: "cutout"
+  ink: 0.139
   scale: 1.2
-  reviewed: true
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題與新字體 [#日花](https://www.instagram.com/explore/search/keyword/?q=%23%E6%97%A5%E8%8A%B1) 連動，要以歷史上出現過的文字造型為靈感，畫出家鄉的土產。對台北人來說有點困難ㄚ，最後畫了跟土產應該算擦邊球的米粉湯。

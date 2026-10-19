@@ -23,8 +23,8 @@ pubDate: 2026-02-19
 tags: ["金屬", "手繪特效", "3D", "👶"]
 wordmark:
   src: "/projects/高級大人/wordmark.webp"
-  source: "auto"
-  ink: 0.206
+  source: "cutout"
+  ink: 0.151
   scale: 1.1
   reviewed: true
 ---

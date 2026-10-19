@@ -19,10 +19,9 @@ pubDate: 2024-06-01
 tags: ["台灣","taiwan","青鳥","🧳"]
 wordmark:
   src: "/projects/民主富二代/wordmark.webp"
-  source: "auto"
-  ink: 0.395
-  scale: 1.1
-  reviewed: true
+  source: "cutout"
+  ink: 0.306
+  scale: 1.15
 ---
 
 現在享有，因為曾有人以命相搏。

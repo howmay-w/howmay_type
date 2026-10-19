@@ -25,10 +25,10 @@ hoverVideo:
   src: "/projects/宇宙無敵霹靂/video_0.mp4"
 wordmark:
   src: "/projects/宇宙無敵霹靂/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#ba9254"
-  ink: 0.332
-  scale: 0.8
+  ink: 0.28
+  scale: 1.05
   reviewed: true
 ---
 

@@ -23,8 +23,8 @@ pubDate: 2022-10-22
 tags: ["emo","🙂"]
 wordmark:
   src: "/projects/EMO/wordmark.webp"
-  source: "auto"
-  ink: 0.605
+  source: "cutout"
+  ink: 0.596
   scale: 1.25
   reviewed: true
 ---

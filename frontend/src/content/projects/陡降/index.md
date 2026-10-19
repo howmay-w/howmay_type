@@ -31,10 +31,9 @@ pubDate: 2023-12-01
 tags: ["suddendrop", "📉"]
 wordmark:
   src: "/projects/陡降/wordmark.webp"
-  source: "auto"
-  ink: 0.408
+  source: "cutout"
+  ink: 0.218
   scale: 1.1
-  reviewed: true
 ---
 
 雖然有沒有到真的很冷，但總覺得氣溫降ㄉ太突然ㄌ，身體反應不過來🥲

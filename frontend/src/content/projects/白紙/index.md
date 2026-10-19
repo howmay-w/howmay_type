@@ -19,6 +19,7 @@ wordmark:
   src: "/projects/白紙/wordmark.webp"
   source: "cutout"
   ink: 0.692
-  scale: 1.1
-  reviewed: true
+  scale: 1.35
+  hidden: true
+  needsImage: true
 ---

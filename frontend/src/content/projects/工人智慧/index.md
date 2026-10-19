@@ -27,9 +27,9 @@ pubDate: 2023-12-08
 tags: ["workerintelligence","stencil","💪"]
 wordmark:
   src: "/projects/工人智慧/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#6d51ef"
-  ink: 0.611
+  ink: 0.53
   reviewed: true
 ---
 

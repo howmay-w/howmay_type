@@ -25,8 +25,8 @@ pubDate: 2025-08-24
 tags: ["AIcopywriting", "🥱"]
 wordmark:
   src: "/projects/不是而是/wordmark.webp"
-  source: "auto"
-  ink: 0.238
+  source: "cutout"
+  ink: 0.213
   reviewed: true
 ---
 

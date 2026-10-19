@@ -17,9 +17,9 @@ pubDate: 2025-04-30
 tags: ["whatzurtype", "臺北文學季特展", "sad", "字字字設計串連", "reels"]
 wordmark:
   src: "/projects/傷心/wordmark.webp"
-  source: "auto"
-  ink: 0.178
-  scale: 1.05
+  source: "cutout"
+  ink: 0.176
+  scale: 1.2
   reviewed: true
 ---
 

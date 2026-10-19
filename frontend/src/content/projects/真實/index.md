@@ -21,6 +21,7 @@ wordmark:
   src: "/projects/真實/wordmark.webp"
   source: "cutout"
   ink: 0.291
+  scale: 1.25
   reviewed: true
 ---
 

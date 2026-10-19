@@ -21,8 +21,8 @@ hoverVideo:
   src: "/projects/電量焦慮/video_0.mp4"
 wordmark:
   src: "/projects/電量焦慮/wordmark.webp"
-  source: "auto"
-  ink: 0.434
+  source: "cutout"
+  ink: 0.385
   reviewed: true
 ---
 

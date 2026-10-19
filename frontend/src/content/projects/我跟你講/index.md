@@ -31,8 +31,9 @@ pubDate: 2024-02-15
 tags: ["LetMeTellYou","🤗"]
 wordmark:
   src: "/projects/我跟你講/wordmark.webp"
-  source: "auto"
-  ink: 0.074
+  source: "cutout"
+  ink: 0.077
+  scale: 1.1
   reviewed: true
 ---
 

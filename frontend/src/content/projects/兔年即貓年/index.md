@@ -39,6 +39,7 @@ wordmark:
   src: "/projects/兔年即貓年/wordmark.webp"
   source: "cutout"
   ink: 0.276
+  scale: 1.1
   reviewed: true
 ---
 

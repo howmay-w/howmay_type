@@ -27,7 +27,7 @@ wordmark:
   src: "/projects/換氣/wordmark.webp"
   source: "cutout"
   ink: 0.561
-  scale: 1.1
+  scale: 1.2
   reviewed: true
 ---
 

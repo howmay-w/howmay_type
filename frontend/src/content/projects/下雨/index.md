@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/下雨/wordmark.webp"
   source: "cutout"
   ink: 0.42
+  scale: 1.2
   reviewed: true
 ---
 

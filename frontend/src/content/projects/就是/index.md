@@ -29,7 +29,7 @@ wordmark:
   src: "/projects/就是/wordmark.webp"
   source: "cutout"
   ink: 0.219
-  scale: 1.2
+  scale: 1.25
   reviewed: true
 ---
 

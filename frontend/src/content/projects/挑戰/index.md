@@ -21,9 +21,9 @@ hoverVideo:
   src: "/projects/挑戰/video_0.mp4"
 wordmark:
   src: "/projects/挑戰/wordmark.webp"
-  source: "auto"
-  ink: 0.338
-  scale: 1.2
+  source: "cutout"
+  ink: 0.292
+  scale: 1.25
   reviewed: true
 ---
 

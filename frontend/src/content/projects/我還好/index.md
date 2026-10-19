@@ -24,8 +24,7 @@ tags: ["nothanks","☺️"]
 wordmark:
   src: "/projects/我還好/wordmark.webp"
   source: "cutout"
-  ink: 0.237
-  reviewed: true
+  ink: 0.283
 ---
 
 成熟的大人不說「不喜歡」，\

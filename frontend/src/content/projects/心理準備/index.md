@@ -27,9 +27,9 @@ pubDate: 2023-12-05
 tags: ["mentallyprepared","🫨"]
 wordmark:
   src: "/projects/心理準備/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#d25d79"
-  ink: 0.45
+  ink: 0.234
   reviewed: true
 ---
 

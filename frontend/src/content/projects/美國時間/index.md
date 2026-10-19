@@ -23,8 +23,8 @@ hoverVideo:
   src: "/projects/美國時間/video_0.mp4"
 wordmark:
   src: "/projects/美國時間/wordmark.webp"
-  source: "auto"
-  ink: 0.348
+  source: "cutout"
+  ink: 0.346
   scale: 1.1
   reviewed: true
 ---

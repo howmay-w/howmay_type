@@ -16,9 +16,9 @@ pubDate: 2023-08-16
 tags: ["鬼門開", "glitch", "specialeffects", "reels"]
 wordmark:
   src: "/projects/魑魅魍魎/wordmark.webp"
-  source: "auto"
-  ink: 0.518
-  reviewed: true
+  source: "cutout"
+  ink: 0.448
+  scale: 1.1
 ---
 
 你的手機應該沒有壞掉，應該📺\

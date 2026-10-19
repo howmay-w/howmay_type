@@ -21,7 +21,7 @@ wordmark:
   src: "/projects/人生的歌/wordmark.webp"
   source: "cutout"
   ink: 0.112
-  scale: 1.1
+  scale: 1.3
   reviewed: true
 ---
 

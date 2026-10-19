@@ -23,8 +23,8 @@ pubDate: 2023-09-29
 tags: ["OMG","thanks"]
 wordmark:
   src: "/projects/竟然/wordmark.webp"
-  source: "auto"
-  ink: 0.542
+  source: "cutout"
+  ink: 0.48
   scale: 1.2
   reviewed: true
 ---

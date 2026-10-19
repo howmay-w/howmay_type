@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/學測就上/wordmark.webp"
   source: "cutout"
   ink: 0.364
+  scale: 1.05
   reviewed: true
 ---
 

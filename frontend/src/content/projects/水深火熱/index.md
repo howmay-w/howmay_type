@@ -25,10 +25,9 @@ pubDate: 2023-07-12
 tags: ["indirestraits","toohot","🥵"]
 wordmark:
   src: "/projects/水深火熱/wordmark.webp"
-  source: "auto"
-  ink: 0.367
+  source: "cutout"
+  ink: 0.324
   scale: 1.05
-  reviewed: true
 ---
 
 最近是忙碌ㄉ日子，水深不深不曉得，但肯定很熱。\

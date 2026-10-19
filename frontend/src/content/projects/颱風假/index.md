@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/颱風假/wordmark.webp"
   source: "cutout"
   ink: 0.495
+  scale: 1.15
   reviewed: true
 ---
 

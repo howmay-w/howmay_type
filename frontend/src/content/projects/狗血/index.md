@@ -25,10 +25,9 @@ pubDate: 2024-04-30
 tags: ["drama","🥃"]
 wordmark:
   src: "/projects/狗血/wordmark.webp"
-  source: "auto"
-  ink: 0.499
-  scale: 1.1
-  reviewed: true
+  source: "cutout"
+  ink: 0.427
+  scale: 1.3
 ---
 
 隨著長大見識越來越多，\

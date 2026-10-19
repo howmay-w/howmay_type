@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/熬夜/wordmark.webp"
   source: "cutout"
   ink: 0.204
+  scale: 1.1
   reviewed: true
 ---
 

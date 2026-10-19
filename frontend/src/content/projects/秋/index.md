@@ -14,6 +14,7 @@ wordmark:
   src: "/projects/秋/wordmark.webp"
   source: "auto"
   ink: 0.334
+  scale: 1.2
   reviewed: true
 ---
 

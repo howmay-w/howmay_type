@@ -23,10 +23,10 @@ pubDate: 2024-07-16
 tags: ["湯匙","spoon","🥄"]
 wordmark:
   src: "/projects/調羹/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#282320"
-  ink: 0.644
-  reviewed: true
+  ink: 0.484
+  scale: 1.2
 ---
 
 長大以後才發現別人家的湯匙都不叫做「調羹」，大驚訝:o

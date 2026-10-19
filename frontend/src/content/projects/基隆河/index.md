@@ -32,6 +32,7 @@ wordmark:
   source: "cutout"
   accent: "#0498fb"
   ink: 0.236
+  scale: 1.45
   reviewed: true
 ---
 

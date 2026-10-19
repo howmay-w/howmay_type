@@ -25,7 +25,7 @@ wordmark:
   src: "/projects/天冷不適合做設計/wordmark.webp"
   source: "cutout"
   ink: 0.547
-  scale: 0.9
+  scale: 0.85
   reviewed: true
 ---
 

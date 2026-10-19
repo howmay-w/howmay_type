@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/總之先開始/wordmark.webp"
   source: "cutout"
   ink: 0.369
+  scale: 1.05
   reviewed: true
 ---
 

@@ -14,6 +14,7 @@ wordmark:
   src: "/projects/布丁/wordmark.webp"
   source: "cutout"
   ink: 0.427
+  scale: 1.35
   reviewed: true
 ---
 

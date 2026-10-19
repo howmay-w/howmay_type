@@ -29,9 +29,9 @@ pubDate: 2023-08-08
 tags: ["daddy","fathersday","🐲"]
 wordmark:
   src: "/projects/爸比/wordmark.webp"
-  source: "auto"
-  ink: 0.417
-  reviewed: true
+  source: "cutout"
+  ink: 0.369
+  scale: 1.2
 ---
 
 今年 24 歲，依然叫我爸「爸比」。

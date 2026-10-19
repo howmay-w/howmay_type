@@ -22,7 +22,9 @@ wordmark:
   source: "auto"
   accent: "#e9bf03"
   ink: 0.13
-  redo: true
+  scale: 1.9
+  hidden: true
+  needsImage: true
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是 [@justfont](https://www.instagram.com/justfont/) 跟獨立出版聯盟 [@indiepub.tw](https://www.instagram.com/indiepub.tw/) 的特別合作，要以一段文字為題設計「讀字」。

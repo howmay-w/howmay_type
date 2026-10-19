@@ -12,8 +12,8 @@ pubDate: 2022-08-20
 tags: ["Headache","💥"]
 wordmark:
   src: "/projects/頭痛/wordmark.webp"
-  source: "auto"
-  ink: 0.609
+  source: "cutout"
+  ink: 0.598
   scale: 1.1
   reviewed: true
 ---

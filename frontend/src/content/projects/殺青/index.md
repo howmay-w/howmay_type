@@ -33,9 +33,8 @@ wordmark:
   src: "/projects/殺青/wordmark.webp"
   source: "cutout"
   accent: "#d84f5d"
-  ink: 0.223
+  ink: 0.166
   scale: 1.45
-  reviewed: true
 ---
 
 2025.01.15 新字體【柑仔蜜】出貨。

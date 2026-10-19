@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/太極/wordmark.webp"
   source: "cutout"
   ink: 0.239
+  scale: 1.15
   reviewed: true
 ---
 

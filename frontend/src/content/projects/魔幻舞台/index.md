@@ -27,9 +27,9 @@ pubDate: 2025-04-20
 tags: ["magicstage","💖"]
 wordmark:
   src: "/projects/魔幻舞台/wordmark.webp"
-  source: "auto"
-  ink: 0.466
-  scale: 0.95
+  source: "cutout"
+  ink: 0.44
+  scale: 1.05
   reviewed: true
 ---
 

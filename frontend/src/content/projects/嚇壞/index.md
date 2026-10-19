@@ -23,10 +23,9 @@ pubDate: 2024-02-19
 tags: ["freakout","😱"]
 wordmark:
   src: "/projects/嚇壞/wordmark.webp"
-  source: "auto"
-  ink: 0.421
+  source: "cutout"
+  ink: 0.349
   scale: 1.1
-  reviewed: true
 ---
 
 世界總是充滿驚奇，例如前幾天看到的 AI 文字生成影片。

@@ -29,7 +29,7 @@ wordmark:
   src: "/projects/忙碌/wordmark.webp"
   source: "auto"
   ink: 0.694
-  scale: 1.15
+  scale: 1.25
   reviewed: true
 ---
 

@@ -29,8 +29,8 @@ pubDate: 2023-11-17
 tags: ["OMG","🤯"]
 wordmark:
   src: "/projects/發瘋/wordmark.webp"
-  source: "auto"
-  ink: 0.604
+  source: "cutout"
+  ink: 0.393
   scale: 1.1
   reviewed: true
 ---

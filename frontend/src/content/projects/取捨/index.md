@@ -27,10 +27,10 @@ pubDate: 2023-09-18
 tags: ["tradeoff","💱"]
 wordmark:
   src: "/projects/取捨/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#040203"
-  ink: 0.197
-  reviewed: true
+  ink: 0.238
+  scale: 1.15
 ---
 
 想做的事情好多，\

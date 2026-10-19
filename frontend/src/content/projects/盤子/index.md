@@ -27,7 +27,7 @@ wordmark:
   src: "/projects/盤子/wordmark.webp"
   source: "auto"
   ink: 0.27
-  scale: 1.2
+  scale: 1.4
   reviewed: true
 ---
 

@@ -34,6 +34,7 @@ wordmark:
   src: "/projects/漂釀/wordmark.webp"
   source: "cutout"
   ink: 0.295
+  scale: 1.2
   reviewed: true
 ---
 

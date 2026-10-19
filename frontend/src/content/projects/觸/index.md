@@ -16,10 +16,9 @@ pubDate: 2024-02-03
 tags: ["true", "touching", "reach", "reels"]
 wordmark:
   src: "/projects/觸/wordmark.webp"
-  source: "auto"
-  ink: 0.343
+  source: "cutout"
+  ink: 0.288
   scale: 1.55
-  reviewed: true
 ---
 
 🥹一字多義 [#觸](https://www.instagram.com/explore/search/keyword/?q=%23%E8%A7%B8)

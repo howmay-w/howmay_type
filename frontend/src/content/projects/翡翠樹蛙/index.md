@@ -21,9 +21,9 @@ hoverVideo:
   src: "/projects/翡翠樹蛙/video_0.mp4"
 wordmark:
   src: "/projects/翡翠樹蛙/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#020502"
-  ink: 0.338
+  ink: 0.304
   scale: 0.9
   reviewed: true
 ---

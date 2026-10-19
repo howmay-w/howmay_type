@@ -21,6 +21,7 @@ wordmark:
   src: "/projects/隧道/wordmark.webp"
   source: "cutout"
   ink: 0.173
+  scale: 1.5
   reviewed: true
 ---
 

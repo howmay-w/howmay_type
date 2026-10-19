@@ -31,11 +31,10 @@ pubDate: 2023-09-06
 tags: ["vegout","🫠"]
 wordmark:
   src: "/projects/軟爛/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#e3a8e7"
-  ink: 0.429
+  ink: 0.366
   scale: 1.1
-  reviewed: true
 ---
 
 到家了以後，就什摸都不想做 (´・ω・`)

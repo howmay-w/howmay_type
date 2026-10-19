@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/吃飽再結/wordmark.webp"
   source: "auto"
   ink: 0.614
+  scale: 0.95
   reviewed: true
 ---
 

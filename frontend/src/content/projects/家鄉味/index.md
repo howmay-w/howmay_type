@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/家鄉味/wordmark.webp"
   source: "cutout"
   ink: 0.493
+  scale: 1.05
   reviewed: true
 ---
 

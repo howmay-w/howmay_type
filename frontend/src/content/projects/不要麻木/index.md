@@ -23,10 +23,9 @@ pubDate: 2024-05-18
 tags: ["😶"]
 wordmark:
   src: "/projects/不要麻木/wordmark.webp"
-  source: "auto"
-  ink: 0.469
-  scale: 0.95
-  reviewed: true
+  source: "cutout"
+  ink: 0.409
+  scale: 1.1
 ---
 
 「請不要移開雙眼、不要停止思考、不要麻木不仁。」

@@ -17,10 +17,9 @@ pubDate: 2024-05-11
 tags: ["digitalart","fingerpainting","reels"]
 wordmark:
   src: "/projects/數位藝術/wordmark.webp"
-  source: "auto"
-  ink: 0.585
-  scale: 1.05
-  reviewed: true
+  source: "cutout"
+  ink: 0.48
+  scale: 1.2
 ---
 
 純手繪數位藝術。（真的純用手，因為忘了帶 Apple Pencil）

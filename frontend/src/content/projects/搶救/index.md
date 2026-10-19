@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/搶救/wordmark.webp"
   source: "cutout"
   ink: 0.186
+  scale: 1.4
   reviewed: true
 ---
 

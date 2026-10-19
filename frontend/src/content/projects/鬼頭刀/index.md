@@ -26,8 +26,7 @@ wordmark:
   src: "/projects/鬼頭刀/wordmark.webp"
   source: "cutout"
   accent: "#88aacc"
-  ink: 0.268
-  reviewed: true
+  ink: 0.164
 ---
 
 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 花蓮常見漁獲第二彈。\

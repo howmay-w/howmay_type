@@ -16,8 +16,9 @@ pubDate: 2025-10-06
 tags: ["whatzurtype","奶茶","髭文字","字字字設計串連","reels"]
 wordmark:
   src: "/projects/仙草/wordmark.webp"
-  source: "auto"
-  ink: 0.507
+  source: "cutout"
+  ink: 0.447
+  scale: 1.15
   reviewed: true
 ---
 

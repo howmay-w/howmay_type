@@ -31,10 +31,10 @@ pubDate: 2024-10-15
 tags: ["recover","👛"]
 wordmark:
   src: "/projects/失而復得/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#0e5c5c"
-  ink: 0.526
-  reviewed: true
+  ink: 0.471
+  scale: 1.05
 ---
 
 失而復得，是世界上最美好的感受之一。

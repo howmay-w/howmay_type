@@ -27,9 +27,9 @@ pubDate: 2023-07-02
 tags: ["hardcore","👹"]
 wordmark:
   src: "/projects/硬派/wordmark.webp"
-  source: "auto"
-  ink: 0.465
-  scale: 1.1
+  source: "cutout"
+  ink: 0.408
+  scale: 1.2
   reviewed: true
 ---
 

@@ -23,9 +23,9 @@ pubDate: 2024-02-07
 tags: ["plz","Socialization","🤦‍♂️"]
 wordmark:
   src: "/projects/社會化/wordmark.webp"
-  source: "auto"
-  ink: 0.348
-  reviewed: true
+  source: "cutout"
+  ink: 0.349
+  scale: 1.1
 ---
 
 來自一位不具名現役高中教師的怒吼。

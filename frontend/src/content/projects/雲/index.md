@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/雲/wordmark.webp"
   source: "cutout"
   ink: 0.45
+  scale: 1.4
   reviewed: true
 ---
 

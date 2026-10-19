@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/風景/wordmark.webp"
   source: "cutout"
   ink: 0.172
+  scale: 1.2
   reviewed: true
 ---
 

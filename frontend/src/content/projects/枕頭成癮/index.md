@@ -25,9 +25,8 @@ pubDate: 2024-02-26
 tags: ["AddictedToPillow","🛌"]
 wordmark:
   src: "/projects/枕頭成癮/wordmark.webp"
-  source: "auto"
-  ink: 0.379
-  reviewed: true
+  source: "cutout"
+  ink: 0.228
 ---
 
 又好冷，早上起不來🫠

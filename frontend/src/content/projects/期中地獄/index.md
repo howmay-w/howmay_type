@@ -25,7 +25,7 @@ wordmark:
   src: "/projects/期中地獄/wordmark.webp"
   source: "cutout"
   ink: 0.356
-  scale: 1.05
+  scale: 1.2
   reviewed: true
 ---
 

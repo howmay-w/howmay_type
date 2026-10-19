@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/人家/wordmark.webp"
   source: "cutout"
   ink: 0.576
+  scale: 1.15
   reviewed: true
 ---
 

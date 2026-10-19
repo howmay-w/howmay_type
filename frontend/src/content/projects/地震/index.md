@@ -14,6 +14,7 @@ wordmark:
   src: "/projects/地震/wordmark.webp"
   source: "cutout"
   ink: 0.389
+  scale: 1.2
   reviewed: true
 ---
 

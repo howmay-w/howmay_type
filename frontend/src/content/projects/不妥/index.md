@@ -25,9 +25,9 @@ pubDate: 2024-03-18
 tags: ["inappropriate", "🤚"]
 wordmark:
   src: "/projects/不妥/wordmark.webp"
-  source: "auto"
-  ink: 0.633
-  reviewed: true
+  source: "cutout"
+  ink: 0.583
+  scale: 1.15
 ---
 
 文雅委婉版本的「不好、不要、不可以、不 ok」，覺得聽起來很高級。\

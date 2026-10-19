@@ -33,8 +33,8 @@ wordmark:
   src: "/projects/秋老虎/wordmark.webp"
   source: "cutout"
   accent: "#dfcfb4"
-  ink: 0.391
-  scale: 1.55
+  ink: 0.122
+  scale: 1.25
   reviewed: true
 ---
 

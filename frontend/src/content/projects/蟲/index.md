@@ -23,10 +23,10 @@ hoverVideo:
   src: "/projects/蟲/video_0.mp4"
 wordmark:
   src: "/projects/蟲/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#011e02"
-  ink: 0.368
-  scale: 1.5
+  ink: 0.303
+  scale: 1.25
   reviewed: true
 ---
 

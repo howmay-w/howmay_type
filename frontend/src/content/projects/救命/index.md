@@ -31,11 +31,10 @@ pubDate: 2023-08-02
 tags: ["help","🆘"]
 wordmark:
   src: "/projects/救命/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#2a3543"
-  ink: 0.579
-  scale: 1.05
-  reviewed: true
+  ink: 0.502
+  scale: 1.2
 ---
 
 來自最近諸事不順ㄉ朋朋的點字，辛苦ㄌQQ

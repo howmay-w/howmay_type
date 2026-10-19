@@ -29,10 +29,9 @@ pubDate: 2023-09-03
 tags: ["學不乖","🤡"]
 wordmark:
   src: "/projects/活該/wordmark.webp"
-  source: "auto"
-  ink: 0.433
-  scale: 1.05
-  reviewed: true
+  source: "cutout"
+  ink: 0.385
+  scale: 1.25
 ---
 
 跟大家分享男友的活該故事：

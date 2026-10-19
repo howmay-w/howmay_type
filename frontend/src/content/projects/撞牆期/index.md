@@ -32,8 +32,7 @@ tags: ["plateau","🤕"]
 wordmark:
   src: "/projects/撞牆期/wordmark.webp"
   source: "cutout"
-  ink: 0.482
-  scale: 0.9
+  ink: 0.395
   reviewed: true
 ---
 

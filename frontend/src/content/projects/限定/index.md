@@ -31,10 +31,10 @@ pubDate: 2024-04-26
 tags: ["limited","期間限定","🈺"]
 wordmark:
   src: "/projects/限定/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#322162"
   ink: 0.615
-  reviewed: true
+  scale: 1.1
 ---
 
 讓商品變得吸引人的魔法🪄

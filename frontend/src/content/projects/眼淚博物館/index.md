@@ -23,6 +23,7 @@ wordmark:
   src: "/projects/眼淚博物館/wordmark.webp"
   source: "cutout"
   ink: 0.473
+  scale: 1.1
   reviewed: true
 ---
 

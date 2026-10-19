@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/錯覺/wordmark.webp"
   source: "cutout"
   ink: 0.27
+  scale: 1.25
   reviewed: true
 ---
 

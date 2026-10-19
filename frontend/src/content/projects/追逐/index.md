@@ -14,6 +14,6 @@ wordmark:
   src: "/projects/追逐/wordmark.webp"
   source: "auto"
   ink: 0.264
-  scale: 1.1
+  scale: 1.6
   reviewed: true
 ---

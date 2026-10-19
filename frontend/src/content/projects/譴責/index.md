@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/譴責/wordmark.webp"
   source: "cutout"
   ink: 0.494
+  scale: 1.25
   reviewed: true
 ---
 

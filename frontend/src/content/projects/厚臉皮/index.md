@@ -23,6 +23,7 @@ wordmark:
   src: "/projects/厚臉皮/wordmark.webp"
   source: "cutout"
   ink: 0.525
+  scale: 1.1
   reviewed: true
 ---
 

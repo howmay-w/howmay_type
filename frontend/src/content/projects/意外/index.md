@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/意外/wordmark.webp"
   source: "cutout"
   ink: 0.52
+  scale: 1.45
   reviewed: true
 ---
 

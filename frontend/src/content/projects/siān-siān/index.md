@@ -15,8 +15,8 @@ tags: ["siān-siān", "台語", "reels"]
 wordmark:
   src: "/projects/siān-siān/wordmark.webp"
   source: "cutout"
-  ink: 0.386
-  reviewed: true
+  ink: 0.268
+  scale: 1.25
 ---
 
 今年送男友的生日禮物是點字＋訂做手機殼。

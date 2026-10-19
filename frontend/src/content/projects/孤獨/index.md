@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/孤獨/wordmark.webp"
   source: "cutout"
   ink: 0.552
+  scale: 1.15
   reviewed: true
 ---
 

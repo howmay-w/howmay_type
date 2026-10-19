@@ -24,9 +24,10 @@ pubDate: 2025-11-19
 tags: ["relish","🍁"]
 wordmark:
   src: "/projects/憧憬/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#d99391"
-  ink: 0.299
+  ink: 0.277
+  scale: 1.2
   reviewed: true
 ---
 

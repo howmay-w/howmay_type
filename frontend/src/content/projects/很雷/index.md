@@ -29,10 +29,10 @@ pubDate: 2023-10-14
 tags: ["slacker","⚡"]
 wordmark:
   src: "/projects/很雷/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#070908"
-  ink: 0.227
-  reviewed: true
+  ink: 0.323
+  scale: 1.3
 ---
 
 用途廣泛ㄉ詞，但還是不要太常遇到比較好🫠

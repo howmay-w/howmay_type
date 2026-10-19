@@ -29,7 +29,7 @@ wordmark:
   src: "/projects/雪/wordmark.webp"
   source: "cutout"
   ink: 0.799
-  scale: 0.65
+  scale: 1.05
   reviewed: true
 ---
 

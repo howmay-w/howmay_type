@@ -19,6 +19,7 @@ wordmark:
   src: "/projects/忌食/wordmark.webp"
   source: "cutout"
   ink: 0.313
+  scale: 1.25
   reviewed: true
 ---
 

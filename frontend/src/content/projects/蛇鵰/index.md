@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/蛇鵰/wordmark.webp"
   source: "cutout"
   ink: 0.388
+  scale: 1.45
   reviewed: true
 ---
 

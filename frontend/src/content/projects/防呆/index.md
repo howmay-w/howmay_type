@@ -26,6 +26,7 @@ wordmark:
   src: "/projects/防呆/wordmark.webp"
   source: "auto"
   ink: 0.611
+  scale: 1.35
   reviewed: true
 ---
 

@@ -23,8 +23,8 @@ hoverVideo:
   src: "/projects/科學的盡頭是玄學/video_0.mp4"
 wordmark:
   src: "/projects/科學的盡頭是玄學/wordmark.webp"
-  source: "auto"
-  ink: 0.425
+  source: "cutout"
+  ink: 0.339
   scale: 0.75
   reviewed: true
 ---

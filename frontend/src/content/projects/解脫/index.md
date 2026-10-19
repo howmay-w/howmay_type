@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/解脫/wordmark.webp"
   source: "cutout"
   ink: 0.437
+  scale: 1.25
   reviewed: true
 ---
 
