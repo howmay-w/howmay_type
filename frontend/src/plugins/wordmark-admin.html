@@ -77,6 +77,7 @@
     .panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; height: 46vh; border-left: 0; border-top: 1px solid var(--line); z-index: 6; }
     main { padding-bottom: 50vh; }
   }
+  .tools { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
   .zoom { display: flex; align-items: center; gap: 6px; color: var(--mut); font-size: 12px; }
   .zoom input { width: 110px; accent-color: var(--accent); padding: 0; }
   .status { font-size: 12px; color: var(--mut); min-height: 1.4em; }
@@ -93,27 +94,25 @@
   <div class="seg" id="filter">
     <button data-f="todo" class="on">待處理 <b id="cTodo"></b></button>
     <button data-f="done">已確認 <b id="cDone"></b></button>
-    <button data-f="redo">重新去背 <b id="cRedo"></b></button>
     <button data-f="swap">需要換圖 <b id="cSwap"></b></button>
     <button data-f="hidden">隱藏 <b id="cHidden"></b></button>
     <button data-f="all">全部 <b id="cAll"></b></button>
   </div>
-  <select id="sort" aria-label="排序">
-    <option value="risk">依風險排序</option>
-    <option value="date">依日期（新到舊）</option>
-    <option value="name">依名稱</option>
-    <option value="size">依字牆大小（大→小）</option>
-  </select>
-  <input type="search" id="q" placeholder="搜尋作品名稱" aria-label="搜尋作品名稱">
-  <label class="zoom">預覽比例 <input type="range" id="zoom" min="0.3" max="1.5" step="0.05"> <span id="zoomVal"></span></label>
-  <button id="exportRedo">匯出待重新去背原圖</button>
-  <button id="importBtn">匯入去背結果…</button>
-  <span class="status" id="batchStatus" aria-live="polite"></span>
-  <div class="hint">所有預覽用同一個比例（上方「預覽比例」），可以直接比較大小。<kbd>J</kbd>/<kbd>K</kbd>（或方向鍵）上下一件、<kbd>Enter</kbd> 確認並下一件、<kbd>H</kbd> 隱藏、<kbd>R</kbd> 重新去背、<kbd>N</kbd> 需要換圖、<kbd>E</kbd> 或點兩下編輯去背、<kbd>-</kbd>/<kbd>=</kbd> 縮小放大。把圖拖到預覽區即可換圖。<br>用 wut 工具重新去背：標記「重新去背」→ 匯出原圖到桌面 → 在 wut 工具處理後「匯出 PNG」→ 把所有 <code>作品名_white.png</code> 一起拖進這個頁面任何地方（或按「匯入去背結果」），會依檔名自動對回作品。</div>
+  <div class="tools">
+    <label class="zoom">預覽比例 <input type="range" id="zoom" min="0.3" max="1.5" step="0.05"> <span id="zoomVal"></span></label>
+    <select id="sort" aria-label="排序">
+      <option value="risk">依風險排序</option>
+      <option value="edited">最近編輯</option>
+      <option value="date">依日期（新到舊）</option>
+      <option value="name">依名稱</option>
+      <option value="size">依字牆大小（大→小）</option>
+    </select>
+    <input type="search" id="q" placeholder="搜尋作品名稱" aria-label="搜尋作品名稱">
+  </div>
+  <div class="hint">所有預覽用同一個比例（上方「預覽比例」），可以直接比較大小。<kbd>J</kbd>/<kbd>K</kbd>（或方向鍵）上下一件、<kbd>Enter</kbd> 確認並下一件、<kbd>H</kbd> 隱藏、<kbd>R</kbd> 重新去背、<kbd>N</kbd> 需要換圖、<kbd>E</kbd> 或點兩下編輯去背、<kbd>-</kbd>/<kbd>=</kbd> 縮小放大。把圖拖到預覽區即可換圖。</div>
 </header>
 <div class="layout"><main id="list"></main><aside class="panel" id="panel" aria-label="編輯面板"></aside></div>
 <input type="file" id="file" accept="image/*" hidden>
-<input type="file" id="importFiles" accept="image/*" multiple hidden>
 <iframe id="editorFrame" title="字圖精修" allowtransparency="true"></iframe>
 <script>
 // 和字牆相同的尺寸公式（ProjectCard.astro + gridViewMode.js），D = 1180 的桌機分段
@@ -196,7 +195,6 @@ function counts() {
   for (const p of all) n[statusOf(p.wordmark)]++;
   $("cTodo").textContent = n.todo;
   $("cDone").textContent = n.ok;
-  $("cRedo").textContent = n.redo;
   $("cSwap").textContent = n.swap;
   $("cHidden").textContent = all.filter((p) => p.wordmark.hidden).length;
   $("cAll").textContent = all.length;
@@ -204,7 +202,6 @@ function counts() {
   $("pDone").style.width = pct(n.ok);
   $("pRedo").style.width = pct(n.redo);
   $("pSwap").style.width = pct(n.swap);
-  $("exportRedo").textContent = `匯出重新去背原圖（${n.redo}）`;
 }
 function render(keepSlug) {
   counts();
@@ -214,7 +211,7 @@ function render(keepSlug) {
     (!q || p.title.includes(q) || p.slug.includes(q)));
   const s = $("sort").value;
   const wholeSize = (p) => wallWidth(p) / Math.sqrt(p.size.width / p.size.height);
-  view.sort(s === "size" ? (a, b) => wholeSize(b) - wholeSize(a) : s === "date" ? (a, b) => b.date.localeCompare(a.date) : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date));
+  view.sort(s === "edited" ? (a, b) => (b.edited ?? 0) - (a.edited ?? 0) : s === "size" ? (a, b) => wholeSize(b) - wholeSize(a) : s === "date" ? (a, b) => b.date.localeCompare(a.date) : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date));
   const L = $("list");
   L.innerHTML = view.length ? "" : `<p class="count">這個篩選條件下沒有作品${filter === "todo" ? "，全部都處理完了 🎉" : ""}。</p>`;
   view.forEach((p) => L.appendChild(rowEl(p)));
@@ -477,51 +474,6 @@ async function replace(p, file) {
   } catch (e) {
     setStatus(el, `換圖失敗：${e.message}`, true);
   }
-}
-
-// ── wut 工具來回：匯出原圖、依檔名批次匯入 ─────────────────────────
-$("exportRedo").addEventListener("click", async () => {
-  const st = $("batchStatus");
-  try {
-    const r = await api("/__wordmarks/api/export-redo", { method: "POST" });
-    st.classList.remove("err");
-    st.textContent = r.files.length
-      ? `已複製 ${r.files.length} 張到 ${r.dir}${r.missing.length ? `（${r.missing.length} 件沒有貼文圖：${r.missing.join("、")}）` : ""}`
-      : "沒有標記「重新去背」的作品";
-  } catch (e) { st.classList.add("err"); st.textContent = `匯出失敗：${e.message}`; }
-});
-$("importBtn").addEventListener("click", () => { $("importFiles").value = ""; $("importFiles").click(); });
-$("importFiles").addEventListener("change", (e) => importFiles([...e.target.files]));
-document.addEventListener("dragover", (e) => e.preventDefault());
-document.addEventListener("drop", (e) => {
-  e.preventDefault();
-  const files = [...(e.dataTransfer.files || [])].filter((f) => f.type.startsWith("image/"));
-  if (files.length) importFiles(files);
-});
-// wut 工具匯出的檔名是「原檔名_white.png」；瀏覽器重複下載會加「 (1)」
-const nameKey = (f) => f.name.replace(/\.[^.]+$/, "").replace(/\s*\(\d+\)$/, "").replace(/_white$/i, "").replace(/^@/, "").normalize("NFC");
-async function importFiles(files) {
-  const st = $("batchStatus");
-  st.classList.remove("err");
-  const done = [], unmatched = [], failed = [];
-  for (const [i, f] of files.entries()) {
-    const key = nameKey(f);
-    const p = all.find((x) => x.slug.normalize("NFC") === key) ?? all.find((x) => x.title.normalize("NFC") === key);
-    if (!p) { unmatched.push(f.name); continue; }
-    st.textContent = `匯入中 ${i + 1}/${files.length}：${p.title}`;
-    try {
-      const { blob, ink } = await toWordmark(f);
-      await api(`/__wordmarks/api/replace?slug=${encodeURIComponent(p.slug)}&ink=${ink.toFixed(3)}`, { method: "POST", body: blob });
-      done.push(p.title);
-    } catch (e) { failed.push(`${p.title}（${e.message}）`); }
-  }
-  await load();
-  st.classList.toggle("err", unmatched.length + failed.length > 0);
-  st.textContent = [
-    `已換圖 ${done.length} 件${done.length ? "，換過的作品回到「未確認」" : ""}`,
-    unmatched.length ? `對不到作品：${unmatched.join("、")}` : "",
-    failed.length ? `失敗：${failed.join("、")}` : "",
-  ].filter(Boolean).join("　");
 }
 
 // ── 精修視窗（iframe）：開啟、上一張／下一張、存檔後更新清單 ─────────────

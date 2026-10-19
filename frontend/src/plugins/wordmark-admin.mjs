@@ -5,12 +5,9 @@
  * - GET  /__wordmarks/api/list    所有作品的字圖資料
  * - POST /__wordmarks/api/update  修改 wordmark 欄位（reviewed / hidden / scale / chars）
  * - POST /__wordmarks/api/replace?slug=&ink=  上傳處理好的 webp，取代 wordmark.webp
- * - POST /__wordmarks/api/export-redo  把標記「重新去背」的作品原圖複製到桌面資料夾，交給 wut-collage-tool 處理
  * 寫回的是 src/content/projects/<slug>/index.md 的 wordmark 區塊與同資料夾的 wordmark.webp。
  */
-import { execFile } from "node:child_process";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -20,8 +17,6 @@ const pageFile = path.join(__dirname, "wordmark-admin.html");
 // 精修視窗（以 iframe 疊在管理頁上），程式在 wordmark-editor/，由 Vite 轉譯
 const editorFile = path.join(__dirname, "wordmark-editor", "editor.html");
 const EDITABLE = new Set(["reviewed", "hidden", "scale", "chars", "redo", "needsImage"]);
-// 待重新去背的原圖匯出到這裡，檔名 = 作品資料夾名稱，wut-collage-tool 匯出時會變成「名稱_white.png」
-const REDO_DIR = path.join(os.homedir(), "Desktop", "字牆重新去背");
 
 function webpSize(file) {
   const b = fs.readFileSync(file);
@@ -93,6 +88,8 @@ function listProjects() {
         wordmark,
         size: exists ? webpSize(file) : null,
         mtime: exists ? fs.statSync(file).mtimeMs : 0,
+        // 最近編輯：index.md 或字圖最後修改的時間（管理頁「最近編輯」排序用）
+        edited: Math.max(fs.statSync(path.join(contentProjects, slug, "index.md")).mtimeMs, exists ? fs.statSync(file).mtimeMs : 0),
       };
     });
 }
@@ -184,25 +181,6 @@ export function wordmarkAdminPlugin() {
             delete current.reviewed;
             fs.writeFileSync(mdFile, writeWordmark(md, current));
             return send(res, 200, { ok: true, wordmark: current });
-          }
-          if (req.method === "POST" && url.pathname === "/api/export-redo") {
-            fs.mkdirSync(REDO_DIR, { recursive: true });
-            const files = [];
-            const missing = [];
-            for (const p of listProjects()) {
-              if (!p.wordmark?.redo) continue;
-              // 貼文原圖的網址是 /projects/<slug>/<檔名>，實際檔案在作品資料夾裡
-              const src = p.post && path.join(contentProjects, p.slug, path.basename(p.post));
-              if (!src || !fs.existsSync(src)) {
-                missing.push(p.slug);
-                continue;
-              }
-              const name = `${p.slug}${path.extname(src)}`;
-              fs.copyFileSync(src, path.join(REDO_DIR, name));
-              files.push(name);
-            }
-            if (url.searchParams.get("open") !== "0") execFile("open", [REDO_DIR], () => {});
-            return send(res, 200, { dir: REDO_DIR, files, missing });
           }
           send(res, 404, { error: "not found" });
         } catch (err) {
