@@ -23,7 +23,7 @@ hoverVideo:
   src: "/projects/生氣/video_0.mp4"
 ---
 
-發個積欠已久的 5 月 whatzurtype 
+發個積欠已久的 5 月 whatzurtype
 這次主題是以文字表現快樂、傷心、生氣三種情緒，畫了 khì-phut-phut 的生氣。
 
 這次主題其實是搭配遮放「我看到的字長這樣！」這件探討文字與共榮的互動作品。感謝大家協力創作投稿，一起在展覽中透過文字表現情緒，期待觀眾們可以藉此發現：文字的模樣，或許沒有標準答案？
@@ -32,4 +32,4 @@ hoverVideo:
 
 ---
 
-本作品投稿 2026 年 7 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。
+本作品投稿 2026 年 5 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。

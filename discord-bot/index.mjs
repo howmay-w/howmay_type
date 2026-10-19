@@ -1,7 +1,9 @@
 /**
  * 方案 C + 表單：/新作品 開 Modal 填標題、標籤、內文；
  * 送出後請在同一頻道發一則帶圖/影片的訊息即建立專案。
- * description 自動從內文第一段擷取；若標籤含 #whatzurtype 則自動加投稿資訊。
+ * description 自動從內文第一段擷取。內文或標籤含 whatzurtype 時自動加投稿資訊：
+ * 月份跟內文的「N 月／上個月／本月」，否則用台北時間的發文日；已有投稿句則不重複。
+ * 標籤裡還沒有 whatzurtype 時會自動補上。
  * 內文中的 @帳號、#標籤 會自動轉成 Instagram Markdown 連結；
  * 中文與英數字相鄰時會自動補空格（中英混排）。
  */
@@ -21,6 +23,7 @@ import {
 } from "discord.js";
 import { spawn, spawnSync, execSync } from "node:child_process";
 import http from "node:http";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -89,6 +92,125 @@ function hasWhatzurtype(tags) {
   return tags.some((t) => /whatzurtype/i.test(t));
 }
 
+function mentionsWhatzurtype(text) {
+  return /whatzurtype/i.test(text || "");
+}
+
+function hasWhatzurtypeFooter(text) {
+  return /本作品投稿/.test(text || "");
+}
+
+/** 台北時間的年月日，避免 UTC 跨日讓發文日差一天 */
+function taipeiYmd(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const get = (type) => Number(parts.find((p) => p.type === type).value);
+  const year = get("year");
+  const month = get("month");
+  const day = get("day");
+  return {
+    year,
+    month,
+    day,
+    iso: `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`,
+  };
+}
+
+function dateFromIso(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+  if (!m) return taipeiYmd();
+  return { year: Number(m[1]), month: Number(m[2]), day: Number(m[3]) };
+}
+
+function shiftMonth({ year, month }, delta) {
+  const d = new Date(Date.UTC(year, month - 1 + delta, 1));
+  return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1 };
+}
+
+const CN_MONTHS = [
+  ["十二", 12],
+  ["十一", 11],
+  ["十", 10],
+  ["九", 9],
+  ["八", 8],
+  ["七", 7],
+  ["六", 6],
+  ["五", 5],
+  ["四", 4],
+  ["三", 3],
+  ["二", 2],
+  ["一", 1],
+];
+
+function toAsciiDigits(text) {
+  return String(text).replace(/[０-９]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) - 0xff10 + 0x30));
+}
+
+/** 把已連結的 #標籤還原成純文字，方便抓主題月 */
+function plainHashtags(text) {
+  return toAsciiDigits(text || "").replace(/\[(#[^\]]+)\]\([^)]*\)/g, "$1");
+}
+
+/**
+ * 投稿年月：看 whatzurtype 前面、最靠近的月份詞。
+ * 「N 月／四月」用該月；「上個月」減一個月；「本月」或沒寫則用發文日。
+ * 主題月比發文月晚（例如一月補十二月的題）則年份減一。
+ */
+function resolveSubmissionDate(text, base) {
+  const src = plainHashtags(text);
+  const idx = src.search(/whatzurtype/i);
+  const before = idx >= 0 ? src.slice(0, idx) : "";
+  const candidates = [];
+  for (const m of before.matchAll(/上個月|上月/g)) candidates.push({ at: m.index, kind: "prev" });
+  for (const m of before.matchAll(/本月/g)) candidates.push({ at: m.index, kind: "this" });
+  for (const m of before.matchAll(/(1[0-2]|[1-9]|十二|十一|十|[一二三四五六七八九])\s*月/g)) {
+    candidates.push({ at: m.index, kind: "num", raw: m[1] });
+  }
+  candidates.sort((a, b) => b.at - a.at);
+  const hit = candidates[0];
+  if (!hit || hit.kind === "this") return { year: base.year, month: base.month };
+  if (hit.kind === "prev") return shiftMonth(base, -1);
+  const month = /^\d+$/.test(hit.raw) ? Number(hit.raw) : CN_MONTHS.find(([k]) => k === hit.raw)?.[1];
+  if (!month) return { year: base.year, month: base.month };
+  const year = month > base.month ? base.year - 1 : base.year;
+  return { year, month };
+}
+
+function withWhatzurtypeFooter(body, tags, base) {
+  const text = body || "";
+  if (hasWhatzurtypeFooter(text)) return text;
+  if (!hasWhatzurtype(tags || []) && !mentionsWhatzurtype(text)) return text;
+  const { year, month } = resolveSubmissionDate(text, base);
+  return `${text.trimEnd()}${WHATZURTYPE_FOOTER.replace("{year}", String(year)).replace("{month}", String(month))}`;
+}
+
+function readProjectFile(slug) {
+  return readFileSync(path.join(FRONTEND_DIR, "src/content/projects", slug, "index.md"), "utf8");
+}
+
+function readProjectPubDate(slug) {
+  try {
+    const m = readProjectFile(slug).match(/^pubDate:\s*(\d{4}-\d{2}-\d{2})/m);
+    return m ? dateFromIso(m[1]) : null;
+  } catch {
+    return null;
+  }
+}
+
+function readProjectTags(slug) {
+  try {
+    const m = readProjectFile(slug).match(/^tags:\s*(\[[\s\S]*?\])/m);
+    if (!m) return [];
+    return [...m[1].matchAll(/"((?:\\.|[^"\\])*)"/g)].map((x) => x[1].replace(/\\"/g, '"'));
+  } catch {
+    return [];
+  }
+}
+
 // Discord 的輸入框會把 -- 自動轉成 —，導致 --- 變成 —-
 // 這裡還原回標準 Markdown 分隔線
 function fixDiscordDashes(text) {
@@ -122,6 +244,13 @@ function mergeTags(...lists) {
     }
   }
   return out;
+}
+
+/** 內文或標籤已是 whatzurtype、但標籤還沒這個字時補上，已有則不重複 */
+function ensureWhatzurtypeTag(tags, body) {
+  const list = tags || [];
+  if (hasWhatzurtype(list) || !mentionsWhatzurtype(body || "")) return list;
+  return mergeTags(list, ["whatzurtype"]);
 }
 
 /** 中文與英數字相鄰時補空格（中英混排）；特殊用法先保護不處理 */
@@ -463,7 +592,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
             .setCustomId("tags")
             .setLabel("標籤")
             .setStyle(TextInputStyle.Short)
-            .setPlaceholder("可用空格或逗號分隔，例如：whatzurtype 字體（有 #whatzurtype 會自動加投稿資訊）")
+            .setPlaceholder("空格或逗號分隔。內文或標籤有 whatzurtype 會自動加投稿資訊")
             .setRequired(false)
             .setMaxLength(256)
         ),
@@ -489,7 +618,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     const body = linkifyInstagram(normalizedBody);
     const tags = parseTags(tagsRaw);
     const description = descriptionFromBody(normalizedBody);
-    const pubDate = new Date().toISOString().slice(0, 10);
+    const pubDate = taipeiYmd().iso;
     const key = `${interaction.channelId}_${interaction.user.id}`;
     pendingByChannelUser.set(key, { title, tags, body, description, pubDate });
     await interaction.reply({
@@ -511,16 +640,13 @@ client.on("messageCreate", async (message) => {
 
   if (pending && images.length + videos.length > 0) {
     pendingByChannelUser.delete(key);
-    let body = pending.body;
-    if (hasWhatzurtype(pending.tags)) {
-      const [y, m] = pending.pubDate.split("-");
-      body += WHATZURTYPE_FOOTER.replace("{year}", y).replace("{month}", String(Number(m)));
-    }
+    const tags = ensureWhatzurtypeTag(pending.tags, pending.body);
+    const body = withWhatzurtypeFooter(pending.body, tags, dateFromIso(pending.pubDate));
     const payload = {
       title: pending.title,
       description: pending.description,
       body,
-      tags: pending.tags.length ? pending.tags : undefined,
+      tags: tags.length ? tags : undefined,
       pubDate: pending.pubDate,
       images: images.map((a) => ({ url: a.url, alt: a.name || undefined })),
       videos: videos.map((a) => ({ url: a.url })),
@@ -594,20 +720,17 @@ client.on("messageCreate", async (message) => {
   const firstLine = content.split("\n")[0]?.trim() || "";
   const rest = content.slice(firstLine.length).trim();
   const title = firstLine || "未命名作品";
-  const tags = extractHashtags(content);
   const normalizedRest = normalizeBodyText(rest);
-  let body = linkifyInstagram(normalizedRest);
-  if (hasWhatzurtype(tags)) {
-    const pubDate = new Date().toISOString().slice(0, 10);
-    const [y, m] = pubDate.split("-");
-    body += WHATZURTYPE_FOOTER.replace("{year}", y).replace("{month}", String(Number(m)));
-  }
+  const linkedBody = linkifyInstagram(normalizedRest);
+  const pub = taipeiYmd();
+  const tags = ensureWhatzurtypeTag(extractHashtags(content), linkedBody);
+  const body = withWhatzurtypeFooter(linkedBody, tags, pub);
   const payload = {
     title,
     description: descriptionFromBody(normalizedRest),
     body,
     tags: tags.length ? tags : undefined,
-    pubDate: new Date().toISOString().slice(0, 10),
+    pubDate: pub.iso,
     images: images.map((a) => ({ url: a.url, alt: a.name || undefined })),
     videos: videos.map((a) => ({ url: a.url })),
     hoverVideoIndex: 0,
@@ -723,7 +846,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
   if (interaction.isModalSubmit() && interaction.customId === "edit_project_modal") {
     const title = interaction.fields.getTextInputValue("title").trim() || "";
     const rawBody = interaction.fields.getTextInputValue("body").trim() || "";
-    const body = prepareBody(rawBody);
+    const preparedBody = prepareBody(rawBody);
     const descriptionRaw = interaction.fields.getTextInputValue("description")?.trim() || "";
     const tagsRaw = interaction.fields.getTextInputValue("tags")?.trim() || "";
     if (!title) {
@@ -731,14 +854,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
       return;
     }
     const slug = slugify(title);
-    const payload = {
-      onlyUpdateBody: true,
-      slug,
-      title,
-      body,
-      ...(descriptionRaw && { description: descriptionRaw }),
-      ...(tagsRaw && { tags: parseTags(tagsRaw) }),
-    };
     await interaction.deferReply({ ephemeral: true }).catch(() => {});
     const editReply = (text) => interaction.editReply(text).catch(() => {});
     try {
@@ -749,6 +864,20 @@ client.on(Events.InteractionCreate, async (interaction) => {
           return;
         }
       }
+      const base = readProjectPubDate(slug) || taipeiYmd();
+      const providedTags = tagsRaw ? parseTags(tagsRaw) : null;
+      const baseTags = providedTags ?? readProjectTags(slug);
+      const tags = ensureWhatzurtypeTag(baseTags, preparedBody);
+      const body = withWhatzurtypeFooter(preparedBody, tags, base);
+      const tagsChanged = providedTags != null || tags.length !== baseTags.length;
+      const payload = {
+        onlyUpdateBody: true,
+        slug,
+        title,
+        body,
+        ...(descriptionRaw && { description: descriptionRaw }),
+        ...(tagsChanged && tags.length ? { tags } : {}),
+      };
       const { status } = await runCreateProject(payload);
       if (status !== "updated") {
         await editReply(`❌ 無法更新（請確認標題與現有專案一致）：\`${title}\``);

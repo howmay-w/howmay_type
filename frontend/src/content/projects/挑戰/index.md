@@ -2,7 +2,7 @@
 title: 挑戰
 description: 7 月 #whatzurtype 主題是抽歌曲畫字，並限制在 15 分鐘內完成，抽到珂拉琪〈這該死的拘執佮愛〉。
 pubDate: 2026-08-30
-tags: ["❤️‍🩹", "珂拉琪"]
+tags: ["❤️‍🩹", "珂拉琪", "whatzurtype"]
 image:
   src: "/projects/挑戰/media_0.webp"
   alt: "IMG_8401.jpg"
@@ -24,3 +24,7 @@ hoverVideo:
 7 月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是抽歌曲畫字，並限制在 15 分鐘內完成，抽到珂拉琪〈這該死的拘執佮愛〉。
 
 美麗而惆悵，希望大家都去收聽。
+
+---
+
+本作品投稿 2026 年 7 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。

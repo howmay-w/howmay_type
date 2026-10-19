@@ -2,7 +2,7 @@
 title: 錫口媽祖宮
 description: "四月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) （拖好久才發）主題是宗教場所，決定研究一下身邊最熟悉的松山慈祐宮。"
 pubDate: 2026-05-27
-tags: ["松山慈祐宮", "廟宇", "🙏"]
+tags: ["松山慈祐宮", "廟宇", "🙏", "whatzurtype"]
 image:
   src: "/projects/錫口媽祖宮/media_0.webp"
   alt: "IMG_8193.jpg"

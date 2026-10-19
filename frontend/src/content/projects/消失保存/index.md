@@ -2,7 +2,7 @@
 title: 消失/保存
 description: 本月 #whatzurtype 與松山文創園區 @song_shan_cultural_park 的 #原創基地節 合作，主題是歷史的變遷，以及其中的「消失與保存」。
 pubDate: 2026-09-30
-tags: ["🚬", "松菸", "原創基地節", "紳士雪茄"]
+tags: ["🚬", "松菸", "原創基地節", "紳士雪茄", "whatzurtype"]
 image:
   src: "/projects/消失保存/media_0.webp"
   alt: "IMG_8723.jpg"
@@ -29,6 +29,10 @@ hoverVideo:
 
 我這次嘗試模仿「紳士雪茄」的文字造型。乍看以為是超細的明體造型，細看（雖然找到的報導照片畫質不酸太高）才發現原來是雕刻般立體感、有尖銳切角的設計。
 
-參考照片來源：https://artouch.com/art-exhibition/content-11473.html
+參考照片來源[#在這](https://artouch.com/art-exhibition/content-11473.html)
 
-(最後發現存畫錯，緊急修改🫠）
+（最後發現存畫錯，緊急修改🫠）
+
+---
+
+本作品投稿 2026 年 9 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。
