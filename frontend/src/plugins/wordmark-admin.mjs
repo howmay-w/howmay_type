@@ -1,6 +1,7 @@
 /**
  * 字圖管理頁（只在 dev server 提供，build 不會包含）：
  * - GET  /__wordmarks             管理頁
+ * - GET  /__wordmarks/editor      精修視窗（wordmark-editor/，以 iframe 疊在管理頁上）
  * - GET  /__wordmarks/api/list    所有作品的字圖資料
  * - POST /__wordmarks/api/update  修改 wordmark 欄位（reviewed / hidden / scale / chars）
  * - POST /__wordmarks/api/replace?slug=&ink=  上傳處理好的 webp，取代 wordmark.webp
@@ -16,6 +17,8 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const contentProjects = path.resolve(__dirname, "../content/projects");
 const pageFile = path.join(__dirname, "wordmark-admin.html");
+// 精修視窗（以 iframe 疊在管理頁上），程式在 wordmark-editor/，由 Vite 轉譯
+const editorFile = path.join(__dirname, "wordmark-editor", "editor.html");
 const EDITABLE = new Set(["reviewed", "hidden", "scale", "chars", "redo", "needsImage"]);
 // 待重新去背的原圖匯出到這裡，檔名 = 作品資料夾名稱，wut-collage-tool 匯出時會變成「名稱_white.png」
 const REDO_DIR = path.join(os.homedir(), "Desktop", "字牆重新去背");
@@ -63,6 +66,14 @@ const firstImage = (md) =>
   md.match(/^(?:thumbnail|image):\s*\n\s+src:\s*"?([^"\n]+)"?/m)?.[1] ??
   md.match(/^images:\s*\n\s+-\s+src:\s*"?([^"\n]+)"?/m)?.[1];
 
+function fallbackImage(slug) {
+  const f = fs
+    .readdirSync(path.join(contentProjects, slug))
+    .filter((n) => /^media_\d+\.(webp|jpe?g|png)$/i.test(n))
+    .sort((a, b) => parseInt(a.slice(6)) - parseInt(b.slice(6)))[0];
+  return f ? `/projects/${slug}/${f}` : null;
+}
+
 function listProjects() {
   return fs
     .readdirSync(contentProjects, { withFileTypes: true })
@@ -77,7 +88,8 @@ function listProjects() {
         slug,
         title: frontValue(md, "title") ?? slug,
         date: frontValue(md, "pubDate") ?? "",
-        post: firstImage(md) ?? null,
+        // 原圖：作品資料登記的第一張圖；只有影片的作品（例如「讀字」）改用資料夾裡的 media_*.webp
+        post: firstImage(md) ?? fallbackImage(slug),
         wordmark,
         size: exists ? webpSize(file) : null,
         mtime: exists ? fs.statSync(file).mtimeMs : 0,
@@ -127,6 +139,9 @@ export function wordmarkAdminPlugin() {
           const url = new URL(req.url ?? "/", "http://localhost");
           if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
             return send(res, 200, fs.readFileSync(pageFile, "utf8"), "text/html; charset=utf-8");
+          }
+          if (req.method === "GET" && url.pathname === "/editor") {
+            return send(res, 200, fs.readFileSync(editorFile, "utf8"), "text/html; charset=utf-8");
           }
           if (req.method === "GET" && url.pathname === "/api/list") return send(res, 200, listProjects());
 

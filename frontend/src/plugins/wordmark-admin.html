@@ -23,6 +23,8 @@
   .seg { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
   .seg button { border: 0; border-radius: 0; }
   .seg button + button { border-left: 1px solid var(--line); }
+  .seg button b { font-weight: 400; color: var(--mut); margin-left: 2px; }
+  .seg button.on b { color: inherit; }
   button, select, input { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; }
   button { cursor: pointer; }
   button.on { color: var(--accent); }
@@ -30,74 +32,113 @@
   input[type=search] { width: 160px; }
   .hint { color: var(--mut); font-size: 12px; flex-basis: 100%; }
   kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 11px; }
-  main { padding: 12px 16px 80px; }
-  .row { display: grid; grid-template-columns: 150px minmax(0, 1fr) 270px; gap: 16px; align-items: center; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); margin-bottom: 10px; }
+  /* 版面：左邊預覽卡片網格，右邊固定的共用編輯面板 */
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
+  main { padding: 12px 16px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-min, 270px), 1fr)); gap: 8px; align-items: start; }
+  main > p { grid-column: 1 / -1; }
+  .row { position: relative; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); overflow: hidden; cursor: pointer; }
   .row.current { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-  .row.reviewed { opacity: 0.62; }
-  .row.reviewed.current { opacity: 1; }
-  .post img { width: 150px; height: 150px; object-fit: cover; border-radius: 6px; display: block; background: #000; }
-  .post .none { width: 150px; height: 150px; border-radius: 6px; display: grid; place-items: center; background: #000; color: var(--mut); font-size: 12px; }
-  .stage { position: relative; min-height: 180px; background: var(--wall); border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 28px; padding: 18px; overflow: hidden; }
+  .row.st-ok .stage { opacity: 0.7; }
+  .row.is-hidden .stage { opacity: 0.35; }
+  .row.st-ok.current .stage { opacity: 1; }
+  .stage { position: relative; height: var(--stage-h, 190px); background: var(--wall); display: flex; align-items: center; justify-content: center; padding: 4px; overflow: hidden; }
   .stage.drop { outline: 2px dashed var(--accent); outline-offset: -6px; }
-  .wm { flex: 0 1 auto; min-width: 0; max-width: calc(100% - 120px); height: auto !important; background: #f2f2f2; -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat; }
-  .ref { flex: none; border: 1px dashed #555; color: #666; font-size: 11px; display: grid; place-items: end center; padding-bottom: 2px; }
-  .hiddenTag { position: absolute; top: 8px; left: 10px; font-size: 12px; color: var(--bad); }
-  .info { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-  .title { font-size: 15px; font-weight: 600; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
-  .title a { color: var(--mut); font-size: 12px; font-weight: 400; }
-  .flags { display: flex; gap: 6px; flex-wrap: wrap; }
-  .flag { font-size: 11px; padding: 1px 7px; border-radius: 99px; border: 1px solid var(--line); color: var(--mut); }
+  .wm { flex: none; max-width: 100%; max-height: 100%; height: auto !important; background: #f2f2f2; -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat; }
+  /* 右側面板 */
+  .panel { position: sticky; top: var(--head-h, 0px); height: calc(100vh - var(--head-h, 0px)); overflow-y: auto; border-left: 1px solid var(--line); background: var(--panel); padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 12px; }
+  .panel .empty { color: var(--mut); }
+  .panel h2 { font-size: 16px; margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .panel h2 a { color: var(--mut); font-size: 12px; font-weight: 400; }
+  .panel .pos { color: var(--mut); }
+  .panel .orig { background: #000; border-radius: 6px; overflow: hidden; aspect-ratio: 1; }
+  .panel .orig img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .panel .orig .none { height: 100%; display: grid; place-items: center; color: var(--mut); }
+  .flags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .flag { font-size: 11px; padding: 0 7px; border-radius: 99px; border: 1px solid var(--line); color: var(--mut); }
   .flag.warn { color: var(--warn); border-color: #5a4320; }
   .flag.bad { color: var(--bad); border-color: #5a2a24; }
   .flag.ok { color: var(--ok); border-color: #24452f; }
-  .ctl { display: grid; grid-template-columns: 52px 1fr 64px; gap: 6px 8px; align-items: center; font-size: 12px; color: var(--mut); }
+  .ctl { display: grid; grid-template-columns: 34px 1fr 58px; gap: 6px; align-items: center; color: var(--mut); }
   .ctl input[type=range] { width: 100%; accent-color: var(--accent); }
-  .ctl input[type=number] { width: 64px; padding: 3px 6px; }
-  .ctl .sv { width: 64px; }
-  .acts { display: flex; gap: 6px; flex-wrap: wrap; }
-  .acts .confirm.on { color: var(--ok); border-color: #24452f; }
-  .status { font-size: 12px; color: var(--mut); min-height: 1.5em; }
-  .status.err { color: var(--bad); }
-  @media (max-width: 860px) {
-    .row { grid-template-columns: 100px minmax(0, 1fr); }
-    .post img, .post .none { width: 100px; height: 100px; }
-    .info { grid-column: 1 / -1; }
+  .ctl input[type=number] { width: 58px; padding: 3px 5px; }
+  .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .acts button { padding: 6px 6px; }
+  .acts { grid-template-columns: 1fr 1fr; }
+  .acts #pHide { grid-column: 1 / -1; }
+  .status-seg { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .status-seg button { padding: 6px 2px; }
+  .status-seg button.on.st-todo { background: #333; color: var(--fg); }
+  .status-seg button.on.st-ok { background: #24452f; color: #fff; }
+  .status-seg button.on.st-redo { background: #6b4a16; color: #fff; }
+  .status-seg button.on.st-swap { background: #6a2a22; color: #fff; }
+  .acts button.on { color: var(--accent); }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    .panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; height: 46vh; border-left: 0; border-top: 1px solid var(--line); z-index: 6; }
+    main { padding-bottom: 50vh; }
   }
+  .zoom { display: flex; align-items: center; gap: 6px; color: var(--mut); font-size: 12px; }
+  .zoom input { width: 110px; accent-color: var(--accent); padding: 0; }
+  .status { font-size: 12px; color: var(--mut); min-height: 1.4em; }
+  .status.err { color: var(--bad); }
+  /* 精修視窗（/__wordmarks/editor）疊在整個管理頁上 */
+  #editorFrame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; z-index: 100; display: none; background: transparent; color-scheme: normal; }
+  #editorFrame.show { display: block; }
 </style>
 </head>
 <body>
 <header>
   <h1>字圖管理</h1>
-  <span class="count">待分類 <b class="todo" id="cTodo">–</b> ／ 已分類 <b id="cClassified">–</b>（確認 <b id="cDone">–</b>、待重新去背 <b id="cRedo">–</b>、需要換圖 <b id="cSwap">–</b>）／ 隱藏 <b id="cHidden">–</b> ／ 共 <b id="cAll">–</b></span>
-  <span class="progress" aria-hidden="true"><span id="pDone"></span><span id="pRedo"></span><span id="pSwap"></span></span>
+  <span class="progress" aria-hidden="true" title="綠：已確認／橘：重新去背／紅：需要換圖"><span id="pDone"></span><span id="pRedo"></span><span id="pSwap"></span></span>
   <div class="seg" id="filter">
-    <button data-f="todo" class="on">待分類</button>
-    <button data-f="done">已確認</button>
-    <button data-f="hidden">隱藏</button>
-    <button data-f="redo">待重新去背</button>
-    <button data-f="swap">需要換圖</button>
-    <button data-f="all">全部</button>
+    <button data-f="todo" class="on">待處理 <b id="cTodo"></b></button>
+    <button data-f="done">已確認 <b id="cDone"></b></button>
+    <button data-f="redo">重新去背 <b id="cRedo"></b></button>
+    <button data-f="swap">需要換圖 <b id="cSwap"></b></button>
+    <button data-f="hidden">隱藏 <b id="cHidden"></b></button>
+    <button data-f="all">全部 <b id="cAll"></b></button>
   </div>
   <select id="sort" aria-label="排序">
     <option value="risk">依風險排序</option>
     <option value="date">依日期（新到舊）</option>
     <option value="name">依名稱</option>
+    <option value="size">依字牆大小（大→小）</option>
   </select>
   <input type="search" id="q" placeholder="搜尋作品名稱" aria-label="搜尋作品名稱">
+  <label class="zoom">預覽比例 <input type="range" id="zoom" min="0.3" max="1.5" step="0.05"> <span id="zoomVal"></span></label>
   <button id="exportRedo">匯出待重新去背原圖</button>
   <button id="importBtn">匯入去背結果…</button>
   <span class="status" id="batchStatus" aria-live="polite"></span>
-  <div class="hint">預覽大小 = 桌機字牆上的實際大小（虛線框為一個字的基準）。<kbd>J</kbd>/<kbd>K</kbd> 上下一件、<kbd>Enter</kbd> 確認並下一件、<kbd>H</kbd> 隱藏、<kbd>R</kbd> 標記重新去背、<kbd>-</kbd>/<kbd>=</kbd> 縮小放大。把圖拖到預覽區即可換圖。<br>用 wut 工具重新去背：標記「重新去背」→ 匯出原圖到桌面 → 在 wut 工具處理後「匯出 PNG」→ 把所有 <code>作品名_white.png</code> 一起拖進這個頁面任何地方（或按「匯入去背結果」），會依檔名自動對回作品。</div>
+  <div class="hint">所有預覽用同一個比例（上方「預覽比例」），可以直接比較大小。<kbd>J</kbd>/<kbd>K</kbd>（或方向鍵）上下一件、<kbd>Enter</kbd> 確認並下一件、<kbd>H</kbd> 隱藏、<kbd>R</kbd> 重新去背、<kbd>N</kbd> 需要換圖、<kbd>E</kbd> 或點兩下編輯去背、<kbd>-</kbd>/<kbd>=</kbd> 縮小放大。把圖拖到預覽區即可換圖。<br>用 wut 工具重新去背：標記「重新去背」→ 匯出原圖到桌面 → 在 wut 工具處理後「匯出 PNG」→ 把所有 <code>作品名_white.png</code> 一起拖進這個頁面任何地方（或按「匯入去背結果」），會依檔名自動對回作品。</div>
 </header>
-<main id="list"></main>
+<div class="layout"><main id="list"></main><aside class="panel" id="panel" aria-label="編輯面板"></aside></div>
 <input type="file" id="file" accept="image/*" hidden>
 <input type="file" id="importFiles" accept="image/*" multiple hidden>
+<iframe id="editorFrame" title="字圖精修" allowtransparency="true"></iframe>
 <script>
 // 和字牆相同的尺寸公式（ProjectCard.astro + gridViewMode.js），D = 1180 的桌機分段
 const UNIT = Math.min(130, Math.max(68, 1180 * 0.074));
 const INK_REF = 0.3;
 // 手動大小倍率的範圍
 const SCALE_MIN = 0.3, SCALE_MAX = 2.5;
+// 預覽比例：所有卡片用同一個比例縮放字牆尺寸，大小可以直接互相比較
+// 預設 0.85（原本 0.55 的 1.5 倍）；之前存過的比例也一併放大 1.5 倍
+let ZOOM = (() => {
+  try {
+    const v2 = parseFloat(localStorage.getItem("wm-admin-zoom2"));
+    if (v2) return v2;
+    const v1 = parseFloat(localStorage.getItem("wm-admin-zoom"));
+    return v1 ? Math.min(1.5, Math.round(v1 * 1.5 * 20) / 20) : 0.85;
+  } catch (_) { return 0.85; }
+})();
+function applyZoom() {
+  const main = document.querySelector("main");
+  // 格子大小跟著預覽比例；格子比字略大一點，讓字在格中佔得滿
+  main.style.setProperty("--stage-h", `${Math.round(Math.min(380, Math.max(110, 250 * ZOOM)))}px`);
+  main.style.setProperty("--card-min", `${Math.round(Math.min(420, Math.max(150, 240 * ZOOM)))}px`);
+  const z = document.getElementById("zoom");
+  if (z) { z.value = ZOOM; document.getElementById("zoomVal").textContent = `${Math.round(ZOOM * 100)}%`; }
+}
 const clampScale = (v) => Math.min(SCALE_MAX, Math.max(SCALE_MIN, Math.round(v * 100) / 100));
 const countChars = (t) => Math.max(1, (t.match(/[\p{Script=Han}\p{Script=Bopomofo}\p{Script=Hiragana}\p{Script=Katakana}]/gu)?.length ?? 0) + (t.match(/[A-Za-z0-9]/g)?.length ?? 0) * 0.5);
 function wallWidth(p) {
@@ -108,6 +149,14 @@ function wallWidth(p) {
   const mass = Math.max(1.6, (chars * (INK_REF / ink) ** 0.2 * sizeMul ** 2) ** 0.8);
   // 手動倍率最後直接乘在寬度上
   return Math.min(UNIT * Math.sqrt(mass * aspect) * (wm.scale ?? 1), 1180);
+}
+// 面板上的提醒：只留需要注意的資訊（狀態、大小、字數在面板上本來就看得到）
+function tipsOf(p) {
+  const wm = p.wordmark, aspect = p.size.width / p.size.height, f = [];
+  if (wm.source === "auto") f.push(["warn", "自動去背，未手動處理"]);
+  if (aspect < 0.35 || aspect > 3.5) f.push(["warn", "長寬比極端"]);
+  if ((wm.ink ?? 0.3) < 0.1) f.push(["warn", "墨量很少，筆畫可能被吃掉"]);
+  return f;
 }
 function flagsOf(p) {
   const wm = p.wordmark, f = [];
@@ -124,7 +173,10 @@ function flagsOf(p) {
   if (wm.scale && wm.scale !== 1) f.push(["", `大小 ×${wm.scale}`]);
   return f;
 }
-const risk = (p) => (p.wordmark.reviewed ? 0 : 100) + (p.wordmark.redo ? 50 : 0) + (p.wordmark.hidden ? 30 : 0) + (p.wordmark.source === "auto" ? 20 : 0) + flagsOf(p).filter((f) => f[0] === "warn").length * 10;
+// 每件作品只有一個狀態（資料上是 reviewed / redo / needsImage 三個欄位，互斥）
+const STATUS = { todo: "待處理", ok: "已確認", redo: "重新去背", swap: "需要換圖" };
+const statusOf = (wm) => (wm.needsImage ? "swap" : wm.redo ? "redo" : wm.reviewed ? "ok" : "todo");
+const risk = (p) => (statusOf(p.wordmark) === "todo" ? 100 : 0) + (p.wordmark.hidden ? 30 : 0) + (p.wordmark.source === "auto" ? 20 : 0) + flagsOf(p).filter((f) => f[0] === "warn").length * 10;
 
 let all = [], view = [], cur = 0, filter = "todo";
 const $ = (id) => document.getElementById(id);
@@ -140,92 +192,50 @@ async function load() {
   render();
 }
 function counts() {
-  $("cAll").textContent = all.length;
-  // 已分類 = 確認過，或標記了「待重新去背」（之後換圖會自動回到待分類）
-  const done = all.filter((p) => p.wordmark.reviewed).length;
-  const redo = all.filter((p) => !p.wordmark.reviewed && p.wordmark.redo).length;
-  const swap = all.filter((p) => !p.wordmark.reviewed && !p.wordmark.redo && p.wordmark.needsImage).length;
-  $("cTodo").textContent = all.length - done - redo - swap;
-  $("cDone").textContent = done;
-  $("cSwap").textContent = swap;
-  $("cClassified").textContent = done + redo + swap;
-  $("pDone").style.width = `${(done / Math.max(1, all.length)) * 100}%`;
-  $("pRedo").style.width = `${(redo / Math.max(1, all.length)) * 100}%`;
-  $("pSwap").style.width = `${(swap / Math.max(1, all.length)) * 100}%`;
+  const n = { todo: 0, ok: 0, redo: 0, swap: 0 };
+  for (const p of all) n[statusOf(p.wordmark)]++;
+  $("cTodo").textContent = n.todo;
+  $("cDone").textContent = n.ok;
+  $("cRedo").textContent = n.redo;
+  $("cSwap").textContent = n.swap;
   $("cHidden").textContent = all.filter((p) => p.wordmark.hidden).length;
-  $("cRedo").textContent = all.filter((p) => p.wordmark.redo).length;
-  $("exportRedo").textContent = `匯出待重新去背原圖（${all.filter((p) => p.wordmark.redo).length}）`;
+  $("cAll").textContent = all.length;
+  const pct = (v) => `${(v / Math.max(1, all.length)) * 100}%`;
+  $("pDone").style.width = pct(n.ok);
+  $("pRedo").style.width = pct(n.redo);
+  $("pSwap").style.width = pct(n.swap);
+  $("exportRedo").textContent = `匯出重新去背原圖（${n.redo}）`;
 }
 function render(keepSlug) {
   counts();
   const q = $("q").value.trim();
   view = all.filter((p) =>
-    (filter === "all" || (filter === "todo" && !p.wordmark.reviewed && !p.wordmark.redo && !p.wordmark.needsImage) || (filter === "done" && p.wordmark.reviewed) || (filter === "hidden" && p.wordmark.hidden) || (filter === "redo" && p.wordmark.redo) || (filter === "swap" && p.wordmark.needsImage)) &&
+    (filter === "all" || (filter === "hidden" ? p.wordmark.hidden : statusOf(p.wordmark) === ({ done: "ok" })[filter] || statusOf(p.wordmark) === filter)) &&
     (!q || p.title.includes(q) || p.slug.includes(q)));
   const s = $("sort").value;
-  view.sort(s === "date" ? (a, b) => b.date.localeCompare(a.date) : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date));
+  const wholeSize = (p) => wallWidth(p) / Math.sqrt(p.size.width / p.size.height);
+  view.sort(s === "size" ? (a, b) => wholeSize(b) - wholeSize(a) : s === "date" ? (a, b) => b.date.localeCompare(a.date) : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date));
   const L = $("list");
-  L.innerHTML = view.length ? "" : `<p class="count">這個篩選條件下沒有作品${filter === "todo" ? "，全部都分類完了 🎉" : ""}。</p>`;
-  view.forEach((p, i) => L.appendChild(rowEl(p, i)));
+  L.innerHTML = view.length ? "" : `<p class="count">這個篩選條件下沒有作品${filter === "todo" ? "，全部都處理完了 🎉" : ""}。</p>`;
+  view.forEach((p) => L.appendChild(rowEl(p)));
   if (keepSlug) cur = Math.max(0, view.findIndex((p) => p.slug === keepSlug));
   cur = Math.min(cur, Math.max(0, view.length - 1));
   highlight(false);
 }
-function rowEl(p, i) {
+function rowEl(p) {
   const wm = p.wordmark;
   const el = document.createElement("section");
-  el.className = "row" + (wm.reviewed ? " reviewed" : "");
+  el.className = `row st-${statusOf(wm)}${wm.hidden ? " is-hidden" : ""}`;
   el.dataset.slug = p.slug;
-  const w = wallWidth(p), h = w / (p.size.width / p.size.height);
+  const w = wallWidth(p);
   el.innerHTML = `
-    <div class="post">${p.post ? `<img src="${p.post}" alt="" loading="lazy">` : `<div class="none">沒有貼文圖</div>`}</div>
-    <div class="stage" title="把新的字圖拖到這裡即可換圖">
-      ${wm.hidden ? `<span class="hiddenTag">隱藏中（不會出現在字牆）</span>` : ""}
-      <span class="ref" style="width:${UNIT}px;height:${UNIT}px">一字</span>
-      <span class="wm" style="--src:url('/projects/${encodeURIComponent(p.slug)}/wordmark.webp?v=${p.mtime}');width:${w.toFixed(0)}px;height:${h.toFixed(0)}px;aspect-ratio:${p.size.width}/${p.size.height}" role="img" aria-label="${p.title} 字圖"></span>
+    <div class="stage" title="${p.title}${wm.hidden ? "（字牆上隱藏中）" : ""}${wm.scale && wm.scale !== 1 ? `・大小 ×${wm.scale}` : ""}">
+      <span class="wm" style="--src:url('/projects/${encodeURIComponent(p.slug)}/wordmark.webp?v=${p.mtime}');width:${(w * ZOOM).toFixed(0)}px;aspect-ratio:${p.size.width}/${p.size.height}" role="img" aria-label="${p.title} 字圖"></span>
     </div>
-    <div class="info">
-      <div class="title">${p.title} <a href="/projects/${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">作品頁 ↗</a></div>
-      <div class="flags">${flagsOf(p).map(([c, t]) => `<span class="flag ${c}">${t}</span>`).join("")}</div>
-      <div class="ctl">
-        <label for="s-${i}">大小</label><input type="range" id="s-${i}" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${wm.scale ?? 1}" data-act="scale"><input type="number" class="sv" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${(wm.scale ?? 1).toFixed(2)}" aria-label="大小倍率">
-        <label for="c-${i}">字數</label><input type="number" id="c-${i}" min="0.5" max="20" step="0.5" value="${wm.chars ?? ""}" placeholder="${countChars(p.title)}" data-act="chars"><span></span>
-      </div>
-      <div class="acts">
-        <button class="confirm ${wm.reviewed ? "on" : ""}" data-act="confirm">${wm.reviewed ? "✓ 已確認" : "確認"}</button>
-        <button data-act="hide">${wm.hidden ? "取消隱藏" : "隱藏"}</button>
-        <button data-act="redo" class="${wm.redo ? "on" : ""}">${wm.redo ? "取消重新去背" : "重新去背"}</button>
-        <button data-act="replace">換圖…</button>
-      </div>
-      <div class="status" aria-live="polite"></div>
-    </div>`;
+`;
   el.addEventListener("click", () => { cur = view.indexOf(p); highlight(false); });
-  const range = el.querySelector("[data-act=scale]");
-  const num = el.querySelector(".sv");
-  const preview = (v) => {
-    p.wordmark.scale = v;
-    range.value = v;
-    num.value = v.toFixed(2);
-    resizePreview(el, p);
-  };
-  range.addEventListener("input", () => preview(clampScale(parseFloat(range.value))));
-  range.addEventListener("change", () => save(p, { scale: clampScale(parseFloat(range.value)) }, el));
-  num.addEventListener("change", () => {
-    const v = clampScale(parseFloat(num.value) || 1);
-    preview(v);
-    save(p, { scale: v }, el);
-  });
-  const chars = el.querySelector("[data-act=chars]");
-  chars.addEventListener("change", () => {
-    const v = chars.value ? parseFloat(chars.value) : null;
-    p.wordmark.chars = v ?? undefined;
-    resizePreview(el, p);
-    save(p, { chars: v }, el);
-  });
-  el.querySelector("[data-act=confirm]").addEventListener("click", (e) => { e.stopPropagation(); toggleConfirm(p); });
-  el.querySelector("[data-act=hide]").addEventListener("click", (e) => { e.stopPropagation(); toggleHide(p); });
-  el.querySelector("[data-act=replace]").addEventListener("click", (e) => { e.stopPropagation(); pickFile(p); });
-  el.querySelector("[data-act=redo]").addEventListener("click", (e) => { e.stopPropagation(); toggleRedo(p); });
+  // 點兩下直接打開精修視窗
+  el.addEventListener("dblclick", () => { cur = view.indexOf(p); highlight(false); openEditor(p); });
   const stage = el.querySelector(".stage");
   stage.addEventListener("dragover", (e) => { e.preventDefault(); stage.classList.add("drop"); });
   stage.addEventListener("dragleave", () => stage.classList.remove("drop"));
@@ -236,17 +246,70 @@ function rowEl(p, i) {
   });
   return el;
 }
-function resizePreview(el, p) {
-  const w = wallWidth(p), h = w / (p.size.width / p.size.height);
-  const wm = el.querySelector(".wm");
-  wm.style.width = `${w.toFixed(0)}px`;
-  wm.style.height = `${h.toFixed(0)}px`;
+
+// ── 右側共用面板：顯示目前選取的作品 ─────────────────────────────
+function renderPanel(p) {
+  const P = $("panel");
+  if (!p) { P.innerHTML = `<p class="empty">點選左邊的作品開始編輯。</p>`; return; }
+  const wm = p.wordmark;
+  P.innerHTML = `
+    <h2><span>${p.title}</span><a href="/projects/${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">作品頁 ↗</a></h2>
+    <div class="pos">${view.indexOf(p) + 1} / ${view.length}${wm.hidden ? "　・字牆上隱藏中" : ""}</div>
+    <div class="seg status-seg" role="group" aria-label="狀態">
+      ${Object.entries(STATUS).map(([k, t]) => `<button data-st="${k}" class="st-${k}${statusOf(wm) === k ? " on" : ""}" title="${({ todo: "", ok: "Enter：確認並下一件", redo: "R", swap: "N：會一併隱藏" })[k]}">${t}</button>`).join("")}
+    </div>
+    ${tipsOf(p).length ? `<div class="flags">${tipsOf(p).map(([c, t]) => `<span class="flag ${c}">${t}</span>`).join("")}</div>` : ""}
+    <div class="ctl">
+      <label for="pScale">大小</label><input type="range" id="pScale" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${wm.scale ?? 1}"><input type="number" id="pScaleNum" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${(wm.scale ?? 1).toFixed(2)}" aria-label="大小倍率">
+      <label for="pChars">字數</label><input type="number" id="pChars" min="0.5" max="20" step="0.5" value="${wm.chars ?? ""}" placeholder="${countChars(p.title)}"><span></span>
+    </div>
+    <div class="acts">
+      <button id="pEdit" title="E">編輯去背</button>
+      <button id="pReplace" title="上傳別張圖">換圖…</button>
+      <button id="pHide" title="H">${wm.hidden ? "在字牆顯示" : "在字牆隱藏"}</button>
+    </div>
+    <div class="status" id="panelStatus" aria-live="polite"></div>
+    <div class="orig">${p.post ? `<img src="${p.post}" alt="${p.title} 原圖">` : `<div class="none">沒有貼文圖</div>`}</div>`;
+  const card = rowOf(p);
+  const range = $("pScale"), num = $("pScaleNum");
+  const preview = (v) => {
+    p.wordmark.scale = v;
+    range.value = v;
+    num.value = v.toFixed(2);
+    if (card) resizePreview(card, p);
+  };
+  range.addEventListener("input", () => preview(clampScale(parseFloat(range.value))));
+  range.addEventListener("change", () => save(p, { scale: clampScale(parseFloat(range.value)) }).then(() => refreshCard(p)));
+  num.addEventListener("change", () => {
+    const v = clampScale(parseFloat(num.value) || 1);
+    preview(v);
+    save(p, { scale: v }).then(() => refreshCard(p));
+  });
+  $("pChars").addEventListener("change", () => {
+    const v = $("pChars").value ? parseFloat($("pChars").value) : null;
+    p.wordmark.chars = v ?? undefined;
+    if (card) resizePreview(card, p);
+    save(p, { chars: v });
+  });
+  P.querySelectorAll("[data-st]").forEach((b) => b.addEventListener("click", () => setStatus2(p, b.dataset.st, b.dataset.st === "ok")));
+  $("pEdit").addEventListener("click", () => openEditor(p));
+  $("pHide").addEventListener("click", () => toggleHide(p));
+  $("pReplace").addEventListener("click", () => pickFile(p));
 }
-function setStatus(el, msg, err) {
-  const s = el?.querySelector(".status");
-  if (!s) return;
-  s.textContent = msg;
-  s.classList.toggle("err", !!err);
+// 只更新卡片上的狀態標記（不重排整個清單）
+function refreshCard(p) {
+  const el = rowOf(p);
+  if (!el) return;
+  el.className = `row st-${statusOf(p.wordmark)}${p.wordmark.hidden ? " is-hidden" : ""}${el.classList.contains("current") ? " current" : ""}`;
+}
+function resizePreview(el, p) {
+  el.querySelector(".wm").style.width = `${(wallWidth(p) * ZOOM).toFixed(0)}px`;
+}
+function setStatus(_el, msg, err) {
+  const st = $("panelStatus");
+  if (!st) return;
+  st.textContent = msg;
+  st.classList.toggle("err", !!err);
 }
 async function save(p, fields, el) {
   try {
@@ -261,17 +324,18 @@ async function save(p, fields, el) {
   }
 }
 const rowOf = (p) => document.querySelector(`.row[data-slug="${CSS.escape(p.slug)}"]`);
-async function toggleConfirm(p, advance) {
-  const ok = await save(p, { reviewed: !p.wordmark.reviewed }, rowOf(p));
-  if (!ok) return;
-  const next = view[cur + 1]?.slug;
-  render(advance && filter === "todo" ? next : p.slug);
-  if (advance && filter !== "todo") move(1);
-}
-async function toggleRedo(p) {
-  const next = view[view.indexOf(p) + 1]?.slug;
-  if (!(await save(p, { redo: !p.wordmark.redo }, rowOf(p)))) return;
-  render(filter === "todo" && p.wordmark.redo ? next : p.slug);
+// 設定狀態；需要換圖會一併隱藏。若新狀態不在目前的篩選裡，就停在原位置（等於自動跳到下一件）
+async function setStatus2(p, st, advance = false) {
+  const fields = { reviewed: st === "ok" || null, redo: st === "redo" || null, needsImage: st === "swap" || null };
+  if (st === "swap") fields.hidden = true;
+  // 隱藏是「需要換圖」連帶加上的；改回其他狀態時一併取消
+  else if (statusOf(p.wordmark) === "swap") fields.hidden = null;
+  const i = view.indexOf(p);
+  const next = view[i + 1]?.slug ?? view[i - 1]?.slug;
+  if (!(await save(p, fields))) return;
+  const stillShown = filter === "all" || (filter === "hidden" ? p.wordmark.hidden : statusOf(p.wordmark) === ({ done: "ok" })[filter] || statusOf(p.wordmark) === filter);
+  render(stillShown ? p.slug : next);
+  if (advance && stillShown) move(1);
 }
 async function toggleHide(p) {
   if (await save(p, { hidden: !p.wordmark.hidden }, rowOf(p))) render(p.slug);
@@ -460,32 +524,90 @@ async function importFiles(files) {
   ].filter(Boolean).join("　");
 }
 
+// ── 精修視窗（iframe）：開啟、上一張／下一張、存檔後更新清單 ─────────────
+const editorFrame = $("editorFrame");
+let editorReady = false, editorPending = null, editorQueue = [], editorDone = new Set(), editorCurrent = null, editorChanged = false;
+const toEditor = (m) => editorFrame.contentWindow.postMessage(m, location.origin);
+function editorInfo(slug) {
+  const p = all.find((x) => x.slug === slug);
+  return {
+    slug, title: p.title, post: p.post,
+    // 精修從目前的字圖開始，不重新自動去背
+    wordmark: `/projects/${encodeURIComponent(slug)}/wordmark.webp?v=${p.mtime}`,
+    index: editorQueue.indexOf(slug), total: editorQueue.length,
+    note: editorDone.size ? `本輪已處理 ${editorDone.size}` : "",
+  };
+}
+function openEditor(p) {
+  // 依目前清單（篩選＋排序）逐張處理
+  editorQueue = view.map((x) => x.slug);
+  if (!editorQueue.includes(p.slug)) editorQueue = [p.slug];
+  editorDone = new Set();
+  editorCurrent = p.slug;
+  editorFrame.classList.add("show");
+  if (!editorReady) {
+    editorPending = p.slug;
+    if (!editorFrame.src) editorFrame.src = "/__wordmarks/editor";
+  } else {
+    toEditor({ type: "open", info: editorInfo(p.slug) });
+  }
+}
+window.addEventListener("message", async (e) => {
+  if (e.origin !== location.origin || e.source !== editorFrame.contentWindow) return;
+  const m = e.data || {};
+  if (m.source !== "wordmark-editor") return;
+  if (m.type === "ready") {
+    editorReady = true;
+    if (editorPending) { toEditor({ type: "open", info: editorInfo(editorPending) }); editorPending = null; }
+  } else if (m.type === "changed") {
+    editorDone.add(m.slug);
+    editorChanged = true;
+  } else if (m.type === "navigate") {
+    const i = editorQueue.indexOf(m.slug);
+    // 確認或標記換圖後跳到下一張還沒處理的；上一張／下一張則照順序
+    const next = m.unfinished
+      ? editorQueue.slice(i + 1).find((s) => !editorDone.has(s)) ?? editorQueue.slice(0, i).find((s) => !editorDone.has(s))
+      : editorQueue[i + m.dir];
+    if (next) { editorCurrent = next; toEditor({ type: "open", info: editorInfo(next) }); }
+    else toEditor({ type: "none" });
+  } else if (m.type === "closed") {
+    editorFrame.classList.remove("show");
+    if (editorChanged) { editorChanged = false; await load(); }
+    render(editorCurrent);
+    highlight(true);
+  }
+});
+
 // ── 鍵盤逐件檢查 ───────────────────────────────────────────────
 function highlight(scroll = true) {
   document.querySelectorAll(".row.current").forEach((r) => r.classList.remove("current"));
   const p = view[cur];
   const r = p && rowOf(p);
+  renderPanel(r ? p : null);
   if (!r) return;
   r.classList.add("current");
-  if (scroll) r.scrollIntoView({ block: "center", behavior: "smooth" });
+  if (scroll) r.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 function move(d) { cur = Math.min(view.length - 1, Math.max(0, cur + d)); highlight(); }
 document.addEventListener("keydown", (e) => {
-  if (e.target.matches("input, select, textarea")) return;
+  // 打字的欄位不攔截；大小滑桿不擋 J／K 等快速鍵（方向鍵仍留給滑桿調整）
+  if (e.target.matches?.('input:not([type="range"]), select, textarea')) return;
+  if (e.target.matches?.('input[type="range"]') && e.key.startsWith("Arrow")) return;
   const p = view[cur];
-  if (e.key === "j" || e.key === "ArrowDown") { e.preventDefault(); move(1); }
-  else if (e.key === "k" || e.key === "ArrowUp") { e.preventDefault(); move(-1); }
-  else if (e.key === "Enter" && p) { e.preventDefault(); if (!p.wordmark.reviewed) toggleConfirm(p, true); else move(1); }
-  else if (e.key === "r" && p) toggleRedo(p);
+  if (e.key === "j" || e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); move(1); }
+  else if (e.key === "k" || e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); move(-1); }
+  else if (e.key === "Enter" && p) { e.preventDefault(); if (statusOf(p.wordmark) !== "ok") setStatus2(p, "ok", true); else move(1); }
+  else if (e.key === "r" && p) setStatus2(p, statusOf(p.wordmark) === "redo" ? "todo" : "redo");
+  else if (e.key === "n" && p) setStatus2(p, statusOf(p.wordmark) === "swap" ? "todo" : "swap");
+  else if (e.key === "e" && p) openEditor(p);
   else if (e.key === "h" && p) toggleHide(p);
   else if ((e.key === "-" || e.key === "=") && p) {
     const v = clampScale((p.wordmark.scale ?? 1) + (e.key === "=" ? 0.05 : -0.05));
     p.wordmark.scale = v;
+    if ($("pScale")) { $("pScale").value = v; $("pScaleNum").value = v.toFixed(2); }
     const el = rowOf(p);
-    el.querySelector("[data-act=scale]").value = v;
-    el.querySelector(".sv").value = v.toFixed(2);
-    resizePreview(el, p);
-    save(p, { scale: v }, el);
+    if (el) resizePreview(el, p);
+    save(p, { scale: v }).then(() => refreshCard(p));
   }
 });
 document.querySelectorAll("#filter button").forEach((b) => b.addEventListener("click", () => {
@@ -495,6 +617,21 @@ document.querySelectorAll("#filter button").forEach((b) => b.addEventListener("c
 }));
 $("sort").addEventListener("change", () => { cur = 0; render(); });
 $("q").addEventListener("input", () => { cur = 0; render(); });
+$("zoom").addEventListener("input", () => {
+  ZOOM = parseFloat($("zoom").value);
+  try { localStorage.setItem("wm-admin-zoom2", String(ZOOM)); } catch (_) {}
+  applyZoom();
+  document.querySelectorAll(".row").forEach((el) => {
+    const p = all.find((x) => x.slug === el.dataset.slug);
+    if (!p) return;
+    resizePreview(el, p);
+  });
+});
+applyZoom();
+// 右側面板固定在標頭下方：依標頭實際高度設定
+const syncHeadH = () => document.documentElement.style.setProperty("--head-h", `${document.querySelector("header").offsetHeight}px`);
+new ResizeObserver(syncHeadH).observe(document.querySelector("header"));
+syncHeadH();
 load().catch((e) => { $("list").innerHTML = `<p class="status err">載入失敗：${e.message}</p>`; });
 </script>
 </body>
