@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import type { CollectionEntry } from "astro:content";
+import { hoverColor } from "../utils/hoverColor";
 import { getWebpSize } from "../utils/webpSize";
 
 function getProjectSlug(id: string) {
@@ -18,7 +19,8 @@ function countChars(title: string) {
 
 // 字牆：讓每件作品的「單字量感」一致。面積 ∝ 字數，再用墨量微調（筆畫細的放大、粗的縮小）
 const INK_REF = 0.3;
-function getWordmark(slug: string, title: string, wordmark: CollectionEntry<"projects">["data"]["wordmark"]) {
+type WordmarkData = NonNullable<CollectionEntry<"projects">["data"]["wordmark"]>;
+function getWordmark(slug: string, title: string, wordmark: WordmarkData | undefined) {
 	if (!wordmark || wordmark.hidden) return null;
 	const file = path.join(process.cwd(), "src/content/projects", slug, path.basename(wordmark.src));
 	const size = getWebpSize(file);
@@ -29,12 +31,8 @@ function getWordmark(slug: string, title: string, wordmark: CollectionEntry<"pro
 	const sizeMul = { s: 0.8, m: 1, l: 1.3 }[wordmark.size ?? "m"];
 	// mass = 以「一個字的面積」為單位的作品面積，前端排版時乘上基準單位
 	const mass = chars * (INK_REF / ink) ** 0.2 * sizeMul ** 2;
-	// 太暗的原作字色在黑底上看不見，改用網站的強調色
-	let accent = wordmark.accent;
-	if (accent) {
-		const [r, g, b] = [1, 3, 5].map((i) => parseInt(accent!.slice(i, i + 2), 16) / 255);
-		if (0.2126 * r + 0.7152 * g + 0.0722 * b < 0.3) accent = undefined;
-	}
+	// hover 用原作字色；太暗的保留色相提亮，沒有顏色的（黑、灰）才用網站的強調色
+	const accent = hoverColor(wordmark.accent);
 	// 手動倍率最後才乘在寬度上（見 gridViewMode.js），×2 就是兩倍寬，不受單字面積下限影響
 	const scale = wordmark.scale ?? 1;
 	// 換圖時檔名不變，用內容雜湊當版本號，瀏覽器才不會一直顯示快取裡的舊字圖
@@ -49,8 +47,11 @@ type Props = {
 
 const { project, deferred = false } = Astro.props;
 const slug = getProjectSlug(project.id);
-const { title, thumbnail, image, images, hoverVideo, hoverVideoFit, video, pubDate, tags, wordmark } = project.data;
-const wm = getWordmark(slug, title, wordmark);
+const { title, thumbnail, image, images, hoverVideo, hoverVideoFit, video, pubDate, tags, wordmark, extraWordmarks } = project.data;
+// 主字圖隱藏時，第一個可顯示的其他款接替成為卡片本身；其餘每款在字牆上各自是一塊（見下方的 data-wm-extra）
+const [wm, ...extras] = [wordmark, ...(extraWordmarks ?? [])]
+	.map((w) => getWordmark(slug, title, w))
+	.filter((w) => w !== null);
 // 縮圖優先順序：專屬縮圖 thumbnail → 輪播第一張 images[0] → 單張 image
 const heroImage = thumbnail ?? (images?.length ? images[0] : image);
 // 若完全沒有圖片但有影片，用影片第一格當封面
@@ -108,6 +109,27 @@ const tagsStr = tags?.length ? tags.join("、") : "";
 		</span>
 	</article>
 </a>
+{extras.map((x, i) => (
+	<a
+		class="project-card project-card--extra"
+		data-wm-extra={`/projects/${slug}`}
+		data-wm-index={i + 1}
+		data-project-title={title}
+		data-project-year={year}
+		data-project-date={dateStr}
+		data-project-tags={tagsStr}
+		data-wordmark=""
+		data-wm-aspect={x.aspect}
+		data-wm-mass={x.mass}
+		data-wm-scale={x.scale}
+		style={`--wm:url("${x.src}");--a:${x.aspect}${(x.accent ?? wm?.accent) ? `;--accent:${x.accent ?? wm?.accent}` : ""}`}
+		href={`/projects/${slug}`}
+		tabindex="-1"
+		aria-hidden="true"
+	>
+		<span class="project-card__wordmark"></span>
+	</a>
+))}
 
 <style>
 	.project-card {
@@ -153,6 +175,10 @@ const tagsStr = tags?.length ? tags.join("、") : "";
 		display: block;
 	}
 	.project-card__wordmark {
+		display: none;
+	}
+	/* 其他款字圖只出現在字牆；圖片模式與排序、搜尋都不把它當成一張卡片（見 productGridActions.js） */
+	.project-card--extra {
 		display: none;
 	}
 	h3,

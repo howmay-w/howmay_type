@@ -534,6 +534,8 @@ export function autoLumExtractSoft(sourceCanvas, options = {}) {
     softness = 40,
     threshold: thresholdOpt,
     spatialBlur = true,
+    // 已去背原圖鋪上的底色亮度（見 wordmark-editor/editor.js）：和底色一樣的像素原本是透明的，一律不保留
+    bgLum,
   } = options;
   const keepBright = keepBrightOpt !== undefined ? keepBrightOpt : !detectNeedsInvert(sourceCanvas);
   const threshold = thresholdOpt !== undefined ? thresholdOpt : computeOtsuThreshold(sourceCanvas);
@@ -551,6 +553,7 @@ export function autoLumExtractSoft(sourceCanvas, options = {}) {
   for (let i = 0; i < d.length; i += 4) {
     if (d[i + 3] < 20) continue;
     const lum = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+    if (bgLum !== undefined && Math.abs(lum - bgLum) < 1.5) continue;
     const signedDist = keepBright ? lum - threshold : threshold - lum;
     let alpha;
     if (signedDist <= -half) alpha = 0;

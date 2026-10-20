@@ -139,6 +139,10 @@ const grid = "projects";
 	:global(html[data-view="type"] .project-grid > a:not([data-wordmark])) {
 		display: none !important;
 	}
+	/* 其他款字圖：所屬作品在字牆上顯示時才出現（gridViewMode.js 加上 data-wm-on） */
+	:global(html[data-view="type"] .project-grid > a[data-wm-extra][data-wm-on]) {
+		display: block;
+	}
 	:global(html[data-view="type"] .project-grid > a[data-wordmark]) {
 		position: absolute;
 		left: var(--x, 0);

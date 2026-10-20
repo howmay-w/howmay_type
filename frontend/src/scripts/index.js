@@ -16,7 +16,7 @@ const initializeVariables = () => {
 	// 只取尚未延遲載入（非 data-deferred）的可見卡片，避免對全部 N 個元素建 tween
 	gridItems = gridContainer
 		? Array.from(gridContainer.children).filter(
-				(el) => !el.hasAttribute("data-deferred"),
+				(el) => !el.hasAttribute("data-deferred") && !el.hasAttribute("data-wm-extra"),
 			)
 		: [];
 	hasPreloaderComponent = document.querySelector(".loading");

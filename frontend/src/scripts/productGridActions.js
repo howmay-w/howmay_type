@@ -103,7 +103,8 @@ const handleSearchInput = (e) => {
 /* Initialize DOM elements and states */
 const initializeVariables = () => {
   gridContainer = document.querySelector("[data-grid]");
-  gridItems = Array.from(gridContainer?.children || []);
+  // 其他款字圖（data-wm-extra）只屬於字牆，由 gridViewMode.js 跟著所屬作品顯示，不算一張卡片
+  gridItems = Array.from(gridContainer?.children || []).filter((el) => !el.hasAttribute("data-wm-extra"));
   shuffleButton = document.querySelector("[data-shuffle]");
   sortButton = document.querySelector("[data-sort]");
   searchButton = document.querySelector("[data-search]");

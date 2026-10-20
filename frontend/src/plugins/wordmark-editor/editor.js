@@ -7,7 +7,8 @@
  *  - 上一張／下一張由管理頁決定（照管理頁目前的清單順序）
  * 與管理頁之間用 postMessage 溝通：
  *  管理頁 → 這裡：{ type: "open", info } / { type: "none" }
- *  這裡 → 管理頁：{ type: "ready" } / { type: "navigate", slug, dir, unfinished } / { type: "changed", slug } / { type: "closed" }
+ *  這裡 → 管理頁：{ type: "ready" } / { type: "navigate", key, dir, unfinished } / { type: "changed", key } / { type: "closed" }
+ * 一件作品可以有好幾款字圖：key = slug#v，v 是第幾款（0 = 主字圖）
  */
 // 樣式表用 <link> 載入（見 editor.html）：若在這裡 import CSS，Vite 會接上即時更新連線，
 // 存檔寫入作品資料夾時 Astro 會要求整頁重新載入，精修中的狀態就會不見
@@ -17,7 +18,7 @@ import { createRefineController } from "./refineModal.js";
 const dialog = document.getElementById("refineDialog");
 const loadingEl = document.getElementById("editorLoading");
 const errorEl = document.getElementById("editorError");
-let current = null; // 管理頁傳來的作品資訊 { slug, title, post, index, total, note }
+let current = null; // 管理頁傳來的作品資訊 { key, slug, v, title, post, wordmark, index, total, note }
 let navResolve = null;
 
 const tell = (msg) => parent.postMessage({ source: "wordmark-editor", ...msg }, location.origin);
@@ -40,6 +41,31 @@ async function loadCanvas(url) {
   return c;
 }
 
+// 已經去背過的原圖（例如換圖時上傳的透明 PNG）：字的深淺只存在透明度裡，RGB 幾乎全是同一個顏色，
+// 只看亮度的去背流程會變成「全留或全刪」、漸層也會消失。
+// 先把它鋪到和字相反的底色上（白字鋪黑底、黑字鋪白底），透明度就變成亮度，臨界值與對比度才能細調。
+function flattenIfCutout(canvas) {
+  const { width: W, height: H } = canvas;
+  const d = canvas.getContext("2d").getImageData(0, 0, W, H).data;
+  let clear = 0, sumA = 0, sumLum = 0;
+  for (let i = 0; i < d.length; i += 4) {
+    const a = d[i + 3];
+    if (a < 250) clear++;
+    sumA += a;
+    sumLum += a * (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
+  }
+  if (clear < W * H * 0.01 || !sumA) return { canvas, preCut: false, bg: undefined };
+  const bright = sumLum / sumA >= 128;
+  const out = document.createElement("canvas");
+  out.width = W;
+  out.height = H;
+  const ctx = out.getContext("2d");
+  ctx.fillStyle = bright ? "#000" : "#fff";
+  ctx.fillRect(0, 0, W, H);
+  ctx.drawImage(canvas, 0, 0);
+  return { canvas: out, preCut: true, bg: bright ? 0 : 255 };
+}
+
 async function api(url, opt) {
   const r = await fetch(url, opt);
   const j = await r.json().catch(() => ({}));
@@ -59,7 +85,7 @@ async function saveWordmark(canvas) {
   for (let i = 3; i < d.length; i += 4) sum += d[i];
   const ink = sum / 255 / (canvas.width * canvas.height);
   const blob = await new Promise((res) => out.toBlob(res, "image/webp", 0.9));
-  await api(`/__wordmarks/api/replace?slug=${encodeURIComponent(current.slug)}&ink=${ink.toFixed(3)}`, {
+  await api(`/__wordmarks/api/replace?slug=${encodeURIComponent(current.slug)}&v=${current.v ?? 0}&ink=${ink.toFixed(3)}`, {
     method: "POST",
     body: blob,
   });
@@ -73,13 +99,14 @@ async function openItem(info) {
   }
   loadingEl.classList.add("show");
   try {
-    const source = await loadCanvas(info.post);
+    const { canvas: source, preCut, bg } = flattenIfCutout(await loadCanvas(info.post));
     // 自動去背的結果只用來提供臨界值等預設值與「找回邊框」；畫面從目前的字圖開始，
     // 不會把之前處理好的結果蓋掉。要重新去背再按「自動」或調整臨界值。
-    const r = fullAutoProcess(source, {});
+    // 已去背的原圖：臨界值放在中間、柔和範圍拉到最寬，結果接近原本的透明漸層（對比度 10%）
+    const r = fullAutoProcess(source, preCut ? { threshold: 128, softness: 271, bgLum: bg } : {});
     const currentCanvas = info.wordmark ? await loadCanvas(info.wordmark).catch(() => null) : null;
     const item = {
-      id: info.slug,
+      id: info.key,
       author: `@${info.title}`,
       file: null,
       sourceCanvas: source,
@@ -97,6 +124,9 @@ async function openItem(info) {
       currentSize: currentCanvas ? { w: currentCanvas.width, h: currentCanvas.height } : null,
       // 「找回邊框」改為對整張原圖重新去背（回到原圖尺寸）
       restoreFull: true,
+      // 原圖本來就去過背：對比度可以調得更低，接近完整保留原本的透明漸層
+      preCut,
+      preCutBg: bg,
     };
     refine.open(item, "refine");
     return true;
@@ -114,12 +144,12 @@ const refine = createRefineController(dialog, {
   onNavigate: (_item, dir, opts = {}) =>
     new Promise((resolve) => {
       navResolve = resolve;
-      tell({ type: "navigate", slug: current.slug, dir, unfinished: !!opts.unfinished });
+      tell({ type: "navigate", key: current.key, dir, unfinished: !!opts.unfinished });
     }),
   async onConfirm(_item, canvas) {
     try {
       await saveWordmark(canvas);
-      tell({ type: "changed", slug: current.slug });
+      tell({ type: "changed", key: current.key });
     } catch (err) {
       showError(`存檔失敗：${err.message}`);
       throw err;
@@ -130,9 +160,9 @@ const refine = createRefineController(dialog, {
       await api("/__wordmarks/api/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug: current.slug, fields: { redo: null, reviewed: null, needsImage: true } }),
+        body: JSON.stringify({ slug: current.slug, v: current.v ?? 0, fields: { redo: null, reviewed: null, needsImage: true } }),
       });
-      tell({ type: "changed", slug: current.slug });
+      tell({ type: "changed", key: current.key });
     } catch (err) {
       showError(`標記失敗：${err.message}`);
     }

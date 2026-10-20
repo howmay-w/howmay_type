@@ -60,7 +60,9 @@
   .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .acts button { padding: 6px 6px; }
   .acts { grid-template-columns: 1fr 1fr; }
-  .acts #pHide { grid-column: 1 / -1; }
+  .acts #pHide, .acts .wide { grid-column: 1 / -1; }
+  .variants { display: flex; gap: 4px; flex-wrap: wrap; }
+  .variants button { padding: 3px 8px; font-size: 12px; }
   .status-seg { display: grid; grid-template-columns: repeat(2, 1fr); }
   .status-seg button { padding: 6px 2px; }
   .status-seg button.on.st-redo { background: #6b4a16; color: #fff; }
@@ -100,10 +102,11 @@
     </select>
     <input type="search" id="q" placeholder="搜尋作品名稱" aria-label="搜尋作品名稱">
   </div>
-  <div class="hint">所有預覽用同一個比例（上方「預覽比例」），可以直接比較大小；搜尋一律在全部作品中找。<kbd>J</kbd>/<kbd>K</kbd>（或方向鍵）上下一件、<kbd>Enter</kbd> 下一件、<kbd>H</kbd> 隱藏、<kbd>R</kbd> 重新去背、<kbd>N</kbd> 需要換圖、<kbd>E</kbd> 或點兩下編輯去背、<kbd>-</kbd>/<kbd>=</kbd> 縮小放大。把圖拖到預覽區即可換圖。</div>
+  <div class="hint">一件作品可以有好幾款字圖，每款各佔一格（標題後面標「第 n 款」），在面板按「新增一款」加入（可一次選多張）。所有預覽用同一個比例（上方「預覽比例」），可以直接比較大小；搜尋一律在全部作品中找。<kbd>J</kbd>/<kbd>K</kbd>（或方向鍵）上下一件、<kbd>Enter</kbd> 下一件、<kbd>H</kbd> 隱藏、<kbd>R</kbd> 重新去背、<kbd>N</kbd> 需要換圖、<kbd>E</kbd> 或點兩下編輯去背、<kbd>-</kbd>/<kbd>=</kbd> 縮小放大。把圖拖到預覽區即可換圖。</div>
 </header>
 <div class="layout"><main id="list"></main><aside class="panel" id="panel" aria-label="編輯面板"></aside></div>
 <input type="file" id="file" accept="image/*" hidden>
+<input type="file" id="files" accept="image/*" multiple hidden>
 <iframe id="editorFrame" title="字圖精修" allowtransparency="true"></iframe>
 <script>
 // 和字牆相同的尺寸公式（ProjectCard.astro + gridViewMode.js），D = 1180 的桌機分段
@@ -168,6 +171,10 @@ const statusOf = (wm) => (wm.needsImage ? "swap" : wm.redo ? "redo" : "none");
 const risk = (p) => (statusOf(p.wordmark) !== "none" ? 50 : 0) + (p.wordmark.hidden ? 30 : 0) + (p.wordmark.source === "auto" ? 20 : 0) + flagsOf(p).filter((f) => f[0] === "warn").length * 10;
 
 let all = [], view = [], cur = 0, filter = "all";
+// 每一款字圖是一筆（key = slug#v）；v = 0 是主字圖，其他款從 1 起
+const nameOf = (p) => (p.v ? `${p.title}・第 ${p.v + 1} 款` : p.title);
+const imgOf = (p) => `/projects/${encodeURIComponent(p.slug)}/${encodeURIComponent(p.file)}?v=${p.mtime}`;
+const siblingsOf = (p) => all.filter((x) => x.slug === p.slug).sort((a, b) => a.v - b.v);
 const $ = (id) => document.getElementById(id);
 const api = async (url, opt) => {
   const r = await fetch(url, opt);
@@ -191,14 +198,14 @@ function render(keepSlug) {
   counts();
   const q = $("q").value.trim();
   view = all.filter((p) =>
-    q ? p.title.includes(q) || p.slug.includes(q) : inFilter(p));
+    q ? nameOf(p).includes(q) || p.slug.includes(q) : inFilter(p));
   const s = $("sort").value;
   const wholeSize = (p) => wallWidth(p) / Math.sqrt(p.size.width / p.size.height);
-  view.sort(s === "edited" ? (a, b) => (b.edited ?? 0) - (a.edited ?? 0) : s === "size" ? (a, b) => wholeSize(b) - wholeSize(a) : s === "date" ? (a, b) => b.date.localeCompare(a.date) : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date));
+  view.sort(s === "edited" ? (a, b) => (b.edited ?? 0) - (a.edited ?? 0) : s === "size" ? (a, b) => wholeSize(b) - wholeSize(a) : s === "date" ? (a, b) => b.date.localeCompare(a.date) || a.v - b.v : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") || a.v - b.v : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date) || a.v - b.v);
   const L = $("list");
   L.innerHTML = view.length ? "" : `<p class="count">${q ? "找不到符合的作品。" : "這個篩選條件下沒有作品。"}</p>`;
   view.forEach((p) => L.appendChild(rowEl(p)));
-  if (keepSlug) cur = Math.max(0, view.findIndex((p) => p.slug === keepSlug));
+  if (keepSlug) cur = Math.max(0, view.findIndex((p) => p.key === keepSlug));
   cur = Math.min(cur, Math.max(0, view.length - 1));
   highlight(false);
 }
@@ -206,11 +213,11 @@ function rowEl(p) {
   const wm = p.wordmark;
   const el = document.createElement("section");
   el.className = `row st-${statusOf(wm)}${wm.hidden ? " is-hidden" : ""}`;
-  el.dataset.slug = p.slug;
+  el.dataset.key = p.key;
   const w = wallWidth(p);
   el.innerHTML = `
-    <div class="stage" title="${p.title}${wm.hidden ? "（字牆上隱藏中）" : ""}${wm.scale && wm.scale !== 1 ? `・大小 ×${wm.scale}` : ""}">
-      <span class="wm" style="--src:url('/projects/${encodeURIComponent(p.slug)}/wordmark.webp?v=${p.mtime}');width:${(w * ZOOM).toFixed(0)}px;aspect-ratio:${p.size.width}/${p.size.height}" role="img" aria-label="${p.title} 字圖"></span>
+    <div class="stage" title="${nameOf(p)}${wm.hidden ? "（字牆上隱藏中）" : ""}${wm.scale && wm.scale !== 1 ? `・大小 ×${wm.scale}` : ""}">
+      <span class="wm" style="--src:url('${imgOf(p)}');width:${(w * ZOOM).toFixed(0)}px;aspect-ratio:${p.size.width}/${p.size.height}" role="img" aria-label="${nameOf(p)} 字圖"></span>
     </div>
 `;
   el.addEventListener("click", () => { cur = view.indexOf(p); highlight(false); });
@@ -232,9 +239,11 @@ function renderPanel(p) {
   const P = $("panel");
   if (!p) { P.innerHTML = `<p class="empty">點選左邊的作品開始編輯。</p>`; return; }
   const wm = p.wordmark;
+  const sibs = siblingsOf(p);
   P.innerHTML = `
-    <h2><span>${p.title}</span><a href="/projects/${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">作品頁 ↗</a></h2>
+    <h2><span>${nameOf(p)}</span><a href="/projects/${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">作品頁 ↗</a></h2>
     <div class="pos">${view.indexOf(p) + 1} / ${view.length}${wm.hidden ? "　・字牆上隱藏中" : ""}</div>
+    ${sibs.length > 1 ? `<div class="variants" role="group" aria-label="這件作品的各款字圖">${sibs.map((x) => `<button data-key="${x.key}" class="${x.key === p.key ? "on" : ""}">${x.v ? `第 ${x.v + 1} 款` : "主字圖"}${x.wordmark.hidden ? "（隱藏）" : ""}</button>`).join("")}</div>` : ""}
     <div class="seg status-seg" role="group" aria-label="狀態">
       ${Object.entries(STATUS).map(([k, t]) => `<button data-st="${k}" class="st-${k}${statusOf(wm) === k ? " on" : ""}" title="${({ redo: "R", swap: "N：會一併隱藏" })[k]}">${t}</button>`).join("")}
     </div>
@@ -247,9 +256,11 @@ function renderPanel(p) {
       <button id="pEdit" title="E">編輯去背</button>
       <button id="pReplace" title="上傳別張圖">換圖…</button>
       <button id="pHide" title="H">${wm.hidden ? "在字牆顯示" : "在字牆隱藏"}</button>
+      <button id="pAdd" class="${p.v ? "" : "wide"}" title="上傳一張或多張圖（可一次選多張），每張成為這件作品的另一款字圖">新增一款…</button>
+      ${p.v ? `<button id="pRemove" title="刪除這一款的字圖檔">刪除這款</button>` : ""}
     </div>
     <div class="status" id="panelStatus" aria-live="polite"></div>
-    <div class="orig">${sourceOf(p) ? `<img src="${sourceOf(p)}" alt="${p.title} 原圖">` : `<div class="none">沒有原圖</div>`}</div>`;
+    <div class="orig">${sourceOf(p) ? `<img src="${sourceOf(p)}" alt="${nameOf(p)} 原圖">` : `<div class="none">沒有原圖</div>`}</div>`;
   const card = rowOf(p);
   const range = $("pScale"), num = $("pScaleNum");
   const preview = (v) => {
@@ -276,6 +287,33 @@ function renderPanel(p) {
   $("pEdit").addEventListener("click", () => openEditor(p));
   $("pHide").addEventListener("click", () => toggleHide(p));
   $("pReplace").addEventListener("click", () => pickFile(p));
+  $("pAdd").addEventListener("click", () => pickFile(p, true));
+  $("pRemove")?.addEventListener("click", () => removeVariant(p));
+  P.querySelectorAll(".variants [data-key]").forEach((b) => b.addEventListener("click", () => select(b.dataset.key)));
+}
+// 跳到同一件作品的另一款；不在目前清單裡（例如被篩選掉）就先清掉搜尋與篩選
+function select(key) {
+  let i = view.findIndex((x) => x.key === key);
+  if (i < 0) {
+    $("q").value = "";
+    filter = "all";
+    document.querySelectorAll("#filter button").forEach((x) => x.classList.toggle("on", x.dataset.f === "all"));
+    render(key);
+    i = view.findIndex((x) => x.key === key);
+  }
+  cur = Math.max(0, i);
+  highlight(true);
+}
+async function removeVariant(p) {
+  if (!p.v || !confirm(`刪除「${nameOf(p)}」？字圖檔和它的原圖都會刪掉。`)) return;
+  try {
+    await api("/__wordmarks/api/remove", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: p.slug, v: p.v }) });
+    await load();
+    render(`${p.slug}#0`);
+    highlight(true);
+  } catch (e) {
+    setStatus(null, `刪除失敗：${e.message}`, true);
+  }
 }
 // 只更新卡片上的狀態標記（不重排整個清單）
 function refreshCard(p) {
@@ -294,7 +332,7 @@ function setStatus(_el, msg, err) {
 }
 async function save(p, fields, el) {
   try {
-    const r = await api("/__wordmarks/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: p.slug, fields }) });
+    const r = await api("/__wordmarks/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: p.slug, v: p.v, fields }) });
     p.wordmark = r.wordmark;
     setStatus(el, "已儲存");
     counts();
@@ -304,7 +342,7 @@ async function save(p, fields, el) {
     return false;
   }
 }
-const rowOf = (p) => document.querySelector(`.row[data-slug="${CSS.escape(p.slug)}"]`);
+const rowOf = (p) => document.querySelector(`.row[data-key="${CSS.escape(p.key)}"]`);
 // 設定狀態；需要換圖會一併隱藏。若新狀態不在目前的篩選裡，就停在原位置（等於自動跳到下一件）
 async function setStatus2(p, st) {
   const fields = { redo: st === "redo" || null, needsImage: st === "swap" || null };
@@ -312,19 +350,26 @@ async function setStatus2(p, st) {
   // 隱藏是「需要換圖」連帶加上的；取消時一併取消
   else if (statusOf(p.wordmark) === "swap") fields.hidden = null;
   const i = view.indexOf(p);
-  const next = view[i + 1]?.slug ?? view[i - 1]?.slug;
+  const next = view[i + 1]?.key ?? view[i - 1]?.key;
   if (!(await save(p, fields))) return;
   const stillShown = !!$("q").value.trim() || inFilter(p);
-  render(stillShown ? p.slug : next);
+  render(stillShown ? p.key : next);
 }
 async function toggleHide(p) {
-  if (await save(p, { hidden: !p.wordmark.hidden }, rowOf(p))) render(p.slug);
+  if (await save(p, { hidden: !p.wordmark.hidden }, rowOf(p))) render(p.key);
 }
 
 // ── 換圖：在瀏覽器裡轉成白字透明背景的 webp ─────────────────────────
+// 換圖選一張；新增一款可以一次選多張，每張各新增一款
 let pickTarget = null;
-function pickFile(p) { pickTarget = p; $("file").value = ""; $("file").click(); }
+function pickFile(p, adding = false) {
+  pickTarget = p;
+  const input = $(adding ? "files" : "file");
+  input.value = "";
+  input.click();
+}
 $("file").addEventListener("change", (e) => { const f = e.target.files?.[0]; if (f && pickTarget) replace(pickTarget, f); });
+$("files").addEventListener("change", (e) => { const fs = [...(e.target.files ?? [])]; if (fs.length && pickTarget) addVariants(pickTarget, fs); });
 
 function otsu(lum) {
   const hist = new Float64Array(256);
@@ -453,19 +498,47 @@ async function toSourceWebp(file) {
 }
 // 精修與面板用的原圖：換過圖就用上傳的原始圖，否則用貼文原圖
 const sourceOf = (p) => (p.wordmark.sourceImage ? `${p.wordmark.sourceImage}?v=${p.edited ?? p.mtime}` : p.post);
-async function replace(p, file) {
+// 一次新增多款：依序處理，每張接在現有最後一款後面
+async function addVariants(p, files) {
+  let firstKey = null, done = 0;
+  const failed = [];
+  for (const file of files) {
+    setStatus(null, `新增中… ${done + 1} / ${files.length}`);
+    try {
+      const key = await addOne(p, file);
+      firstKey ??= key;
+      done++;
+    } catch (e) {
+      failed.push(`${file.name}（${e.message}）`);
+    }
+  }
+  await load();
+  if (firstKey) select(firstKey);
+  setStatus(null, failed.length ? `已新增 ${done} 款；失敗：${failed.join("、")}` : `已新增 ${done} 款，請逐一確認效果`, failed.length > 0);
+}
+async function addOne(p, file) {
+  const { blob, ink } = await toWordmark(file);
+  const list = await api("/__wordmarks/api/list");
+  const v = Math.max(...list.filter((x) => x.slug === p.slug).map((x) => x.v)) + 1;
+  const q = `slug=${encodeURIComponent(p.slug)}&v=${v}`;
+  await api(`/__wordmarks/api/replace?${q}&ink=${ink.toFixed(3)}`, { method: "POST", body: blob });
+  await api(`/__wordmarks/api/source?${q}`, { method: "POST", body: await toSourceWebp(file) });
+  return `${p.slug}#${v}`;
+}
+async function replace(p, file, adding = false) {
   const el = rowOf(p);
   setStatus(el, "處理中…");
   try {
     const { blob, ink } = await toWordmark(file);
-    await api(`/__wordmarks/api/replace?slug=${encodeURIComponent(p.slug)}&ink=${ink.toFixed(3)}`, { method: "POST", body: blob });
-    // 上傳的原始圖存成這件作品的去背來源，之後「編輯去背」以它為原圖，不會跳回貼文原圖
-    await api(`/__wordmarks/api/source?slug=${encodeURIComponent(p.slug)}`, { method: "POST", body: await toSourceWebp(file) });
+    // 新增一款：款號接在這件作品現有的最後一款後面
+    const v = adding ? Math.max(...siblingsOf(p).map((x) => x.v)) + 1 : p.v;
+    const q = `slug=${encodeURIComponent(p.slug)}&v=${v}`;
+    await api(`/__wordmarks/api/replace?${q}&ink=${ink.toFixed(3)}`, { method: "POST", body: blob });
+    // 上傳的原始圖存成這款字圖的去背來源，之後「編輯去背」以它為原圖，不會跳回貼文原圖
+    await api(`/__wordmarks/api/source?${q}`, { method: "POST", body: await toSourceWebp(file) });
     await load();
-    const row = rowOf(p);
-    setStatus(row, "已換圖，請確認效果");
-    cur = Math.max(0, view.findIndex((x) => x.slug === p.slug));
-    highlight(true);
+    select(`${p.slug}#${v}`);
+    setStatus(null, adding ? "已新增一款，請確認效果" : "已換圖，請確認效果");
   } catch (e) {
     setStatus(el, `換圖失敗：${e.message}`, true);
   }
@@ -475,28 +548,28 @@ async function replace(p, file) {
 const editorFrame = $("editorFrame");
 let editorReady = false, editorPending = null, editorQueue = [], editorDone = new Set(), editorCurrent = null, editorChanged = false;
 const toEditor = (m) => editorFrame.contentWindow.postMessage(m, location.origin);
-function editorInfo(slug) {
-  const p = all.find((x) => x.slug === slug);
+function editorInfo(key) {
+  const p = all.find((x) => x.key === key);
   return {
-    slug, title: p.title, post: sourceOf(p),
+    key, slug: p.slug, v: p.v, title: nameOf(p), post: sourceOf(p),
     // 精修從目前的字圖開始，不重新自動去背
-    wordmark: `/projects/${encodeURIComponent(slug)}/wordmark.webp?v=${p.mtime}`,
-    index: editorQueue.indexOf(slug), total: editorQueue.length,
+    wordmark: imgOf(p),
+    index: editorQueue.indexOf(key), total: editorQueue.length,
     note: editorDone.size ? `本輪已處理 ${editorDone.size}` : "",
   };
 }
 function openEditor(p) {
   // 依目前清單（篩選＋排序）逐張處理
-  editorQueue = view.map((x) => x.slug);
-  if (!editorQueue.includes(p.slug)) editorQueue = [p.slug];
+  editorQueue = view.map((x) => x.key);
+  if (!editorQueue.includes(p.key)) editorQueue = [p.key];
   editorDone = new Set();
-  editorCurrent = p.slug;
+  editorCurrent = p.key;
   editorFrame.classList.add("show");
   if (!editorReady) {
-    editorPending = p.slug;
+    editorPending = p.key;
     if (!editorFrame.src) editorFrame.src = "/__wordmarks/editor";
   } else {
-    toEditor({ type: "open", info: editorInfo(p.slug) });
+    toEditor({ type: "open", info: editorInfo(p.key) });
   }
 }
 window.addEventListener("message", async (e) => {
@@ -507,10 +580,10 @@ window.addEventListener("message", async (e) => {
     editorReady = true;
     if (editorPending) { toEditor({ type: "open", info: editorInfo(editorPending) }); editorPending = null; }
   } else if (m.type === "changed") {
-    editorDone.add(m.slug);
+    editorDone.add(m.key);
     editorChanged = true;
   } else if (m.type === "navigate") {
-    const i = editorQueue.indexOf(m.slug);
+    const i = editorQueue.indexOf(m.key);
     // 確認或標記換圖後跳到下一張還沒處理的；上一張／下一張則照順序
     const next = m.unfinished
       ? editorQueue.slice(i + 1).find((s) => !editorDone.has(s)) ?? editorQueue.slice(0, i).find((s) => !editorDone.has(s))
@@ -569,7 +642,7 @@ $("zoom").addEventListener("input", () => {
   try { localStorage.setItem("wm-admin-zoom2", String(ZOOM)); } catch (_) {}
   applyZoom();
   document.querySelectorAll(".row").forEach((el) => {
-    const p = all.find((x) => x.slug === el.dataset.slug);
+    const p = all.find((x) => x.key === el.dataset.key);
     if (!p) return;
     resizePreview(el, p);
   });

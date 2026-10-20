@@ -34,10 +34,34 @@ const applyView = (view) => {
   }
 };
 
-const visibleItems = () =>
-  Array.from(grid.children)
-    .filter((el) => el.hasAttribute("data-wordmark") && getComputedStyle(el).display !== "none")
+/*
+ * 字牆上要排的作品：顯示中的卡片照順序，再把其他款字圖（data-wm-extra）穿插進去。
+ * 其他款跟著所屬作品顯示或隱藏（搜尋、MORE 都只動卡片），並和本尊隔開一段距離，不會擠在一起。
+ */
+const visibleItems = () => {
+  const children = Array.from(grid.children);
+  const cards = children
+    .filter((el) => !el.hasAttribute("data-wm-extra") && el.hasAttribute("data-wordmark") && getComputedStyle(el).display !== "none")
     .sort((a, b) => (parseInt(a.style.order) || 0) - (parseInt(b.style.order) || 0));
+  const at = new Map(cards.map((el, i) => [el.getAttribute("href"), i]));
+  const extras = children.filter((el) => el.hasAttribute("data-wm-extra"));
+  const byCard = new Map();
+  for (const el of extras) {
+    const on = at.has(el.dataset.wmExtra);
+    el.toggleAttribute("data-wm-on", on);
+    if (!on) continue;
+    const list = byCard.get(el.dataset.wmExtra) ?? [];
+    list.push(el);
+    byCard.set(el.dataset.wmExtra, list);
+  }
+  // 第 j 款排在本尊後面 j × spread 的位置：把本尊之後的作品平均分給各款，至少隔 4 件
+  const keyed = cards.map((el, i) => ({ el, key: i }));
+  for (const [href, list] of byCard) {
+    const spread = Math.max(4, Math.floor((cards.length - at.get(href)) / (list.length + 1)));
+    list.forEach((el, j) => keyed.push({ el, key: at.get(href) + (j + 1) * spread + 0.5 }));
+  }
+  return keyed.sort((a, b) => a.key - b.key).map((x) => x.el);
+};
 
 // 版面寬度分段：同一段內只做等比例縮放（純 CSS 百分比），跨段才重新排版，縮放視窗時不會一直跳動
 const BANDS = [320, 400, 480, 580, 700, 840, 1000, 1180, 1400, 1660, 1960];
@@ -101,9 +125,12 @@ const packColumns = (items, D) => {
 
   const queue = items.map((el) => {
     const { aspect, mass } = metrics(el);
-    return { el, aspect, target: Math.min(unit * Math.sqrt(mass * aspect), D) };
+    return { el, href: el.getAttribute("href"), aspect, target: Math.min(unit * Math.sqrt(mass * aspect), D) };
   });
   const placed = [];
+  // 同一件作品的其他款：剛放過同一件的，接下來 APART 件內盡量不再放，避免兩款挨在一起
+  const APART = 8;
+  const lastAt = new Map();
   let top = 0;
 
   while (queue.length) {
@@ -145,6 +172,7 @@ const packColumns = (items, D) => {
           Math.abs(w / it.target - 1) * 1.5 +
           (sliver ? 0.25 : 0) +
           (left === 0 ? -0.05 : 0) +
+          (placed.length - (lastAt.get(it.href) ?? -Infinity) < APART ? 1 : 0) +
           i * 0.04;
         if (!best || score < best.score) best = { i, k, w, h, ch, score };
       }
@@ -160,6 +188,7 @@ const packColumns = (items, D) => {
     const spanW = spanOf(k);
     const spanX = c0 * pitch;
     const x = c0 === 0 ? spanX : c0 + k === N ? spanX + spanW - w : spanX + (spanW - w) / 2;
+    lastAt.set(it.href, placed.length);
     placed.push({ el: it.el, x, y: r0 * STEP, w, h, r0, ch, c0, k });
   }
   // 排完後的置中調整：左右「兩側都被其他作品夾住」的作品，移到中間空間的正中央，
@@ -197,7 +226,7 @@ const layout = () => {
   if (!W) return;
   const D = bandOf(W);
   const items = visibleItems();
-  const signature = `${D}|${items.map((el) => el.getAttribute("href")).join(",")}`;
+  const signature = `${D}|${items.map((el) => `${el.getAttribute("href")}#${el.dataset.wmIndex ?? 0}`).join(",")}`;
   if (signature === lastSignature) return;
   const bandChanged = currentBand && currentBand !== D;
   lastSignature = signature;

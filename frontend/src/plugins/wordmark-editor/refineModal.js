@@ -555,9 +555,13 @@ export function createRefineController(dialog, callbacks) {
   // 高對比 → 窄過渡（較銳、易鋸齒）；低對比 → 寬過渡（較柔、易出半透明底）。
   const SOFT_MIN = 6;
   const SOFT_MAX = 140;
+  // 已去背的原圖（字圖管理頁 item.preCut）：深淺全在透明度裡，柔和範圍放寬到整個亮度範圍，
+  // 對比度調到最低時幾乎原樣保留漸層
+  const SOFT_MAX_PRECUT = 300;
+  const softMax = () => (state?.item?.preCut ? SOFT_MAX_PRECUT : SOFT_MAX);
   function contrastToSoftness(contrastPct) {
     const t = Math.max(10, Math.min(100, contrastPct)) / 100;
-    return SOFT_MAX - t * (SOFT_MAX - SOFT_MIN);
+    return softMax() - t * (softMax() - SOFT_MIN);
   }
 
   // 依目前的 亮度風格(hard/soft) + 閾值 + 對比度 + 明暗 設定，重新計算亮度去背預覽（不含雜訊清理，速度優先）。
@@ -574,6 +578,7 @@ export function createRefineController(dialog, callbacks) {
             threshold,
             keepBright,
             softness: contrastToSoftness(Number(softContrastSlider.value)),
+            bgLum: state.item.preCutBg,
           })
         : autoLumExtract(state.item.sourceCanvas, { threshold, keepBright, minNoiseArea: 0 });
     // 字圖管理頁：畫面若還是「目前的字圖」（尺寸、位置和原圖對不上），
@@ -767,7 +772,12 @@ export function createRefineController(dialog, callbacks) {
       const threshold = Number(lumThreshSlider.value);
       state.working =
         lumStyle === 'soft'
-          ? autoLumExtractSoft(src, { threshold, keepBright, softness: contrastToSoftness(Number(softContrastSlider.value)) })
+          ? autoLumExtractSoft(src, {
+              threshold,
+              keepBright,
+              softness: contrastToSoftness(Number(softContrastSlider.value)),
+              bgLum: state.item.preCutBg,
+            })
           : autoLumExtract(src, { threshold, keepBright, minNoiseArea: 0 });
       // 位移換算成相對於 baseSourceDx/Dy，之後調整去背參數時才會沿用整張原圖的範圍
       cropOffsetX = -baseSourceDx;
@@ -954,7 +964,9 @@ export function createRefineController(dialog, callbacks) {
                 10,
                 Math.min(
                   100,
-                  ((SOFT_MAX - item.lastLumSoftness) / (SOFT_MAX - SOFT_MIN)) * 100,
+                  (((item.preCut ? SOFT_MAX_PRECUT : SOFT_MAX) - item.lastLumSoftness) /
+                    ((item.preCut ? SOFT_MAX_PRECUT : SOFT_MAX) - SOFT_MIN)) *
+                    100,
                 ),
               ),
             )

@@ -3,10 +3,12 @@
  * - GET  /__wordmarks             管理頁
  * - GET  /__wordmarks/editor      精修視窗（wordmark-editor/，以 iframe 疊在管理頁上）
  * - GET  /__wordmarks/api/list    所有作品的字圖資料
- * - POST /__wordmarks/api/update  修改 wordmark 欄位（reviewed / hidden / scale / chars）
- * - POST /__wordmarks/api/replace?slug=&ink=  上傳處理好的 webp，取代 wordmark.webp
- * - POST /__wordmarks/api/source?slug=  換圖時上傳的原始圖，存成 wordmark-source.webp，之後精修以它為原圖（不會進正式網站）
- * 寫回的是 src/content/projects/<slug>/index.md 的 wordmark 區塊與同資料夾的 wordmark.webp。
+ * - POST /__wordmarks/api/update  修改字圖欄位（hidden / scale / chars / redo / needsImage）
+ * - POST /__wordmarks/api/replace?slug=&v=&ink=  上傳處理好的 webp，取代該款字圖；v 等於現有款數時新增一款
+ * - POST /__wordmarks/api/source?slug=&v=  換圖時上傳的原始圖，存成 wordmark-source*.webp，之後精修以它為原圖（不會進正式網站）
+ * - POST /__wordmarks/api/remove  刪除其他款字圖（主字圖不能刪，只能隱藏）
+ * v 是第幾款：0 = 主字圖（index.md 的 wordmark 區塊、wordmark.webp），
+ * 1 起 = 其他款（extraWordmarks 清單、wordmark-2.webp、wordmark-3.webp…）。
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -49,14 +51,58 @@ function readWordmark(md) {
   }
   return out;
 }
+const ORDER = ["src", "source", "sourceImage", "accent", "ink", "chars", "size", "scale", "hidden", "redo", "needsImage", "reviewed"];
 function writeWordmark(md, fields) {
-  const order = ["src", "source", "sourceImage", "accent", "ink", "chars", "size", "scale", "hidden", "redo", "needsImage", "reviewed"];
-  const keys = [...order.filter((k) => k in fields), ...Object.keys(fields).filter((k) => !order.includes(k))];
+  const keys = [...ORDER.filter((k) => k in fields), ...Object.keys(fields).filter((k) => !ORDER.includes(k))];
   const block = `wordmark:\n${keys.map((k) => `  ${k}: ${JSON.stringify(fields[k])}\n`).join("")}`;
   if (BLOCK_RE.test(md)) return md.replace(BLOCK_RE, block);
   const end = md.indexOf("\n---", 4);
   return `${md.slice(0, end + 1)}${block}${md.slice(end + 1)}`;
 }
+// 其他款字圖：extraWordmarks 清單，每款一行「  - {JSON}」（YAML 的流式寫法）
+const EXTRA_RE = /^extraWordmarks:\n((?:[ \t]+.*\n)*)/m;
+function readExtras(md) {
+  const m = md.match(EXTRA_RE);
+  if (!m) return [];
+  return m[1]
+    .split("\n")
+    .map((line) => line.match(/^\s+-\s*(\{.*\})\s*$/)?.[1])
+    .filter(Boolean)
+    .map((j) => JSON.parse(j));
+}
+function writeExtras(md, list) {
+  const sorted = list.map((f) => Object.fromEntries([...ORDER.filter((k) => k in f), ...Object.keys(f).filter((k) => !ORDER.includes(k))].map((k) => [k, f[k]])));
+  const block = list.length ? `extraWordmarks:\n${sorted.map((f) => `  - ${JSON.stringify(f)}\n`).join("")}` : "";
+  if (EXTRA_RE.test(md)) return md.replace(EXTRA_RE, block);
+  if (!block) return md;
+  // 接在 wordmark 區塊後面；沒有的話放在 front matter 最後
+  const wm = md.match(BLOCK_RE);
+  if (wm) return md.replace(BLOCK_RE, `${wm[0]}${block}`);
+  const end = md.indexOf("\n---", 4);
+  return `${md.slice(0, end + 1)}${block}${md.slice(end + 1)}`;
+}
+// 讀寫第 v 款
+const readVariant = (md, v) => (v === 0 ? readWordmark(md) : (readExtras(md)[v - 1] ?? null));
+function writeVariant(md, v, fields) {
+  if (v === 0) return writeWordmark(md, fields);
+  const list = readExtras(md);
+  list[v - 1] = fields;
+  return writeExtras(md, list);
+}
+// 新增一款時的檔名：wordmark-2.webp、wordmark-3.webp…，挑沒用過的號碼
+function newExtraName(dir, md) {
+  const used = new Set(readExtras(md).map((f) => path.basename(f.src)));
+  for (let n = 2; ; n++) {
+    const name = `wordmark-${n}.webp`;
+    if (!used.has(name) && !fs.existsSync(path.join(dir, name))) return name;
+  }
+}
+const sourceNameOf = (file) => file.replace(/^wordmark/, "wordmark-source");
+const variantOf = (v) => {
+  const n = parseInt(v ?? "0", 10);
+  return Number.isInteger(n) && n >= 0 ? n : 0;
+};
+
 const frontValue = (md, key) => md.match(new RegExp(`^${key}:\\s*"?(.*?)"?\\s*$`, "m"))?.[1];
 const firstImage = (md) =>
   md.match(/^(?:thumbnail|image):\s*\n\s+src:\s*"?([^"\n]+)"?/m)?.[1] ??
@@ -70,28 +116,43 @@ function fallbackImage(slug) {
   return f ? `/projects/${slug}/${f}` : null;
 }
 
+// 管理頁的清單：每一款字圖是一筆（key = slug#v），其他款的標題加上「第 n 款」
 function listProjects() {
   return fs
     .readdirSync(contentProjects, { withFileTypes: true })
     .filter((d) => d.isDirectory() && fs.existsSync(path.join(contentProjects, d.name, "index.md")))
-    .map((d) => {
+    .flatMap((d) => {
       const slug = d.name;
-      const md = fs.readFileSync(path.join(contentProjects, slug, "index.md"), "utf8");
-      const wordmark = readWordmark(md);
-      const file = path.join(contentProjects, slug, "wordmark.webp");
-      const exists = fs.existsSync(file);
-      return {
+      const dir = path.join(contentProjects, slug);
+      const md = fs.readFileSync(path.join(dir, "index.md"), "utf8");
+      const mdTime = fs.statSync(path.join(dir, "index.md")).mtimeMs;
+      const title = frontValue(md, "title") ?? slug;
+      const base = {
         slug,
-        title: frontValue(md, "title") ?? slug,
+        title,
         date: frontValue(md, "pubDate") ?? "",
         // 原圖：作品資料登記的第一張圖；只有影片的作品（例如「讀字」）改用資料夾裡的 media_*.webp
         post: firstImage(md) ?? fallbackImage(slug),
-        wordmark,
-        size: exists ? webpSize(file) : null,
-        mtime: exists ? fs.statSync(file).mtimeMs : 0,
-        // 最近編輯：index.md 或字圖最後修改的時間（管理頁「最近編輯」排序用）
-        edited: Math.max(fs.statSync(path.join(contentProjects, slug, "index.md")).mtimeMs, exists ? fs.statSync(file).mtimeMs : 0),
       };
+      const variants = [readWordmark(md), ...readExtras(md)];
+      const total = variants.filter(Boolean).length;
+      return variants.map((wordmark, v) => {
+        const file = path.join(dir, wordmark?.src ? path.basename(wordmark.src) : "wordmark.webp");
+        const exists = fs.existsSync(file);
+        const mtime = exists ? fs.statSync(file).mtimeMs : 0;
+        return {
+          ...base,
+          key: `${slug}#${v}`,
+          v,
+          total,
+          file: path.basename(file),
+          wordmark,
+          size: exists ? webpSize(file) : null,
+          mtime,
+          // 最近編輯：index.md 或字圖最後修改的時間（管理頁「最近編輯」排序用）
+          edited: Math.max(mdTime, mtime),
+        };
+      });
     });
 }
 
@@ -144,19 +205,20 @@ export function wordmarkAdminPlugin() {
           if (req.method === "GET" && url.pathname === "/api/list") return send(res, 200, listProjects());
 
           if (req.method === "POST" && url.pathname === "/api/update") {
-            const { slug, fields } = JSON.parse((await readBody(req)).toString("utf8"));
+            const { slug, v: rawV, fields } = JSON.parse((await readBody(req)).toString("utf8"));
+            const v = variantOf(rawV);
             const dir = projectDir(slug);
             if (!dir) return send(res, 404, { error: "找不到作品" });
             const mdFile = path.join(dir, "index.md");
             const md = fs.readFileSync(mdFile, "utf8");
-            const current = readWordmark(md);
+            const current = readVariant(md, v);
             if (!current) return send(res, 400, { error: "這件作品還沒有字圖" });
-            for (const [k, v] of Object.entries(fields ?? {})) {
+            for (const [k, val] of Object.entries(fields ?? {})) {
               if (!EDITABLE.has(k)) continue;
-              if (v === null || v === false || (k === "scale" && v === 1)) delete current[k];
-              else current[k] = v;
+              if (val === null || val === false || (k === "scale" && val === 1)) delete current[k];
+              else current[k] = val;
             }
-            fs.writeFileSync(mdFile, writeWordmark(md, current));
+            fs.writeFileSync(mdFile, writeVariant(md, v, current));
             return send(res, 200, { ok: true, wordmark: current });
           }
 
@@ -168,11 +230,16 @@ export function wordmarkAdminPlugin() {
             if (body.toString("ascii", 0, 4) !== "RIFF" || body.toString("ascii", 8, 12) !== "WEBP") {
               return send(res, 400, { error: "需要 webp 圖檔" });
             }
-            fs.writeFileSync(path.join(dir, "wordmark.webp"), body);
+            const v = variantOf(url.searchParams.get("v"));
             const mdFile = path.join(dir, "index.md");
             const md = fs.readFileSync(mdFile, "utf8");
-            const current = readWordmark(md) ?? {};
-            current.src = `/projects/${slug}/wordmark.webp`;
+            const extras = readExtras(md);
+            if (v > extras.length + 1) return send(res, 400, { error: "款號不對" });
+            // v 等於現有款數：新增一款
+            const current = (v === 0 ? readWordmark(md) : extras[v - 1]) ?? {};
+            const name = v === 0 ? "wordmark.webp" : current.src ? path.basename(current.src) : newExtraName(dir, md);
+            fs.writeFileSync(path.join(dir, name), body);
+            current.src = `/projects/${slug}/${name}`;
             current.source = "cutout";
             const ink = parseFloat(url.searchParams.get("ink") ?? "");
             if (Number.isFinite(ink)) current.ink = Math.round(ink * 1000) / 1000;
@@ -180,8 +247,8 @@ export function wordmarkAdminPlugin() {
             delete current.redo;
             delete current.needsImage;
             delete current.reviewed;
-            fs.writeFileSync(mdFile, writeWordmark(md, current));
-            return send(res, 200, { ok: true, wordmark: current });
+            fs.writeFileSync(mdFile, writeVariant(md, v, current));
+            return send(res, 200, { ok: true, v, wordmark: current });
           }
           if (req.method === "POST" && url.pathname === "/api/source") {
             const slug = url.searchParams.get("slug");
@@ -191,14 +258,35 @@ export function wordmarkAdminPlugin() {
             if (body.toString("ascii", 0, 4) !== "RIFF" || body.toString("ascii", 8, 12) !== "WEBP") {
               return send(res, 400, { error: "需要 webp 圖檔" });
             }
-            fs.writeFileSync(path.join(dir, "wordmark-source.webp"), body);
+            const v = variantOf(url.searchParams.get("v"));
             const mdFile = path.join(dir, "index.md");
             const md = fs.readFileSync(mdFile, "utf8");
-            const current = readWordmark(md);
+            const current = readVariant(md, v);
             if (!current) return send(res, 400, { error: "這件作品還沒有字圖" });
-            current.sourceImage = `/projects/${slug}/wordmark-source.webp`;
-            fs.writeFileSync(mdFile, writeWordmark(md, current));
+            // 原始圖跟著字圖檔名：wordmark.webp → wordmark-source.webp、wordmark-2.webp → wordmark-source-2.webp
+            const name = sourceNameOf(path.basename(current.src));
+            fs.writeFileSync(path.join(dir, name), body);
+            current.sourceImage = `/projects/${slug}/${name}`;
+            fs.writeFileSync(mdFile, writeVariant(md, v, current));
             return send(res, 200, { ok: true, wordmark: current });
+          }
+          if (req.method === "POST" && url.pathname === "/api/remove") {
+            const { slug, v: rawV } = JSON.parse((await readBody(req)).toString("utf8"));
+            const v = variantOf(rawV);
+            const dir = projectDir(slug);
+            if (!dir) return send(res, 404, { error: "找不到作品" });
+            if (v === 0) return send(res, 400, { error: "主字圖不能刪除，只能隱藏" });
+            const mdFile = path.join(dir, "index.md");
+            const md = fs.readFileSync(mdFile, "utf8");
+            const list = readExtras(md);
+            const [gone] = list.splice(v - 1, 1);
+            if (!gone) return send(res, 404, { error: "找不到這一款" });
+            fs.writeFileSync(mdFile, writeExtras(md, list));
+            for (const f of [gone.src, gone.sourceImage]) {
+              const file = f && path.join(dir, path.basename(f));
+              if (file && fs.existsSync(file)) fs.rmSync(file);
+            }
+            return send(res, 200, { ok: true });
           }
           send(res, 404, { error: "not found" });
         } catch (err) {

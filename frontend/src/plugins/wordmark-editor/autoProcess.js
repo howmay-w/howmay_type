@@ -33,7 +33,7 @@ export function fullAutoProcess(sourceCanvas, options = {}) {
     options.keepBright !== undefined
       ? options.keepBright
       : !detectNeedsInvert(sourceCanvas);
-  const raw = autoLumExtractSoft(sourceCanvas, { threshold, keepBright, softness });
+  const raw = autoLumExtractSoft(sourceCanvas, { threshold, keepBright, softness, bgLum: options.bgLum });
   // 保留智慧裁切前的版本，讓使用者之後可以在編輯介面一鍵還原（若誤裁掉想要的部分）
   const preTrim = trim ? trimTransparentRect(raw, padding) : { canvas: raw, dx: 0, dy: 0 };
   const preSmartCropCanvas = preTrim.canvas;
