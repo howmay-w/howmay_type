@@ -36,29 +36,56 @@ const applyView = (view) => {
 
 /*
  * 字牆上要排的作品：顯示中的卡片照順序，再把其他款字圖（data-wm-extra）穿插進去。
- * 其他款跟著所屬作品顯示或隱藏（搜尋、MORE 都只動卡片），並和本尊隔開一段距離，不會擠在一起。
+ * 其他款要散在整面牆、不和本尊擠在一起：每一款在「全部卡片的順序」裡分到一個隨機位置
+ * （把整個清單切成和款數一樣多段，每段裡隨機挑一個，且離本尊至少 EXTRA_APART 件），
+ * 等那個位置的卡片顯示出來（例如按 MORE 載入到那裡）就出現在它旁邊；本尊還沒載入也沒關係，點進去都是同一篇。
+ * 搜尋時：本尊被篩掉，其他款也不出現；本尊符合但那個位置的卡片被篩掉，就改排在本尊後面幾件。
  */
+const EXTRA_APART = 6;
+// 由字串算出 0–1 的固定亂數：同一款每次都落在同一個位置（卡片順序本身已經是隨機或依日期）
+const hash01 = (str) => {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619);
+  return ((h >>> 0) % 100000) / 100000;
+};
+const byOrder = (a, b) => (parseInt(a.style.order) || 0) - (parseInt(b.style.order) || 0);
 const visibleItems = () => {
   const children = Array.from(grid.children);
-  const cards = children
-    .filter((el) => !el.hasAttribute("data-wm-extra") && el.hasAttribute("data-wordmark") && getComputedStyle(el).display !== "none")
-    .sort((a, b) => (parseInt(a.style.order) || 0) - (parseInt(b.style.order) || 0));
-  const at = new Map(cards.map((el, i) => [el.getAttribute("href"), i]));
+  const all = children.filter((el) => !el.hasAttribute("data-wm-extra")).sort(byOrder);
+  const shown = (el) => el.hasAttribute("data-wordmark") && getComputedStyle(el).display !== "none";
+  const cards = all.filter(shown);
+  const at = new Map(cards.map((el, i) => [el, i]));
+  // 只在有字圖的卡片之間挑位置（沒有字圖的卡片不會出現在字牆）
+  const pool = all.filter((el) => el.hasAttribute("data-wordmark"));
+  const poolAt = new Map(pool.map((el, i) => [el.getAttribute("href"), i]));
+  const byHref = new Map(all.map((el) => [el.getAttribute("href"), el]));
   const extras = children.filter((el) => el.hasAttribute("data-wm-extra"));
-  const byCard = new Map();
-  for (const el of extras) {
-    const on = at.has(el.dataset.wmExtra);
-    el.toggleAttribute("data-wm-on", on);
-    if (!on) continue;
-    const list = byCard.get(el.dataset.wmExtra) ?? [];
-    list.push(el);
-    byCard.set(el.dataset.wmExtra, list);
-  }
-  // 第 j 款排在本尊後面 j × spread 的位置：把本尊之後的作品平均分給各款，至少隔 4 件
+  const count = new Map();
+  for (const el of extras) count.set(el.dataset.wmExtra, (count.get(el.dataset.wmExtra) ?? 0) + 1);
   const keyed = cards.map((el, i) => ({ el, key: i }));
-  for (const [href, list] of byCard) {
-    const spread = Math.max(4, Math.floor((cards.length - at.get(href)) / (list.length + 1)));
-    list.forEach((el, j) => keyed.push({ el, key: at.get(href) + (j + 1) * spread + 0.5 }));
+  for (const el of extras) {
+    const href = el.dataset.wmExtra;
+    const parent = byHref.get(href);
+    let key = null;
+    // 本尊被搜尋篩掉（隱藏但不是「還沒載入」）時，其他款也不出現
+    const parentFiltered = !parent || (!at.has(parent) && !parent.hasAttribute("data-deferred"));
+    if (!parentFiltered) {
+      const n = count.get(href);
+      const j = (parseInt(el.dataset.wmIndex) || 1) - 1;
+      const home = poolAt.get(href);
+      // 第 j 段裡的隨機位置；太靠近本尊就往後挪
+      let v = Math.floor(((j + hash01(`${href}#${j}`)) / n) * pool.length);
+      if (Math.abs(v - home) < EXTRA_APART) v = (home + EXTRA_APART + j) % pool.length;
+      const target = pool[v];
+      if (target && at.has(target)) key = at.get(target) + 0.5;
+      else if (target && !target.hasAttribute("data-deferred") && at.has(parent)) {
+        // 被搜尋篩掉：排在本尊後面，各款之間隔開
+        key = at.get(parent) + (j + 1) * Math.max(3, Math.floor((cards.length - at.get(parent)) / (n + 1))) + 0.5;
+      }
+      // 其餘（那個位置的卡片還沒載入）：先不顯示，載入到那裡時才出現
+    }
+    el.toggleAttribute("data-wm-on", key !== null);
+    if (key !== null) keyed.push({ el, key });
   }
   return keyed.sort((a, b) => a.key - b.key).map((x) => x.el);
 };
@@ -112,7 +139,7 @@ const createPacker = (D) => {
   const pitch = colW + gap;
   const spanOf = (k) => k * colW + (k - 1) * gap;
   let rows = 512;
-  // 0 = 空、1 = 已放作品、2 = 放不下任何作品而留白
+  // 0 = 空、1 = 已放作品、2 = 放不下任何作品而留白、3 = 整排置中後讓出的空位（之後的作品不能放）
   let occ = new Uint8Array(N * rows);
   const grow = () => {
     const o = new Uint8Array(N * rows * 2);
@@ -122,7 +149,7 @@ const createPacker = (D) => {
   };
   const free = (r, c, k, ch) => {
     while (r + ch > rows) grow();
-    for (let rr = r; rr < r + ch; rr++) for (let cc = c; cc < c + k; cc++) if (occ[rr * N + cc] === 1) return false;
+    for (let rr = r; rr < r + ch; rr++) for (let cc = c; cc < c + k; cc++) if (occ[rr * N + cc] & 1) return false;
     return true;
   };
   const fill = (p, v) => {
@@ -163,7 +190,7 @@ const createPacker = (D) => {
       let up = Infinity;
       for (let cc = p.c0; cc < p.c0 + p.k; cc++) {
         let n = 0;
-        while (p.r0 - n - 1 >= 0 && occ[(p.r0 - n - 1) * N + cc] !== 1) n++;
+        while (p.r0 - n - 1 >= 0 && !(occ[(p.r0 - n - 1) * N + cc] & 1)) n++;
         up = Math.min(up, n);
       }
       let best = null;
@@ -215,17 +242,56 @@ const createPacker = (D) => {
       for (let rr = p.r0; rr < p.r0 + p.ch; rr++) {
         let l = 0;
         let c = p.c0 - 1;
-        for (; c >= 0 && occ[rr * N + c] !== 1; c--) l++;
+        for (; c >= 0 && !(occ[rr * N + c] & 1); c--) l++;
         if (c < 0) openEdge = true;
         let r = 0;
         c = p.c0 + p.k;
-        for (; c < N && occ[rr * N + c] !== 1; c++) r++;
+        for (; c < N && !(occ[rr * N + c] & 1); c++) r++;
         if (c >= N) openEdge = true;
         left = Math.min(left, l);
         right = Math.min(right, r);
       }
       if (openEdge) continue;
       p.x += ((right - left) / 2) * pitch;
+    }
+  };
+
+  // 手機版：一排填不滿時置中。手機常是兩欄交錯排列，沒有整齊的「一排」可以整組平移，
+  // 所以讓每件作品依左右實際的空間各自往中間調整，重複幾輪到穩定：
+  // 左右的障礙是同一高度的其他作品（保持標準間距）或邊界；靠邊界那側分到兩倍的空白，
+  // 結果是左右留白相等、作品之間的間距只略為加大。已排好（凍結）的作品不動，只當障礙。
+  const centerRows = (movable) => {
+    const rowsOverlap = (a, b) => a.r0 < b.r0 + b.ch && b.r0 < a.r0 + a.ch;
+    const neighbors = new Map(movable.map((p) => [p, placed.filter((q) => q !== p && rowsOverlap(p, q))]));
+    for (let iter = 0; iter < 24; iter++) {
+      let moved = 0;
+      for (const p of movable) {
+        let lb = 0;
+        let rb = D;
+        let lw = 2;
+        let rw = 2;
+        for (const q of neighbors.get(p)) {
+          if (q.x + q.w <= p.x + 0.5 && q.x + q.w + gap > lb) {
+            lb = q.x + q.w + gap;
+            lw = 1;
+          } else if (q.x >= p.x + p.w - 0.5 && q.x - gap < rb) {
+            rb = q.x - gap;
+            rw = 1;
+          }
+        }
+        const slack = rb - lb - p.w;
+        if (slack <= 0) continue;
+        const x = lb + (slack * lw) / (lw + rw);
+        moved = Math.max(moved, Math.abs(x - p.x));
+        p.x = x;
+      }
+      if (moved < 0.5) break;
+    }
+    // 作品畫面上移離了原本的欄位：把現在佔到的欄（含標準間距）保留起來，之後（例如 MORE）的作品不能放進去
+    for (const p of movable) {
+      const c0 = Math.max(0, Math.floor(p.x / pitch));
+      const c1 = Math.min(N - 1, Math.ceil((p.x + p.w + gap) / pitch) - 1);
+      for (let rr = p.r0; rr < p.r0 + p.ch; rr++) for (let cc = c0; cc <= c1; cc++) if (!(occ[rr * N + cc] & 1)) occ[rr * N + cc] = 3;
     }
   };
 
@@ -321,7 +387,8 @@ const createPacker = (D) => {
     }
     const fresh = placed.slice(frozen);
     growIntoGaps(fresh);
-    centerBetween(fresh);
+    if (D < 480) centerRows(fresh);
+    else centerBetween(fresh);
     const height = placed.reduce((mx, p) => Math.max(mx, p.y + p.h), 0) || 1;
     return { placed, height };
   };
