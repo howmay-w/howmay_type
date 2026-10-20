@@ -30,7 +30,6 @@ wordmark:
   source: "cutout"
   accent: "#e13c71"
   ink: 0.238
-  scale: 1.15
 ---
 
 想做的事情好多，\

@@ -31,7 +31,6 @@ wordmark:
   accent: "#097680"
   ink: 0.306
   chars: 4
-  scale: 1.1
 ---
 
 這個月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 題目很有趣ㄛ！要先抽選大家出題的特色歐文字型，以它為靈感來創作漢字。\

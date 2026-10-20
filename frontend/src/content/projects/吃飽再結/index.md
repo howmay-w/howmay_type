@@ -30,7 +30,6 @@ wordmark:
   source: "cutout"
   accent: "#c34d24"
   ink: 0.573
-  scale: 0.95
 ---
 
 最近去幾家小吃店，老闆都說「吃飽再結」。

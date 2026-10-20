@@ -32,7 +32,6 @@ wordmark:
   source: "cutout"
   accent: "#b42ee7"
   ink: 0.385
-  scale: 1.25
 ---
 
 跟大家分享男友的活該故事：

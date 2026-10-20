@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#1384dc"
   ink: 0.427
-  scale: 1.3
 ---
 
 隨著長大見識越來越多，\

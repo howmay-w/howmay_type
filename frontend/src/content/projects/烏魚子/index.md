@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#b8923e"
   ink: 0.226
-  scale: 1.1
 ---
 
 沒吃到烏魚子，就好像沒過到年。

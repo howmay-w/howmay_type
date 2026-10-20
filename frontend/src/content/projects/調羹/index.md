@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#d6a84f"
   ink: 0.484
-  scale: 1.2
 ---
 
 長大以後才發現別人家的湯匙都不叫做「調羹」，大驚訝:o

@@ -36,7 +36,6 @@ wordmark:
   sourceImage: "/projects/花/wordmark-source.webp"
   accent: "#8d8bca"
   ink: 0.161
-  scale: 1.55
 ---
 
 今天洗澡時突然想試試看，\

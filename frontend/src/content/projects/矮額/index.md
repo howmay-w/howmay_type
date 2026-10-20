@@ -30,7 +30,6 @@ wordmark:
   source: "cutout"
   accent: "#8a37d1"
   ink: 0.669
-  scale: 1.3
 ---
 
 喜歡這種大家都會說，\

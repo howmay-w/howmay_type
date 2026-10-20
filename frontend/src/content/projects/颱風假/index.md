@@ -30,7 +30,6 @@ wordmark:
   source: "cutout"
   accent: "#568eb5"
   ink: 0.596
-  scale: 1.05
 ---
 
 突然獲得兩天颱風假令人心情複雜。

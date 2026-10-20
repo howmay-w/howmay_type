@@ -32,7 +32,6 @@ wordmark:
   source: "cutout"
   accent: "#3a3f81"
   ink: 0.282
-  scale: 1.15
 ---
 
 我家的貓貓 be like:

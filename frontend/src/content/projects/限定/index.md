@@ -34,7 +34,6 @@ wordmark:
   source: "cutout"
   accent: "#322162"
   ink: 0.615
-  scale: 1.1
 ---
 
 讓商品變得吸引人的魔法🪄

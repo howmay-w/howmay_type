@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#ee624f"
   ink: 0.324
-  scale: 1.05
 ---
 
 最近是忙碌ㄉ日子，水深不深不曉得，但肯定很熱。\

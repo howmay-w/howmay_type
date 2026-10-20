@@ -32,7 +32,6 @@ wordmark:
   source: "cutout"
   accent: "#6d7fe1"
   ink: 0.369
-  scale: 1.2
 ---
 
 今年 24 歲，依然叫我爸「爸比」。

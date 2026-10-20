@@ -20,7 +20,6 @@ wordmark:
   source: "cutout"
   accent: "#e99f1b"
   ink: 0.323
-  scale: 1.15
 ---
 
 沒人教，但全世界都叫他大笨鳥。

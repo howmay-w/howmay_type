@@ -33,9 +33,7 @@ wordmark:
   src: "/projects/好難/wordmark.webp"
   source: "cutout"
   accent: "#f15d5e"
-  ink: 0.128
-  scale: 1.65
-  reviewed: true
+  ink: 0.328
 ---
 
 最近在準備考英文檢定，好難喔🥲

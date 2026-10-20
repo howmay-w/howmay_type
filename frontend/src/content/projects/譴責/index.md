@@ -32,7 +32,6 @@ wordmark:
   source: "cutout"
   accent: "#f783cc"
   ink: 0.428
-  scale: 1.25
 ---
 
 前幾天說好要約會，結果男友沒有設定鬧鐘，\

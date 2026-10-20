@@ -28,7 +28,6 @@ wordmark:
   source: "auto"
   accent: "#e55e7e"
   ink: 0.27
-  scale: 1.2
   reviewed: true
 ---
 

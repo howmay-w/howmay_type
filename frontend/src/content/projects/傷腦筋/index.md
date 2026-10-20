@@ -21,7 +21,6 @@ wordmark:
   sourceImage: "/projects/傷腦筋/wordmark-source.webp"
   accent: "#b23e40"
   ink: 0.264
-  scale: 1.25
 ---
 
 明天就要 25 歲了，傷腦筋😵‍💫

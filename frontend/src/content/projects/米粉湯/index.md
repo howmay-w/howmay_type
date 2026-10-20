@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#405f7f"
   ink: 0.139
-  scale: 0.9
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題與新字體 [#日花](https://www.instagram.com/explore/search/keyword/?q=%23%E6%97%A5%E8%8A%B1) 連動，要以歷史上出現過的文字造型為靈感，畫出家鄉的土產。對台北人來說有點困難ㄚ，最後畫了跟土產應該算擦邊球的米粉湯。

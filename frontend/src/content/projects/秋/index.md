@@ -15,7 +15,6 @@ wordmark:
   source: "auto"
   accent: "#3d31da"
   ink: 0.334
-  scale: 1.2
   reviewed: true
 ---
 

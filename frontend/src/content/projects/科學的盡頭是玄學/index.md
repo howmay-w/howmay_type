@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#055a3d"
   ink: 0.339
-  scale: 0.75
 ---
 
 雖然知道不一定是這樣，

@@ -29,7 +29,6 @@ wordmark:
   sourceImage: "/projects/喔某/wordmark-source.webp"
   accent: "#065670"
   ink: 0.358
-  scale: 1.35
 ---
 
 最近莫名很常看到，但我韓劇好像看太少ㄌ，還特別去查才知道意思🥲

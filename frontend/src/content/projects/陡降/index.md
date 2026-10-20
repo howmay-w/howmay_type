@@ -34,7 +34,6 @@ wordmark:
   source: "cutout"
   accent: "#1d432a"
   ink: 0.324
-  scale: 1.1
 ---
 
 雖然有沒有到真的很冷，但總覺得氣溫降ㄉ太突然ㄌ，身體反應不過來🥲

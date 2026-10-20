@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#4981f0"
   ink: 0.523
-  scale: 1.15
 ---
 
 覺得「硬要」是個有趣而有畫面感的詞。\

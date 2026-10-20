@@ -26,10 +26,9 @@ wordmark:
   source: "cutout"
   accent: "#da9806"
   ink: 0.114
-  scale: 1.35
   reviewed: true
 extraWordmarks:
-  - {"src":"/projects/翹課/wordmark-2.webp","source":"cutout","sourceImage":"/projects/翹課/wordmark-source-2.webp","ink":0.374,"scale":1.2}
+  - {"src":"/projects/翹課/wordmark-2.webp","source":"cutout","sourceImage":"/projects/翹課/wordmark-source-2.webp","ink":0.374}
 ---
 
 明天⋯不可能⋯\

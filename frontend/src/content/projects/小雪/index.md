@@ -35,7 +35,6 @@ wordmark:
   sourceImage: "/projects/小雪/wordmark-source.webp"
   accent: "#60879e"
   ink: 0.162
-  scale: 1.2
 ---
 
 賺到好幾天好天氣，今天才開始感覺到涼意。剛好適合上個月遲發的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) ：小雪。

@@ -20,6 +20,7 @@ wordmark:
   source: "cutout"
   accent: "#a8b4e4"
   ink: 0.14
+  chars: 4.5
   reviewed: true
 ---
 

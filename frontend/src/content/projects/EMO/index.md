@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#32b720"
   ink: 0.596
-  scale: 1.25
 ---
 
 又下雨ㄌ

@@ -34,7 +34,6 @@ wordmark:
   source: "cutout"
   accent: "#432682"
   ink: 0.382
-  scale: 1.15
 ---
 
 台北換季沒在跟你拖拖拉拉，\

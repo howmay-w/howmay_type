@@ -24,7 +24,6 @@ wordmark:
   source: "cutout"
   accent: "#c70218"
   ink: 0.408
-  scale: 1.25
 ---
 
 聽學術倫理講座時畫ㄉ\

@@ -34,7 +34,6 @@ wordmark:
   source: "cutout"
   accent: "#4850bc"
   ink: 0.552
-  scale: 1.15
 ---
 
 有時會不自覺想到，人生就是趟會不斷失去心愛人事物的旅程，好孤獨ㄛ。

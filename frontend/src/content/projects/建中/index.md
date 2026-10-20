@@ -22,7 +22,6 @@ wordmark:
   source: "cutout"
   accent: "#c8bc88"
   ink: 0.19
-  scale: 1.1
 ---
 
 歡迎大家祝我男友生日快樂（是本名）（對ㄉ，他也剛好有從建中畢業）

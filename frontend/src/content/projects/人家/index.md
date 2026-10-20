@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#1096aa"
   ink: 0.49
-  scale: 1.15
 ---
 
 覺得「人家」也是個有趣的詞。\

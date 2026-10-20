@@ -20,7 +20,6 @@ wordmark:
   source: "cutout"
   accent: "#da3995"
   ink: 0.176
-  scale: 1.2
 ---
 
 試著用限動做字✨

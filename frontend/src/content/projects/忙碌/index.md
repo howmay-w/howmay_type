@@ -30,7 +30,6 @@ wordmark:
   source: "cutout"
   accent: "#2f57d5"
   ink: 0.669
-  scale: 1.25
 ---
 
 最近少發文，因為真的好忙好忙ㄛ。

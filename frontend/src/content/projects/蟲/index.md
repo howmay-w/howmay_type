@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#011e02"
   ink: 0.303
-  scale: 1.25
 ---
 
 6 月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是部件組字。重複的形狀因為意義堆疊成字，是小時候學漢字最先能感受到的有趣之處。

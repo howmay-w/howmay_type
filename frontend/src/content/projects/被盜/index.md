@@ -30,7 +30,6 @@ wordmark:
   source: "cutout"
   accent: "#c7262d"
   ink: 0.238
-  scale: 1.2
 ---
 
 跟大家說一件前陣子有點心煩的事情，\

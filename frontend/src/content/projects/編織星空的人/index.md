@@ -27,7 +27,7 @@ wordmark:
   sourceImage: "/projects/編織星空的人/wordmark-source.webp"
   accent: "#bbb471"
   ink: 0.029
-  scale: 0.9
+  chars: 0.5
 ---
 
 🎶用一顆孩子的心，在大人世界生存🎶\

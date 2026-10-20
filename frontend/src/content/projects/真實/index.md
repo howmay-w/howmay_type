@@ -23,7 +23,6 @@ wordmark:
   sourceImage: "/projects/真實/wordmark-source.webp"
   accent: "#bc603a"
   ink: 0.387
-  scale: 1.25
 ---
 
 大學時，攝影老師總讓我們重複練習「Cropping」（或正是所謂的 framing）：要學會排除雜訊，保留概念、保留美。

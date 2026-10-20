@@ -35,7 +35,6 @@ wordmark:
   sourceImage: "/projects/有料/wordmark-source.webp"
   accent: "#069b8f"
   ink: 0.797
-  scale: 1.1
 ---
 
 想大力稱讚，但又怕多講多錯時，就可以使用「有料」。\

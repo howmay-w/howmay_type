@@ -33,7 +33,6 @@ wordmark:
   sourceImage: "/projects/分手快樂/wordmark-source.webp"
   accent: "#c65d85"
   ink: 0.277
-  scale: 1.2
 ---
 
 某位觀眾的點字，\

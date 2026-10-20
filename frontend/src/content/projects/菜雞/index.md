@@ -32,7 +32,6 @@ wordmark:
   source: "cutout"
   accent: "#850c13"
   ink: 0.419
-  scale: 1.1
 ---
 
 Me.

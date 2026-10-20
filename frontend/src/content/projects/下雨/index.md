@@ -35,7 +35,8 @@ wordmark:
   sourceImage: "/projects/下雨/wordmark-source.webp"
   accent: "#5b81fa"
   ink: 0.641
-  scale: 1.2
+  chars: 1
+  scale: 1.05
 ---
 
 下班又忘記帶傘ㄌ，傷腦筋。\

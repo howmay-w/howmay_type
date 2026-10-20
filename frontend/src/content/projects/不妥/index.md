@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#3da544"
   ink: 0.583
-  scale: 1.15
 ---
 
 文雅委婉版本的「不好、不要、不可以、不 ok」，覺得聽起來很高級。\

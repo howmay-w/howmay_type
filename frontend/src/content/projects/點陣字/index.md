@@ -36,16 +36,15 @@ wordmark:
   accent: "#eacd43"
   ink: 0.6
   chars: 1
-  scale: 0.95
 extraWordmarks:
-  - {"src":"/projects/點陣字/wordmark-2.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-2.webp","ink":0.597,"chars":1,"scale":0.9}
-  - {"src":"/projects/點陣字/wordmark-3.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-3.webp","ink":0.679,"chars":1,"scale":0.85}
-  - {"src":"/projects/點陣字/wordmark-4.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-4.webp","ink":0.35,"chars":1,"scale":0.8}
-  - {"src":"/projects/點陣字/wordmark-5.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-5.webp","ink":0.534,"chars":1,"scale":0.9}
-  - {"src":"/projects/點陣字/wordmark-6.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-6.webp","ink":0.423,"chars":1,"scale":0.8}
-  - {"src":"/projects/點陣字/wordmark-7.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-7.webp","ink":0.257,"chars":1,"scale":0.85}
-  - {"src":"/projects/點陣字/wordmark-8.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-8.webp","ink":0.742,"chars":1,"scale":0.95}
-  - {"src":"/projects/點陣字/wordmark-9.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-9.webp","ink":0.587,"chars":1,"scale":0.9}
+  - {"src":"/projects/點陣字/wordmark-2.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-2.webp","ink":0.597,"chars":1}
+  - {"src":"/projects/點陣字/wordmark-3.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-3.webp","ink":0.679,"chars":1}
+  - {"src":"/projects/點陣字/wordmark-4.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-4.webp","ink":0.35,"chars":1}
+  - {"src":"/projects/點陣字/wordmark-5.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-5.webp","ink":0.534,"chars":1}
+  - {"src":"/projects/點陣字/wordmark-6.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-6.webp","ink":0.423,"chars":1}
+  - {"src":"/projects/點陣字/wordmark-7.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-7.webp","ink":0.257,"chars":1}
+  - {"src":"/projects/點陣字/wordmark-8.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-8.webp","ink":0.742,"chars":1}
+  - {"src":"/projects/點陣字/wordmark-9.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-9.webp","ink":0.587,"chars":1}
 ---
 
 我做了一個大家都可以玩ㄉ點陣字工具！

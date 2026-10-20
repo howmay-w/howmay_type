@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#9d0504"
   ink: 0.385
-  scale: 1.1
 ---
 
 喉嚨⋯痛痛ㄉ⋯⋯\

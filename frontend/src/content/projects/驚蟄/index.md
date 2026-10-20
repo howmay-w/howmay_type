@@ -24,7 +24,6 @@ wordmark:
   source: "cutout"
   accent: "#f5faae"
   ink: 0.232
-  scale: 1.15
 ---
 
 說好ㄉ回暖ㄋ？！

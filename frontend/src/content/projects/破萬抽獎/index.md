@@ -32,7 +32,7 @@ wordmark:
   source: "cutout"
   accent: "#ed696d"
   ink: 0.401
-  scale: 0.8
+  chars: 1
 ---
 
 ☘️自己賀破萬！來抽獎☘️

@@ -19,7 +19,6 @@ wordmark:
   source: "cutout"
   accent: "#522d5a"
   ink: 0.448
-  scale: 1.1
 ---
 
 你的手機應該沒有壞掉，應該📺\

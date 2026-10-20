@@ -29,7 +29,6 @@ wordmark:
   sourceImage: "/projects/寫日記/wordmark-source.webp"
   accent: "#c8a345"
   ink: 0.568
-  scale: 1.1
 ---
 
 這個月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 題目是「習慣」。我唯一比較自豪的習慣，是從高一開始，每天睡前都會花幾分鐘寫日記。

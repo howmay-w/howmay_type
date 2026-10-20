@@ -41,7 +41,6 @@ wordmark:
   sourceImage: "/projects/兔年即貓年/wordmark-source.webp"
   accent: "#bf306d"
   ink: 0.317
-  scale: 1.1
 ---
 
 冷知識：越南的兔年是貓年ㄛ！\

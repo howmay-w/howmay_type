@@ -30,7 +30,6 @@ wordmark:
   source: "cutout"
   accent: "#b7ab42"
   ink: 0.478
-  scale: 1.2
 ---
 
 感覺比起「繼續」，更常聽到大家講「句續」。

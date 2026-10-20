@@ -20,7 +20,6 @@ wordmark:
   sourceImage: "/projects/仙草/wordmark-source.webp"
   accent: "#eca208"
   ink: 0.523
-  scale: 1.15
 ---
 
 以仙草搭配 [@traditional_label_lab](https://www.instagram.com/traditional_label_lab/) 老師的奶茶！

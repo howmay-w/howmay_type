@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#568028"
   ink: 0.215
-  scale: 0.9
 ---
 
 這週去文博會！\

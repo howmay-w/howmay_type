@@ -32,7 +32,6 @@ wordmark:
   source: "cutout"
   accent: "#471f19"
   ink: 0.186
-  scale: 1.15
 ---
 
 今天去看了關於我和鬼變成家人的那件事（好長），也算是種有趣的怪談ㄅ。

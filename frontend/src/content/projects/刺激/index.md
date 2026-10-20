@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#4ba13b"
   ink: 0.266
-  scale: 1.45
 ---
 
 今天兩場都這麼刺激合理嗎？\

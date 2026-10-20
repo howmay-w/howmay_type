@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#5c1398"
   ink: 0.349
-  scale: 1.1
 ---
 
 世界總是充滿驚奇，例如前幾天看到的 AI 文字生成影片。

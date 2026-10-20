@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#077b54"
   ink: 0.499
-  scale: 0.95
 ---
 
 這幾天翻了一些十多年前的書，

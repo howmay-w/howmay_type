@@ -32,7 +32,6 @@ wordmark:
   source: "cutout"
   accent: "#b6340b"
   ink: 0.352
-  scale: 1.15
 ---
 
 這兩個禮拜在趕一個超複雜ㄉ資料，沒日沒夜，直到今天終於交了🫠可喜可賀嗚嗚

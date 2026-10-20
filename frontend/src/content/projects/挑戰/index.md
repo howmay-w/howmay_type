@@ -24,7 +24,7 @@ wordmark:
   source: "cutout"
   accent: "#31044a"
   ink: 0.292
-  scale: 1.25
+  scale: 1.35
 ---
 
 7 月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是抽歌曲畫字，並限制在 15 分鐘內完成，抽到珂拉琪〈這該死的拘執佮愛〉。

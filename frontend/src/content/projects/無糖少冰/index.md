@@ -20,7 +20,6 @@ wordmark:
   source: "cutout"
   accent: "#f6d56b"
   ink: 0.292
-  scale: 1.3
 ---
 
 ✨ 客製化自由！用 Beambox II 雷射切割機輕鬆將設計商品化

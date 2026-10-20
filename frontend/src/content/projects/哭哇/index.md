@@ -35,7 +35,6 @@ wordmark:
   sourceImage: "/projects/哭哇/wordmark-source.webp"
   accent: "#cfbd8d"
   ink: 0.227
-  scale: 1.25
 ---
 
 年前想說「過完年再說」的事，\

@@ -27,7 +27,6 @@ wordmark:
   sourceImage: "/projects/生氣/wordmark-source.webp"
   accent: "#e8685a"
   ink: 0.289
-  scale: 1.35
 ---
 
 發個積欠已久的 5 月 whatzurtype

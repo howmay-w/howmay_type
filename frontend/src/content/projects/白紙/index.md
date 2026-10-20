@@ -21,5 +21,4 @@ wordmark:
   sourceImage: "/projects/白紙/wordmark-source.webp"
   accent: "#1ec62d"
   ink: 0.752
-  scale: 1.4
 ---

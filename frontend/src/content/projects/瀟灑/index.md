@@ -30,7 +30,6 @@ wordmark:
   source: "cutout"
   accent: "#046f71"
   ink: 0.365
-  scale: 1.15
 ---
 
 我今天生日ㄛ！\

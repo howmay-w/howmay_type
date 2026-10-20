@@ -22,7 +22,6 @@ wordmark:
   source: "cutout"
   accent: "#045354"
   ink: 0.306
-  scale: 1.05
 ---
 
 現在享有，因為曾有人以命相搏。

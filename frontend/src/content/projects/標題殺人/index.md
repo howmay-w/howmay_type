@@ -34,7 +34,6 @@ wordmark:
   source: "cutout"
   accent: "#da3995"
   ink: 0.46
-  scale: 0.95
 ---
 
 俗諺說筆比劍更有力量，\

@@ -34,7 +34,6 @@ wordmark:
   source: "cutout"
   accent: "#e3a8e7"
   ink: 0.366
-  scale: 1.1
 ---
 
 到家了以後，就什摸都不想做 (´・ω・`)

@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#66e77f"
   ink: 0.676
-  scale: 1.1
 ---
 
 今天台北的天氣：

@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#053753"
   ink: 0.262
-  scale: 0.8
 ---
 
 冷到打字跟用滑鼠都不太順利，\

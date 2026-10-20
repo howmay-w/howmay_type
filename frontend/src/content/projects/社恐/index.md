@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   accent: "#50ae04"
   ink: 0.46
-  scale: 1.1
 ---
 
 覺得社恐比起一種性格，\

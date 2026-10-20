@@ -27,7 +27,6 @@ wordmark:
   sourceImage: "/projects/旅途愉快/wordmark-source.webp"
   accent: "#183a80"
   ink: 0.421
-  scale: 1.1
 ---
 
 搭車、搭飛機，我很喜歡聽到「祝您旅途愉快。」不論是錄音還是現場廣播。
