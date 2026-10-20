@@ -28,6 +28,7 @@ tags: ["magicstage","💖"]
 wordmark:
   src: "/projects/魔幻舞台/wordmark.webp"
   source: "cutout"
+  accent: "#e54d79"
   ink: 0.44
   scale: 1.05
   reviewed: true

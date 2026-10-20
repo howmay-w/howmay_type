@@ -26,6 +26,7 @@ tags: ["whatzurtype","eyetest","文博會","字字字設計串連","👓"]
 wordmark:
   src: "/projects/視力檢查/wordmark.webp"
   source: "cutout"
+  accent: "#568028"
   ink: 0.215
   scale: 0.9
 ---

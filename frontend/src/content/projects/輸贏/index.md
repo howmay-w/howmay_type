@@ -28,7 +28,7 @@ tags: ["su-iânn","🏅"]
 wordmark:
   src: "/projects/輸贏/wordmark.webp"
   source: "cutout"
-  accent: "#42332b"
+  accent: "#eb7f4c"
   ink: 0.353
   scale: 1.25
 ---

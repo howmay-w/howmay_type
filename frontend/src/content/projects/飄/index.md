@@ -28,6 +28,7 @@ tags: ["blowup", "🌬️"]
 wordmark:
   src: "/projects/飄/wordmark.webp"
   source: "cutout"
+  accent: "#e0a538"
   ink: 0.16
   scale: 1.6
   reviewed: true

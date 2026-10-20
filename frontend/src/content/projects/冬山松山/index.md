@@ -26,6 +26,8 @@ wordmark:
   sourceImage: "/projects/冬山松山/wordmark-source.webp"
   accent: "#e1903b"
   ink: 0.558
+extraWordmarks:
+  - {"src":"/projects/冬山松山/wordmark-2.webp","source":"cutout","sourceImage":"/projects/冬山松山/wordmark-source-2.webp","ink":0.502}
 ---
 
 🚂松山與冬山是我最常出沒的兩個火車站。名字剛好很接近，卻各有風景。

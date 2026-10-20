@@ -24,7 +24,7 @@ tags: ["distressed","哭","😵‍💫"]
 wordmark:
   src: "/projects/狼狽/wordmark.webp"
   source: "cutout"
-  accent: "#765957"
+  accent: "#440406"
   ink: 0.118
   scale: 1.25
   reviewed: true

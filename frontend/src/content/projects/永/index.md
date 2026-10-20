@@ -19,7 +19,7 @@ wordmark:
   src: "/projects/永/wordmark.webp"
   source: "cutout"
   accent: "#eca208"
-  ink: 0.172
+  ink: 0.171
   scale: 1.55
 ---
 

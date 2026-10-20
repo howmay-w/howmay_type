@@ -22,6 +22,7 @@ tags: ["museumoftears","鄭興","💧"]
 wordmark:
   src: "/projects/眼淚博物館/wordmark.webp"
   source: "cutout"
+  accent: "#7ca0fd"
   ink: 0.473
   scale: 1.1
   reviewed: true

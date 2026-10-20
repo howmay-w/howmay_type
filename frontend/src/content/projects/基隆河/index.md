@@ -33,7 +33,7 @@ wordmark:
   sourceImage: "/projects/基隆河/wordmark-source.webp"
   accent: "#0498fb"
   ink: 0.253
-  scale: 1.1
+  scale: 1.25
 ---
 
 這次 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 的挑戰是認領一條河！

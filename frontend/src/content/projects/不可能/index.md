@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/不可能/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/不可能/wordmark-source.webp"
+  accent: "#d80287"
   ink: 0.258
 ---
 

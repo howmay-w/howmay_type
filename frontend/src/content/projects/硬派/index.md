@@ -28,6 +28,7 @@ tags: ["hardcore","👹"]
 wordmark:
   src: "/projects/硬派/wordmark.webp"
   source: "cutout"
+  accent: "#fa6390"
   ink: 0.408
   scale: 1.2
   reviewed: true

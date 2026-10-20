@@ -21,6 +21,7 @@ wordmark:
   src: "/projects/真實/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/真實/wordmark-source.webp"
+  accent: "#bc603a"
   ink: 0.387
   scale: 1.25
 ---

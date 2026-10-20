@@ -30,7 +30,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/諧/wordmark-source.webp"
   accent: "#815716"
-  ink: 0.502
+  ink: 0.481
   scale: 1.1
 ---
 

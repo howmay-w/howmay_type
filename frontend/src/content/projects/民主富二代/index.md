@@ -16,10 +16,11 @@ video:
 hoverVideo:
   src: "/projects/民主富二代/video_0.mp4"
 pubDate: 2024-06-01
-tags: ["台灣","taiwan","青鳥","🧳"]
+tags: ["台灣","taiwan","青鳥","🧳","臺灣"]
 wordmark:
   src: "/projects/民主富二代/wordmark.webp"
   source: "cutout"
+  accent: "#045354"
   ink: 0.306
   scale: 1.05
 ---

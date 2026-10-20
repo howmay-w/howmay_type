@@ -22,6 +22,7 @@ hoverVideo:
 wordmark:
   src: "/projects/挑戰/wordmark.webp"
   source: "cutout"
+  accent: "#31044a"
   ink: 0.292
   scale: 1.25
 ---

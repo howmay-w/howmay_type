@@ -30,7 +30,7 @@ tags: ["好累", "拖延症", "賀", "抽獎"]
 wordmark:
   src: "/projects/破萬抽獎/wordmark.webp"
   source: "cutout"
-  accent: "#010100"
+  accent: "#ed696d"
   ink: 0.401
   scale: 0.8
 ---

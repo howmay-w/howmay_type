@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/喉嚨借過/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/喉嚨借過/wordmark-source.webp"
+  accent: "#994f4d"
   ink: 0.55
 ---
 

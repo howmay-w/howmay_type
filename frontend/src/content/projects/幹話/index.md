@@ -32,7 +32,8 @@ tags: ["talkingcrap","🙂‍↕️"]
 wordmark:
   src: "/projects/幹話/wordmark.webp"
   source: "cutout"
-  ink: 0.732
+  accent: "#738a44"
+  ink: 0.73
   scale: 1.35
 ---
 

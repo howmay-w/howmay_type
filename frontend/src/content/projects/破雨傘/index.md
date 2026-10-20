@@ -24,10 +24,11 @@ video:
 hoverVideo:
   src: "/projects/破雨傘/video_0.mp4"
 pubDate: 2024-09-30
-tags: ["whatzurtype","台灣字造：小屋裡的字體展","雨傘旗魚","雨笠仔","☔️"]
+tags: ["whatzurtype","台灣字造：小屋裡的字體展","雨傘旗魚","雨笠仔","☔️","台灣","臺灣"]
 wordmark:
   src: "/projects/破雨傘/wordmark.webp"
   source: "cutout"
+  accent: "#360259"
   ink: 0.645
   reviewed: true
 ---

@@ -25,6 +25,7 @@ tags: ["🤦"]
 wordmark:
   src: "/projects/防呆/wordmark.webp"
   source: "cutout"
+  accent: "#3e8f4b"
   ink: 0.611
   scale: 1.35
 ---

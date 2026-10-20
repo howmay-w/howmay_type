@@ -18,6 +18,7 @@ tags: ["diet","me","🤐"]
 wordmark:
   src: "/projects/忌食/wordmark.webp"
   source: "cutout"
+  accent: "#d43626"
   ink: 0.268
   scale: 1.25
 ---

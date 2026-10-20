@@ -24,7 +24,7 @@ tags: ["tense","⚾️"]
 wordmark:
   src: "/projects/刺激/wordmark.webp"
   source: "cutout"
-  accent: "#20271f"
+  accent: "#4ba13b"
   ink: 0.266
   scale: 1.45
 ---

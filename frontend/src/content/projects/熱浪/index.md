@@ -28,6 +28,7 @@ tags: ["heatwave","🫠"]
 wordmark:
   src: "/projects/熱浪/wordmark.webp"
   source: "cutout"
+  accent: "#4a62ed"
   ink: 0.329
   scale: 1.1
   reviewed: true

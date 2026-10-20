@@ -19,6 +19,7 @@ wordmark:
   src: "/projects/白紙/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/白紙/wordmark-source.webp"
+  accent: "#1ec62d"
   ink: 0.327
-  scale: 1.35
+  scale: 1.6
 ---

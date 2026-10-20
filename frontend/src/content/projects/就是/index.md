@@ -28,6 +28,7 @@ tags: ["well","🔄"]
 wordmark:
   src: "/projects/就是/wordmark.webp"
   source: "cutout"
+  accent: "#463586"
   ink: 0.139
   scale: 1.25
 ---

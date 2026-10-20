@@ -26,6 +26,7 @@ tags: ["inappropriate", "🤚"]
 wordmark:
   src: "/projects/不妥/wordmark.webp"
   source: "cutout"
+  accent: "#3da544"
   ink: 0.583
   scale: 1.15
 ---

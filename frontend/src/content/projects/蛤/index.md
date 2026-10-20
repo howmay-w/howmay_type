@@ -24,6 +24,7 @@ tags: ["clam","台灣文蛤","蛤蜊","🆕"]
 wordmark:
   src: "/projects/蛤/wordmark.webp"
   source: "cutout"
+  accent: "#68f9b1"
   ink: 0.424
   scale: 1.2
 ---

@@ -19,7 +19,7 @@ tags:
 wordmark:
   src: "/projects/金牛座/wordmark.webp"
   source: "cutout"
-  accent: "#2d2618"
+  accent: "#e2631b"
   ink: 0.287
   scale: 1.15
   reviewed: true

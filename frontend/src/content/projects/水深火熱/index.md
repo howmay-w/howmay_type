@@ -26,6 +26,7 @@ tags: ["indirestraits","toohot","🥵"]
 wordmark:
   src: "/projects/水深火熱/wordmark.webp"
   source: "cutout"
+  accent: "#ee624f"
   ink: 0.324
   scale: 1.05
 ---

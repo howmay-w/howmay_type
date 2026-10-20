@@ -22,6 +22,7 @@ tags: ["rebirth","點字","😌"]
 wordmark:
   src: "/projects/重生/wordmark.webp"
   source: "cutout"
+  accent: "#448f95"
   ink: 0.309
   scale: 1.35
 ---

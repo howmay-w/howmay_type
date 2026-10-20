@@ -28,8 +28,8 @@ tags: ["dramatic","🎭"]
 wordmark:
   src: "/projects/戲劇化/wordmark.webp"
   source: "cutout"
+  accent: "#e77131"
   ink: 0.231
-  scale: 1.25
 ---
 
 最近台北ㄉ天氣有點戲劇化🫠

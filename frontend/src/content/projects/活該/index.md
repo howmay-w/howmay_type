@@ -30,6 +30,7 @@ tags: ["學不乖","🤡"]
 wordmark:
   src: "/projects/活該/wordmark.webp"
   source: "cutout"
+  accent: "#b42ee7"
   ink: 0.385
   scale: 1.25
 ---

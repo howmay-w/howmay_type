@@ -24,6 +24,7 @@ tags: ["OMG","thanks"]
 wordmark:
   src: "/projects/竟然/wordmark.webp"
   source: "cutout"
+  accent: "#3497f0"
   ink: 0.48
   scale: 1.2
   reviewed: true

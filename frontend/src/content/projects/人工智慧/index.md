@@ -24,6 +24,7 @@ tags: ["whatzurtype","字字字設計串連","智慧","AI","🤖"]
 wordmark:
   src: "/projects/人工智慧/wordmark.webp"
   source: "cutout"
+  accent: "#aed9f2"
   ink: 0.281
   reviewed: true
 ---

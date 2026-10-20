@@ -26,8 +26,9 @@ tags: ["어머","😯"]
 wordmark:
   src: "/projects/喔某/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/喔某/wordmark-source.webp"
   accent: "#065670"
-  ink: 0.249
+  ink: 0.358
   scale: 1.35
 ---
 

@@ -24,6 +24,7 @@ tags: ["help","💥"]
 wordmark:
   src: "/projects/搶救/wordmark.webp"
   source: "cutout"
+  accent: "#a41409"
   ink: 0.186
   scale: 1.4
   reviewed: true

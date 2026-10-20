@@ -22,6 +22,7 @@ hoverVideo:
 wordmark:
   src: "/projects/電量焦慮/wordmark.webp"
   source: "cutout"
+  accent: "#06768e"
   ink: 0.385
 ---
 

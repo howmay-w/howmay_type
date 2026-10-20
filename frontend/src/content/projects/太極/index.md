@@ -24,6 +24,7 @@ tags: ["taichi","點字","☯️"]
 wordmark:
   src: "/projects/太極/wordmark.webp"
   source: "cutout"
+  accent: "#da6e5f"
   ink: 0.239
   scale: 1.15
   reviewed: true

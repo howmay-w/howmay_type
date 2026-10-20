@@ -13,7 +13,7 @@ tags: ["PlacesIveNeverBeen","🗺️"]
 wordmark:
   src: "/projects/沒去過的地方/wordmark.webp"
   source: "cutout"
-  accent: "#000101"
+  accent: "#3c9d87"
   ink: 0.444
   scale: 1.15
   hidden: true

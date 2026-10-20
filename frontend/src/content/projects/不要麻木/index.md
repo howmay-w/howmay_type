@@ -24,8 +24,9 @@ tags: ["😶"]
 wordmark:
   src: "/projects/不要麻木/wordmark.webp"
   source: "cutout"
+  accent: "#9c3407"
   ink: 0.409
-  scale: 1.1
+  scale: 1.05
 ---
 
 「請不要移開雙眼、不要停止思考、不要麻木不仁。」

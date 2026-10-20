@@ -32,6 +32,7 @@ tags: ["stayup","😵"]
 wordmark:
   src: "/projects/熬夜/wordmark.webp"
   source: "cutout"
+  accent: "#271242"
   ink: 0.204
   scale: 1.1
   reviewed: true

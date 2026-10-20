@@ -32,7 +32,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/四季春/wordmark-source.webp"
   accent: "#1f5618"
-  ink: 0.4
+  ink: 0.232
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是飲料／甜品基底，下個月再來加料。無糖茶派的我選了四季春。

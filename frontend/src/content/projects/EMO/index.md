@@ -24,6 +24,7 @@ tags: ["emo","🙂"]
 wordmark:
   src: "/projects/EMO/wordmark.webp"
   source: "cutout"
+  accent: "#32b720"
   ink: 0.596
   scale: 1.25
 ---

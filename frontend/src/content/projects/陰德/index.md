@@ -22,7 +22,7 @@ tags: ["cedit","fortune","⚖️"]
 wordmark:
   src: "/projects/陰德/wordmark.webp"
   source: "cutout"
-  accent: "#2a251d"
+  accent: "#bc8d21"
   ink: 0.593
   scale: 1.1
 ---

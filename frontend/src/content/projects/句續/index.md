@@ -28,6 +28,7 @@ tags: ["繼續","👀"]
 wordmark:
   src: "/projects/句續/wordmark.webp"
   source: "cutout"
+  accent: "#b7ab42"
   ink: 0.478
   scale: 1.2
 ---

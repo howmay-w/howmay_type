@@ -33,6 +33,7 @@ tags: ["漂亮","beautiful","AI","ML","reels"]
 wordmark:
   src: "/projects/漂釀/wordmark.webp"
   source: "cutout"
+  accent: "#d99ae8"
   ink: 0.295
   scale: 1.2
 ---

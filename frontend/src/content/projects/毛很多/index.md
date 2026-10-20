@@ -30,6 +30,7 @@ tags: ["highmaintenance.","🐱"]
 wordmark:
   src: "/projects/毛很多/wordmark.webp"
   source: "cutout"
+  accent: "#e87079"
   ink: 0.296
   reviewed: true
 ---

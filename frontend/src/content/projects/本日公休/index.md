@@ -30,6 +30,7 @@ tags: ["dayoff","🏖️"]
 wordmark:
   src: "/projects/本日公休/wordmark.webp"
   source: "cutout"
+  accent: "#e66221"
   ink: 0.577
 ---
 

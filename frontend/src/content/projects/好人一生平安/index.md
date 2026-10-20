@@ -30,6 +30,7 @@ tags: ["Allthebest","🙏"]
 wordmark:
   src: "/projects/好人一生平安/wordmark.webp"
   source: "cutout"
+  accent: "#0dd48a"
   ink: 0.447
   scale: 0.9
   reviewed: true

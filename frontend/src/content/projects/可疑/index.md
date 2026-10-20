@@ -29,6 +29,7 @@ wordmark:
   src: "/projects/可疑/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/可疑/wordmark-source.webp"
+  accent: "#e0c11d"
   ink: 0.418
 ---
 

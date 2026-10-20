@@ -26,6 +26,7 @@ tags: ["🤢"]
 wordmark:
   src: "/projects/吃壞肚子/wordmark.webp"
   source: "cutout"
+  accent: "#886433"
   ink: 0.31
   scale: 1.15
   reviewed: true

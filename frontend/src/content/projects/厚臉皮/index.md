@@ -22,6 +22,7 @@ tags: ["cheeky","🥸"]
 wordmark:
   src: "/projects/厚臉皮/wordmark.webp"
   source: "cutout"
+  accent: "#108704"
   ink: 0.525
   scale: 1.1
 ---

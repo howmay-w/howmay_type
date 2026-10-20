@@ -24,6 +24,7 @@ tags: ["金屬", "手繪特效", "3D", "👶"]
 wordmark:
   src: "/projects/高級大人/wordmark.webp"
   source: "cutout"
+  accent: "#342a73"
   ink: 0.151
   scale: 1.1
   reviewed: true

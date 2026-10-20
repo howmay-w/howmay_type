@@ -18,7 +18,7 @@ tags: ["黑冠麻鷺","地瓜鳥","山暗光","MalayanNightHeron","reels"]
 wordmark:
   src: "/projects/大笨鳥/wordmark.webp"
   source: "cutout"
-  accent: "#23262c"
+  accent: "#e99f1b"
   ink: 0.323
   scale: 1.15
 ---

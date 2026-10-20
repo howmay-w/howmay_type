@@ -22,6 +22,7 @@ tags: ["collapse","gif","loop","🔨"]
 wordmark:
   src: "/projects/瓦解/wordmark.webp"
   source: "cutout"
+  accent: "#c70218"
   ink: 0.408
   scale: 1.25
 ---

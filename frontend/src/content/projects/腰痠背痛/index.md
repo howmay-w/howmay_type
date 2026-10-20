@@ -28,6 +28,7 @@ tags: ["backpain","🩻"]
 wordmark:
   src: "/projects/腰痠背痛/wordmark.webp"
   source: "cutout"
+  accent: "#d19614"
   ink: 0.325
 ---
 

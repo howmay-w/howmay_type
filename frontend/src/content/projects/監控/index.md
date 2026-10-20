@@ -30,7 +30,8 @@ tags: ["surveillance","👁️"]
 wordmark:
   src: "/projects/監控/wordmark.webp"
   source: "cutout"
-  ink: 0.258
+  accent: "#3a3f81"
+  ink: 0.282
   scale: 1.15
 ---
 

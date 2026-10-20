@@ -24,6 +24,7 @@ tags: ["toocold","🥶"]
 wordmark:
   src: "/projects/天冷不適合做設計/wordmark.webp"
   source: "cutout"
+  accent: "#053753"
   ink: 0.262
   scale: 0.85
 ---

@@ -18,6 +18,7 @@ tags: ["開學了","🔒"]
 wordmark:
   src: "/projects/研究鎖/wordmark.webp"
   source: "cutout"
+  accent: "#afab01"
   ink: 0.392
   scale: 0.95
   reviewed: true

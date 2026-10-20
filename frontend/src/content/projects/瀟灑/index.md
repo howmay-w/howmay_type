@@ -28,6 +28,7 @@ tags: ["becool","🎂"]
 wordmark:
   src: "/projects/瀟灑/wordmark.webp"
   source: "cutout"
+  accent: "#046f71"
   ink: 0.365
   scale: 1.15
 ---

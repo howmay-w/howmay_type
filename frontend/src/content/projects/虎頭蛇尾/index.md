@@ -30,6 +30,7 @@ tags: ["🐯"]
 wordmark:
   src: "/projects/虎頭蛇尾/wordmark.webp"
   source: "cutout"
+  accent: "#2c8bb5"
   ink: 0.382
 ---
 

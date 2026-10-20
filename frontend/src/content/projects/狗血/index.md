@@ -26,6 +26,7 @@ tags: ["drama","🥃"]
 wordmark:
   src: "/projects/狗血/wordmark.webp"
   source: "cutout"
+  accent: "#1384dc"
   ink: 0.427
   scale: 1.3
 ---

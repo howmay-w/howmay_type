@@ -26,6 +26,7 @@ tags: ["itsokay","まあまあ","🉑"]
 wordmark:
   src: "/projects/還行/wordmark.webp"
   source: "cutout"
+  accent: "#3f935e"
   ink: 0.299
   scale: 1.2
 ---

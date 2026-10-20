@@ -22,6 +22,7 @@ tags: ["然後","andthen","👂"]
 wordmark:
   src: "/projects/拿後/wordmark.webp"
   source: "cutout"
+  accent: "#049ab0"
   ink: 0.415
   scale: 1.2
   reviewed: true

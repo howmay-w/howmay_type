@@ -32,8 +32,9 @@ tags: ["Burning","🔥"]
 wordmark:
   src: "/projects/燒/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/燒/wordmark-source.webp"
   accent: "#c74627"
-  ink: 0.19
+  ink: 0.206
   scale: 1.6
 ---
 

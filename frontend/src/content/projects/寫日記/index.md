@@ -27,6 +27,7 @@ wordmark:
   src: "/projects/寫日記/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/寫日記/wordmark-source.webp"
+  accent: "#c8a345"
   ink: 0.568
   scale: 1.1
 ---

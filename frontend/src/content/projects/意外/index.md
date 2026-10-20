@@ -24,6 +24,7 @@ tags: ["Serendipity","🧳"]
 wordmark:
   src: "/projects/意外/wordmark.webp"
   source: "cutout"
+  accent: "#9e4128"
   ink: 0.52
   scale: 1.3
   reviewed: true

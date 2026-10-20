@@ -28,7 +28,7 @@ tags: ["tradeoff","💱"]
 wordmark:
   src: "/projects/取捨/wordmark.webp"
   source: "cutout"
-  accent: "#040203"
+  accent: "#e13c71"
   ink: 0.238
   scale: 1.15
 ---

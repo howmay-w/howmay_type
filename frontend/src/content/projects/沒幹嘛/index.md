@@ -20,6 +20,7 @@ tags: ["nothing", "3D", "🫤"]
 wordmark:
   src: "/projects/沒幹嘛/wordmark.webp"
   source: "cutout"
+  accent: "#562ca6"
   ink: 0.352
   scale: 1.75
 ---

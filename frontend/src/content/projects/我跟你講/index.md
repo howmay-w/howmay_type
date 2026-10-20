@@ -32,6 +32,7 @@ tags: ["LetMeTellYou","🤗"]
 wordmark:
   src: "/projects/我跟你講/wordmark.webp"
   source: "cutout"
+  accent: "#07bd86"
   ink: 0.077
   scale: 1.1
   reviewed: true

@@ -28,6 +28,7 @@ tags: ["whatzurtype","journey","字字字設計串連","✈️"]
 wordmark:
   src: "/projects/旅行/wordmark.webp"
   source: "cutout"
+  accent: "#097680"
   ink: 0.306
 ---
 

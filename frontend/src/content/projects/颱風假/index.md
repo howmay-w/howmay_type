@@ -28,8 +28,9 @@ tags: ["typhoondayoff","🌀"]
 wordmark:
   src: "/projects/颱風假/wordmark.webp"
   source: "cutout"
+  accent: "#568eb5"
   ink: 0.596
-  scale: 1.15
+  scale: 1.05
 ---
 
 突然獲得兩天颱風假令人心情複雜。

@@ -26,7 +26,7 @@ video:
 hoverVideo:
   src: "/projects/勇敢/video_0.mp4"
 pubDate: 2023-06-26
-tags: ["brave","🌻"]
+tags: ["brave","🌻","台灣","臺灣"]
 wordmark:
   src: "/projects/勇敢/wordmark.webp"
   source: "cutout"

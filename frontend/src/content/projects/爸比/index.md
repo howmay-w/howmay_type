@@ -30,6 +30,7 @@ tags: ["daddy","fathersday","🐲"]
 wordmark:
   src: "/projects/爸比/wordmark.webp"
   source: "cutout"
+  accent: "#6d7fe1"
   ink: 0.369
   scale: 1.2
 ---

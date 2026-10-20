@@ -26,6 +26,7 @@ tags: ["airplane","✈️"]
 wordmark:
   src: "/projects/艾爾普蘭星/wordmark.webp"
   source: "cutout"
+  accent: "#085736"
   ink: 0.241
   reviewed: true
 ---

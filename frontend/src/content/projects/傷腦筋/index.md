@@ -18,7 +18,9 @@ tags: ["knotty","animation","reels"]
 wordmark:
   src: "/projects/傷腦筋/wordmark.webp"
   source: "cutout"
-  ink: 0.337
+  sourceImage: "/projects/傷腦筋/wordmark-source.webp"
+  accent: "#b23e40"
+  ink: 0.264
   scale: 1.25
 ---
 

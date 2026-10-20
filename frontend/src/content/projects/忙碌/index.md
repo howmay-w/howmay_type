@@ -28,6 +28,7 @@ tags: ["busy","😵"]
 wordmark:
   src: "/projects/忙碌/wordmark.webp"
   source: "cutout"
+  accent: "#2f57d5"
   ink: 0.669
   scale: 1.25
 ---

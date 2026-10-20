@@ -33,8 +33,9 @@ wordmark:
   src: "/projects/好冷/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/好冷/wordmark-source.webp"
-  accent: "#1c1e24"
+  accent: "#8b9dfb"
   ink: 0.569
+  scale: 1.15
 ---
 
 就好冷。冷到什麼事都做不太好。大家保重。

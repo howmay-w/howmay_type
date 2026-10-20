@@ -24,6 +24,7 @@ hoverVideo:
 wordmark:
   src: "/projects/美國時間/wordmark.webp"
   source: "cutout"
+  accent: "#078fe1"
   ink: 0.346
   scale: 1.1
   reviewed: true

@@ -29,7 +29,9 @@ wordmark:
   src: "/projects/情緒勞動/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/情緒勞動/wordmark-source.webp"
+  accent: "#57861a"
   ink: 0.418
+  scale: 0.95
 ---
 
 第一次認識「情緒勞動」概念時頗為震撼，突然為某些特別疲累或不滿的時刻找到解釋，理解感受從何而來。

@@ -25,6 +25,7 @@ wordmark:
   src: "/projects/海巡/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/海巡/wordmark-source.webp"
+  accent: "#2087cd"
   ink: 0.414
   scale: 1.1
 ---

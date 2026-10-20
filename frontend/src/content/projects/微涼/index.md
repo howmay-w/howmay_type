@@ -19,6 +19,7 @@ wordmark:
   src: "/projects/微涼/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/微涼/wordmark-source.webp"
+  accent: "#74bebf"
   ink: 0.206
 ---
 

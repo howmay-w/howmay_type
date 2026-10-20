@@ -15,6 +15,7 @@ tags: ["siān-siān", "台語", "reels"]
 wordmark:
   src: "/projects/siān-siān/wordmark.webp"
   source: "cutout"
+  accent: "#fe736c"
   ink: 0.268
   scale: 1.25
 ---

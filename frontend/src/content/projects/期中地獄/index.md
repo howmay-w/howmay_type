@@ -24,6 +24,7 @@ tags: ["期末地獄", "hell", "點字", "特效", "3D", "😵"]
 wordmark:
   src: "/projects/期中地獄/wordmark.webp"
   source: "cutout"
+  accent: "#2a4523"
   ink: 0.227
   scale: 1.2
 ---

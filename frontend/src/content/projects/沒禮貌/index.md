@@ -28,6 +28,7 @@ tags: ["havenomanners","🤗"]
 wordmark:
   src: "/projects/沒禮貌/wordmark.webp"
   source: "cutout"
+  accent: "#e566c8"
   ink: 0.444
   scale: 1.1
   reviewed: true

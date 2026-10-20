@@ -26,7 +26,9 @@ tags: ["illusion","🥴"]
 wordmark:
   src: "/projects/錯覺/wordmark.webp"
   source: "cutout"
-  ink: 0.27
+  sourceImage: "/projects/錯覺/wordmark-source.webp"
+  accent: "#ea6621"
+  ink: 0.256
   scale: 1.25
 ---
 

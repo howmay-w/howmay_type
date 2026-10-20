@@ -26,6 +26,7 @@ tags: ["AIcopywriting", "🥱"]
 wordmark:
   src: "/projects/不是而是/wordmark.webp"
   source: "cutout"
+  accent: "#27776e"
   ink: 0.213
   reviewed: true
 ---

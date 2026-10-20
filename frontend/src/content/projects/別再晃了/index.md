@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/別再晃了/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/別再晃了/wordmark-source.webp"
+  accent: "#cac816"
   ink: 0.417
 ---
 

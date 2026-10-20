@@ -26,6 +26,7 @@ tags: ["AddictedToPillow","🛌"]
 wordmark:
   src: "/projects/枕頭成癮/wordmark.webp"
   source: "cutout"
+  accent: "#4097a8"
   ink: 0.228
 ---
 

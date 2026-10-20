@@ -26,6 +26,7 @@ tags: ["頑張れ","點字","⛽"]
 wordmark:
   src: "/projects/學測就上/wordmark.webp"
   source: "cutout"
+  accent: "#b560f9"
   ink: 0.364
   scale: 1.05
   reviewed: true

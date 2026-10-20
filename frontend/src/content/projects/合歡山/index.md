@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/合歡山/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/合歡山/wordmark-source.webp"
+  accent: "#c06242"
   ink: 0.509
 ---
 

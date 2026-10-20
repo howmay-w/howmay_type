@@ -26,13 +26,15 @@ tags:
     "特效",
     "3D",
     "🏅",
+    "台灣",
+    "臺灣",
   ]
 wordmark:
   src: "/projects/應援/wordmark.webp"
   source: "cutout"
   accent: "#b98978"
   ink: 0.355
-  scale: 1.35
+  scale: 1.45
   reviewed: true
 ---
 

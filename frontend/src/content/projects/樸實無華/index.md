@@ -24,6 +24,7 @@ hoverVideo:
 wordmark:
   src: "/projects/樸實無華/wordmark.webp"
   source: "cutout"
+  accent: "#077b54"
   ink: 0.499
   scale: 0.95
 ---

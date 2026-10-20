@@ -26,6 +26,7 @@ tags: ["あたし","💁"]
 wordmark:
   src: "/projects/人家/wordmark.webp"
   source: "cutout"
+  accent: "#1096aa"
   ink: 0.49
   scale: 1.15
 ---

@@ -16,7 +16,7 @@ video:
 hoverVideo:
   src: "/projects/補課臺灣史/video_0.mp4"
 pubDate: 2026-02-28
-tags: ["台灣史", "228", "和平紀念日", "🕯️"]
+tags: ["台灣史", "228", "和平紀念日", "🕯️", "台灣", "臺灣"]
 wordmark:
   src: "/projects/補課臺灣史/wordmark.webp"
   source: "cutout"

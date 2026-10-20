@@ -32,7 +32,7 @@ tags: ["help","🆘"]
 wordmark:
   src: "/projects/救命/wordmark.webp"
   source: "cutout"
-  accent: "#2a3543"
+  accent: "#eaa04b"
   ink: 0.502
   scale: 1.2
 ---

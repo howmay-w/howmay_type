@@ -17,6 +17,7 @@ tags: ["true", "touching", "reach", "reels"]
 wordmark:
   src: "/projects/觸/wordmark.webp"
   source: "cutout"
+  accent: "#2e6df6"
   ink: 0.288
   scale: 1.55
 ---

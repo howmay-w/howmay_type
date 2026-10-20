@@ -32,6 +32,7 @@ tags: ["thunder","⛈️"]
 wordmark:
   src: "/projects/打雷了/wordmark.webp"
   source: "cutout"
+  accent: "#b49603"
   ink: 0.41
   reviewed: true
 ---

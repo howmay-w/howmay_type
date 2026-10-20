@@ -20,7 +20,8 @@ tags: ["cycle", "loop", "🔃"]
 wordmark:
   src: "/projects/循環/wordmark.webp"
   source: "cutout"
-  ink: 0.46
+  sourceImage: "/projects/循環/wordmark-source.webp"
+  accent: "#9091fd"
+  ink: 0.369
   scale: 1.15
-  reviewed: true
 ---

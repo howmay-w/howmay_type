@@ -20,6 +20,7 @@ tags: ["人生ê歌", "Jînsingêkua", "黃乙玲", "台語", "🎤"]
 wordmark:
   src: "/projects/人生的歌/wordmark.webp"
   source: "cutout"
+  accent: "#b47654"
   ink: 0.112
   scale: 1.3
   reviewed: true

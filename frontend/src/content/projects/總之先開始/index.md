@@ -26,6 +26,7 @@ tags: ["BeginItNow", "二棲知學", "motioner", "🚶‍➡️"]
 wordmark:
   src: "/projects/總之先開始/wordmark.webp"
   source: "cutout"
+  accent: "#f57a95"
   ink: 0.369
   scale: 1.05
   reviewed: true

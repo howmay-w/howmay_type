@@ -30,6 +30,7 @@ tags: ["expectation","🌄"]
 wordmark:
   src: "/projects/期待/wordmark.webp"
   source: "cutout"
+  accent: "#62c2af"
   ink: 0.438
   scale: 1.25
 ---

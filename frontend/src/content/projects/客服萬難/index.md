@@ -22,7 +22,7 @@ hoverVideo:
 wordmark:
   src: "/projects/客服萬難/wordmark.webp"
   source: "cutout"
-  accent: "#180400"
+  accent: "#e1732f"
   ink: 0.289
   reviewed: true
 ---

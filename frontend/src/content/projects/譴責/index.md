@@ -30,6 +30,7 @@ tags: ["criticize","😊"]
 wordmark:
   src: "/projects/譴責/wordmark.webp"
   source: "cutout"
+  accent: "#f783cc"
   ink: 0.428
   scale: 1.25
 ---

@@ -17,6 +17,7 @@ tags: ["鬼門開", "glitch", "specialeffects", "reels"]
 wordmark:
   src: "/projects/魑魅魍魎/wordmark.webp"
   source: "cutout"
+  accent: "#522d5a"
   ink: 0.448
   scale: 1.1
 ---

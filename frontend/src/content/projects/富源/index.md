@@ -17,7 +17,6 @@ wordmark:
   sourceImage: "/projects/富源/wordmark-source.webp"
   accent: "#839370"
   ink: 0.11
-  scale: 0.8
 ---
 
 ### 富源🚇

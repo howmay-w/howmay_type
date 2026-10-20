@@ -34,6 +34,7 @@ wordmark:
   source: "cutout"
   accent: "#a6aece"
   ink: 0.139
+  scale: 0.9
 ---
 
 最近下太多撐傘太誇張、不撐傘又有些困擾（尤其我戴眼鏡）的毛毛毛毛雨。

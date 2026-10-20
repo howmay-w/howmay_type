@@ -28,6 +28,7 @@ tags: ["whatzurtype", "咱佗位", "字字字設計串連", "🏡"]
 wordmark:
   src: "/projects/民生社區/wordmark.webp"
   source: "cutout"
+  accent: "#7e8f0c"
   ink: 0.628
 ---
 

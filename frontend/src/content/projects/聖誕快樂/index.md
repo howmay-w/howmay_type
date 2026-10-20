@@ -26,8 +26,11 @@ tags: ["抽獎","merrychristmas","卡片設計","孔版印刷"]
 wordmark:
   src: "/projects/聖誕快樂/wordmark.webp"
   source: "cutout"
-  accent: "#322320"
+  accent: "#fa7a7d"
   ink: 0.272
+  scale: 1.1
+extraWordmarks:
+  - {"src":"/projects/聖誕快樂/wordmark-2.webp","source":"cutout","sourceImage":"/projects/聖誕快樂/wordmark-source-2.webp","ink":0.095,"scale":0.8}
 ---
 
 🎄快閃抽獎∣已截止🎄\

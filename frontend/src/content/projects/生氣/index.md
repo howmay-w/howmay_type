@@ -25,7 +25,7 @@ wordmark:
   src: "/projects/生氣/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/生氣/wordmark-source.webp"
-  accent: "#291601"
+  accent: "#e8685a"
   ink: 0.289
   scale: 1.35
 ---

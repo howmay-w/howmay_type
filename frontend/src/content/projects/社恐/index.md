@@ -26,6 +26,7 @@ tags: ["社交恐懼","socialphobia","コミュ障","🥸"]
 wordmark:
   src: "/projects/社恐/wordmark.webp"
   source: "cutout"
+  accent: "#50ae04"
   ink: 0.46
   scale: 1.1
 ---

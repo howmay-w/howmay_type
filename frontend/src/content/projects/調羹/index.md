@@ -24,7 +24,7 @@ tags: ["湯匙","spoon","🥄"]
 wordmark:
   src: "/projects/調羹/wordmark.webp"
   source: "cutout"
-  accent: "#282320"
+  accent: "#d6a84f"
   ink: 0.484
   scale: 1.2
 ---

@@ -24,6 +24,7 @@ tags: ["plz","Socialization","🤦‍♂️"]
 wordmark:
   src: "/projects/社會化/wordmark.webp"
   source: "cutout"
+  accent: "#dcc109"
   ink: 0.349
   scale: 1.1
 ---

@@ -13,6 +13,7 @@ tags: ["hungry", "😵"]
 wordmark:
   src: "/projects/餓/wordmark.webp"
   source: "cutout"
+  accent: "#ff937f"
   ink: 0.24
   scale: 1.25
 ---

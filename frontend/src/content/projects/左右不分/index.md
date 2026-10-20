@@ -24,6 +24,7 @@ tags: ["dizzy","😵‍💫"]
 wordmark:
   src: "/projects/左右不分/wordmark.webp"
   source: "cutout"
+  accent: "#e8b251"
   ink: 0.465
   scale: 0.95
 ---

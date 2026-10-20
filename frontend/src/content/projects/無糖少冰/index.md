@@ -18,6 +18,7 @@ tags: ["FLUX", "beambox", "reels"]
 wordmark:
   src: "/projects/無糖少冰/wordmark.webp"
   source: "cutout"
+  accent: "#f6d56b"
   ink: 0.292
   scale: 1.3
 ---

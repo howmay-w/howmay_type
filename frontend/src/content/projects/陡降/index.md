@@ -32,6 +32,7 @@ tags: ["suddendrop", "📉"]
 wordmark:
   src: "/projects/陡降/wordmark.webp"
   source: "cutout"
+  accent: "#1d432a"
   ink: 0.324
   scale: 1.1
 ---

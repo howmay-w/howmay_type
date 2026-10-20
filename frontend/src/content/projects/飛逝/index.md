@@ -28,6 +28,7 @@ tags: ["timeflies","🕝"]
 wordmark:
   src: "/projects/飛逝/wordmark.webp"
   source: "cutout"
+  accent: "#d7840e"
   ink: 0.303
   scale: 1.15
 ---

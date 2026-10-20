@@ -28,6 +28,7 @@ tags: ["snow", "ゆき", "特效", "☃️"]
 wordmark:
   src: "/projects/雪/wordmark.webp"
   source: "cutout"
+  accent: "#9ab9fd"
   ink: 0.799
   scale: 1.05
   reviewed: true

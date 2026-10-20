@@ -24,6 +24,7 @@ hoverVideo:
 wordmark:
   src: "/projects/圈起來打一個問號/wordmark.webp"
   source: "cutout"
+  accent: "#fc5e99"
   ink: 0.159
   reviewed: true
 ---

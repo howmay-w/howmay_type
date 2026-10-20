@@ -28,6 +28,7 @@ tags: ["Payaftermeal","🍱"]
 wordmark:
   src: "/projects/吃飽再結/wordmark.webp"
   source: "cutout"
+  accent: "#c34d24"
   ink: 0.573
   scale: 0.95
 ---

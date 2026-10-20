@@ -26,6 +26,7 @@ tags: ["insist","🌚"]
 wordmark:
   src: "/projects/硬要/wordmark.webp"
   source: "cutout"
+  accent: "#4981f0"
   ink: 0.523
   scale: 1.15
 ---

@@ -26,6 +26,7 @@ tags: ["toohot","❤️‍🔥"]
 wordmark:
   src: "/projects/急需冷氣/wordmark.webp"
   source: "cutout"
+  accent: "#ea4907"
   ink: 0.406
 ---
 

@@ -28,6 +28,7 @@ tags: ["clockwatcher","點字","🚔"]
 wordmark:
   src: "/projects/薪水小偷/wordmark.webp"
   source: "auto"
+  accent: "#68780b"
   ink: 0.284
   reviewed: true
 ---

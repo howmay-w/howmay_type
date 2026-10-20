@@ -32,6 +32,7 @@ tags: ["anniversary","週年","⏳"]
 wordmark:
   src: "/projects/一年之前/wordmark.webp"
   source: "cutout"
+  accent: "#ce3554"
   ink: 0.279
 ---
 

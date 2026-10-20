@@ -30,7 +30,7 @@ tags: ["slacker","⚡"]
 wordmark:
   src: "/projects/很雷/wordmark.webp"
   source: "cutout"
-  accent: "#070908"
+  accent: "#e7c725"
   ink: 0.323
   scale: 1.3
 ---

@@ -31,7 +31,7 @@ wordmark:
   src: "/projects/貓/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/貓/wordmark-source.webp"
-  accent: "#443e37"
+  accent: "#fba325"
   ink: 0.521
   scale: 1.1
 ---

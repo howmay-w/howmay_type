@@ -13,6 +13,7 @@ tags: ["地震", "抖爆嗚嗚嗚", "earthquake", "😖"]
 wordmark:
   src: "/projects/地震/wordmark.webp"
   source: "cutout"
+  accent: "#b35b0e"
   ink: 0.389
   scale: 1.2
   reviewed: true

@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/下雨/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/下雨/wordmark-source.webp"
+  accent: "#5b81fa"
   ink: 0.641
   scale: 1.2
 ---

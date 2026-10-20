@@ -26,6 +26,7 @@ tags: ["plate","來都來了","🍽️"]
 wordmark:
   src: "/projects/盤子/wordmark.webp"
   source: "auto"
+  accent: "#e55e7e"
   ink: 0.27
   scale: 1.2
   reviewed: true

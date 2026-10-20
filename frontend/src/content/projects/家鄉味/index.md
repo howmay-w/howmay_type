@@ -33,6 +33,7 @@ wordmark:
   src: "/projects/家鄉味/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/家鄉味/wordmark-source.webp"
+  accent: "#9f0101"
   ink: 0.51
   scale: 1.05
 ---

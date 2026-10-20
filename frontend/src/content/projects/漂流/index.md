@@ -17,6 +17,7 @@ tags: ["蘇打綠","flow","喵的奇幻漂流","wave","reels"]
 wordmark:
   src: "/projects/漂流/wordmark.webp"
   source: "cutout"
+  accent: "#1f8fa2"
   ink: 0.261
   scale: 1.4
   reviewed: true

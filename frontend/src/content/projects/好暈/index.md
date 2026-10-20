@@ -26,7 +26,7 @@ tags: ["dizzy","😵‍💫"]
 wordmark:
   src: "/projects/好暈/wordmark.webp"
   source: "cutout"
-  accent: "#100406"
+  accent: "#e78677"
   ink: 0.228
   scale: 1.1
   reviewed: true

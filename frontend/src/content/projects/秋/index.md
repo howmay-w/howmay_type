@@ -13,6 +13,7 @@ tags: ["Autumn", "中秋", "Moon Festival", "🌛"]
 wordmark:
   src: "/projects/秋/wordmark.webp"
   source: "auto"
+  accent: "#3d31da"
   ink: 0.334
   scale: 1.2
   reviewed: true

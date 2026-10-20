@@ -24,6 +24,7 @@ tags: ["freakout","😱"]
 wordmark:
   src: "/projects/嚇壞/wordmark.webp"
   source: "cutout"
+  accent: "#5c1398"
   ink: 0.349
   scale: 1.1
 ---

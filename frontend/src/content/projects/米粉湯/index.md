@@ -26,6 +26,7 @@ tags: ["whatzurtype", "日花", "字字字設計串連", "BíHúnThng", "🥣"]
 wordmark:
   src: "/projects/米粉湯/wordmark.webp"
   source: "cutout"
+  accent: "#405f7f"
   ink: 0.139
   scale: 0.9
 ---

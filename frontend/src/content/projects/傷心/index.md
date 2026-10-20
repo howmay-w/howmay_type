@@ -18,6 +18,7 @@ tags: ["whatzurtype", "臺北文學季特展", "sad", "字字字設計串連", "
 wordmark:
   src: "/projects/傷心/wordmark.webp"
   source: "cutout"
+  accent: "#da3995"
   ink: 0.176
   scale: 1.2
 ---

@@ -28,6 +28,7 @@ tags: ["學籽", "法律知識", "📜"]
 wordmark:
   src: "/projects/先簽約再做稿/wordmark.webp"
   source: "cutout"
+  accent: "#32469d"
   ink: 0.228
   reviewed: true
 ---

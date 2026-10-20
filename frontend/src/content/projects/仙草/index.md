@@ -18,6 +18,7 @@ wordmark:
   src: "/projects/仙草/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/仙草/wordmark-source.webp"
+  accent: "#eca208"
   ink: 0.523
   scale: 1.15
 ---

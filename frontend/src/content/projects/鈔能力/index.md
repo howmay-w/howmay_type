@@ -31,6 +31,7 @@ wordmark:
   src: "/projects/鈔能力/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/鈔能力/wordmark-source.webp"
+  accent: "#b4741c"
   ink: 0.369
 ---
 

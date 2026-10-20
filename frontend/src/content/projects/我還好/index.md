@@ -24,6 +24,7 @@ tags: ["nothanks","☺️"]
 wordmark:
   src: "/projects/我還好/wordmark.webp"
   source: "cutout"
+  accent: "#c85951"
   ink: 0.283
   scale: 1.05
 ---

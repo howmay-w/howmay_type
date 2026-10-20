@@ -29,6 +29,7 @@ tags: ["死語復興運動","🛵"]
 wordmark:
   src: "/projects/機車/wordmark.webp"
   source: "cutout"
+  accent: "#e5a222"
   ink: 0.387
   scale: 1.2
   reviewed: true

@@ -28,7 +28,8 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/下次一定/wordmark-source.webp"
   accent: "#fba325"
-  ink: 0.336
+  ink: 0.284
+  scale: 1.15
 ---
 
 身為一個台北人：

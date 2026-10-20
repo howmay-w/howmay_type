@@ -28,7 +28,7 @@ tags: ["regret","🥲"]
 wordmark:
   src: "/projects/遺憾/wordmark.webp"
   source: "cutout"
-  accent: "#050307"
+  accent: "#927be4"
   ink: 0.502
   scale: 1.15
   reviewed: true

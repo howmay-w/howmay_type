@@ -14,7 +14,7 @@ wordmark:
   src: "/projects/字戀/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/字戀/wordmark-source.webp"
-  accent: "#504636"
+  accent: "#d2b809"
   ink: 0.185
 ---
 

@@ -24,6 +24,7 @@ tags: ["fretful","🤬"]
 wordmark:
   src: "/projects/煩躁/wordmark.webp"
   source: "cutout"
+  accent: "#9d0504"
   ink: 0.385
   scale: 1.1
 ---

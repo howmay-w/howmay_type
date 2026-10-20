@@ -26,6 +26,7 @@ tags: ["whatswrongwithyou","🤗"]
 wordmark:
   src: "/projects/吃錯藥/wordmark.webp"
   source: "cutout"
+  accent: "#66e77f"
   ink: 0.676
   scale: 1.1
 ---

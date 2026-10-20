@@ -26,7 +26,7 @@ tags: ["whatzurtype","hertz","字字字設計串連","🎧"]
 wordmark:
   src: "/projects/赫茲/wordmark.webp"
   source: "cutout"
-  accent: "#314039"
+  accent: "#4e538f"
   ink: 0.419
   scale: 1.15
   reviewed: true

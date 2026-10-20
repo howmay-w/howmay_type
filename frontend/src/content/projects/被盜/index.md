@@ -28,6 +28,7 @@ tags: ["盜版", "侵權", "piracy", "🙄"]
 wordmark:
   src: "/projects/被盜/wordmark.webp"
   source: "cutout"
+  accent: "#c7262d"
   ink: 0.238
   scale: 1.2
 ---

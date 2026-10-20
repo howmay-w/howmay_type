@@ -32,6 +32,7 @@ tags: ["Lonely", "😶"]
 wordmark:
   src: "/projects/孤獨/wordmark.webp"
   source: "cutout"
+  accent: "#4850bc"
   ink: 0.552
   scale: 1.15
 ---

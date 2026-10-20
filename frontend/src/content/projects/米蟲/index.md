@@ -28,8 +28,9 @@ tags: ["ricebug", "doingnothing", "🪲"]
 wordmark:
   src: "/projects/米蟲/wordmark.webp"
   source: "cutout"
+  accent: "#c0ba3f"
   ink: 0.734
-  scale: 1.4
+  scale: 1.35
   reviewed: true
 ---
 

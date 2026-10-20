@@ -28,6 +28,7 @@ tags: ["whatzurtype", "字字字設計串連", "大冠鷲", "SerpentEagle", "�
 wordmark:
   src: "/projects/蛇鵰/wordmark.webp"
   source: "cutout"
+  accent: "#328243"
   ink: 0.388
   scale: 1.45
   reviewed: true
