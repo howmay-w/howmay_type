@@ -27,10 +27,9 @@ pubDate: 2024-08-22
 tags: ["busy","😵"]
 wordmark:
   src: "/projects/忙碌/wordmark.webp"
-  source: "auto"
-  ink: 0.694
+  source: "cutout"
+  ink: 0.669
   scale: 1.25
-  reviewed: true
 ---
 
 最近少發文，因為真的好忙好忙ㄛ。

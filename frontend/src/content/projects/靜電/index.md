@@ -25,9 +25,8 @@ wordmark:
   src: "/projects/靜電/wordmark.webp"
   source: "cutout"
   accent: "#0e1c99"
-  ink: 0.38
+  ink: 0.289
   scale: 1.3
-  reviewed: true
 ---
 
 其實我不太常被靜電電到ㄋ。\

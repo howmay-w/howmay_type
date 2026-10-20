@@ -30,9 +30,8 @@ tags: ["relief","🦋"]
 wordmark:
   src: "/projects/解脫/wordmark.webp"
   source: "cutout"
-  ink: 0.437
+  ink: 0.352
   scale: 1.25
-  reviewed: true
 ---
 
 這兩個禮拜在趕一個超複雜ㄉ資料，沒日沒夜，直到今天終於交了🫠可喜可賀嗚嗚

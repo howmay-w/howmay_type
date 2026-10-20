@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   ink: 0.339
   scale: 0.75
-  reviewed: true
 ---
 
 雖然知道不一定是這樣，

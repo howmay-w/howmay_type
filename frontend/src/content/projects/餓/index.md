@@ -12,8 +12,7 @@ pubDate: 2022-08-27
 tags: ["hungry", "😵"]
 wordmark:
   src: "/projects/餓/wordmark.webp"
-  source: "auto"
-  ink: 0.273
+  source: "cutout"
+  ink: 0.24
   scale: 1.25
-  reviewed: true
 ---

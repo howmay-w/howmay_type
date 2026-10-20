@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   ink: 0.385
   scale: 1.25
-  reviewed: true
 ---
 
 喉嚨⋯痛痛ㄉ⋯⋯\

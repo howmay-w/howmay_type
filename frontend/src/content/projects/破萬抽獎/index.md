@@ -33,7 +33,6 @@ wordmark:
   accent: "#010100"
   ink: 0.401
   scale: 0.8
-  reviewed: true
 ---
 
 ☘️自己賀破萬！來抽獎☘️

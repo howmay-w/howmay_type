@@ -24,10 +24,9 @@ pubDate: 2026-01-14
 tags: ["🤦"]
 wordmark:
   src: "/projects/防呆/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   ink: 0.611
   scale: 1.35
-  reviewed: true
 ---
 
 一直很欣賞有做防呆設計的任何事物，為整個世界減少了許多時間的浪費與不必要的挫折。\

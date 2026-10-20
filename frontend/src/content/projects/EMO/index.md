@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   ink: 0.596
   scale: 1.25
-  reviewed: true
 ---
 
 又下雨ㄌ

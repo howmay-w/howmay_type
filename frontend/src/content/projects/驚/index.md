@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   ink: 0.308
   scale: 1.25
-  reviewed: true
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是有「馬」部件的字，選了「驚」。

@@ -34,7 +34,6 @@ wordmark:
   source: "cutout"
   ink: 0.493
   scale: 1.05
-  reviewed: true
 ---
 
 家的味道如果用字呈現，那或許是柑仔蜜。

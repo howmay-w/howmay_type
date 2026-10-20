@@ -24,7 +24,6 @@ wordmark:
   source: "cutout"
   ink: 0.525
   scale: 1.1
-  reviewed: true
 ---
 
 厚臉皮雖然很恥，但大多時候有用。\

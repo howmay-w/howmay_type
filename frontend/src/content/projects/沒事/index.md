@@ -23,9 +23,8 @@ wordmark:
   src: "/projects/沒事/wordmark.webp"
   source: "cutout"
   accent: "#58a089"
-  ink: 0.399
+  ink: 0.348
   scale: 1.25
-  reviewed: true
 ---
 
 一詞多義的典範。\

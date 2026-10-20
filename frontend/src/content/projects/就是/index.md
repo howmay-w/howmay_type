@@ -28,9 +28,8 @@ tags: ["well","🔄"]
 wordmark:
   src: "/projects/就是/wordmark.webp"
   source: "cutout"
-  ink: 0.219
+  ink: 0.139
   scale: 1.25
-  reviewed: true
 ---
 
 腦袋中詞語還沒排列好的時候，會先出來扛一下ㄉ擋箭牌。\

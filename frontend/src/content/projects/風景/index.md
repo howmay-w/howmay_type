@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   ink: 0.172
   scale: 1.2
-  reviewed: true
 ---
 
 大學畢業以後反而學了很多新東西，\

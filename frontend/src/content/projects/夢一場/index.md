@@ -29,9 +29,8 @@ wordmark:
   src: "/projects/夢一場/wordmark.webp"
   source: "cutout"
   accent: "#c475db"
-  ink: 0.338
+  ink: 0.175
   scale: 1.05
-  reviewed: true
 ---
 
 最近好常做夢哇，\

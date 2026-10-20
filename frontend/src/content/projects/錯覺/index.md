@@ -28,7 +28,6 @@ wordmark:
   source: "cutout"
   ink: 0.27
   scale: 1.25
-  reviewed: true
 ---
 
 如果你看到字了，那可能是錯覺ㄅ。\

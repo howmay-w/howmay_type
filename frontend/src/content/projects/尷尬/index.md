@@ -31,11 +31,10 @@ pubDate: 2023-10-25
 tags: ["awkward", "執事排", "3D", "😬"]
 wordmark:
   src: "/projects/尷尬/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/尷尬/wordmark-source.webp"
   accent: "#e9943d"
-  ink: 0.465
-  hidden: true
-  needsImage: true
+  ink: 0.438
 ---
 
 尷尬好像是種很社會化的情緒ㄋ，\

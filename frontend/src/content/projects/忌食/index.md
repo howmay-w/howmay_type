@@ -18,9 +18,8 @@ tags: ["diet","me","🤐"]
 wordmark:
   src: "/projects/忌食/wordmark.webp"
   source: "cutout"
-  ink: 0.313
+  ink: 0.268
   scale: 1.25
-  reviewed: true
 ---
 
 看完醫生或是量完身體組成以後的 me\

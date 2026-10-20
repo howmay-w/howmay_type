@@ -29,10 +29,9 @@ pubDate: 2023-01-24
 tags: ["點字","🧧"]
 wordmark:
   src: "/projects/幸福安康/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#c39368"
-  ink: 0.365
-  reviewed: true
+  ink: 0.265
 ---
 
 過年持續說好話（？\

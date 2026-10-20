@@ -12,12 +12,10 @@ pubDate: 2022-08-20
 tags: ["PlacesIveNeverBeen","🗺️"]
 wordmark:
   src: "/projects/沒去過的地方/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#000101"
   ink: 0.444
   scale: 0.85
-  hidden: true
-  reviewed: true
 ---
 
 可能是奇幻的世界。

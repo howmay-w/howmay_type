@@ -29,7 +29,6 @@ wordmark:
   accent: "#363f9c"
   ink: 0.504
   scale: 1.25
-  reviewed: true
 ---
 
 獻給週一ㄉ你。

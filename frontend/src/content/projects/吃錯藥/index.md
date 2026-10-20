@@ -26,9 +26,8 @@ tags: ["whatswrongwithyou","🤗"]
 wordmark:
   src: "/projects/吃錯藥/wordmark.webp"
   source: "cutout"
-  ink: 0.731
+  ink: 0.676
   scale: 1.1
-  reviewed: true
 ---
 
 今天台北的天氣：

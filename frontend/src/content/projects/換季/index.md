@@ -33,9 +33,8 @@ wordmark:
   src: "/projects/換季/wordmark.webp"
   source: "cutout"
   accent: "#432682"
-  ink: 0.515
+  ink: 0.382
   scale: 1.25
-  reviewed: true
 ---
 
 台北換季沒在跟你拖拖拉拉，\

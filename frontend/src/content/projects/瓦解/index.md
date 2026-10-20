@@ -21,10 +21,9 @@ pubDate: 2022-10-26
 tags: ["collapse","gif","loop","🔨"]
 wordmark:
   src: "/projects/瓦解/wordmark.webp"
-  source: "auto"
-  ink: 0.425
+  source: "cutout"
+  ink: 0.408
   scale: 1.25
-  reviewed: true
 ---
 
 聽學術倫理講座時畫ㄉ\

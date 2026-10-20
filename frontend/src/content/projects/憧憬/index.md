@@ -28,7 +28,6 @@ wordmark:
   accent: "#d99391"
   ink: 0.277
   scale: 1.2
-  reviewed: true
 ---
 
 擁有憧憬，是最美好的一種心情。

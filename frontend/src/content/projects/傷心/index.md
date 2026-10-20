@@ -20,7 +20,6 @@ wordmark:
   source: "cutout"
   ink: 0.176
   scale: 1.2
-  reviewed: true
 ---
 
 試著用限動做字✨

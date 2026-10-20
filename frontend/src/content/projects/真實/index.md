@@ -22,7 +22,6 @@ wordmark:
   source: "cutout"
   ink: 0.291
   scale: 1.25
-  reviewed: true
 ---
 
 大學時，攝影老師總讓我們重複練習「Cropping」（或正是所謂的 framing）：要學會排除雜訊，保留概念、保留美。

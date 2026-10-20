@@ -32,10 +32,9 @@ tags: ["gradstudent","研究生","🚬"]
 wordmark:
   src: "/projects/菸酒生/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/菸酒生/wordmark-source.webp"
   accent: "#a69c23"
-  ink: 0.578
-  hidden: true
-  needsImage: true
+  ink: 0.521
 ---
 
 邁入研究生生涯第三年的 me 🥲\
