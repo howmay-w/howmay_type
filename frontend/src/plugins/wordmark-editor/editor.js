@@ -95,6 +95,8 @@ async function openItem(info) {
       cropRect: currentCanvas ? null : r.cropRect || null,
       lumViewport: currentCanvas ? r.cropRect || null : null,
       currentSize: currentCanvas ? { w: currentCanvas.width, h: currentCanvas.height } : null,
+      // 「找回邊框」改為對整張原圖重新去背（回到原圖尺寸）
+      restoreFull: true,
     };
     refine.open(item, "refine");
     return true;

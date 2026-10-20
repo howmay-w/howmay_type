@@ -761,6 +761,22 @@ export function createRefineController(dialog, callbacks) {
 
   // 還原自動流程套用「智慧裁切」之前的版本（保留邊框，讓使用者自行決定要不要留）
   restoreSmartCropBtn?.addEventListener('click', () => {
+    // 字圖管理頁：用目前的去背設定對「整張原圖」重新去背，畫布回到原圖的完整尺寸
+    if (state?.item?.restoreFull && state.item.sourceCanvas && bgMode === 'lum') {
+      const src = state.item.sourceCanvas;
+      const threshold = Number(lumThreshSlider.value);
+      state.working =
+        lumStyle === 'soft'
+          ? autoLumExtractSoft(src, { threshold, keepBright, softness: contrastToSoftness(Number(softContrastSlider.value)) })
+          : autoLumExtract(src, { threshold, keepBright, minNoiseArea: 0 });
+      // 位移換算成相對於 baseSourceDx/Dy，之後調整去背參數時才會沿用整張原圖的範圍
+      cropOffsetX = -baseSourceDx;
+      cropOffsetY = -baseSourceDy;
+      cropRect = null;
+      pushHistory();
+      fitCanvas();
+      return;
+    }
     if (!state?.item?.preSmartCropCanvas) return;
     state.working = cloneCanvas(state.item.preSmartCropCanvas);
     // preSmartCropCanvas 相對於 sourceCanvas 的位移跟 openingCanvas 不同，
@@ -906,10 +922,12 @@ export function createRefineController(dialog, callbacks) {
       cropDrag = null;
 
       if (restoreSmartCropBtn) {
-        restoreSmartCropBtn.disabled = !item.preSmartCropCanvas;
-        restoreSmartCropBtn.title = item.preSmartCropCanvas
-          ? '找回自動裁切時被去除的邊框內容'
-          : '這張作品沒有被自動裁切過';
+        restoreSmartCropBtn.disabled = !item.preSmartCropCanvas && !item.restoreFull;
+        restoreSmartCropBtn.title = item.restoreFull
+          ? '用目前的去背設定對整張原圖重新去背，回到原圖的完整尺寸'
+          : item.preSmartCropCanvas
+            ? '找回自動裁切時被去除的邊框內容'
+            : '這張作品沒有被自動裁切過';
       }
       titleEl.textContent = `精修 · ${item.author}`;
       // 逐張處理的位置與按鈕狀態（由 main.js 提供 navInfo）
