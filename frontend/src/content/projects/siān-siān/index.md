@@ -17,6 +17,7 @@ wordmark:
   source: "cutout"
   accent: "#fe736c"
   ink: 0.268
+  chars: 3
 ---
 
 今年送男友的生日禮物是點字＋訂做手機殼。

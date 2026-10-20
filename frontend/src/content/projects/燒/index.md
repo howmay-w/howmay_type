@@ -35,6 +35,7 @@ wordmark:
   sourceImage: "/projects/燒/wordmark-source.webp"
   accent: "#c74627"
   ink: 0.206
+  scale: 1.45
 ---
 
 用「燒」來比喻容易點燃、也有會忽然熄滅的購物慾，\

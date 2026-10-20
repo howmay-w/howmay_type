@@ -26,6 +26,7 @@ wordmark:
   source: "cutout"
   accent: "#68f9b1"
   ink: 0.424
+  scale: 1.1
 ---
 
 本日要聞。\

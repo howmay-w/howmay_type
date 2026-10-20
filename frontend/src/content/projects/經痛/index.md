@@ -31,6 +31,7 @@ wordmark:
   sourceImage: "/projects/經痛/wordmark-source.webp"
   accent: "#243ba1"
   ink: 0.167
+  scale: 1.2
 ---
 
 今天月經來第二天，好痛哦😖

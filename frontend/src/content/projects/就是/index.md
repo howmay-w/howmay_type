@@ -30,6 +30,7 @@ wordmark:
   source: "cutout"
   accent: "#463586"
   ink: 0.139
+  chars: 2.5
 ---
 
 腦袋中詞語還沒排列好的時候，會先出來扛一下ㄉ擋箭牌。\

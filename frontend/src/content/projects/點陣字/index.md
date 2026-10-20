@@ -37,7 +37,7 @@ wordmark:
   ink: 0.6
   chars: 1
 extraWordmarks:
-  - {"src":"/projects/點陣字/wordmark-2.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-2.webp","ink":0.597,"chars":1}
+  - {"src":"/projects/點陣字/wordmark-2.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-2.webp","ink":0.597,"chars":1,"scale":0.95}
   - {"src":"/projects/點陣字/wordmark-3.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-3.webp","ink":0.679,"chars":1}
   - {"src":"/projects/點陣字/wordmark-4.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-4.webp","ink":0.35,"chars":1}
   - {"src":"/projects/點陣字/wordmark-5.webp","source":"cutout","sourceImage":"/projects/點陣字/wordmark-source-5.webp","ink":0.534,"chars":1}

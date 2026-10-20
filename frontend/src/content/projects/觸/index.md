@@ -19,6 +19,7 @@ wordmark:
   source: "cutout"
   accent: "#2e6df6"
   ink: 0.288
+  scale: 1.25
 ---
 
 🥹一字多義 [#觸](https://www.instagram.com/explore/search/keyword/?q=%23%E8%A7%B8)

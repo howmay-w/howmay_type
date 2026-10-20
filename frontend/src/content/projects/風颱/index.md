@@ -29,6 +29,7 @@ wordmark:
   sourceImage: "/projects/風颱/wordmark-source.webp"
   accent: "#9e8d06"
   ink: 0.632
+  chars: 2.5
 ---
 
 今年颱風好多，明明都十月ㄌ。\

@@ -29,6 +29,7 @@ wordmark:
   sourceImage: "/projects/燈/wordmark-source.webp"
   accent: "#87451f"
   ink: 0.101
+  scale: 1.3
 ---
 
 二月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是火部的字，想到燈。

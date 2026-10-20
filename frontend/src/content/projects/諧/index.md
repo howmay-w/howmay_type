@@ -31,7 +31,7 @@ wordmark:
   sourceImage: "/projects/諧/wordmark-source.webp"
   accent: "#815716"
   ink: 0.481
-  scale: 1.2
+  scale: 1.15
 ---
 
 挑戰用 Procreate 製造假 3D，\
