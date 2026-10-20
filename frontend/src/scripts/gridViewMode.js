@@ -534,7 +534,82 @@ const cleanup = () => {
   frame = 0;
 };
 
+/*
+ * 從作品頁返回首頁時回到原本的段落：
+ * 離開首頁時記下捲動位置與已載入幾批（MORE 按了幾次）；按「返回」回到首頁時，
+ * 照同樣的順序一批一批載入（排版是接著排的，每件作品會回到一模一樣的位置），再捲回原處。
+ * 首頁初始化（index.js）會先捲到頂端，所以等所有初始化跑完才還原。
+ */
+const RETURN_KEY = "grid-return";
+// 整頁載入時（例如從帶 from_search 的作品頁按瀏覽器的上一頁）也算返回
+let returning = performance.getEntriesByType?.("navigation")[0]?.type === "back_forward";
+// 讓首頁入場動畫（index.js）知道這次是返回，跳過動畫
+window.__gridReturning = returning;
+document.addEventListener("astro:before-preparation", (e) => {
+  if (grid && document.documentElement.getAttribute("data-page") === "home") {
+    const loaded = Array.from(grid.children).filter(
+      (el) => !el.hasAttribute("data-wm-extra") && !el.hasAttribute("data-deferred"),
+    ).length;
+    try {
+      sessionStorage.setItem(RETURN_KEY, JSON.stringify({ y: window.scrollY, loaded }));
+    } catch (_) {}
+  }
+  returning = e.navigationType === "traverse" && new URL(e.to).pathname === "/";
+  window.__gridReturning = returning;
+});
+
+const restoreReturn = () => {
+  let saved = null;
+  try {
+    saved = JSON.parse(sessionStorage.getItem(RETURN_KEY) ?? "null");
+  } catch (_) {}
+  if (!saved || !grid) return;
+  const more = document.getElementById("load-more");
+  const loadedNow = () =>
+    Array.from(grid.children).filter((el) => !el.hasAttribute("data-wm-extra") && !el.hasAttribute("data-deferred"))
+      .length;
+  // 首頁其他初始化（還原這次的隨機順序等）已經跑完：先用現在的順序重排第一批，
+  // 再一批一批顯示、每批立刻排版，和當初一批一批按 MORE 的結果相同。
+  // 不經過 MORE 按鈕：MORE 會播浮上來的動畫，返回時要直接是排好的樣子
+  if (frame) cancelAnimationFrame(frame);
+  clearTimeout(frameTimer);
+  packer = null;
+  lastSignature = "";
+  layout();
+  const BATCH = 24;
+  const deferred = () =>
+    Array.from(grid.children)
+      .filter((el) => el.hasAttribute("data-deferred"))
+      .sort(byOrder);
+  while (loadedNow() < saved.loaded) {
+    const batch = deferred().slice(0, BATCH);
+    if (!batch.length) break;
+    for (const el of batch) {
+      el.removeAttribute("data-deferred");
+      el.style.display = "";
+    }
+    if (frame) cancelAnimationFrame(frame);
+    clearTimeout(frameTimer);
+    layout();
+  }
+  if (more && !deferred().length) more.classList.add("hidden");
+  const cards = Array.from(grid.children);
+  gsap.killTweensOf(cards);
+  gsap.set(cards, { yPercent: 0, autoAlpha: 1 });
+  gsap.set(grid, { autoAlpha: 1 });
+  window.scrollTo(0, saved.y);
+};
+
 document.addEventListener("astro:page-load", () => {
-  if (document.documentElement.getAttribute("data-page") === "home") init();
+  if (document.documentElement.getAttribute("data-page") !== "home") return;
+  init();
+  if (returning) {
+    returning = false;
+    // 旗標等還原跑完才清掉：index.js 的初始化可能在這之後才執行，還要讀到它
+    setTimeout(() => {
+      restoreReturn();
+      window.__gridReturning = false;
+    }, 0);
+  }
 });
 document.addEventListener("astro:before-swap", cleanup);

@@ -90,6 +90,11 @@ const init = () => {
 	if ("scrollRestoration" in history) {
 		history.scrollRestoration = "manual";
 	}
+	// 從作品頁返回：不播入場動畫、不捲回頂端，直接顯示排好的字牆（捲動位置由 gridViewMode.js 還原）
+	if (window.__gridReturning) {
+		ensureGridVisible();
+		return;
+	}
 	// Scroll to the top of the page.
 	window.scrollTo(0, 0);
 
