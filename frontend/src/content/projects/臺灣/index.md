@@ -22,12 +22,12 @@ wordmark:
   ink: 0.377
   scale: 1.2
 extraWordmarks:
-  - {"src":"/projects/臺灣/wordmark-2.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-2.webp","ink":0.464}
+  - {"src":"/projects/臺灣/wordmark-2.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-2.webp","ink":0.464,"hidden":true}
   - {"src":"/projects/臺灣/wordmark-3.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-3.webp","ink":0.581}
   - {"src":"/projects/臺灣/wordmark-4.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-4.webp","ink":0.467,"scale":1.05}
   - {"src":"/projects/臺灣/wordmark-5.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-5.webp","ink":0.306}
   - {"src":"/projects/臺灣/wordmark-6.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-6.webp","ink":0.523}
-  - {"src":"/projects/臺灣/wordmark-7.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-7.webp","ink":0.596}
+  - {"src":"/projects/臺灣/wordmark-7.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-7.webp","ink":0.488,"scale":1.1}
 ---
 
 美麗而多山的島，稱為家。

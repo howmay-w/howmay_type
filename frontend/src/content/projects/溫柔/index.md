@@ -35,7 +35,7 @@ wordmark:
   sourceImage: "/projects/溫柔/wordmark-source.webp"
   accent: "#664897"
   ink: 0.26
-  scale: 1.05
+  scale: 1.2
 ---
 
 溫柔很多種樣貌，\

@@ -32,7 +32,7 @@ wordmark:
   source: "cutout"
   accent: "#e7c725"
   ink: 0.323
-  scale: 1.3
+  scale: 1.15
 ---
 
 用途廣泛ㄉ詞，但還是不要太常遇到比較好🫠

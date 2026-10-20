@@ -26,7 +26,6 @@ wordmark:
   source: "cutout"
   accent: "#e8b251"
   ink: 0.465
-  scale: 0.95
 ---
 
 最近大家應該都很混亂，\

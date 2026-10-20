@@ -29,6 +29,7 @@ wordmark:
   sourceImage: "/projects/不可能/wordmark-source.webp"
   accent: "#d80287"
   ink: 0.258
+  scale: 1.1
 ---
 
 這幾天天氣也太好ㄌ⋯！\

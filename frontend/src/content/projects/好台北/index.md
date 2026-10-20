@@ -28,7 +28,7 @@ wordmark:
   source: "cutout"
   accent: "#aed9f2"
   ink: 0.26
-  scale: 1.05
+  scale: 0.9
 ---
 
 這幾天不是爛台北，是好台北！\
