@@ -26,7 +26,6 @@
   button.on { color: var(--accent); }
   button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
   input[type=search] { width: 160px; }
-  .hint { color: var(--mut); font-size: 12px; flex-basis: 100%; }
   kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 11px; }
   /* 版面：左邊預覽卡片網格，右邊固定的共用編輯面板 */
   .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
@@ -77,6 +76,16 @@
   .zoom { display: flex; align-items: center; gap: 6px; color: var(--mut); font-size: 12px; }
   .zoom input { width: 110px; accent-color: var(--accent); padding: 0; }
   .status { font-size: 12px; color: var(--mut); min-height: 1.4em; }
+  /* 字牆檢視：用正式網站的排版規則排出整面牆，點字選取 */
+  main.is-wall { display: block; }
+  .wallbox { position: relative; overflow: hidden; }
+  .wall { position: absolute; left: 0; top: 0; background: var(--wall); transform-origin: top left; }
+  .wall .wmw { position: absolute; display: block; background: #f2f2f2; -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat; cursor: pointer; }
+  .wall .wmw:hover { background: #fff; }
+  .wall .wmw.current { background: var(--accent); }
+  .wall .wmw.current::after { content: ""; position: absolute; inset: -6px; border: 1px solid var(--accent); border-radius: 4px; }
+  .wall-note { color: var(--mut); font-size: 12px; margin: 0 0 8px; }
+  body:not(.mode-wall) .wall-only, body.mode-wall .grid-only { display: none; }
   .status.err { color: var(--bad); }
   /* 精修視窗（/__wordmarks/editor）疊在整個管理頁上 */
   #editorFrame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; z-index: 100; display: none; background: transparent; color-scheme: normal; }
@@ -91,8 +100,19 @@
     <button data-f="swap">需要換圖 <b id="cSwap"></b></button>
     <button data-f="hidden">隱藏 <b id="cHidden"></b></button>
   </div>
+  <div class="seg" id="mode" role="group" aria-label="檢視">
+    <button data-mode="grid" class="on">格子</button>
+    <button data-mode="wall">字牆</button>
+  </div>
   <div class="tools">
-    <label class="zoom">預覽比例 <input type="range" id="zoom" min="0.3" max="1.5" step="0.05"> <span id="zoomVal"></span></label>
+    <select id="wallW" class="wall-only" aria-label="字牆寬度">
+      <option value="1180">電腦（1180）</option>
+      <option value="1660">寬螢幕（1660）</option>
+      <option value="400">手機（400）</option>
+      <option value="320">小手機（320）</option>
+    </select>
+    <label class="zoom grid-only">預覽比例 <input type="range" id="zoom" min="0.3" max="1.5" step="0.05"> <span id="zoomVal"></span></label>
+    <select id="charsF" aria-label="依字數篩選"></select>
     <select id="sort" aria-label="排序">
       <option value="risk">依風險排序</option>
       <option value="edited">最近編輯</option>
@@ -102,7 +122,6 @@
     </select>
     <input type="search" id="q" placeholder="搜尋作品名稱" aria-label="搜尋作品名稱">
   </div>
-  <div class="hint">一件作品可以有好幾款字圖，每款各佔一格（標題後面標「第 n 款」），在面板按「新增一款」加入（可一次選多張）。所有預覽用同一個比例（上方「預覽比例」），可以直接比較大小；搜尋一律在全部作品中找。<kbd>J</kbd>/<kbd>K</kbd>（或方向鍵）上下一件、<kbd>Enter</kbd> 下一件、<kbd>H</kbd> 隱藏、<kbd>R</kbd> 重新去背、<kbd>N</kbd> 需要換圖、<kbd>E</kbd> 或點兩下編輯去背、<kbd>-</kbd>/<kbd>=</kbd> 縮小放大。把圖拖到預覽區即可換圖。</div>
 </header>
 <div class="layout"><main id="list"></main><aside class="panel" id="panel" aria-label="編輯面板"></aside></div>
 <input type="file" id="file" accept="image/*" hidden>
@@ -112,6 +131,7 @@
 // 和字牆相同的尺寸公式（ProjectCard.astro + gridViewMode.js），D = 1180 的桌機分段
 const UNIT = Math.min(130, Math.max(68, 1180 * 0.074));
 const INK_REF = 0.3;
+const WORD_SCALE = 1;
 // 手動大小倍率的範圍
 const SCALE_MIN = 0.3, SCALE_MAX = 2.5;
 // 預覽比例：所有卡片用同一個比例縮放字牆尺寸，大小可以直接互相比較
@@ -141,8 +161,8 @@ function wallWidth(p) {
   const sizeMul = ({ s: 0.8, m: 1, l: 1.3 })[wm.size ?? "m"];
   const mass = Math.max(1.6, (chars * (INK_REF / ink) ** 0.2 * sizeMul ** 2) ** 0.8);
   // 手動倍率最後直接乘在寬度上
-  // 0.9 = 字牆的整體字級（gridViewMode.js 的 WORD_SCALE）
-  return Math.min(UNIT * Math.sqrt(mass * aspect) * 0.9 * (wm.scale ?? 1), 1180);
+  // WORD_SCALE = 字牆的整體字級（和 gridViewMode.js 一致）
+  return Math.min(UNIT * Math.sqrt(mass * aspect) * WORD_SCALE * (wm.scale ?? 1), 1180);
 }
 // 面板上的提醒：只留需要注意的資訊（狀態、大小、字數在面板上本來就看得到）
 function tipsOf(p) {
@@ -184,6 +204,89 @@ const api = async (url, opt) => {
   return j;
 };
 
+// ── 字牆檢視：和正式網站同一套排版規則（src/scripts/wallPacker.js） ─────────────
+let MODE = (() => { try { return localStorage.getItem("wm-admin-mode") === "wall" ? "wall" : "grid"; } catch (_) { return "grid"; } })();
+let WALL = null; // 排版模組
+let wallTimer = 0;
+import("/src/scripts/wallPacker.js").then((m) => { WALL = m; if (MODE === "wall") render(); });
+// 原始量感（和 ProjectCard.astro 相同）：字數 × 墨量修正 × 大小
+function massOf(p) {
+  const wm = p.wordmark;
+  const chars = wm.chars ?? countChars(p.title);
+  const ink = Math.min(0.8, Math.max(0.08, wm.ink ?? INK_REF));
+  const sizeMul = ({ s: 0.8, m: 1, l: 1.3 })[wm.size ?? "m"];
+  return chars * (INK_REF / ink) ** 0.2 * sizeMul ** 2;
+}
+function renderWall() {
+  const L = $("list");
+  if (!WALL) { L.innerHTML = `<p class="count">載入排版規則中…</p>`; return; }
+  const D = parseInt($("wallW").value, 10);
+  // 和正式網站一樣：隱藏的不出現；每件作品第一個顯示的款是本尊，其餘各款散在整面牆
+  const shown = view.filter((p) => !p.wordmark.hidden);
+  const cards = [], extras = new Map();
+  for (const p of shown) {
+    if (!extras.has(p.slug)) { extras.set(p.slug, []); cards.push(p); }
+    else extras.get(p.slug).push(p);
+  }
+  const keyed = cards.map((p, i) => ({ p, key: i }));
+  cards.forEach((card, home) => {
+    const list = extras.get(card.slug);
+    list.forEach((p, j) => keyed.push({ p, key: WALL.scatterIndex(`/projects/${card.slug}`, j, list.length, home, cards.length) + 0.5 }));
+  });
+  const items = keyed.sort((a, b) => a.key - b.key).map(({ p }) => ({
+    p,
+    getAttribute: () => `/projects/${p.slug}`,
+    dataset: { wmAspect: String(p.size.width / p.size.height), wmMass: String(massOf(p)), wmScale: String(p.wordmark.scale ?? 1) },
+  }));
+  // 正式網站每次 MORE 載入 24 件、接著排；這裡一次排完，但同樣分批
+  const packer = WALL.createPacker(D);
+  let res = { placed: [], height: 1 };
+  for (let i = 0; i < items.length; i += 24) res = packer.add(items.slice(i, i + 24));
+  const k = Math.min(1, (L.clientWidth - 32) / D);
+  L.innerHTML = `<p class="wall-note">依正式網站的排版規則（寬度 ${D}px${k < 1 ? `，縮小 ${Math.round(k * 100)}% 顯示` : ""}）排出 ${res.placed.length} 張；順序依上方排序，隱藏的不出現。點字選取、點兩下編輯去背，調整大小會立刻重排。</p>`;
+  const box = document.createElement("div");
+  box.className = "wallbox";
+  box.style.height = `${Math.ceil(res.height * k)}px`;
+  box.style.width = `${Math.ceil(D * k)}px`;
+  const wall = document.createElement("div");
+  wall.className = "wall";
+  wall.style.width = `${D}px`;
+  wall.style.height = `${Math.ceil(res.height)}px`;
+  wall.style.transform = `scale(${k})`;
+  for (const pl of res.placed) {
+    const p = pl.el.p;
+    const el = document.createElement("span");
+    el.className = "wmw";
+    el.dataset.key = p.key;
+    el.title = `${nameOf(p)}${p.wordmark.scale && p.wordmark.scale !== 1 ? `・大小 ×${p.wordmark.scale}` : ""}`;
+    el.style.cssText = `left:${pl.x.toFixed(1)}px;top:${pl.y.toFixed(1)}px;width:${pl.w.toFixed(1)}px;height:${pl.h.toFixed(1)}px;--src:url('${imgOf(p)}')`;
+    el.addEventListener("click", () => { cur = view.indexOf(p); highlight(false); });
+    el.addEventListener("dblclick", () => { cur = view.indexOf(p); highlight(false); openEditor(p); });
+    wall.appendChild(el);
+  }
+  box.appendChild(wall);
+  L.appendChild(box);
+}
+// 調整大小時重排字牆（拖滑桿時合併成每個畫面一次）
+function relayoutWall() {
+  if (MODE !== "wall") return;
+  cancelAnimationFrame(wallTimer);
+  wallTimer = requestAnimationFrame(() => {
+    const key = view[cur]?.key;
+    renderWall();
+    const el = key && document.querySelector(`.wmw[data-key="${CSS.escape(key)}"]`);
+    if (el) el.classList.add("current");
+  });
+}
+function setMode(m) {
+  MODE = m;
+  try { localStorage.setItem("wm-admin-mode", m); } catch (_) {}
+  document.body.classList.toggle("mode-wall", m === "wall");
+  $("list").classList.toggle("is-wall", m === "wall");
+  document.querySelectorAll("#mode button").forEach((b) => b.classList.toggle("on", b.dataset.mode === m));
+  render(view[cur]?.key);
+}
+
 async function load() {
   all = (await api("/__wordmarks/api/list")).filter((p) => p.wordmark && p.size);
   render();
@@ -194,9 +297,22 @@ function counts() {
   $("cHidden").textContent = all.filter((p) => p.wordmark.hidden).length;
 }
 // 是否符合目前的篩選；有輸入搜尋字時一律在全部作品中找
-const inFilter = (p) => filter === "all" || (filter === "hidden" ? !!p.wordmark.hidden : statusOf(p.wordmark) === filter);
+// 字數：有手動填就用手動的，沒有就從標題推算（和字牆相同）；篩選依無條件進位分組，5 字以上合為一組
+const charsOf = (p) => p.wordmark.chars ?? countChars(p.title);
+const charsGroup = (p) => Math.min(5, Math.ceil(charsOf(p)));
+const CHARS_LABEL = { 1: "1 字", 2: "2 字", 3: "3 字", 4: "4 字", 5: "5 字以上" };
+function renderCharsFilter() {
+  const sel = $("charsF"), cur = sel.value || "all";
+  const n = (g) => all.filter((p) => charsGroup(p) === g).length;
+  sel.innerHTML = `<option value="all">全部字數</option>${[1, 2, 3, 4, 5].map((g) => `<option value="${g}">${CHARS_LABEL[g]}（${n(g)}）</option>`).join("")}`;
+  sel.value = cur;
+}
+const inFilter = (p) =>
+  (filter === "all" || (filter === "hidden" ? !!p.wordmark.hidden : statusOf(p.wordmark) === filter)) &&
+  ($("charsF").value === "all" || charsGroup(p) === parseInt($("charsF").value, 10));
 function render(keepSlug) {
   counts();
+  renderCharsFilter();
   const q = $("q").value.trim();
   view = all.filter((p) =>
     q ? nameOf(p).includes(q) || p.slug.includes(q) : inFilter(p));
@@ -205,7 +321,8 @@ function render(keepSlug) {
   view.sort(s === "edited" ? (a, b) => (b.edited ?? 0) - (a.edited ?? 0) : s === "size" ? (a, b) => wholeSize(b) - wholeSize(a) : s === "date" ? (a, b) => b.date.localeCompare(a.date) || a.v - b.v : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") || a.v - b.v : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date) || a.v - b.v);
   const L = $("list");
   L.innerHTML = view.length ? "" : `<p class="count">${q ? "找不到符合的作品。" : "這個篩選條件下沒有作品。"}</p>`;
-  view.forEach((p) => L.appendChild(rowEl(p)));
+  if (MODE === "wall") { if (view.length) renderWall(); }
+  else view.forEach((p) => L.appendChild(rowEl(p)));
   if (keepSlug) cur = Math.max(0, view.findIndex((p) => p.key === keepSlug));
   cur = Math.min(cur, Math.max(0, view.length - 1));
   highlight(false);
@@ -251,7 +368,7 @@ function renderPanel(p) {
     ${tipsOf(p).length ? `<div class="flags">${tipsOf(p).map(([c, t]) => `<span class="flag ${c}">${t}</span>`).join("")}</div>` : ""}
     <div class="ctl">
       <label for="pScale">大小</label><input type="range" id="pScale" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${wm.scale ?? 1}"><input type="number" id="pScaleNum" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${(wm.scale ?? 1).toFixed(2)}" aria-label="大小倍率">
-      <label for="pChars">字數</label><input type="number" id="pChars" min="0.5" max="20" step="0.5" value="${wm.chars ?? ""}" placeholder="${countChars(p.title)}"><span></span>
+      <label for="pChars">字數</label><input type="number" id="pChars" min="0.5" max="20" step="0.5" value="${charsOf(p)}" title="從標題推算為 ${countChars(p.title)}"><span>${wm.chars != null ? "手動" : "自動"}</span>
     </div>
     <div class="acts">
       <button id="pEdit" title="E">編輯去背</button>
@@ -278,7 +395,11 @@ function renderPanel(p) {
     save(p, { scale: v }).then(() => refreshCard(p));
   });
   $("pChars").addEventListener("change", () => {
-    const v = $("pChars").value ? parseFloat($("pChars").value) : null;
+    // 改回和標題推算相同（或清空）就不記錄，維持自動
+    const raw = $("pChars").value ? parseFloat($("pChars").value) : null;
+    const v = raw === null || raw === countChars(p.title) ? null : raw;
+    if (raw === null) $("pChars").value = countChars(p.title);
+    $("pChars").nextElementSibling.textContent = v === null ? "自動" : "手動";
     p.wordmark.chars = v ?? undefined;
     if (card) resizePreview(card, p);
     save(p, { chars: v });
@@ -318,11 +439,13 @@ async function removeVariant(p) {
 }
 // 只更新卡片上的狀態標記（不重排整個清單）
 function refreshCard(p) {
+  if (MODE === "wall") return relayoutWall();
   const el = rowOf(p);
   if (!el) return;
   el.className = `row st-${statusOf(p.wordmark)}${p.wordmark.hidden ? " is-hidden" : ""}${el.classList.contains("current") ? " current" : ""}`;
 }
 function resizePreview(el, p) {
+  if (MODE === "wall") return relayoutWall();
   el.querySelector(".wm").style.width = `${(wallWidth(p) * ZOOM).toFixed(0)}px`;
 }
 function setStatus(_el, msg, err) {
@@ -343,7 +466,7 @@ async function save(p, fields, el) {
     return false;
   }
 }
-const rowOf = (p) => document.querySelector(`.row[data-key="${CSS.escape(p.key)}"]`);
+const rowOf = (p) => document.querySelector(`${MODE === "wall" ? ".wmw" : ".row"}[data-key="${CSS.escape(p.key)}"]`);
 // 設定狀態；需要換圖會一併隱藏。若新狀態不在目前的篩選裡，就停在原位置（等於自動跳到下一件）
 async function setStatus2(p, st) {
   const fields = { redo: st === "redo" || null, needsImage: st === "swap" || null };
@@ -601,10 +724,11 @@ window.addEventListener("message", async (e) => {
 
 // ── 鍵盤逐件檢查 ───────────────────────────────────────────────
 function highlight(scroll = true) {
-  document.querySelectorAll(".row.current").forEach((r) => r.classList.remove("current"));
+  document.querySelectorAll(".row.current, .wmw.current").forEach((r) => r.classList.remove("current"));
   const p = view[cur];
   const r = p && rowOf(p);
-  renderPanel(r ? p : null);
+  // 字牆上沒有隱藏的字圖，但面板仍可編輯它（例如取消隱藏）
+  renderPanel(p && (r || MODE === "wall") ? p : null);
   if (!r) return;
   r.classList.add("current");
   if (scroll) r.scrollIntoView({ block: "nearest", behavior: "smooth" });
@@ -637,6 +761,7 @@ document.querySelectorAll("#filter button").forEach((b) => b.addEventListener("c
   cur = 0; render();
 }));
 $("sort").addEventListener("change", () => { cur = 0; render(); });
+$("charsF").addEventListener("change", () => { cur = 0; render(); });
 $("q").addEventListener("input", () => { cur = 0; render(); });
 $("zoom").addEventListener("input", () => {
   ZOOM = parseFloat($("zoom").value);
@@ -649,6 +774,15 @@ $("zoom").addEventListener("input", () => {
   });
 });
 applyZoom();
+document.querySelectorAll("#mode button").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+$("wallW").value = (() => { try { return localStorage.getItem("wm-admin-wallw") || "1180"; } catch (_) { return "1180"; } })();
+$("wallW").addEventListener("change", () => { try { localStorage.setItem("wm-admin-wallw", $("wallW").value); } catch (_) {} relayoutWall(); });
+document.body.classList.toggle("mode-wall", MODE === "wall");
+$("list").classList.toggle("is-wall", MODE === "wall");
+document.querySelectorAll("#mode button").forEach((b) => b.classList.toggle("on", b.dataset.mode === MODE));
+// 寬度改變才重排（字牆本身改變高度不算）
+let listW = 0;
+new ResizeObserver(() => { const w = $("list").clientWidth; if (Math.abs(w - listW) > 1) { listW = w; relayoutWall(); } }).observe($("list"));
 // 右側面板固定在標頭下方：依標頭實際高度設定
 const syncHeadH = () => document.documentElement.style.setProperty("--head-h", `${document.querySelector("header").offsetHeight}px`);
 new ResizeObserver(syncHeadH).observe(document.querySelector("header"));
