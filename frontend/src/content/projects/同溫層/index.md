@@ -29,11 +29,10 @@ pubDate: 2023-10-29
 tags: ["echochamber","🥴"]
 wordmark:
   src: "/projects/同溫層/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/同溫層/wordmark-source.webp"
   accent: "#e4a6e2"
-  ink: 0.392
-  hidden: true
-  needsImage: true
+  ink: 0.258
 ---
 
 一直待在同溫層雖然可恥，但舒適。

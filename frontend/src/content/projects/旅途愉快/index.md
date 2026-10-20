@@ -23,11 +23,10 @@ hoverVideo:
   src: "/projects/旅途愉快/video_0.mp4"
 wordmark:
   src: "/projects/旅途愉快/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/旅途愉快/wordmark-source.webp"
   accent: "#183a80"
-  ink: 0.414
-  hidden: true
-  needsImage: true
+  ink: 0.252
 ---
 
 搭車、搭飛機，我很喜歡聽到「祝您旅途愉快。」不論是錄音還是現場廣播。

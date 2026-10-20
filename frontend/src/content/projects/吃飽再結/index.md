@@ -27,10 +27,9 @@ pubDate: 2024-07-20
 tags: ["Payaftermeal","🍱"]
 wordmark:
   src: "/projects/吃飽再結/wordmark.webp"
-  source: "auto"
-  ink: 0.614
+  source: "cutout"
+  ink: 0.573
   scale: 0.95
-  reviewed: true
 ---
 
 最近去幾家小吃店，老闆都說「吃飽再結」。

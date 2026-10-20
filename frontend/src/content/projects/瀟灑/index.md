@@ -27,10 +27,9 @@ pubDate: 2023-05-16
 tags: ["becool","🎂"]
 wordmark:
   src: "/projects/瀟灑/wordmark.webp"
-  source: "auto"
-  ink: 0.401
+  source: "cutout"
+  ink: 0.365
   scale: 1.15
-  reviewed: true
 ---
 
 我今天生日ㄛ！\

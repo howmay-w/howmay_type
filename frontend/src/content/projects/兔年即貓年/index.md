@@ -38,9 +38,9 @@ tags:
 wordmark:
   src: "/projects/兔年即貓年/wordmark.webp"
   source: "cutout"
-  ink: 0.276
+  sourceImage: "/projects/兔年即貓年/wordmark-source.webp"
+  ink: 0.317
   scale: 1.1
-  reviewed: true
 ---
 
 冷知識：越南的兔年是貓年ㄛ！\

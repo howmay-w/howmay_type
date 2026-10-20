@@ -32,9 +32,8 @@ tags: ["QQ","地震","🫨"]
 wordmark:
   src: "/projects/別再晃了/wordmark.webp"
   source: "cutout"
-  ink: 0.299
-  hidden: true
-  needsImage: true
+  sourceImage: "/projects/別再晃了/wordmark-source.webp"
+  ink: 0.417
 ---
 
 晚上震半夜震早上又震，\

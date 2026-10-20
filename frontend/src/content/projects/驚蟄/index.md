@@ -21,11 +21,10 @@ pubDate: 2023-02-16
 tags: ["Awakening","whatzurtype","字字字設計串連","🐞"]
 wordmark:
   src: "/projects/驚蟄/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#f5faae"
-  ink: 0.254
-  scale: 1.05
-  reviewed: true
+  ink: 0.232
+  scale: 1.15
 ---
 
 說好ㄉ回暖ㄋ？！

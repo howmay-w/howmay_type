@@ -30,9 +30,9 @@ tags: ["whatzurtype","Sijichun","字字字設計串連","🧋"]
 wordmark:
   src: "/projects/四季春/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/四季春/wordmark-source.webp"
   accent: "#1f5618"
-  ink: 0.523
-  reviewed: true
+  ink: 0.4
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是飲料／甜品基底，下個月再來加料。無糖茶派的我選了四季春。

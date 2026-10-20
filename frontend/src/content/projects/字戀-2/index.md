@@ -12,10 +12,9 @@ pubDate: 2022-09-22
 tags: ["whatzurtype","字字字設計串連","LoveFont","💟"]
 wordmark:
   src: "/projects/字戀-2/wordmark.webp"
-  source: "auto"
-  ink: 0.259
-  hidden: true
-  needsImage: true
+  source: "cutout"
+  sourceImage: "/projects/字戀-2/wordmark-source.webp"
+  ink: 0.135
 ---
 
 投稿看看

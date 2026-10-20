@@ -32,10 +32,10 @@ tags: ["熬","stayup","👁️"]
 wordmark:
   src: "/projects/熬夜-2/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/熬夜-2/wordmark-source.webp"
   accent: "#d99ae8"
-  ink: 0.799
-  hidden: true
-  needsImage: true
+  ink: 0.365
+  scale: 1.15
 ---
 
 大學同學說過：熬夜使人心靈脆弱。所言甚是。\

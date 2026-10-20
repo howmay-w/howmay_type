@@ -23,10 +23,9 @@ pubDate: 2023-04-11
 tags: ["clam","台灣文蛤","蛤蜊","🆕"]
 wordmark:
   src: "/projects/蛤/wordmark.webp"
-  source: "auto"
-  ink: 0.452
+  source: "cutout"
+  ink: 0.424
   scale: 1.2
-  reviewed: true
 ---
 
 本日要聞。\

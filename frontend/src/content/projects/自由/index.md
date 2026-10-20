@@ -29,11 +29,10 @@ pubDate: 2022-11-11
 tags: ["freedom","🪁"]
 wordmark:
   src: "/projects/自由/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/自由/wordmark-source.webp"
   accent: "#2d4005"
-  ink: 0.506
-  hidden: true
-  needsImage: true
+  ink: 0.465
 ---
 
 長大ㄌ以後好自由ㄛ！\

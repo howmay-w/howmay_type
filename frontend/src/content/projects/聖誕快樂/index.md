@@ -25,11 +25,9 @@ pubDate: 2022-12-22
 tags: ["抽獎","merrychristmas","卡片設計","孔版印刷"]
 wordmark:
   src: "/projects/聖誕快樂/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#322320"
-  ink: 0.322
-  hidden: true
-  needsImage: true
+  ink: 0.272
 ---
 
 🎄快閃抽獎∣已截止🎄\

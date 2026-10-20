@@ -25,10 +25,9 @@ pubDate: 2023-01-13
 tags: ["unbelievable","🥹"]
 wordmark:
   src: "/projects/不可能/wordmark.webp"
-  source: "auto"
-  ink: 0.284
-  hidden: true
-  needsImage: true
+  source: "cutout"
+  sourceImage: "/projects/不可能/wordmark-source.webp"
+  ink: 0.258
 ---
 
 這幾天天氣也太好ㄌ⋯！\

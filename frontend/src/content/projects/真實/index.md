@@ -20,7 +20,8 @@ tags: ["frame", "🖼️"]
 wordmark:
   src: "/projects/真實/wordmark.webp"
   source: "cutout"
-  ink: 0.291
+  sourceImage: "/projects/真實/wordmark-source.webp"
+  ink: 0.387
   scale: 1.25
 ---
 

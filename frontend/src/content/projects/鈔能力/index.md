@@ -29,10 +29,9 @@ pubDate: 2023-12-30
 tags: ["whatzurtype","噴錢","moneytalks","字字字設計串連","💵"]
 wordmark:
   src: "/projects/鈔能力/wordmark.webp"
-  source: "auto"
-  ink: 0.307
-  hidden: true
-  needsImage: true
+  source: "cutout"
+  sourceImage: "/projects/鈔能力/wordmark-source.webp"
+  ink: 0.369
 ---
 
 應該是今年最後一篇！\

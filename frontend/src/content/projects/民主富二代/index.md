@@ -21,7 +21,7 @@ wordmark:
   src: "/projects/民主富二代/wordmark.webp"
   source: "cutout"
   ink: 0.306
-  scale: 1.15
+  scale: 1.05
 ---
 
 現在享有，因為曾有人以命相搏。

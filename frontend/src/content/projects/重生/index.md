@@ -21,10 +21,9 @@ pubDate: 2023-01-03
 tags: ["rebirth","點字","😌"]
 wordmark:
   src: "/projects/重生/wordmark.webp"
-  source: "auto"
-  ink: 0.327
+  source: "cutout"
+  ink: 0.309
   scale: 1.35
-  reviewed: true
 ---
 
 冷天洗完熱水澡ㄉ感覺：

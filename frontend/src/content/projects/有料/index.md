@@ -32,9 +32,9 @@ tags: ["reallysomething","🧋"]
 wordmark:
   src: "/projects/有料/wordmark.webp"
   source: "cutout"
-  ink: 0.69
-  scale: 1.2
-  reviewed: true
+  sourceImage: "/projects/有料/wordmark-source.webp"
+  ink: 0.797
+  scale: 1.1
 ---
 
 想大力稱讚，但又怕多講多錯時，就可以使用「有料」。\

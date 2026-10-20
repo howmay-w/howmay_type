@@ -24,9 +24,8 @@ tags: ["dizzy","😵‍💫"]
 wordmark:
   src: "/projects/左右不分/wordmark.webp"
   source: "cutout"
-  ink: 0.575
-  scale: 1.1
-  reviewed: true
+  ink: 0.465
+  scale: 0.95
 ---
 
 最近大家應該都很混亂，\

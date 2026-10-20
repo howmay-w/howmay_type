@@ -27,10 +27,9 @@ pubDate: 2024-08-10
 tags: ["EmotionalLabor","😫"]
 wordmark:
   src: "/projects/情緒勞動/wordmark.webp"
-  source: "auto"
-  ink: 0.396
-  hidden: true
-  needsImage: true
+  source: "cutout"
+  sourceImage: "/projects/情緒勞動/wordmark-source.webp"
+  ink: 0.418
 ---
 
 第一次認識「情緒勞動」概念時頗為震撼，突然為某些特別疲累或不滿的時刻找到解釋，理解感受從何而來。

@@ -27,11 +27,11 @@ pubDate: 2024-03-14
 tags: ["cramps","🫠"]
 wordmark:
   src: "/projects/經痛/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/經痛/wordmark-source.webp"
   accent: "#243ba1"
-  ink: 0.112
-  hidden: true
-  needsImage: true
+  ink: 0.167
+  scale: 1.15
 ---
 
 今天月經來第二天，好痛哦😖

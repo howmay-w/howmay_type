@@ -25,10 +25,9 @@ pubDate: 2023-03-24
 tags: ["itsokay","まあまあ","🉑"]
 wordmark:
   src: "/projects/還行/wordmark.webp"
-  source: "auto"
-  ink: 0.376
+  source: "cutout"
+  ink: 0.299
   scale: 1.2
-  reviewed: true
 ---
 
 普普通通ㄉ狀態，\

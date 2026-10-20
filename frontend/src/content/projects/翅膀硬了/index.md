@@ -29,11 +29,10 @@ pubDate: 2023-05-14
 tags: ["mothersday","🪽"]
 wordmark:
   src: "/projects/翅膀硬了/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/翅膀硬了/wordmark-source.webp"
   accent: "#f58384"
-  ink: 0.534
-  hidden: true
-  needsImage: true
+  ink: 0.451
 ---
 
 不管幾歲在媽媽眼裡都是孩子，\

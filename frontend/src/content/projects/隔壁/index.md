@@ -34,10 +34,10 @@ tags: ["nextdoor","🧱"]
 wordmark:
   src: "/projects/隔壁/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/隔壁/wordmark-source.webp"
   accent: "#b4c17b"
-  ink: 0.826
-  hidden: true
-  needsImage: true
+  ink: 0.345
+  scale: 1.1
 ---
 
 「隔壁」聽起來好像比「旁邊」更可愛，至少我自己覺得。

@@ -13,11 +13,11 @@ pubDate: 2024-04-17
 tags: ["whatzurtype","字字字設計串連","瑞穗","台鐵","reels"]
 wordmark:
   src: "/projects/富源/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/富源/wordmark-source.webp"
   accent: "#839370"
-  ink: 0.251
-  hidden: true
-  needsImage: true
+  ink: 0.11
+  scale: 0.8
 ---
 
 ### 富源🚇

@@ -32,9 +32,9 @@ tags: ["雨","rain","🌧️"]
 wordmark:
   src: "/projects/下雨/wordmark.webp"
   source: "cutout"
-  ink: 0.42
+  sourceImage: "/projects/下雨/wordmark-source.webp"
+  ink: 0.641
   scale: 1.2
-  reviewed: true
 ---
 
 下班又忘記帶傘ㄌ，傷腦筋。\

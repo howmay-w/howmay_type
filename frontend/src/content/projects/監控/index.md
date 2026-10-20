@@ -32,7 +32,6 @@ wordmark:
   source: "cutout"
   ink: 0.258
   scale: 1.15
-  reviewed: true
 ---
 
 我家的貓貓 be like:

@@ -29,7 +29,7 @@ wordmark:
   src: "/projects/沒禮貌/wordmark.webp"
   source: "cutout"
   ink: 0.444
-  scale: 1.2
+  scale: 1.1
   reviewed: true
 ---
 

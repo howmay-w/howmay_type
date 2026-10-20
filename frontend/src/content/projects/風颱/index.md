@@ -25,10 +25,10 @@ pubDate: 2023-10-06
 tags: ["颱風","hong-thai","typhoon","🌀"]
 wordmark:
   src: "/projects/風颱/wordmark.webp"
-  source: "auto"
-  ink: 0.713
-  hidden: true
-  needsImage: true
+  source: "cutout"
+  sourceImage: "/projects/風颱/wordmark-source.webp"
+  ink: 0.632
+  scale: 1.2
 ---
 
 今年颱風好多，明明都十月ㄌ。\

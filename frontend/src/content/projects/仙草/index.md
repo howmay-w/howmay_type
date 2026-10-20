@@ -17,9 +17,9 @@ tags: ["whatzurtype","奶茶","髭文字","字字字設計串連","reels"]
 wordmark:
   src: "/projects/仙草/wordmark.webp"
   source: "cutout"
-  ink: 0.447
+  sourceImage: "/projects/仙草/wordmark-source.webp"
+  ink: 0.523
   scale: 1.15
-  reviewed: true
 ---
 
 以仙草搭配 [@traditional_label_lab](https://www.instagram.com/traditional_label_lab/) 老師的奶茶！

@@ -27,11 +27,10 @@ pubDate: 2025-09-25
 tags: ["死語","台語","omg","😱"]
 wordmark:
   src: "/projects/阿娘喂/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/阿娘喂/wordmark-source.webp"
   accent: "#000617"
-  ink: 0.184
-  hidden: true
-  needsImage: true
+  ink: 0.173
 ---
 
 死語復興運動

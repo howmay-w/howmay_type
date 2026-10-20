@@ -20,9 +20,8 @@ tags: ["nothing", "3D", "🫤"]
 wordmark:
   src: "/projects/沒幹嘛/wordmark.webp"
   source: "cutout"
-  ink: 0.5
-  hidden: true
-  needsImage: true
+  ink: 0.352
+  scale: 1.75
 ---
 
 就沒幹嘛，試試看以拉的 3D 效果。

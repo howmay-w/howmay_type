@@ -27,11 +27,10 @@ pubDate: 2023-07-25
 tags: ["🏅"]
 wordmark:
   src: "/projects/得失心/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/得失心/wordmark-source.webp"
   accent: "#0b1506"
-  ink: 0.074
-  hidden: true
-  needsImage: true
+  ink: 0.316
 ---
 
 之前參加競賽型活動，被家人提醒「不要得失心太重。」才雄雄想起來，啊，原來這種焦慮叫做得失心。

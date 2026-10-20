@@ -25,11 +25,10 @@ hoverVideo:
   src: "/projects/下次一定/video_0.mp4"
 wordmark:
   src: "/projects/下次一定/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/下次一定/wordmark-source.webp"
   accent: "#fba325"
-  ink: 0.441
-  hidden: true
-  needsImage: true
+  ink: 0.336
 ---
 
 身為一個台北人：

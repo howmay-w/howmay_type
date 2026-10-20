@@ -15,7 +15,8 @@ wordmark:
   source: "cutout"
   accent: "#000101"
   ink: 0.444
-  scale: 0.85
+  scale: 1.15
+  hidden: true
 ---
 
 可能是奇幻的世界。

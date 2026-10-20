@@ -31,11 +31,11 @@ pubDate: 2025-01-28
 tags: ["merciless","🧧"]
 wordmark:
   src: "/projects/心狠手辣/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/心狠手辣/wordmark-source.webp"
   accent: "#e14e82"
-  ink: 0.553
-  hidden: true
-  needsImage: true
+  ink: 0.569
+  scale: 0.8
 ---
 
 過年啦。

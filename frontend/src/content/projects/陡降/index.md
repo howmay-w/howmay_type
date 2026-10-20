@@ -32,7 +32,7 @@ tags: ["suddendrop", "📉"]
 wordmark:
   src: "/projects/陡降/wordmark.webp"
   source: "cutout"
-  ink: 0.218
+  ink: 0.324
   scale: 1.1
 ---
 

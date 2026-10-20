@@ -26,9 +26,7 @@ tags: ["blowmoney","💸"]
 wordmark:
   src: "/projects/噴錢/wordmark.webp"
   source: "cutout"
-  ink: 0.53
-  hidden: true
-  needsImage: true
+  ink: 0.267
 ---
 
 年尾總是花錢如瀑布，\

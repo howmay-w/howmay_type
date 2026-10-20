@@ -25,11 +25,11 @@ pubDate: 2023-01-17
 tags: ["leak","💧"]
 wordmark:
   src: "/projects/漏水/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/漏水/wordmark-source.webp"
   accent: "#14491e"
-  ink: 0.563
-  hidden: true
-  needsImage: true
+  ink: 0.481
+  scale: 1.15
 ---
 
 祝福大家一輩子都不要再遇到

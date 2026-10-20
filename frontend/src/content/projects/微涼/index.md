@@ -17,10 +17,9 @@ pubDate: 2022-10-10
 tags: ["feelingcold","點字","🤧"]
 wordmark:
   src: "/projects/微涼/wordmark.webp"
-  source: "auto"
-  ink: 0.14
-  hidden: true
-  needsImage: true
+  source: "cutout"
+  sourceImage: "/projects/微涼/wordmark-source.webp"
+  ink: 0.206
 ---
 
 問答點字的「微涼」\

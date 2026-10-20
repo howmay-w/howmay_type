@@ -22,5 +22,4 @@ wordmark:
   source: "cutout"
   ink: 0.616
   scale: 0.9
-  reviewed: true
 ---

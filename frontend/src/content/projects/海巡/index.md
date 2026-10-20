@@ -23,10 +23,10 @@ hoverVideo:
   src: "/projects/海巡/video_0.mp4"
 wordmark:
   src: "/projects/海巡/wordmark.webp"
-  source: "auto"
-  ink: 0.071
-  hidden: true
-  needsImage: true
+  source: "cutout"
+  sourceImage: "/projects/海巡/wordmark-source.webp"
+  ink: 0.414
+  scale: 1.1
 ---
 
 颱風平安。

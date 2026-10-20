@@ -19,11 +19,10 @@ pubDate: 2022-10-21
 tags: ["loveletter","💌","cmyk"]
 wordmark:
   src: "/projects/情書/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/情書/wordmark-source.webp"
   accent: "#1b0800"
-  ink: 0.2
-  hidden: true
-  needsImage: true
+  ink: 0.463
 ---
 
 這個時代還有情書嗎？訊息不算的話\

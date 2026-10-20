@@ -21,10 +21,10 @@ pubDate: 2025-07-11
 tags: ["whatzurtype","字字字設計串連","宜蘭藝術自造季","mimicking","🤖"]
 wordmark:
   src: "/projects/照樣造句/wordmark.webp"
-  source: "auto"
+  source: "cutout"
   accent: "#190800"
   ink: 0.377
-  needsImage: true
+  scale: 0.9
 ---
 
 本次 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 與宜蘭藝術自造季 [@chccp_yilan](https://www.instagram.com/chccp_yilan/) 串聯，題目是以「造」造詞，我選的是「造樣造句」。

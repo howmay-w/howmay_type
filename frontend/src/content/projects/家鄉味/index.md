@@ -32,7 +32,8 @@ tags: ["柑仔蜜", "kamabit", "番茄", "🍅"]
 wordmark:
   src: "/projects/家鄉味/wordmark.webp"
   source: "cutout"
-  ink: 0.493
+  sourceImage: "/projects/家鄉味/wordmark-source.webp"
+  ink: 0.51
   scale: 1.05
 ---
 

@@ -29,11 +29,10 @@ pubDate: 2022-12-14
 tags: ["分手","happybreakup","點字","❤️‍🩹"]
 wordmark:
   src: "/projects/分手快樂/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/分手快樂/wordmark-source.webp"
   accent: "#c65d85"
-  ink: 0.294
-  hidden: true
-  needsImage: true
+  ink: 0.277
 ---
 
 某位觀眾的點字，\

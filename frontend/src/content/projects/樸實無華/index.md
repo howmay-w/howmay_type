@@ -23,10 +23,9 @@ hoverVideo:
   src: "/projects/樸實無華/video_0.mp4"
 wordmark:
   src: "/projects/樸實無華/wordmark.webp"
-  source: "auto"
-  ink: 0.634
+  source: "cutout"
+  ink: 0.499
   scale: 0.95
-  reviewed: true
 ---
 
 這幾天翻了一些十多年前的書，

@@ -31,11 +31,10 @@ pubDate: 2024-01-23
 tags: ["freezing","🥶"]
 wordmark:
   src: "/projects/好冷/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/好冷/wordmark-source.webp"
   accent: "#1c1e24"
-  ink: 0.464
-  hidden: true
-  needsImage: true
+  ink: 0.569
 ---
 
 就好冷。冷到什麼事都做不太好。大家保重。

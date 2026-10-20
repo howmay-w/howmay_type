@@ -18,8 +18,7 @@ tags: ["whitepaperrevolution","A4revolution","📄"]
 wordmark:
   src: "/projects/白紙/wordmark.webp"
   source: "cutout"
-  ink: 0.692
+  sourceImage: "/projects/白紙/wordmark-source.webp"
+  ink: 0.327
   scale: 1.35
-  hidden: true
-  needsImage: true
 ---
