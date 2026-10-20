@@ -27,10 +27,9 @@ pubDate: 2024-08-04
 tags: ["tailwind","🎐"]
 wordmark:
   src: "/projects/順風/wordmark.webp"
-  source: "auto"
-  ink: 0.436
-  hidden: true
-  needsImage: true
+  source: "cutout"
+  sourceImage: "/projects/順風/wordmark-source.webp"
+  ink: 0.217
 ---
 
 「順風」一直是我很喜歡的祝福說法，帶著相信實力或準備已然足夠的從容，只祈好的機緣推動。

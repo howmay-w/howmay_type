@@ -32,10 +32,10 @@ tags: ["cry","哭","🥲"]
 wordmark:
   src: "/projects/哭哇/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/哭哇/wordmark-source.webp"
   accent: "#cfbd8d"
-  ink: 0.817
+  ink: 0.227
   scale: 1.25
-  needsImage: true
 ---
 
 年前想說「過完年再說」的事，\

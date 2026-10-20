@@ -32,7 +32,8 @@ tags: ["whatzurtype","MinorSnow","字字字設計串連","❄️"]
 wordmark:
   src: "/projects/小雪/wordmark.webp"
   source: "cutout"
-  ink: 0.179
+  sourceImage: "/projects/小雪/wordmark-source.webp"
+  ink: 0.192
   scale: 1.2
 ---
 

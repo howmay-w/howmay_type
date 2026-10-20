@@ -26,7 +26,8 @@ tags: ["whatzurtype","字字字設計串連","diary","📔"]
 wordmark:
   src: "/projects/寫日記/wordmark.webp"
   source: "cutout"
-  ink: 0.363
+  sourceImage: "/projects/寫日記/wordmark-source.webp"
+  ink: 0.568
   scale: 1.15
 ---
 

@@ -22,11 +22,10 @@ pubDate: 2024-04-08
 tags: ["whatzurtype", "字字字設計串連", "松山", "冬山", "台鐵", "reels"]
 wordmark:
   src: "/projects/冬山松山/wordmark.webp"
-  source: "auto"
+  source: "cutout"
+  sourceImage: "/projects/冬山松山/wordmark-source.webp"
   accent: "#e1903b"
-  ink: 0.277
-  hidden: true
-  needsImage: true
+  ink: 0.558
 ---
 
 🚂松山與冬山是我最常出沒的兩個火車站。名字剛好很接近，卻各有風景。

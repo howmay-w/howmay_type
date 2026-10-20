@@ -25,7 +25,7 @@ wordmark:
   src: "/projects/煩躁/wordmark.webp"
   source: "cutout"
   ink: 0.385
-  scale: 1.25
+  scale: 1.1
 ---
 
 喉嚨⋯痛痛ㄉ⋯⋯\

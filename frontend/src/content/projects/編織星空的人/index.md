@@ -23,11 +23,10 @@ pubDate: 2022-10-15
 tags: ["編織星空","點字","crispy脆樂團","脆脆","✨"]
 wordmark:
   src: "/projects/編織星空的人/wordmark.webp"
-  source: "auto"
-  ink: 0.088
+  source: "cutout"
+  sourceImage: "/projects/編織星空的人/wordmark-source.webp"
+  ink: 0.029
   scale: 0.8
-  hidden: true
-  needsImage: true
 ---
 
 🎶用一顆孩子的心，在大人世界生存🎶\
