@@ -162,20 +162,26 @@ const packColumns = (items, D) => {
     const x = c0 === 0 ? spanX : c0 + k === N ? spanX + spanW - w : spanX + (spanW - w) / 2;
     placed.push({ el: it.el, x, y: r0 * STEP, w, h, r0, ch, c0, k });
   }
-  // 排完後的置中調整：不貼左右邊界的作品，移到它左右兩側實際空著的範圍正中央，
-  // 讓放不進東西的空白平均分到兩側，而不是全部堆在右邊
+  // 排完後的置中調整：左右「兩側都被其他作品夾住」的作品，移到中間空間的正中央，
+  // 讓放不進東西的空白平均分到兩側。某一側空到邊界（例如最後一排、搜尋結果很少）就維持靠左。
   for (const p of placed) {
     if (p.c0 === 0 || p.c0 + p.k === N) continue;
     let left = Infinity;
     let right = Infinity;
+    let openEdge = false;
     for (let rr = p.r0; rr < p.r0 + p.ch; rr++) {
       let l = 0;
-      for (let c = p.c0 - 1; c >= 0 && occ[rr * N + c] !== 1; c--) l++;
+      let c = p.c0 - 1;
+      for (; c >= 0 && occ[rr * N + c] !== 1; c--) l++;
+      if (c < 0) openEdge = true;
       let r = 0;
-      for (let c = p.c0 + p.k; c < N && occ[rr * N + c] !== 1; c++) r++;
+      c = p.c0 + p.k;
+      for (; c < N && occ[rr * N + c] !== 1; c++) r++;
+      if (c >= N) openEdge = true;
       left = Math.min(left, l);
       right = Math.min(right, r);
     }
+    if (openEdge) continue;
     p.x += ((right - left) / 2) * pitch;
   }
   const height = placed.reduce((mx, p) => Math.max(mx, p.y + p.h), 0) || 1;
