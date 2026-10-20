@@ -1,6 +1,7 @@
 /**
  * 字圖管理頁（只在 dev server 提供，build 不會包含）：
  * - GET  /__wordmarks             管理頁
+ * - GET  /__wordmarks/compare-scale  字牆空隙比較（原本／先縮再排／加大間距三欄並排，可調倍率與寬度）
  * - GET  /__wordmarks/editor      精修視窗（wordmark-editor/，以 iframe 疊在管理頁上）
  * - GET  /__wordmarks/api/list    所有作品的字圖資料
  * - POST /__wordmarks/api/update  修改字圖欄位（hidden / scale / chars / redo / needsImage）
@@ -19,6 +20,7 @@ const contentProjects = path.resolve(__dirname, "../content/projects");
 const pageFile = path.join(__dirname, "wordmark-admin.html");
 // 精修視窗（以 iframe 疊在管理頁上），程式在 wordmark-editor/，由 Vite 轉譯
 const editorFile = path.join(__dirname, "wordmark-editor", "editor.html");
+const compareFile = path.join(__dirname, "wordmark-compare.html");
 const EDITABLE = new Set(["reviewed", "hidden", "scale", "chars", "redo", "needsImage"]);
 
 function webpSize(file) {
@@ -198,6 +200,9 @@ export function wordmarkAdminPlugin() {
           const url = new URL(req.url ?? "/", "http://localhost");
           if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
             return send(res, 200, fs.readFileSync(pageFile, "utf8"), "text/html; charset=utf-8");
+          }
+          if (req.method === "GET" && url.pathname === "/compare-scale") {
+            return send(res, 200, fs.readFileSync(compareFile, "utf8"), "text/html; charset=utf-8");
           }
           if (req.method === "GET" && url.pathname === "/editor") {
             return send(res, 200, fs.readFileSync(editorFile, "utf8"), "text/html; charset=utf-8");

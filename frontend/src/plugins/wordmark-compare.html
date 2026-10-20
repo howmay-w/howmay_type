@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>字牆空隙比較</title>
+<style>
+  :root { --bg: #161616; --panel: #1f1f1f; --fg: #eee; --mut: #8f8f8f; --line: #2e2e2e; --accent: #d7ea06; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 -apple-system, "PingFang TC", sans-serif; display: flex; flex-direction: column; }
+  header { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+  h1 { font-size: 15px; margin: 0 6px 0 0; }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  button, select { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  .seg button { border: 0; border-radius: 0; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  button.on { color: var(--accent); }
+  .hint { color: var(--mut); font-size: 12px; flex-basis: 100%; margin: 0; }
+  main { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 12px 16px 16px; }
+  .pane { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .pane h2 { font-size: 13px; font-weight: 500; color: var(--mut); margin: 0; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; min-height: 30px; }
+  .pane h2 b { color: var(--fg); }
+  .pane h2 select { padding: 2px 6px; font-size: 12px; }
+  .box { flex: 1; min-height: 0; position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #111; }
+  .box iframe { position: absolute; left: 50%; top: 0; border: 0; transform-origin: top center; background: #111; }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>字牆空隙比較</h1>
+  <div class="seg" id="width" role="group" aria-label="寬度">
+    <button data-w="375" class="on">手機 375</button>
+    <button data-w="1280">電腦 1280</button>
+  </div>
+  <button id="loadAll">全部載入</button>
+  <button id="reshuffle" title="換一個隨機順序重新比較">換一組順序</button>
+  <p class="hint">三邊用同一個作品順序，各自重新排版。方案 1：字先縮小再排，間距不變（字變小、一屏看得多）。方案 2：字大小不變，排版時直接加大間距（空隙平均、牆變長）。間距 ×1.11 相當於方案 1 的 0.9 再整面放大回來。捲動依比例同步。</p>
+</header>
+<main>
+  <section class="pane"><h2><b>原本</b></h2><div class="box"><iframe data-base="" title="原本的字牆"></iframe></div></section>
+  <section class="pane">
+    <h2><b>方案 1</b> 先縮再排
+      <select data-param="wmpre" aria-label="排版前縮放">
+        <option>0.85</option><option selected>0.9</option><option>0.95</option>
+      </select>
+    </h2>
+    <div class="box"><iframe title="方案 1 的字牆"></iframe></div>
+  </section>
+  <section class="pane">
+    <h2><b>方案 2</b> 間距倍數
+      <select data-param="wmgap" aria-label="間距倍數">
+        <option>1.11</option><option selected>1.2</option><option>1.3</option><option>1.4</option>
+      </select>
+    </h2>
+    <div class="box"><iframe title="方案 2 的字牆"></iframe></div>
+  </section>
+</main>
+<script>
+const frames = [...document.querySelectorAll("iframe")];
+let W = 375;
+
+// iframe 用實際寬度渲染，再等比例縮到框裡
+function fit() {
+  for (const f of frames) {
+    const box = f.parentElement;
+    const k = Math.min(1, box.clientWidth / W);
+    f.style.width = `${W}px`;
+    f.style.height = `${box.clientHeight / k}px`;
+    f.style.transform = `translateX(-50%) scale(${k})`;
+  }
+}
+new ResizeObserver(fit).observe(document.querySelector("main"));
+
+const srcOf = (f) => {
+  const sel = f.closest(".pane").querySelector("select");
+  return sel ? `/?view=type&${sel.dataset.param}=${sel.value}` : "/?view=type";
+};
+
+// 三邊共用同一份隨機順序（同一個分頁的 sessionStorage）：先載第一個，排好順序後再載其他
+function load(only) {
+  fit();
+  if (only) { only.src = srcOf(only); return; }
+  for (const f of frames.slice(1)) f.removeAttribute("src");
+  frames[0].onload = () => {
+    frames[0].onload = null;
+    for (const f of frames.slice(1)) f.src = srcOf(f);
+  };
+  frames[0].src = srcOf(frames[0]);
+}
+
+// 捲動依比例同步（三邊牆的長度不同）
+let syncing = false;
+frames.forEach((f) => f.addEventListener("load", () => {
+  const win = f.contentWindow;
+  win.addEventListener("scroll", () => {
+    if (syncing) return;
+    syncing = true;
+    const max = win.document.documentElement.scrollHeight - win.innerHeight;
+    const r = max > 0 ? win.scrollY / max : 0;
+    for (const o of frames) {
+      if (o === f || !o.contentWindow) continue;
+      const ow = o.contentWindow;
+      ow.scrollTo(0, r * (ow.document.documentElement.scrollHeight - ow.innerHeight));
+    }
+    requestAnimationFrame(() => { syncing = false; });
+  });
+}));
+
+document.querySelectorAll("#width button").forEach((b) => b.addEventListener("click", () => {
+  W = parseInt(b.dataset.w, 10);
+  document.querySelectorAll("#width button").forEach((x) => x.classList.toggle("on", x === b));
+  load();
+}));
+document.querySelectorAll(".pane select").forEach((s) => s.addEventListener("change", () => load(s.closest(".pane").querySelector("iframe"))));
+document.getElementById("reshuffle").addEventListener("click", () => {
+  try { sessionStorage.removeItem("grid-session-order"); } catch (_) {}
+  load();
+});
+// 每邊都按 MORE 直到全部載入（每按一次等一下，讓排版一批一批接著排）
+document.getElementById("loadAll").addEventListener("click", async () => {
+  for (let n = 0; n < 20; n++) {
+    let any = false;
+    for (const f of frames) {
+      const btn = f.contentDocument?.getElementById("load-more");
+      if (btn && !btn.classList.contains("hidden")) { btn.click(); any = true; }
+    }
+    if (!any) break;
+    await new Promise((r) => setTimeout(r, 250));
+  }
+});
+load();
+</script>
+</body>
+</html>

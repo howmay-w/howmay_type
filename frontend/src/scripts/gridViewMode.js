@@ -128,9 +128,17 @@ const SHRINK_MOBILE = 0.85;
 // 同一件作品的其他款：剛放過同一件的，接下來 APART 件內盡量不再放，避免兩款挨在一起
 const APART = 8;
 
+// 字的整體大小與間距：字先縮到 WORD_SCALE 再排版，間距是基準單位的 GAP_RATIO 倍
+// （原本字 ×1、間距 0.45；在比較頁比較後改為字 ×0.9、間距 ×1.5，讓字與字之間更透氣）
+const WORD_SCALE = 0.9;
+const GAP_RATIO = 0.45 * 1.5;
+// 測試用網址參數（比較頁用）：wmpre = 排版前再把字縮放、wmgap = 間距再乘的倍數，都疊加在上面的設定上
+const testParam = (key) => parseFloat(new URLSearchParams(window.location.search).get(key)) || 1;
+
 const createPacker = (D) => {
   const unit = unitOf(D);
-  const gap = unit * 0.45; // 字與字的間距（原 0.34，之後加大到 0.374、0.45）
+  const gap = unit * GAP_RATIO * testParam("wmgap"); // 字與字的間距（歷次：0.34 → 0.374 → 0.45 → 0.675）
+  const pre = testParam("wmpre");
   // 手機版原本 8 欄：欄寬（約 53px）相對作品太粗，作品很難剛好撐滿欄寬，空洞多；改成和桌機一樣 16 欄
   const N = 16;
   const growMax = D < 480 ? GROW_MOBILE : GROW;
@@ -230,6 +238,13 @@ const createPacker = (D) => {
     }
   };
 
+  // 作品畫面上移離了原本的欄位（置中）：把現在佔到的欄（含標準間距）保留起來，之後（例如 MORE）的作品不能放進去
+  const reserve = (p) => {
+    const c0 = Math.max(0, Math.floor(p.x / pitch));
+    const c1 = Math.min(N - 1, Math.ceil((p.x + p.w + gap) / pitch) - 1);
+    for (let rr = p.r0; rr < p.r0 + p.ch; rr++) for (let cc = c0; cc <= c1; cc++) if (!(occ[rr * N + cc] & 1)) occ[rr * N + cc] = 3;
+  };
+
   // 置中調整：左右「兩側都被其他作品夾住」的作品，移到中間空間的正中央，
   // 讓放不進東西的空白平均分到兩側。某一側空到邊界（例如最後一排、搜尋結果很少）就維持靠左。
   const centerBetween = (movable) => {
@@ -253,6 +268,7 @@ const createPacker = (D) => {
       }
       if (openEdge) continue;
       p.x += ((right - left) / 2) * pitch;
+      reserve(p);
     }
   };
 
@@ -287,12 +303,7 @@ const createPacker = (D) => {
       }
       if (moved < 0.5) break;
     }
-    // 作品畫面上移離了原本的欄位：把現在佔到的欄（含標準間距）保留起來，之後（例如 MORE）的作品不能放進去
-    for (const p of movable) {
-      const c0 = Math.max(0, Math.floor(p.x / pitch));
-      const c1 = Math.min(N - 1, Math.ceil((p.x + p.w + gap) / pitch) - 1);
-      for (let rr = p.r0; rr < p.r0 + p.ch; rr++) for (let cc = c0; cc <= c1; cc++) if (!(occ[rr * N + cc] & 1)) occ[rr * N + cc] = 3;
-    }
+    for (const p of movable) reserve(p);
   };
 
   // 排入一批作品；已經排好的不動
@@ -306,7 +317,7 @@ const createPacker = (D) => {
     }
     const queue = items.map((el) => {
       const { aspect, mass } = metrics(el);
-      return { el, href: el.getAttribute("href"), aspect, target: Math.min(unit * Math.sqrt(mass * aspect), D) };
+      return { el, href: el.getAttribute("href"), aspect, target: Math.min(unit * Math.sqrt(mass * aspect) * WORD_SCALE * pre, D) };
     });
     const apart = (it) => (placed.length - (lastAt.get(it.href) ?? -Infinity) < APART ? 1 : 0);
 
@@ -435,10 +446,15 @@ const layout = () => {
   observer?.disconnect();
   // 跨段重排時讓字滑到新位置；第一次排版與排序／搜尋直接定位
   grid.classList.toggle("wall--glide", Boolean(bandChanged));
+  // 測試用：網址加 ?wmscale=0.9，排版完成後每張字圖以自己的中心縮放（位置不變、空隙變大），比較視覺感受用
+  const s = testParam("wmscale");
   for (const p of placed) {
-    p.el.style.setProperty("--x", `${((p.x / D) * 100).toFixed(3)}%`);
-    p.el.style.setProperty("--y", `${((p.y / height) * 100).toFixed(3)}%`);
-    p.el.style.setProperty("--w", `${((p.w / D) * 100).toFixed(3)}%`);
+    const w = p.w * s;
+    const x = p.x + (p.w - w) / 2;
+    const y = p.y + (p.h - p.h * s) / 2;
+    p.el.style.setProperty("--x", `${((x / D) * 100).toFixed(3)}%`);
+    p.el.style.setProperty("--y", `${((y / height) * 100).toFixed(3)}%`);
+    p.el.style.setProperty("--w", `${((w / D) * 100).toFixed(3)}%`);
   }
   grid.style.setProperty("--wall-ratio", `${D} / ${Math.ceil(height)}`);
   observe();
