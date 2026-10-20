@@ -55,6 +55,8 @@ const projects = defineCollection({
       .object({
         src: z.string(),
         source: z.enum(["cutout", "auto", "ai"]).optional(),
+        // 換圖時上傳的原始圖（wordmark-source.webp），只給本機精修當原圖用，不會複製到正式網站
+        sourceImage: z.string().optional(),
         accent: z.string().optional(),
         // 字圖不透明像素比例，用來平衡粗細字的量感
         ink: z.number().optional(),

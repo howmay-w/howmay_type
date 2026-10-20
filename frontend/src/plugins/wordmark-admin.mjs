@@ -5,6 +5,7 @@
  * - GET  /__wordmarks/api/list    所有作品的字圖資料
  * - POST /__wordmarks/api/update  修改 wordmark 欄位（reviewed / hidden / scale / chars）
  * - POST /__wordmarks/api/replace?slug=&ink=  上傳處理好的 webp，取代 wordmark.webp
+ * - POST /__wordmarks/api/source?slug=  換圖時上傳的原始圖，存成 wordmark-source.webp，之後精修以它為原圖（不會進正式網站）
  * 寫回的是 src/content/projects/<slug>/index.md 的 wordmark 區塊與同資料夾的 wordmark.webp。
  */
 import fs from "node:fs";
@@ -49,7 +50,7 @@ function readWordmark(md) {
   return out;
 }
 function writeWordmark(md, fields) {
-  const order = ["src", "source", "accent", "ink", "chars", "size", "scale", "hidden", "redo", "needsImage", "reviewed"];
+  const order = ["src", "source", "sourceImage", "accent", "ink", "chars", "size", "scale", "hidden", "redo", "needsImage", "reviewed"];
   const keys = [...order.filter((k) => k in fields), ...Object.keys(fields).filter((k) => !order.includes(k))];
   const block = `wordmark:\n${keys.map((k) => `  ${k}: ${JSON.stringify(fields[k])}\n`).join("")}`;
   if (BLOCK_RE.test(md)) return md.replace(BLOCK_RE, block);
@@ -179,6 +180,23 @@ export function wordmarkAdminPlugin() {
             delete current.redo;
             delete current.needsImage;
             delete current.reviewed;
+            fs.writeFileSync(mdFile, writeWordmark(md, current));
+            return send(res, 200, { ok: true, wordmark: current });
+          }
+          if (req.method === "POST" && url.pathname === "/api/source") {
+            const slug = url.searchParams.get("slug");
+            const dir = projectDir(slug);
+            if (!dir) return send(res, 404, { error: "找不到作品" });
+            const body = await readBody(req);
+            if (body.toString("ascii", 0, 4) !== "RIFF" || body.toString("ascii", 8, 12) !== "WEBP") {
+              return send(res, 400, { error: "需要 webp 圖檔" });
+            }
+            fs.writeFileSync(path.join(dir, "wordmark-source.webp"), body);
+            const mdFile = path.join(dir, "index.md");
+            const md = fs.readFileSync(mdFile, "utf8");
+            const current = readWordmark(md);
+            if (!current) return send(res, 400, { error: "這件作品還沒有字圖" });
+            current.sourceImage = `/projects/${slug}/wordmark-source.webp`;
             fs.writeFileSync(mdFile, writeWordmark(md, current));
             return send(res, 200, { ok: true, wordmark: current });
           }

@@ -41,7 +41,8 @@ function copyProjectAssets(outDir) {
     if (!fs.existsSync(srcDir)) continue;
     const entries = fs.readdirSync(srcDir, { withFileTypes: true });
     for (const e of entries) {
-      if (e.isFile() && e.name !== "index.md" && isAsset(e.name)) {
+      // wordmark-source.*：字圖管理頁精修用的原始圖，只留在本機，不放上正式網站
+      if (e.isFile() && e.name !== "index.md" && !e.name.startsWith("wordmark-source.") && isAsset(e.name)) {
         fs.mkdirSync(destDir, { recursive: true });
         fs.copyFileSync(path.join(srcDir, e.name), path.join(destDir, e.name));
       }

@@ -266,7 +266,7 @@ function renderPanel(p) {
       <button id="pHide" title="H">${wm.hidden ? "在字牆顯示" : "在字牆隱藏"}</button>
     </div>
     <div class="status" id="panelStatus" aria-live="polite"></div>
-    <div class="orig">${p.post ? `<img src="${p.post}" alt="${p.title} 原圖">` : `<div class="none">沒有貼文圖</div>`}</div>`;
+    <div class="orig">${sourceOf(p) ? `<img src="${sourceOf(p)}" alt="${p.title} 原圖">` : `<div class="none">沒有原圖</div>`}</div>`;
   const card = rowOf(p);
   const range = $("pScale"), num = $("pScaleNum");
   const preview = (v) => {
@@ -460,12 +460,24 @@ async function toWordmark(file) {
   const blob = await out.convertToBlob({ type: "image/webp", quality: 0.9 });
   return { blob, ink: sum / 255 / (cw * ch) };
 }
+// 換圖時的原始圖：長邊最多 2400px、轉 webp（保留透明），給精修當原圖
+async function toSourceWebp(file) {
+  const bmp = await createImageBitmap(file);
+  const k = Math.min(1, 2400 / Math.max(bmp.width, bmp.height));
+  const c = new OffscreenCanvas(Math.round(bmp.width * k), Math.round(bmp.height * k));
+  c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+  return c.convertToBlob({ type: "image/webp", quality: 0.92 });
+}
+// 精修與面板用的原圖：換過圖就用上傳的原始圖，否則用貼文原圖
+const sourceOf = (p) => (p.wordmark.sourceImage ? `${p.wordmark.sourceImage}?v=${p.edited ?? p.mtime}` : p.post);
 async function replace(p, file) {
   const el = rowOf(p);
   setStatus(el, "處理中…");
   try {
     const { blob, ink } = await toWordmark(file);
     await api(`/__wordmarks/api/replace?slug=${encodeURIComponent(p.slug)}&ink=${ink.toFixed(3)}`, { method: "POST", body: blob });
+    // 上傳的原始圖存成這件作品的去背來源，之後「編輯去背」以它為原圖，不會跳回貼文原圖
+    await api(`/__wordmarks/api/source?slug=${encodeURIComponent(p.slug)}`, { method: "POST", body: await toSourceWebp(file) });
     await load();
     const row = rowOf(p);
     setStatus(row, "已換圖，請確認效果");
@@ -483,7 +495,7 @@ const toEditor = (m) => editorFrame.contentWindow.postMessage(m, location.origin
 function editorInfo(slug) {
   const p = all.find((x) => x.slug === slug);
   return {
-    slug, title: p.title, post: p.post,
+    slug, title: p.title, post: sourceOf(p),
     // 精修從目前的字圖開始，不重新自動去背
     wordmark: `/projects/${encodeURIComponent(slug)}/wordmark.webp?v=${p.mtime}`,
     index: editorQueue.indexOf(slug), total: editorQueue.length,

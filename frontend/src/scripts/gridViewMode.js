@@ -68,7 +68,7 @@ const FLEX = 0.1;
 
 const packColumns = (items, D) => {
   const unit = unitOf(D);
-  const gap = unit * 0.374; // 字與字的間距（原 0.34，加大 10%）
+  const gap = unit * 0.45; // 字與字的間距（原 0.34，之後加大到 0.374、0.45）
   const N = D < 480 ? 8 : 16;
   const colW = (D - gap * (N - 1)) / N;
   const pitch = colW + gap;
