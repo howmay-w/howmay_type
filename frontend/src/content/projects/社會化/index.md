@@ -26,6 +26,7 @@ wordmark:
   source: "cutout"
   accent: "#dcc109"
   ink: 0.349
+  scale: 1.3
 ---
 
 來自一位不具名現役高中教師的怒吼。

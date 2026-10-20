@@ -20,6 +20,7 @@ wordmark:
   source: "cutout"
   accent: "#d43626"
   ink: 0.268
+  scale: 1.1
 ---
 
 看完醫生或是量完身體組成以後的 me\

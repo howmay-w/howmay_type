@@ -26,8 +26,9 @@ wordmark:
   source: "cutout"
   accent: "#2a4523"
   ink: 0.227
+  scale: 1.2
 extraWordmarks:
-  - {"src":"/projects/期中地獄/wordmark-2.webp","source":"cutout","sourceImage":"/projects/期中地獄/wordmark-source-2.webp","ink":0.285}
+  - {"src":"/projects/期中地獄/wordmark-2.webp","source":"cutout","sourceImage":"/projects/期中地獄/wordmark-source-2.webp","ink":0.285,"scale":1.2}
 ---
 
 期中還沒走，期末就要來ㄌ。\

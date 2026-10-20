@@ -24,6 +24,7 @@ wordmark:
   source: "cutout"
   accent: "#448f95"
   ink: 0.309
+  scale: 1.1
 ---
 
 冷天洗完熱水澡ㄉ感覺：

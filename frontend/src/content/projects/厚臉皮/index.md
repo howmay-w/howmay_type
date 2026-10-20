@@ -24,6 +24,7 @@ wordmark:
   source: "cutout"
   accent: "#108704"
   ink: 0.525
+  scale: 1.1
 ---
 
 厚臉皮雖然很恥，但大多時候有用。\

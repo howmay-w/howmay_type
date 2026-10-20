@@ -31,6 +31,7 @@ wordmark:
   sourceImage: "/projects/阿娘喂/wordmark-source.webp"
   accent: "#9f870d"
   ink: 0.173
+  scale: 1.15
 ---
 
 死語復興運動

@@ -16,6 +16,7 @@ wordmark:
   sourceImage: "/projects/字戀-2/wordmark-source.webp"
   accent: "#c510c5"
   ink: 0.178
+  scale: 1.25
 ---
 
 投稿看看

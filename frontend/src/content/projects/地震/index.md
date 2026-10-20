@@ -14,8 +14,8 @@ wordmark:
   src: "/projects/地震/wordmark.webp"
   source: "cutout"
   accent: "#b35b0e"
-  ink: 0.389
-  reviewed: true
+  ink: 0.41
+  scale: 1.15
 ---
 
 願大家平安

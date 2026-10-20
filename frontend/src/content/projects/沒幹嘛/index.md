@@ -22,6 +22,7 @@ wordmark:
   source: "cutout"
   accent: "#562ca6"
   ink: 0.352
+  scale: 1.2
 ---
 
 就沒幹嘛，試試看以拉的 3D 效果。

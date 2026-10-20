@@ -24,6 +24,7 @@ wordmark:
   source: "cutout"
   accent: "#58a089"
   ink: 0.348
+  scale: 1.1
 ---
 
 一詞多義的典範。\

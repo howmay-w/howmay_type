@@ -26,6 +26,7 @@ wordmark:
   source: "cutout"
   accent: "#c85951"
   ink: 0.283
+  scale: 1.05
 ---
 
 成熟的大人不說「不喜歡」，\

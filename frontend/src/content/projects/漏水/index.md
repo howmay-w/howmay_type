@@ -29,6 +29,7 @@ wordmark:
   sourceImage: "/projects/漏水/wordmark-source.webp"
   accent: "#14491e"
   ink: 0.481
+  scale: 1.1
 ---
 
 祝福大家一輩子都不要再遇到

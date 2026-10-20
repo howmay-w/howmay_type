@@ -32,6 +32,7 @@ wordmark:
   source: "cutout"
   accent: "#536339"
   ink: 0.448
+  scale: 1.15
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 與 《2025 城西生活節｜印一個所在》合作，參考高鵬翔老師的《臺灣活版時代》中的各種印刷設備與流程，製作一組印刷關鍵字！

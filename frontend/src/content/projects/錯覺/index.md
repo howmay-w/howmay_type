@@ -29,6 +29,7 @@ wordmark:
   sourceImage: "/projects/錯覺/wordmark-source.webp"
   accent: "#ea6621"
   ink: 0.256
+  scale: 1.1
 ---
 
 如果你看到字了，那可能是錯覺ㄅ。\
