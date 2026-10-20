@@ -34,6 +34,7 @@ wordmark:
   source: "cutout"
   accent: "#eaa04b"
   ink: 0.502
+  scale: 1.1
 ---
 
 來自最近諸事不順ㄉ朋朋的點字，辛苦ㄌQQ

@@ -36,7 +36,7 @@ wordmark:
   accent: "#5b81fa"
   ink: 0.641
   chars: 1
-  scale: 1.05
+  scale: 1.1
 ---
 
 下班又忘記帶傘ㄌ，傷腦筋。\

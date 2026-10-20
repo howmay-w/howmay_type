@@ -34,6 +34,7 @@ wordmark:
   source: "cutout"
   accent: "#868dbb"
   ink: 0.077
+  scale: 1.05
 ---
 
 年假旅遊時突然中標腸胃炎，慘兮兮。

@@ -23,4 +23,5 @@ wordmark:
   sourceImage: "/projects/循環/wordmark-source.webp"
   accent: "#9091fd"
   ink: 0.369
+  scale: 1.15
 ---

@@ -35,7 +35,7 @@ wordmark:
   accent: "#ed9905"
   ink: 0.126
 extraWordmarks:
-  - {"src":"/projects/顏文字/wordmark-2.webp","source":"cutout","sourceImage":"/projects/顏文字/wordmark-source-2.webp","ink":0.194}
+  - {"src":"/projects/顏文字/wordmark-2.webp","source":"cutout","sourceImage":"/projects/顏文字/wordmark-source-2.webp","ink":0.194,"chars":2}
 ---
 
 ( ´•̥̥̥ω•̥̥̥` ) (;´༎ຶД༎ຶ`)\
