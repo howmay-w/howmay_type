@@ -67,8 +67,6 @@
   .status-seg button.on.st-redo { background: #6b4a16; color: #fff; }
   .status-seg button.on.st-swap { background: #6a2a22; color: #fff; }
   .acts button.on { color: var(--accent); }
-  .direct { display: flex; gap: 6px; align-items: flex-start; color: var(--mut); line-height: 1.4; cursor: pointer; }
-  .direct input { margin: 2px 0 0; accent-color: var(--accent); }
   .res { color: var(--mut); }
   @media (max-width: 760px) {
     .layout { grid-template-columns: 1fr; }
@@ -377,12 +375,12 @@ function renderPanel(p) {
     </div>
     <div class="acts">
       <button id="pEdit" title="E">編輯去背</button>
+      <button id="pDirectBtn" title="用面板下方的原圖重新產生字圖，不經過去背處理，保留灰階、光影與細節。想用別張圖：先「換圖…」再按這裡">原圖直接用</button>
       <button id="pReplace" title="上傳別張圖">換圖…</button>
       <button id="pHide" title="H">${wm.hidden ? "在字牆顯示" : "在字牆隱藏"}</button>
       <button id="pAdd" class="${p.v ? "" : "wide"}" title="上傳一張或多張圖（可一次選多張），每張成為這件作品的另一款字圖">新增一款…</button>
       ${p.v ? `<button id="pRemove" title="刪除這一款的字圖檔">刪除這款</button>` : ""}
     </div>
-    <label class="direct"><input type="checkbox" id="pDirect" ${DIRECT ? "checked" : ""}> 原圖直接用：換圖、新增時不經過去背處理，保留灰階與細節（已去背的透明圖、或白底黑字的黑白圖）</label>
     <div class="res">${p.size.width}×${p.size.height}px${p.bytes ? `・${Math.round(p.bytes / 1024)} KB` : ""}${p.wordmark.source === "direct" ? "・原圖直接用" : ""}</div>
     <div class="status" id="panelStatus" aria-live="polite"></div>
     <div class="orig">${sourceOf(p) ? `<img src="${sourceOf(p)}" alt="${nameOf(p)} 原圖">` : `<div class="none">沒有原圖</div>`}</div>`;
@@ -417,10 +415,7 @@ function renderPanel(p) {
   $("pHide").addEventListener("click", () => toggleHide(p));
   $("pReplace").addEventListener("click", () => pickFile(p));
   $("pAdd").addEventListener("click", () => pickFile(p, true));
-  $("pDirect").addEventListener("change", () => {
-    DIRECT = $("pDirect").checked;
-    try { localStorage.setItem("wm-admin-direct", DIRECT ? "1" : ""); } catch (_) {}
-  });
+  $("pDirectBtn").addEventListener("click", () => useSourceDirect(p));
   $("pRemove")?.addEventListener("click", () => removeVariant(p));
   P.querySelectorAll(".variants [data-key]").forEach((b) => b.addEventListener("click", () => select(b.dataset.key)));
 }
@@ -625,12 +620,11 @@ async function toWordmark(file) {
 }
 // 換圖時的原始圖：長邊最多 2400px、轉 webp（保留透明），給精修當原圖
 // ── 原圖直接用：不做臨界值、柔邊、雜點清除，只把字以外的地方變透明、裁掉外圍空白 ─────
-// - 已經有透明背景：照原本的透明度
+// - 已經有透明背景：照原本的透明度，再依深淺保留字裡的光影與外框
 // - 沒有透明背景（黑白或灰階原圖）：亮度直接換成透明度，紙色 → 全透明、最深的墨色 → 全不透明，
 //   中間的灰階照比例保留（筆觸、紙紋都在）；字比底亮（黑底白字）就自動反過來
-// 長邊最多 1600px（字牆在視網膜大螢幕上約需 1000px），WebP 品質 0.92
-let DIRECT = (() => { try { return localStorage.getItem("wm-admin-direct") === "1"; } catch (_) { return false; } })();
-const DIRECT_MAX = 1600;
+// 長邊最多 1200px（字牆在視網膜大螢幕上約需 1000px），WebP 品質 0.9
+const DIRECT_MAX = 1200;
 async function toWordmarkDirect(file) {
   const bmp = await createImageBitmap(file);
   const k0 = Math.min(1, 3200 / Math.max(bmp.width, bmp.height));
@@ -642,7 +636,32 @@ async function toWordmarkDirect(file) {
   let clear = 0;
   for (let i = 0; i < W * H; i++) if (d[i * 4 + 3] < 250) clear++;
   if (clear > W * H * 0.01) {
-    for (let i = 0; i < W * H; i++) alpha[i] = d[i * 4 + 3];
+    // 已經是透明背景：透明度照原本，再乘上深淺，字裡的光影、外框才不會被壓成一片剪影。
+    // 淺色字（白字、彩色立體字）越亮越不透明；深色字（黑字、黑色外框）越暗越不透明
+    let sumA = 0, sumL = 0;
+    for (let i = 0; i < W * H; i++) {
+      const a = d[i * 4 + 3];
+      sumA += a;
+      sumL += a * (0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]);
+    }
+    const lightInk = sumA ? sumL / sumA >= 128 : true;
+    // 以字裡最亮（深色字則最深）的 1% 當作完全不透明：單色字（粉紅、藍色）是實心，有光影的保留層次
+    const hist = new Float64Array(256);
+    for (let i = 0; i < W * H; i++) {
+      const a = d[i * 4 + 3];
+      if (a < 128) continue;
+      hist[Math.round(0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2])]++;
+    }
+    const total = hist.reduce((x, y) => x + y, 0);
+    let peak = lightInk ? 255 : 0, acc = 0;
+    if (lightInk) { for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc >= total * 0.01) { peak = v; break; } } }
+    else { for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= total * 0.01) { peak = v; break; } } }
+    const span = lightInk ? Math.max(1, peak) : Math.max(1, 255 - peak);
+    for (let i = 0; i < W * H; i++) {
+      const lum = 0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2];
+      const t = lightInk ? lum / span : (255 - lum) / span;
+      alpha[i] = Math.round(d[i * 4 + 3] * Math.min(1, t));
+    }
   } else {
     const lum = new Uint8Array(W * H);
     for (let i = 0; i < W * H; i++) lum[i] = Math.round(0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]);
@@ -689,10 +708,27 @@ async function toWordmarkDirect(file) {
   const octx = out.getContext("2d");
   octx.imageSmoothingQuality = "high";
   octx.drawImage(crop, 0, 0, out.width, out.height);
-  const blob = await out.convertToBlob({ type: "image/webp", quality: 0.92 });
+  const blob = await out.convertToBlob({ type: "image/webp", quality: 0.9 });
   return { blob, ink: sum / 255 / (cw * ch), direct: true };
 }
-const makeWordmark = (file) => (DIRECT ? toWordmarkDirect(file) : toWordmark(file));
+// 換圖、新增一款一律先經過去背處理；要改用原圖直接用，再按面板上的「原圖直接用」
+const makeWordmark = (file) => toWordmark(file);
+// 「原圖直接用」：拿面板下方顯示的原圖（換圖時上傳的那張；沒換過圖就是作品的第一張）重新產生字圖
+async function useSourceDirect(p) {
+  const src = sourceOf(p);
+  if (!src) return setStatus(null, "這件作品沒有原圖", true);
+  setStatus(null, "用原圖產生中…");
+  try {
+    const blob = await (await fetch(src)).blob();
+    const r = await toWordmarkDirect(new File([blob], "source", { type: blob.type }));
+    await api(`/__wordmarks/api/replace?slug=${encodeURIComponent(p.slug)}&v=${p.v}&ink=${r.ink.toFixed(3)}&mode=direct`, { method: "POST", body: r.blob });
+    await load();
+    select(p.key);
+    setStatus(null, "已改用原圖直接用；想回到去背處理，按「編輯去背」重新調整");
+  } catch (e) {
+    setStatus(null, `原圖直接用失敗：${e.message}`, true);
+  }
+}
 
 async function toSourceWebp(file) {
   const bmp = await createImageBitmap(file);
@@ -757,6 +793,8 @@ function editorInfo(key) {
   const p = all.find((x) => x.key === key);
   return {
     key, slug: p.slug, v: p.v, title: nameOf(p), post: sourceOf(p),
+    // 原圖直接用的字圖：只裁切、擦除時存檔保留原解析度與標記
+    direct: p.wordmark.source === "direct",
     // 精修從目前的字圖開始，不重新自動去背
     wordmark: imgOf(p),
     index: editorQueue.indexOf(key), total: editorQueue.length,

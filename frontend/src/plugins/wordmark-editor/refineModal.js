@@ -601,6 +601,8 @@ export function createRefineController(dialog, callbacks) {
       );
     }
     state.working = result;
+    // 重新去背過：存檔時不再當成「原圖直接用」（見 editor.js 的 saveWordmark）
+    state.item.lumChanged = true;
     state.item.lastLumThreshold = threshold;
     state.item.lastKeepBright = keepBright;
     cropRect = null;
@@ -649,6 +651,8 @@ export function createRefineController(dialog, callbacks) {
     btn.addEventListener('click', () => {
       keepBright = btn.dataset.bright === 'true';
       if (state?.item) state.item.lastKeepBright = keepBright;
+      // 字圖管理頁：已去背的透明原圖要換成對應的底色，深色的字才不會和底色混在一起（見 editor.js）
+      state?.item?.reflatten?.(keepBright);
       brightDarkBtns.forEach(b => b.classList.toggle('active', b.dataset.bright === String(keepBright)));
       // 立即套用亮度去背（即時預覽跳過雜訊清理以加快速度，最終套用時才清理）
       if (bgMode === 'lum') runLumPreview();
@@ -769,6 +773,7 @@ export function createRefineController(dialog, callbacks) {
     // 字圖管理頁：用目前的去背設定對「整張原圖」重新去背，畫布回到原圖的完整尺寸
     if (state?.item?.restoreFull && state.item.sourceCanvas && bgMode === 'lum') {
       const src = state.item.sourceCanvas;
+      state.item.lumChanged = true;
       const threshold = Number(lumThreshSlider.value);
       state.working =
         lumStyle === 'soft'

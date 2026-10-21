@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { navigate } from "astro:transitions/client";
 
 const SESSION_ORDER_KEY = "grid-session-order";
 const GRID_SEARCH_KEY = "grid-search-term";
@@ -452,7 +453,8 @@ const applySearchFromSession = () => {
   }
 };
 
-/* 點擊專案卡片時，帶上 from_search 或 from=latest，讓專案頁 BACK 可回到篩選結果 */
+/* 點擊專案卡片時，帶上 from_search 或 from=latest，讓專案頁 BACK 可回到篩選結果。
+   用站內換頁（navigate）而不是整頁跳轉，字牆點字進作品頁的轉場才會保留（見 projectWordmark.js） */
 const handleGridCardClick = (e) => {
   const link = e.target.closest("a[href^='/projects/']");
   if (!link) return;
@@ -471,12 +473,12 @@ const handleGridCardClick = (e) => {
     e.preventDefault();
     const url = new URL(link.href);
     url.searchParams.set("from_search", term);
-    window.location.href = url.toString();
+    navigate(url.toString(), { sourceElement: link });
   } else if (viewMode === "latest") {
     e.preventDefault();
     const url = new URL(link.href);
     url.searchParams.set("from", "latest");
-    window.location.href = url.toString();
+    navigate(url.toString(), { sourceElement: link });
   }
 };
 
@@ -509,7 +511,18 @@ const init = () => {
   const hadFromLatest =
     new URLSearchParams(window.location.search).get("from") === "latest";
   applyViewModeFromUrl();
-  if (!hadFromLatest) applySessionOrder();
+  // 從作品頁返回（站內換頁的上一頁）時維持原本的「最新」排序；重新整理則照舊回到隨機
+  const returningToLatest =
+    window.__gridReturning &&
+    (() => {
+      try {
+        return sessionStorage.getItem(GRID_VIEW_MODE_KEY) === "latest";
+      } catch (_) {
+        return false;
+      }
+    })();
+  if (returningToLatest) sortGrid();
+  else if (!hadFromLatest) applySessionOrder();
   applyTagFromUrl();
   applySearchFromSession();
 };
