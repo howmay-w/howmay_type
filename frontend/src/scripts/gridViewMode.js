@@ -60,8 +60,10 @@ const visibleItems = () => {
     const href = el.dataset.wmExtra;
     const parent = byHref.get(href);
     let key = null;
-    // 本尊被搜尋篩掉（隱藏但不是「還沒載入」）時，其他款也不出現
-    const parentFiltered = !parent || (!at.has(parent) && !parent.hasAttribute("data-deferred"));
+    // 本尊被搜尋篩掉時，其他款也不出現。搜尋會把不符合的卡片設成 display: none（還沒載入的卡片也一樣），
+    // 所以看 inline 的 display；只是還沒載入（MORE）的本尊則不算篩掉
+    const parentFiltered =
+      !parent || (!at.has(parent) && (parent.style.display === "none" || !parent.hasAttribute("data-deferred")));
     if (!parentFiltered) {
       const n = count.get(href);
       const j = (parseInt(el.dataset.wmIndex) || 1) - 1;
@@ -254,6 +256,14 @@ const restoreReturn = () => {
   } catch (_) {}
   if (!saved || !grid) return;
   const more = document.getElementById("load-more");
+  // 搜尋中：所有符合的作品都已顯示，不用一批一批補載入（補載入會把被篩掉的卡片重新顯示）
+  const searching = (() => {
+    try {
+      return Boolean(sessionStorage.getItem("grid-search-term"));
+    } catch (_) {
+      return false;
+    }
+  })();
   const loadedNow = () =>
     Array.from(grid.children).filter((el) => !el.hasAttribute("data-wm-extra") && !el.hasAttribute("data-deferred"))
       .length;
@@ -270,7 +280,7 @@ const restoreReturn = () => {
     Array.from(grid.children)
       .filter((el) => el.hasAttribute("data-deferred"))
       .sort(byOrder);
-  while (loadedNow() < saved.loaded) {
+  while (!searching && loadedNow() < saved.loaded) {
     const batch = deferred().slice(0, BATCH);
     if (!batch.length) break;
     for (const el of batch) {
@@ -281,8 +291,9 @@ const restoreReturn = () => {
     clearTimeout(frameTimer);
     layout();
   }
-  if (more && !deferred().length) more.classList.add("hidden");
-  const cards = Array.from(grid.children);
+  if (more && !searching && !deferred().length) more.classList.add("hidden");
+  // 只處理畫面上顯示的字（隱藏的卡片維持原狀，之後 MORE 或清除搜尋時會正常播放）
+  const cards = Array.from(grid.children).filter((el) => getComputedStyle(el).display !== "none");
   gsap.killTweensOf(cards);
   gsap.set(cards, { yPercent: 0, autoAlpha: 1 });
   gsap.set(grid, { autoAlpha: 1 });

@@ -441,7 +441,8 @@ const applySearchFromSession = () => {
   })();
   const term = fromUrl ?? fromSession ?? "";
   if (!term) return;
-  filterGrid(term);
+  // 從作品頁返回時直接顯示搜尋結果、不播淡入動畫（gridViewMode.js 會還原捲動位置，動畫會和它衝突，字停在透明的起點）
+  filterGrid(term, { skipAnimation: Boolean(window.__gridReturning) });
   toggleClearButton(term);
   searchButton?.classList.add("search--active");
   setSearchToolbarLabel(term);
