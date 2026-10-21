@@ -30,7 +30,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/經痛/wordmark-source.webp"
   accent: "#243ba1"
-  ink: 0.167
+  ink: 0.281
   scale: 1.2
 ---
 

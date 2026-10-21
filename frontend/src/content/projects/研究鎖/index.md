@@ -20,5 +20,6 @@ wordmark:
   source: "cutout"
   accent: "#afab01"
   ink: 0.392
+  scale: 0.95
   reviewed: true
 ---

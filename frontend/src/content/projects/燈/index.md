@@ -25,10 +25,10 @@ pubDate: 2025-03-03
 tags: ["whatzurtype","字字字設計串連","🏮"]
 wordmark:
   src: "/projects/燈/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/燈/wordmark-source.webp"
   accent: "#87451f"
-  ink: 0.101
+  ink: 0.069
   scale: 1.3
 ---
 

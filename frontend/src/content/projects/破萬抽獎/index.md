@@ -33,6 +33,7 @@ wordmark:
   accent: "#ed696d"
   ink: 0.401
   chars: 1
+  scale: 1.05
 ---
 
 ☘️自己賀破萬！來抽獎☘️

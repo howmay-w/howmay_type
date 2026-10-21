@@ -21,6 +21,7 @@ wordmark:
   sourceImage: "/projects/微涼/wordmark-source.webp"
   accent: "#74bebf"
   ink: 0.209
+  scale: 1.05
 ---
 
 問答點字的「微涼」\

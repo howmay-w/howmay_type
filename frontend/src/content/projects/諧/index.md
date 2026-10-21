@@ -27,10 +27,10 @@ pubDate: 2022-10-06
 tags: ["homophonie", "metallic", "balloon", "手繪特效", "3D", "🎈"]
 wordmark:
   src: "/projects/諧/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/諧/wordmark-source.webp"
   accent: "#815716"
-  ink: 0.481
+  ink: 0.584
   scale: 1.15
 ---
 

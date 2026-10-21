@@ -35,6 +35,7 @@ wordmark:
   sourceImage: "/projects/尷尬/wordmark-source.webp"
   accent: "#e9943d"
   ink: 0.5
+  scale: 1.05
 ---
 
 尷尬好像是種很社會化的情緒ㄋ，\

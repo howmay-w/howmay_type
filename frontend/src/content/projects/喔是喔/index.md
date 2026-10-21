@@ -29,6 +29,7 @@ wordmark:
   sourceImage: "/projects/喔是喔/wordmark-source.webp"
   accent: "#c89eb3"
   ink: 0.197
+  scale: 0.95
 ---
 
 有時唸作 Also。

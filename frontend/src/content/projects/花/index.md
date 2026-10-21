@@ -35,7 +35,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/花/wordmark-source.webp"
   accent: "#8d8bca"
-  ink: 0.161
+  ink: 0.24
   scale: 1.35
 ---
 

@@ -24,6 +24,8 @@ wordmark:
   source: "cutout"
   accent: "#7ca0fd"
   ink: 0.473
+  chars: 4.5
+  scale: 0.95
   reviewed: true
 ---
 

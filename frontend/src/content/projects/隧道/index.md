@@ -23,7 +23,7 @@ wordmark:
   accent: "#310dc1"
   ink: 0.173
   chars: 2.5
-  scale: 1.35
+  scale: 1.3
   reviewed: true
 ---
 

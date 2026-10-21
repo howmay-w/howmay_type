@@ -16,7 +16,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/富源/wordmark-source.webp"
   accent: "#839370"
-  ink: 0.11
+  ink: 0.106
   scale: 0.85
 ---
 

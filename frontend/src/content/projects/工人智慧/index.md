@@ -30,6 +30,7 @@ wordmark:
   source: "cutout"
   accent: "#6d51ef"
   ink: 0.53
+  chars: 3.5
 ---
 
 「哦這個是我們用工人智慧做的！」

@@ -37,10 +37,11 @@ tags:
   ]
 wordmark:
   src: "/projects/兔年即貓年/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/兔年即貓年/wordmark-source.webp"
   accent: "#bf306d"
-  ink: 0.317
+  ink: 0.418
+  scale: 1.05
 ---
 
 冷知識：越南的兔年是貓年ㄛ！\

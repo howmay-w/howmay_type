@@ -32,6 +32,7 @@ wordmark:
   source: "cutout"
   accent: "#4f2e18"
   ink: 0.276
+  chars: 3.5
 ---
 
 其實還沒有要畢業，只是昨天先參加了畢業典禮🥵\

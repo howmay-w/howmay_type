@@ -36,7 +36,7 @@ wordmark:
   accent: "#d99ae8"
   ink: 0.365
   chars: 1
-  scale: 1.1
+  scale: 1.15
 ---
 
 大學同學說過：熬夜使人心靈脆弱。所言甚是。\

@@ -19,9 +19,8 @@ wordmark:
   src: "/projects/關我屁事/wordmark.webp"
   source: "cutout"
   accent: "#a8b4e4"
-  ink: 0.14
+  ink: 0.172
   chars: 4.5
-  reviewed: true
 ---
 
 突如其來ㄉ特效，有影片ㄛ！

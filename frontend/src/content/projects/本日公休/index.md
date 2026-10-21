@@ -32,6 +32,7 @@ wordmark:
   source: "cutout"
   accent: "#e66221"
   ink: 0.577
+  scale: 0.95
 ---
 
 最近好忙好忙，好想公休ㄛ。\

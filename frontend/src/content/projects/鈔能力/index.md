@@ -33,6 +33,7 @@ wordmark:
   sourceImage: "/projects/鈔能力/wordmark-source.webp"
   accent: "#b4741c"
   ink: 0.369
+  scale: 1.1
 ---
 
 應該是今年最後一篇！\

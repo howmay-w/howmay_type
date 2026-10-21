@@ -21,8 +21,7 @@ wordmark:
   src: "/projects/願你的王國榮耀/wordmark.webp"
   source: "cutout"
   accent: "#d2aa38"
-  ink: 0.174
-  reviewed: true
+  ink: 0.204
 ---
 
 [好聽](https://youtu.be/zmsnipltJTM)，與各位分享。

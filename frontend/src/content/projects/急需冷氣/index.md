@@ -28,6 +28,7 @@ wordmark:
   source: "cutout"
   accent: "#ea4907"
   ink: 0.406
+  chars: 3
 ---
 
 今年初夏，房間的冷氣突然打不開，經搶救宣告不治。\
