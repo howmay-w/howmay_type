@@ -32,7 +32,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/分手快樂/wordmark-source.webp"
   accent: "#c65d85"
-  ink: 0.277
+  ink: 0.233
   scale: 1.35
 ---
 

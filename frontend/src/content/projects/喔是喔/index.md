@@ -25,10 +25,10 @@ pubDate: 2026-01-07
 tags: ["😌"]
 wordmark:
   src: "/projects/喔是喔/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/喔是喔/wordmark-source.webp"
   accent: "#c89eb3"
-  ink: 0.179
+  ink: 0.197
 ---
 
 有時唸作 Also。

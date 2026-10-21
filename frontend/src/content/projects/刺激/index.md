@@ -25,7 +25,7 @@ wordmark:
   src: "/projects/刺激/wordmark.webp"
   source: "cutout"
   accent: "#4ba13b"
-  ink: 0.266
+  ink: 0.353
 ---
 
 今天兩場都這麼刺激合理嗎？\

@@ -15,7 +15,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/字戀/wordmark-source.webp"
   accent: "#d2b809"
-  ink: 0.185
+  ink: 0.173
 ---
 
 其實畫了兩張ㄛ！

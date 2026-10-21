@@ -23,9 +23,9 @@ wordmark:
 extraWordmarks:
   - {"src":"/projects/臺灣/wordmark-2.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-2.webp","ink":0.464,"hidden":true}
   - {"src":"/projects/臺灣/wordmark-3.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-3.webp","ink":0.581}
-  - {"src":"/projects/臺灣/wordmark-4.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-4.webp","ink":0.467}
-  - {"src":"/projects/臺灣/wordmark-5.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-5.webp","ink":0.306}
-  - {"src":"/projects/臺灣/wordmark-6.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-6.webp","ink":0.523}
+  - {"src":"/projects/臺灣/wordmark-4.webp","source":"direct","sourceImage":"/projects/臺灣/wordmark-source-4.webp","ink":0.466}
+  - {"src":"/projects/臺灣/wordmark-5.webp","source":"direct","sourceImage":"/projects/臺灣/wordmark-source-5.webp","ink":0.31}
+  - {"src":"/projects/臺灣/wordmark-6.webp","source":"direct","sourceImage":"/projects/臺灣/wordmark-source-6.webp","ink":0.518}
   - {"src":"/projects/臺灣/wordmark-7.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-7.webp","ink":0.488}
 ---
 

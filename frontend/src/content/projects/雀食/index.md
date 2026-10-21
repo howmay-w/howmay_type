@@ -29,10 +29,10 @@ pubDate: 2023-04-26
 tags: ["indeed","🪶"]
 wordmark:
   src: "/projects/雀食/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/雀食/wordmark-source.webp"
   accent: "#e9c074"
-  ink: 0.474
+  ink: 0.344
 ---
 
 圖文無關但\

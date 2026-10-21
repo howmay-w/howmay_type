@@ -15,7 +15,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/字戀-2/wordmark-source.webp"
   accent: "#c510c5"
-  ink: 0.178
+  ink: 0.166
   scale: 1.25
 ---
 

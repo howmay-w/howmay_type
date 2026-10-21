@@ -21,10 +21,10 @@ hoverVideo:
   src: "/projects/預防針/video_0.mp4"
 wordmark:
   src: "/projects/預防針/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/預防針/wordmark-source.webp"
   accent: "#8567a1"
-  ink: 0.599
+  ink: 0.455
   scale: 0.95
 ---
 

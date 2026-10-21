@@ -16,10 +16,11 @@ pubDate: 2025-10-06
 tags: ["whatzurtype","奶茶","髭文字","字字字設計串連","reels"]
 wordmark:
   src: "/projects/仙草/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/仙草/wordmark-source.webp"
   accent: "#eca208"
-  ink: 0.523
+  ink: 0.525
+  scale: 1.05
 ---
 
 以仙草搭配 [@traditional_label_lab](https://www.instagram.com/traditional_label_lab/) 老師的奶茶！

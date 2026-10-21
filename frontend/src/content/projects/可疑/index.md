@@ -27,10 +27,10 @@ pubDate: 2023-12-20
 tags: ["suspicious","sus","🤨"]
 wordmark:
   src: "/projects/可疑/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/可疑/wordmark-source.webp"
   accent: "#e0c11d"
-  ink: 0.418
+  ink: 0.332
 ---
 
 有時事情太過順利，反而會有點可疑🤔

@@ -29,10 +29,10 @@ pubDate: 2023-06-16
 tags: ["whatzurtype","字字字設計串連","keelungriver","🏞️"]
 wordmark:
   src: "/projects/基隆河/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/基隆河/wordmark-source.webp"
   accent: "#0498fb"
-  ink: 0.253
+  ink: 0.256
   scale: 1.25
 ---
 

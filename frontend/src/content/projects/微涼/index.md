@@ -20,7 +20,7 @@ wordmark:
   source: "cutout"
   sourceImage: "/projects/微涼/wordmark-source.webp"
   accent: "#74bebf"
-  ink: 0.206
+  ink: 0.209
 ---
 
 問答點字的「微涼」\

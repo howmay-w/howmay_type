@@ -31,10 +31,11 @@ pubDate: 2024-12-07
 tags: ["whatzurtype","MinorSnow","字字字設計串連","❄️"]
 wordmark:
   src: "/projects/小雪/wordmark.webp"
-  source: "cutout"
+  source: "direct"
   sourceImage: "/projects/小雪/wordmark-source.webp"
   accent: "#60879e"
-  ink: 0.162
+  ink: 0.142
+  scale: 1.15
 ---
 
 賺到好幾天好天氣，今天才開始感覺到涼意。剛好適合上個月遲發的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) ：小雪。
