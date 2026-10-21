@@ -403,7 +403,8 @@ const applyTagFromUrl = () => {
   const params = new URLSearchParams(window.location.search);
   const tag = params.get("tag");
   if (!tag) return;
-  filterGrid(tag);
+  // 頁面載入時套用：不播篩選的淡入動畫，交給首頁入場動畫（index.js），兩個動畫疊在一起字會停在透明
+  filterGrid(tag, { skipAnimation: true });
   toggleClearButton(tag);
   searchButton?.classList.add("search--active");
   setSearchToolbarLabel(tag);
@@ -441,8 +442,9 @@ const applySearchFromSession = () => {
   })();
   const term = fromUrl ?? fromSession ?? "";
   if (!term) return;
-  // 從作品頁返回時直接顯示搜尋結果、不播淡入動畫（gridViewMode.js 會還原捲動位置，動畫會和它衝突，字停在透明的起點）
-  filterGrid(term, { skipAnimation: Boolean(window.__gridReturning) });
+  // 頁面載入時套用：不播篩選的淡入動畫。一般載入交給首頁入場動畫（index.js），從作品頁返回時由 gridViewMode.js 直接顯示；
+  // 兩個動畫疊在一起，字會停在透明的狀態
+  filterGrid(term, { skipAnimation: true });
   toggleClearButton(term);
   searchButton?.classList.add("search--active");
   setSearchToolbarLabel(term);
