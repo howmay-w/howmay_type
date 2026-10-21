@@ -28,6 +28,7 @@ wordmark:
   source: "cutout"
   accent: "#3f935e"
   ink: 0.299
+  scale: 1.1
 ---
 
 普普通通ㄉ狀態，\
