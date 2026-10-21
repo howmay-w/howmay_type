@@ -22,7 +22,7 @@ const INK_REF = 0.3;
 type WordmarkData = NonNullable<CollectionEntry<"projects">["data"]["wordmark"]>;
 function getWordmark(slug: string, title: string, wordmark: WordmarkData | undefined) {
 	if (!wordmark || wordmark.hidden) return null;
-	const file = path.join(process.cwd(), "src/content/projects", slug, path.basename(wordmark.src));
+	const file = path.join(process.cwd(), "src/content", wordmark.src);
 	const size = getWebpSize(file);
 	if (!size) return null;
 	const aspect = size.width / size.height;

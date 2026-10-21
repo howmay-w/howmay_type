@@ -108,7 +108,7 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ?? [])]
 	.filter((w): w is NonNullable<typeof w> => Boolean(w && !w.hidden))
 	.map((w) => {
-		const file = path.join(process.cwd(), "src/content/projects", currentSlug, path.basename(w.src));
+		const file = path.join(process.cwd(), "src/content", w.src);
 		const size = getWebpSize(file);
 		if (!size) return null;
 		const aspect = size.width / size.height;
