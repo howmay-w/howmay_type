@@ -26,7 +26,14 @@ video:
 hoverVideo:
   src: "/projects/勇敢/video_0.mp4"
 pubDate: 2023-06-26
-tags: ["brave","🌻"]
+tags: ["brave","🌻","台灣","臺灣"]
+wordmark:
+  src: "/projects/勇敢/wordmark.webp"
+  source: "cutout"
+  accent: "#e0b4a4"
+  ink: 0.235
+  scale: 1.15
+  reviewed: true
 ---
 
 台灣的 metoo 來得太晚。每天看到新的故事，又有人揭開舊的傷口。

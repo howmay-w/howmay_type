@@ -27,6 +27,13 @@ hoverVideo:
   src: "/projects/基隆河/video_0.mp4"
 pubDate: 2023-06-16
 tags: ["whatzurtype","字字字設計串連","keelungriver","🏞️"]
+wordmark:
+  src: "/projects/基隆河/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/基隆河/wordmark-source.webp"
+  accent: "#0498fb"
+  ink: 0.256
+  scale: 1.25
 ---
 
 這次 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 的挑戰是認領一條河！

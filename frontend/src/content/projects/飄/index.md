@@ -25,6 +25,13 @@ hoverVideo:
   src: "/projects/飄/video_0.mp4"
 pubDate: 2025-06-09
 tags: ["blowup", "🌬️"]
+wordmark:
+  src: "/projects/飄/wordmark.webp"
+  source: "cutout"
+  accent: "#e0a538"
+  ink: 0.16
+  scale: 1.3
+  reviewed: true
 ---
 
 一直覺得「貼文飄出去了。」實在是頗貼切又可愛的說法。

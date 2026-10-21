@@ -19,6 +19,13 @@ video:
   src: "/projects/預防針/video_0.mp4"
 hoverVideo:
   src: "/projects/預防針/video_0.mp4"
+wordmark:
+  src: "/projects/預防針/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/預防針/wordmark-source.webp"
+  accent: "#8567a1"
+  ink: 0.455
+  scale: 0.95
 ---
 
 不知道是因為工作類型的關係，還是隨著見過的世面越來越多，總覺得自己已經越來越習慣在發言時先打預防針，再說原本要表達的事。

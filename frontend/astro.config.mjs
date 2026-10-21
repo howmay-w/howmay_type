@@ -7,6 +7,7 @@ import {
   projectAssetsPlugin,
   projectAssetsDevPlugin,
 } from "./src/plugins/project-assets.mjs";
+import { wordmarkAdminPlugin } from "./src/plugins/wordmark-admin.mjs";
 
 const { SITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
@@ -24,7 +25,7 @@ export default defineConfig({
   },
   vite: {
     // @ts-expect-error - custom plugins for project asset copy/serve
-    plugins: [projectAssetsPlugin(), projectAssetsDevPlugin()],
+    plugins: [projectAssetsPlugin(), projectAssetsDevPlugin(), wordmarkAdminPlugin()],
     server: {
       // 0.0.0.0 讓同一 Wi‑Fi 下的手機可連 http://<你電腦的 IP>:4321 測試
       host: "0.0.0.0",

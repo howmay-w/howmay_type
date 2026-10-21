@@ -27,6 +27,11 @@ hoverVideo:
   src: "/projects/活該/video_0.mp4"
 pubDate: 2023-09-03
 tags: ["學不乖","🤡"]
+wordmark:
+  src: "/projects/活該/wordmark.webp"
+  source: "cutout"
+  accent: "#b42ee7"
+  ink: 0.385
 ---
 
 跟大家分享男友的活該故事：

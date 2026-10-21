@@ -17,6 +17,14 @@ hoverVideo:
   src: "/projects/隧道/video_0.mp4"
 pubDate: 2022-10-18
 tags: ["tunnel","穿越","🚇"]
+wordmark:
+  src: "/projects/隧道/wordmark.webp"
+  source: "cutout"
+  accent: "#310dc1"
+  ink: 0.173
+  chars: 2.5
+  scale: 1.3
+  reviewed: true
 ---
 
 日子飛快，太快

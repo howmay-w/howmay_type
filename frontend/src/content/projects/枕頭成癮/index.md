@@ -23,6 +23,11 @@ hoverVideo:
   src: "/projects/枕頭成癮/video_0.mp4"
 pubDate: 2024-02-26
 tags: ["AddictedToPillow","🛌"]
+wordmark:
+  src: "/projects/枕頭成癮/wordmark.webp"
+  source: "cutout"
+  accent: "#4097a8"
+  ink: 0.228
 ---
 
 又好冷，早上起不來🫠

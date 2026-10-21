@@ -1,5 +1,5 @@
 ---
-title: "熬夜"
+title: "熬"
 description: "👁️ 大學同學說過：熬夜使人心靈脆弱。所言甚是。"
 image:
   src: "/projects/熬夜-2/media_0.webp"
@@ -28,7 +28,15 @@ video:
 hoverVideo:
   src: "/projects/熬夜-2/video_0.mp4"
 pubDate: 2023-07-06
-tags: ["熬","stayup","👁️"]
+tags: ["熬", "熬夜", "stayup", "👁️"]
+wordmark:
+  src: "/projects/熬夜-2/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/熬夜-2/wordmark-source.webp"
+  accent: "#d99ae8"
+  ink: 0.365
+  chars: 1
+  scale: 1.15
 ---
 
 大學同學說過：熬夜使人心靈脆弱。所言甚是。\

@@ -15,6 +15,11 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2024-05-11
 tags: ["digitalart","fingerpainting","reels"]
+wordmark:
+  src: "/projects/數位藝術/wordmark.webp"
+  source: "cutout"
+  accent: "#32be9b"
+  ink: 0.48
 ---
 
 純手繪數位藝術。（真的純用手，因為忘了帶 Apple Pencil）

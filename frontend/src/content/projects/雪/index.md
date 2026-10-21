@@ -25,6 +25,13 @@ hoverVideo:
   src: "/projects/雪/video_0.mp4"
 pubDate: 2023-03-02
 tags: ["snow", "ゆき", "特效", "☃️"]
+wordmark:
+  src: "/projects/雪/wordmark.webp"
+  source: "cutout"
+  accent: "#9ab9fd"
+  ink: 0.799
+  scale: 1.1
+  reviewed: true
 ---
 
 貼文發出來的時候，我應該已經在北海道、\

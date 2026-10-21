@@ -23,6 +23,13 @@ hoverVideo:
   src: "/projects/盤子/video_0.mp4"
 pubDate: 2023-03-05
 tags: ["plate","來都來了","🍽️"]
+wordmark:
+  src: "/projects/盤子/wordmark.webp"
+  source: "auto"
+  accent: "#e55e7e"
+  ink: 0.27
+  scale: 1.15
+  reviewed: true
 ---
 
 在日本ㄉ我即便是盤子，也是一枚快樂幸福ㄉ盤子！

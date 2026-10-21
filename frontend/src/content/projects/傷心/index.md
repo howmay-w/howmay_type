@@ -15,6 +15,12 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-04-30
 tags: ["whatzurtype", "臺北文學季特展", "sad", "字字字設計串連", "reels"]
+wordmark:
+  src: "/projects/傷心/wordmark.webp"
+  source: "cutout"
+  accent: "#da3995"
+  ink: 0.176
+  scale: 1.05
 ---
 
 試著用限動做字✨

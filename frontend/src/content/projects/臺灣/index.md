@@ -14,7 +14,19 @@ hoverVideo:
   src: "/projects/臺灣/video_0.mp4"
 hoverVideoFit: contain
 pubDate: 2024-09-03
-tags: ["whatzurtype","台灣","Taiwan","字字字設計串連","reels"]
+tags: ["whatzurtype","台灣","Taiwan","字字字設計串連","reels","臺灣"]
+wordmark:
+  src: "/projects/臺灣/wordmark.webp"
+  source: "cutout"
+  accent: "#899cfe"
+  ink: 0.377
+extraWordmarks:
+  - {"src":"/projects/臺灣/wordmark-2.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-2.webp","ink":0.464,"hidden":true}
+  - {"src":"/projects/臺灣/wordmark-3.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-3.webp","ink":0.581}
+  - {"src":"/projects/臺灣/wordmark-4.webp","source":"direct","sourceImage":"/projects/臺灣/wordmark-source-4.webp","ink":0.466}
+  - {"src":"/projects/臺灣/wordmark-5.webp","source":"direct","sourceImage":"/projects/臺灣/wordmark-source-5.webp","ink":0.31}
+  - {"src":"/projects/臺灣/wordmark-6.webp","source":"direct","sourceImage":"/projects/臺灣/wordmark-source-6.webp","ink":0.518}
+  - {"src":"/projects/臺灣/wordmark-7.webp","source":"cutout","sourceImage":"/projects/臺灣/wordmark-source-7.webp","ink":0.488}
 ---
 
 美麗而多山的島，稱為家。

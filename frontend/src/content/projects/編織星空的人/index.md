@@ -21,6 +21,12 @@ hoverVideo:
   src: "/projects/編織星空的人/video_0.mp4"
 pubDate: 2022-10-15
 tags: ["編織星空","點字","crispy脆樂團","脆脆","✨"]
+wordmark:
+  src: "/projects/編織星空的人/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/編織星空的人/wordmark-source.webp"
+  accent: "#bbb471"
+  ink: 0.029
 ---
 
 🎶用一顆孩子的心，在大人世界生存🎶\

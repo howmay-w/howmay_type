@@ -27,6 +27,11 @@ hoverVideo:
   src: "/projects/期待/video_0.mp4"
 pubDate: 2024-07-09
 tags: ["expectation","🌄"]
+wordmark:
+  src: "/projects/期待/wordmark.webp"
+  source: "cutout"
+  accent: "#62c2af"
+  ink: 0.438
 ---
 
 聽別人說過「期待是一種詛咒」。別人給的是壓力，自己給的會放大失落。

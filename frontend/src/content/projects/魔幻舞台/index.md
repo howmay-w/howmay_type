@@ -25,6 +25,12 @@ hoverVideo:
   src: "/projects/魔幻舞台/video_0.mp4"
 pubDate: 2025-04-20
 tags: ["magicstage","💖"]
+wordmark:
+  src: "/projects/魔幻舞台/wordmark.webp"
+  source: "cutout"
+  accent: "#e54d79"
+  ink: 0.44
+  reviewed: true
 ---
 
 敬魔幻舞台

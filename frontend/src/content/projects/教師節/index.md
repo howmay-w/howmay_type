@@ -17,4 +17,11 @@ hoverVideo:
   src: "/projects/教師節/video_0.mp4"
 pubDate: 2022-09-28
 tags: ["節","teachersday","🏫"]
+wordmark:
+  src: "/projects/教師節/wordmark.webp"
+  source: "cutout"
+  accent: "#325842"
+  ink: 0.616
+  chars: 1
+  scale: 1.05
 ---

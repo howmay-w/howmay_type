@@ -21,6 +21,12 @@ hoverVideo:
   src: "/projects/煩躁/video_0.mp4"
 pubDate: 2023-02-08
 tags: ["fretful","🤬"]
+wordmark:
+  src: "/projects/煩躁/wordmark.webp"
+  source: "cutout"
+  accent: "#9d0504"
+  ink: 0.385
+  scale: 1.05
 ---
 
 喉嚨⋯痛痛ㄉ⋯⋯\

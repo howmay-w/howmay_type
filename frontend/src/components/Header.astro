@@ -29,13 +29,13 @@ const activeRoute = routes[currentPath] || null;
       <a
         href="/about"
         class={activeRoute === "About" ? "current" : ""}
-        data-astro-prefetch><TextSlider content="About" /></a>
+        data-astro-prefetch><TextSlider content="關於我" /></a>
     </li>
     <li>
       <a
         href="/contact"
         class={activeRoute === "Contact" ? "current" : ""}
-        data-astro-prefetch><TextSlider content="Contact" /></a>
+        data-astro-prefetch><TextSlider content="委託／合作" /></a>
     </li>
   </ul>
 </header>
@@ -88,6 +88,8 @@ const activeRoute = routes[currentPath] || null;
   }
   ul {
     display: flex;
+    /* 中文字比英文高，行高 1 時 TextSlider 會切掉字頂；和左側副標同樣用 1.3 */
+    line-height: 1.3;
     list-style: none;
     gap: 1rem;
     margin: 0;

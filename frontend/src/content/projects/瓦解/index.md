@@ -19,6 +19,11 @@ hoverVideo:
   src: "/projects/瓦解/video_0.mp4"
 pubDate: 2022-10-26
 tags: ["collapse","gif","loop","🔨"]
+wordmark:
+  src: "/projects/瓦解/wordmark.webp"
+  source: "cutout"
+  accent: "#c70218"
+  ink: 0.408
 ---
 
 聽學術倫理講座時畫ㄉ\

@@ -29,6 +29,12 @@ hoverVideo:
   src: "/projects/家鄉味/video_0.mp4"
 pubDate: 2023-11-25
 tags: ["柑仔蜜", "kamabit", "番茄", "🍅"]
+wordmark:
+  src: "/projects/家鄉味/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/家鄉味/wordmark-source.webp"
+  accent: "#9f0101"
+  ink: 0.51
 ---
 
 家的味道如果用字呈現，那或許是柑仔蜜。

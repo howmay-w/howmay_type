@@ -17,6 +17,11 @@ hoverVideo:
   src: "/projects/願你的王國榮耀/video_0.mp4"
 pubDate: 2022-09-30
 tags: ["昏鴉", "TheMurkyCrows", "⚜️"]
+wordmark:
+  src: "/projects/願你的王國榮耀/wordmark.webp"
+  source: "cutout"
+  accent: "#d2aa38"
+  ink: 0.204
 ---
 
 [好聽](https://youtu.be/zmsnipltJTM)，與各位分享。

@@ -10,4 +10,11 @@ hoverVideo:
   src: "/projects/追逐/video_0.mp4"
 pubDate: 2022-08-30
 tags: ["chasing","活著就是","🏃🏻"]
+wordmark:
+  src: "/projects/追逐/wordmark.webp"
+  source: "auto"
+  accent: "#4ba13b"
+  ink: 0.264
+  scale: 1.35
+  reviewed: true
 ---

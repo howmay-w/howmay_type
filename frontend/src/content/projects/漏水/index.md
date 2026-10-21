@@ -23,6 +23,13 @@ hoverVideo:
   src: "/projects/漏水/video_0.mp4"
 pubDate: 2023-01-17
 tags: ["leak","💧"]
+wordmark:
+  src: "/projects/漏水/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/漏水/wordmark-source.webp"
+  accent: "#14491e"
+  ink: 0.481
+  scale: 1.2
 ---
 
 祝福大家一輩子都不要再遇到

@@ -23,6 +23,13 @@ hoverVideo:
   src: "/projects/燈/video_0.mp4"
 pubDate: 2025-03-03
 tags: ["whatzurtype","字字字設計串連","🏮"]
+wordmark:
+  src: "/projects/燈/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/燈/wordmark-source.webp"
+  accent: "#87451f"
+  ink: 0.069
+  scale: 1.3
 ---
 
 二月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是火部的字，想到燈。

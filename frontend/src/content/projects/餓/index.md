@@ -10,4 +10,10 @@ hoverVideo:
   src: "/projects/餓/video_0.mp4"
 pubDate: 2022-08-27
 tags: ["hungry", "😵"]
+wordmark:
+  src: "/projects/餓/wordmark.webp"
+  source: "cutout"
+  accent: "#ff937f"
+  ink: 0.24
+  scale: 1.1
 ---

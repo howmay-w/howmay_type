@@ -21,6 +21,12 @@ hoverVideo:
   src: "/projects/天冷不適合做設計/video_0.mp4"
 pubDate: 2022-12-17
 tags: ["toocold","🥶"]
+wordmark:
+  src: "/projects/天冷不適合做設計/wordmark.webp"
+  source: "cutout"
+  accent: "#053753"
+  ink: 0.262
+  chars: 5.5
 ---
 
 冷到打字跟用滑鼠都不太順利，\

@@ -29,6 +29,12 @@ hoverVideo:
   src: "/projects/軟爛/video_0.mp4"
 pubDate: 2023-09-06
 tags: ["vegout","🫠"]
+wordmark:
+  src: "/projects/軟爛/wordmark.webp"
+  source: "cutout"
+  accent: "#e3a8e7"
+  ink: 0.366
+  scale: 1.1
 ---
 
 到家了以後，就什摸都不想做 (´・ω・`)

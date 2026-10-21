@@ -29,6 +29,12 @@ hoverVideo:
   src: "/projects/打雷了/video_0.mp4"
 pubDate: 2024-03-31
 tags: ["thunder","⛈️"]
+wordmark:
+  src: "/projects/打雷了/wordmark.webp"
+  source: "cutout"
+  accent: "#b49603"
+  ink: 0.41
+  reviewed: true
 ---
 
 剛剛是不是今年第一次打雷啊？\

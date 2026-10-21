@@ -15,6 +15,12 @@ hoverVideo:
   src: "/projects/關我屁事/video_0.mp4"
 pubDate: 2022-09-24
 tags: ["noneofmybusiness", "金屬", "特效", "3D", "😇"]
+wordmark:
+  src: "/projects/關我屁事/wordmark.webp"
+  source: "cutout"
+  accent: "#a8b4e4"
+  ink: 0.172
+  chars: 4.5
 ---
 
 突如其來ㄉ特效，有影片ㄛ！

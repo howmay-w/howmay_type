@@ -25,6 +25,11 @@ hoverVideo:
   src: "/projects/瀟灑/video_0.mp4"
 pubDate: 2023-05-16
 tags: ["becool","🎂"]
+wordmark:
+  src: "/projects/瀟灑/wordmark.webp"
+  source: "cutout"
+  accent: "#046f71"
+  ink: 0.365
 ---
 
 我今天生日ㄛ！\

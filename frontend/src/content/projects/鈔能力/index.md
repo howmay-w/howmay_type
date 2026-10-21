@@ -27,6 +27,13 @@ hoverVideo:
   src: "/projects/鈔能力/video_0.mp4"
 pubDate: 2023-12-30
 tags: ["whatzurtype","噴錢","moneytalks","字字字設計串連","💵"]
+wordmark:
+  src: "/projects/鈔能力/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/鈔能力/wordmark-source.webp"
+  accent: "#b4741c"
+  ink: 0.369
+  scale: 1.1
 ---
 
 應該是今年最後一篇！\

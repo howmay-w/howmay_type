@@ -19,6 +19,12 @@ hoverVideo:
   src: "/projects/厚臉皮/video_0.mp4"
 pubDate: 2023-12-16
 tags: ["cheeky","🥸"]
+wordmark:
+  src: "/projects/厚臉皮/wordmark.webp"
+  source: "cutout"
+  accent: "#108704"
+  ink: 0.525
+  scale: 1.1
 ---
 
 厚臉皮雖然很恥，但大多時候有用。\

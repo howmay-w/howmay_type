@@ -23,6 +23,11 @@ hoverVideo:
   src: "/projects/硬要/video_0.mp4"
 pubDate: 2023-11-21
 tags: ["insist","🌚"]
+wordmark:
+  src: "/projects/硬要/wordmark.webp"
+  source: "cutout"
+  accent: "#4981f0"
+  ink: 0.523
 ---
 
 覺得「硬要」是個有趣而有畫面感的詞。\

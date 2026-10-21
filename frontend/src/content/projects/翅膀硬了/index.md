@@ -27,6 +27,12 @@ hoverVideo:
   src: "/projects/翅膀硬了/video_0.mp4"
 pubDate: 2023-05-14
 tags: ["mothersday","🪽"]
+wordmark:
+  src: "/projects/翅膀硬了/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/翅膀硬了/wordmark-source.webp"
+  accent: "#f58384"
+  ink: 0.451
 ---
 
 不管幾歲在媽媽眼裡都是孩子，\

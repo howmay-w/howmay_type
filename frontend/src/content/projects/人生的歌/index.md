@@ -17,6 +17,14 @@ hoverVideo:
   src: "/projects/人生的歌/video_0.mp4"
 pubDate: 2022-10-12
 tags: ["人生ê歌", "Jînsingêkua", "黃乙玲", "台語", "🎤"]
+wordmark:
+  src: "/projects/人生的歌/wordmark.webp"
+  source: "cutout"
+  accent: "#b47654"
+  ink: 0.112
+  chars: 4
+  scale: 1.05
+  reviewed: true
 ---
 
 苦情歌好讚，適合在浴室大唱特唱。

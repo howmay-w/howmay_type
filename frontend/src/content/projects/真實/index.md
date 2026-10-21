@@ -17,6 +17,13 @@ hoverVideo:
   src: "/projects/真實/video_0.mp4"
 pubDate: 2023-02-12
 tags: ["frame", "🖼️"]
+wordmark:
+  src: "/projects/真實/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/真實/wordmark-source.webp"
+  accent: "#bc603a"
+  ink: 0.387
+  scale: 1.1
 ---
 
 大學時，攝影老師總讓我們重複練習「Cropping」（或正是所謂的 framing）：要學會排除雜訊，保留概念、保留美。

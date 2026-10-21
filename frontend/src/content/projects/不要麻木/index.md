@@ -21,6 +21,11 @@ hoverVideo:
   src: "/projects/不要麻木/video_0.mp4"
 pubDate: 2024-05-18
 tags: ["😶"]
+wordmark:
+  src: "/projects/不要麻木/wordmark.webp"
+  source: "cutout"
+  accent: "#9c3407"
+  ink: 0.409
 ---
 
 「請不要移開雙眼、不要停止思考、不要麻木不仁。」

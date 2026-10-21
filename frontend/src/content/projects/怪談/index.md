@@ -27,6 +27,11 @@ hoverVideo:
   src: "/projects/怪談/video_0.mp4"
 pubDate: 2023-02-24
 tags: ["weirdtales","關於我和鬼變成家人的那件事","👻"]
+wordmark:
+  src: "/projects/怪談/wordmark.webp"
+  source: "cutout"
+  accent: "#471f19"
+  ink: 0.186
 ---
 
 今天去看了關於我和鬼變成家人的那件事（好長），也算是種有趣的怪談ㄅ。

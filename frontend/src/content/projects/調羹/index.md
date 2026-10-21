@@ -21,6 +21,11 @@ hoverVideo:
   src: "/projects/調羹/video_0.mp4"
 pubDate: 2024-07-16
 tags: ["湯匙","spoon","🥄"]
+wordmark:
+  src: "/projects/調羹/wordmark.webp"
+  source: "cutout"
+  accent: "#d6a84f"
+  ink: 0.484
 ---
 
 長大以後才發現別人家的湯匙都不叫做「調羹」，大驚訝:o

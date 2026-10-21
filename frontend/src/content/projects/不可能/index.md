@@ -23,6 +23,13 @@ hoverVideo:
   src: "/projects/不可能/video_0.mp4"
 pubDate: 2023-01-13
 tags: ["unbelievable","🥹"]
+wordmark:
+  src: "/projects/不可能/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/不可能/wordmark-source.webp"
+  accent: "#d80287"
+  ink: 0.269
+  scale: 1.05
 ---
 
 這幾天天氣也太好ㄌ⋯！\

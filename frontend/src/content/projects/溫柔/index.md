@@ -29,6 +29,13 @@ hoverVideo:
   src: "/projects/溫柔/video_0.mp4"
 pubDate: 2022-11-06
 tags: ["優しい","gentle","點字","🎗️"]
+wordmark:
+  src: "/projects/溫柔/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/溫柔/wordmark-source.webp"
+  accent: "#664897"
+  ink: 0.26
+  scale: 1.15
 ---
 
 溫柔很多種樣貌，\

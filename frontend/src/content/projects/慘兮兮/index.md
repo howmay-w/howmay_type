@@ -29,6 +29,12 @@ hoverVideo:
   src: "/projects/慘兮兮/video_0.mp4"
 pubDate: 2025-02-07
 tags: ["miserable", "金屬", "手繪特效", "🤢"]
+wordmark:
+  src: "/projects/慘兮兮/wordmark.webp"
+  source: "cutout"
+  accent: "#868dbb"
+  ink: 0.077
+  scale: 1.05
 ---
 
 年假旅遊時突然中標腸胃炎，慘兮兮。

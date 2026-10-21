@@ -15,6 +15,13 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-05-23
 tags: ["wild","reels"]
+wordmark:
+  src: "/projects/野生/wordmark.webp"
+  source: "cutout"
+  accent: "#880201"
+  ink: 0.612
+  scale: 0.95
+  reviewed: true
 ---
 
 喜歡在路邊看到野生、不修邊幅而充滿活力的設計。\

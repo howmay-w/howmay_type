@@ -14,6 +14,11 @@ hoverVideo:
   src: "/projects/魑魅魍魎/video_0.mp4"
 pubDate: 2023-08-16
 tags: ["鬼門開", "glitch", "specialeffects", "reels"]
+wordmark:
+  src: "/projects/魑魅魍魎/wordmark.webp"
+  source: "cutout"
+  accent: "#522d5a"
+  ink: 0.448
 ---
 
 你的手機應該沒有壞掉，應該📺\

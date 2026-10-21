@@ -25,6 +25,13 @@ hoverVideo:
   src: "/projects/順風/video_0.mp4"
 pubDate: 2024-08-04
 tags: ["tailwind","🎐"]
+wordmark:
+  src: "/projects/順風/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/順風/wordmark-source.webp"
+  accent: "#064b2d"
+  ink: 0.217
+  scale: 1.2
 ---
 
 「順風」一直是我很喜歡的祝福說法，帶著相信實力或準備已然足夠的從容，只祈好的機緣推動。

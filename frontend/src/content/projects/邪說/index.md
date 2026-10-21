@@ -17,6 +17,13 @@ pubDate: 2023-06-29
 tags: ["heresy", "reels"]
 instagramReels:
   - "https://www.instagram.com/reel/CuFFQFxNZkL/"
+wordmark:
+  src: "/projects/邪說/wordmark.webp"
+  source: "cutout"
+  accent: "#7e1f0d"
+  ink: 0.111
+  scale: 1.4
+  reviewed: true
 ---
 
 「你要不要聽聽看你在說什麼🙃」\

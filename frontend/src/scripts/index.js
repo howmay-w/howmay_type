@@ -13,10 +13,13 @@ const initializeVariables = () => {
 	lines = document.querySelectorAll("hr");
 	textSliders = document.querySelectorAll("header .oh > .oh__inner");
 	gridContainer = document.querySelector("[data-grid]");
-	// 只取尚未延遲載入（非 data-deferred）的可見卡片，避免對全部 N 個元素建 tween
+	// 只取畫面上顯示的卡片（不含還沒載入、被搜尋或標籤篩掉的），避免對全部 N 個元素建 tween
 	gridItems = gridContainer
 		? Array.from(gridContainer.children).filter(
-				(el) => !el.hasAttribute("data-deferred"),
+				(el) =>
+					!el.hasAttribute("data-deferred") &&
+					!el.hasAttribute("data-wm-extra") &&
+					el.style.display !== "none",
 			)
 		: [];
 	hasPreloaderComponent = document.querySelector(".loading");
@@ -89,6 +92,11 @@ const init = () => {
 	// Disable scroll restoration on browser back navigation.
 	if ("scrollRestoration" in history) {
 		history.scrollRestoration = "manual";
+	}
+	// 從作品頁返回：不播入場動畫、不捲回頂端，直接顯示排好的字牆（捲動位置由 gridViewMode.js 還原）
+	if (window.__gridReturning) {
+		ensureGridVisible();
+		return;
 	}
 	// Scroll to the top of the page.
 	window.scrollTo(0, 0);

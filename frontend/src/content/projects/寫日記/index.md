@@ -23,6 +23,12 @@ hoverVideo:
   src: "/projects/寫日記/video_0.mp4"
 pubDate: 2024-01-26
 tags: ["whatzurtype","字字字設計串連","diary","📔"]
+wordmark:
+  src: "/projects/寫日記/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/寫日記/wordmark-source.webp"
+  accent: "#c8a345"
+  ink: 0.498
 ---
 
 這個月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 題目是「習慣」。我唯一比較自豪的習慣，是從高一開始，每天睡前都會花幾分鐘寫日記。

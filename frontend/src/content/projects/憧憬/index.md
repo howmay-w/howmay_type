@@ -22,6 +22,11 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-11-19
 tags: ["relish","🍁"]
+wordmark:
+  src: "/projects/憧憬/wordmark.webp"
+  source: "cutout"
+  accent: "#d99391"
+  ink: 0.277
 ---
 
 擁有憧憬，是最美好的一種心情。

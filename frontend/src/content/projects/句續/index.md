@@ -25,6 +25,11 @@ hoverVideo:
   src: "/projects/句續/video_0.mp4"
 pubDate: 2024-09-21
 tags: ["繼續","👀"]
+wordmark:
+  src: "/projects/句續/wordmark.webp"
+  source: "cutout"
+  accent: "#b7ab42"
+  ink: 0.478
 ---
 
 感覺比起「繼續」，更常聽到大家講「句續」。

@@ -25,6 +25,11 @@ hoverVideo:
   src: "/projects/被盜/video_0.mp4"
 pubDate: 2024-04-19
 tags: ["盜版", "侵權", "piracy", "🙄"]
+wordmark:
+  src: "/projects/被盜/wordmark.webp"
+  source: "cutout"
+  accent: "#c7262d"
+  ink: 0.238
 ---
 
 跟大家說一件前陣子有點心煩的事情，\

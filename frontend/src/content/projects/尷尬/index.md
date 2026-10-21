@@ -29,6 +29,13 @@ hoverVideo:
   src: "/projects/尷尬/video_0.mp4"
 pubDate: 2023-10-25
 tags: ["awkward", "執事排", "3D", "😬"]
+wordmark:
+  src: "/projects/尷尬/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/尷尬/wordmark-source.webp"
+  accent: "#e9943d"
+  ink: 0.5
+  scale: 1.05
 ---
 
 尷尬好像是種很社會化的情緒ㄋ，\

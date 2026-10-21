@@ -21,6 +21,14 @@ hoverVideo:
   src: "/projects/期中地獄/video_0.mp4"
 pubDate: 2022-11-02
 tags: ["期末地獄", "hell", "點字", "特效", "3D", "😵"]
+wordmark:
+  src: "/projects/期中地獄/wordmark.webp"
+  source: "cutout"
+  accent: "#2a4523"
+  ink: 0.227
+  scale: 1.05
+extraWordmarks:
+  - {"src":"/projects/期中地獄/wordmark-2.webp","source":"cutout","sourceImage":"/projects/期中地獄/wordmark-source-2.webp","ink":0.233,"scale":1.05}
 ---
 
 期中還沒走，期末就要來ㄌ。\

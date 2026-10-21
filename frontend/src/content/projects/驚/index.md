@@ -23,6 +23,12 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2026-02-01
 tags: ["whatzurtype","字字字設計串連","😲"]
+wordmark:
+  src: "/projects/驚/wordmark.webp"
+  source: "cutout"
+  accent: "#b44046"
+  ink: 0.308
+  scale: 1.35
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是有「馬」部件的字，選了「驚」。

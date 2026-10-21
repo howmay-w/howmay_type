@@ -10,6 +10,12 @@ hoverVideo:
   src: "/projects/地震/video_0.mp4"
 pubDate: 2022-09-19
 tags: ["地震", "抖爆嗚嗚嗚", "earthquake", "😖"]
+wordmark:
+  src: "/projects/地震/wordmark.webp"
+  source: "cutout"
+  accent: "#b35b0e"
+  ink: 0.41
+  scale: 1.15
 ---
 
 願大家平安

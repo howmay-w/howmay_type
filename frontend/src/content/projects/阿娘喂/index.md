@@ -25,6 +25,13 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-09-25
 tags: ["死語","台語","omg","😱"]
+wordmark:
+  src: "/projects/阿娘喂/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/阿娘喂/wordmark-source.webp"
+  accent: "#9f870d"
+  ink: 0.173
+  scale: 1.15
 ---
 
 死語復興運動

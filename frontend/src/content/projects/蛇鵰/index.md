@@ -25,6 +25,13 @@ hoverVideo:
   src: "/projects/蛇鵰/video_0.mp4"
 pubDate: 2024-07-28
 tags: ["whatzurtype", "字字字設計串連", "大冠鷲", "SerpentEagle", "🦅"]
+wordmark:
+  src: "/projects/蛇鵰/wordmark.webp"
+  source: "cutout"
+  accent: "#328243"
+  ink: 0.388
+  scale: 1.3
+  reviewed: true
 ---
 
 本月[#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 延續上次在松菸對談聊到「鳥」很難做的話題，題目是「有鳥部件的字」，我抽到鵰，決定做大冠鷲的俗稱之一的「蛇鵰」。

@@ -25,6 +25,12 @@ hoverVideo:
   src: "/projects/就是/video_0.mp4"
 pubDate: 2023-05-07
 tags: ["well","🔄"]
+wordmark:
+  src: "/projects/就是/wordmark.webp"
+  source: "cutout"
+  accent: "#463586"
+  ink: 0.139
+  chars: 2.5
 ---
 
 腦袋中詞語還沒排列好的時候，會先出來扛一下ㄉ擋箭牌。\

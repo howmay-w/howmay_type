@@ -17,6 +17,12 @@ hoverVideo:
   src: "/projects/情書/video_0.mp4"
 pubDate: 2022-10-21
 tags: ["loveletter","💌","cmyk"]
+wordmark:
+  src: "/projects/情書/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/情書/wordmark-source.webp"
+  accent: "#eb49e9"
+  ink: 0.463
 ---
 
 這個時代還有情書嗎？訊息不算的話\

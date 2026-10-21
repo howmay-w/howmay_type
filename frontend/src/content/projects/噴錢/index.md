@@ -23,6 +23,12 @@ hoverVideo:
   src: "/projects/噴錢/video_0.mp4"
 pubDate: 2022-12-19
 tags: ["blowmoney","💸"]
+wordmark:
+  src: "/projects/噴錢/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/噴錢/wordmark-source.webp"
+  accent: "#5d88aa"
+  ink: 0.335
 ---
 
 年尾總是花錢如瀑布，\

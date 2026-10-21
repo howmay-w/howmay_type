@@ -25,6 +25,11 @@ hoverVideo:
   src: "/projects/取捨/video_0.mp4"
 pubDate: 2023-09-18
 tags: ["tradeoff","💱"]
+wordmark:
+  src: "/projects/取捨/wordmark.webp"
+  source: "cutout"
+  accent: "#e13c71"
+  ink: 0.238
 ---
 
 想做的事情好多，\

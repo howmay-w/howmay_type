@@ -27,6 +27,11 @@ hoverVideo:
   src: "/projects/譴責/video_0.mp4"
 pubDate: 2023-04-08
 tags: ["criticize","😊"]
+wordmark:
+  src: "/projects/譴責/wordmark.webp"
+  source: "cutout"
+  accent: "#f783cc"
+  ink: 0.428
 ---
 
 前幾天說好要約會，結果男友沒有設定鬧鐘，\

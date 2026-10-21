@@ -25,6 +25,12 @@ hoverVideo:
   src: "/projects/有餘/video_0.mp4"
 pubDate: 2022-12-29
 tags: ["typowordchain23，","takethingsinyourstride","🈶"]
+wordmark:
+  src: "/projects/有餘/wordmark.webp"
+  source: "cutout"
+  accent: "#d2ae25"
+  ink: 0.326
+  reviewed: true
 ---
 
 其實是新年期許：希望能當個游刃有餘的人！\

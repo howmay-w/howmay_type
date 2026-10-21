@@ -49,6 +49,8 @@ class HoverVideo {
     const card = e.currentTarget;
     const src = card.getAttribute("data-hover-video");
     if (!src) return;
+    // 字牆模式不播 hover 影片
+    if (document.documentElement.dataset.view === "type") return;
 
     if (this._leaveTimers.has(card)) {
       clearTimeout(this._leaveTimers.get(card));

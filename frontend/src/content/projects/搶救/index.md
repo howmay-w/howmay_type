@@ -21,6 +21,13 @@ hoverVideo:
   src: "/projects/搶救/video_0.mp4"
 pubDate: 2022-11-24
 tags: ["help","💥"]
+wordmark:
+  src: "/projects/搶救/wordmark.webp"
+  source: "cutout"
+  accent: "#a41409"
+  ink: 0.186
+  scale: 1.1
+  reviewed: true
 ---
 
 最近很常看到的字。\

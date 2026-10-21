@@ -13,6 +13,12 @@ hoverVideo:
   src: "/projects/太狠了/video_0.mp4"
 pubDate: 2023-03-20
 tags: ["badass","注意看","☠️"]
+wordmark:
+  src: "/projects/太狠了/wordmark.webp"
+  source: "auto"
+  accent: "#4097a8"
+  ink: 0.424
+  reviewed: true
 ---
 
 注意看，

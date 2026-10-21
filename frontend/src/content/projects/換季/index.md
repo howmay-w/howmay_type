@@ -29,6 +29,11 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-10-27
 tags: ["seasonalchange","🌦️"]
+wordmark:
+  src: "/projects/換季/wordmark.webp"
+  source: "cutout"
+  accent: "#432682"
+  ink: 0.382
 ---
 
 台北換季沒在跟你拖拖拉拉，\

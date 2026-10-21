@@ -23,6 +23,13 @@ hoverVideo:
   src: "/projects/喔是喔/video_0.mp4"
 pubDate: 2026-01-07
 tags: ["😌"]
+wordmark:
+  src: "/projects/喔是喔/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/喔是喔/wordmark-source.webp"
+  accent: "#c89eb3"
+  ink: 0.197
+  scale: 0.95
 ---
 
 有時唸作 Also。

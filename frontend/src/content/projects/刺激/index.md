@@ -21,6 +21,11 @@ hoverVideo:
   src: "/projects/刺激/video_0.mp4"
 pubDate: 2024-11-24
 tags: ["tense","⚾️"]
+wordmark:
+  src: "/projects/刺激/wordmark.webp"
+  source: "cutout"
+  accent: "#4ba13b"
+  ink: 0.353
 ---
 
 今天兩場都這麼刺激合理嗎？\

@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { navigate } from "astro:transitions/client";
 
 const SESSION_ORDER_KEY = "grid-session-order";
 const GRID_SEARCH_KEY = "grid-search-term";
@@ -103,7 +104,8 @@ const handleSearchInput = (e) => {
 /* Initialize DOM elements and states */
 const initializeVariables = () => {
   gridContainer = document.querySelector("[data-grid]");
-  gridItems = Array.from(gridContainer?.children || []);
+  // 其他款字圖（data-wm-extra）只屬於字牆，由 gridViewMode.js 跟著所屬作品顯示，不算一張卡片
+  gridItems = Array.from(gridContainer?.children || []).filter((el) => !el.hasAttribute("data-wm-extra"));
   shuffleButton = document.querySelector("[data-shuffle]");
   sortButton = document.querySelector("[data-sort]");
   searchButton = document.querySelector("[data-search]");
@@ -206,7 +208,9 @@ const applySessionOrder = () => {
 };
 
 /* 最新：重設回「全部專案依日期排序後的最新 LOAD_BATCH 張」，其餘重新隱藏 */
-const sortGrid = () => {
+// skipAnimation：頁面載入時套用（BACK 回「最新」）不播卡片浮上動畫，交給首頁入場動畫；
+// 兩個動畫同時跑時，入場動畫會從「透明」動到「透明」，卡片就一直不出現
+const sortGrid = ({ skipAnimation = false } = {}) => {
   // 使用者主動切回日期排序 → 清除 session，下次重整會重新隨機
   try {
     sessionStorage.removeItem(SESSION_ORDER_KEY);
@@ -232,7 +236,10 @@ const sortGrid = () => {
       item.style.display = ""; // 清除殘留 inline display，讓 CSS 規則接管
     }
   });
-  appearCards(visible);
+  if (skipAnimation) {
+    gsap.killTweensOf(visible);
+    gsap.set(visible, { yPercent: 0, autoAlpha: 1 });
+  } else appearCards(visible);
   updateLoadMoreVisibility();
   document.dispatchEvent(new CustomEvent("grid:reordered"));
 };
@@ -401,7 +408,8 @@ const applyTagFromUrl = () => {
   const params = new URLSearchParams(window.location.search);
   const tag = params.get("tag");
   if (!tag) return;
-  filterGrid(tag);
+  // 頁面載入時套用：不播篩選的淡入動畫，交給首頁入場動畫（index.js），兩個動畫疊在一起字會停在透明
+  filterGrid(tag, { skipAnimation: true });
   toggleClearButton(tag);
   searchButton?.classList.add("search--active");
   setSearchToolbarLabel(tag);
@@ -420,7 +428,7 @@ const applyTagFromUrl = () => {
 const applyViewModeFromUrl = () => {
   const params = new URLSearchParams(window.location.search);
   if (params.get("from") !== "latest") return;
-  sortGrid();
+  sortGrid({ skipAnimation: true });
   const url = new URL(window.location.href);
   url.searchParams.delete("from");
   window.history.replaceState({}, "", url);
@@ -439,7 +447,9 @@ const applySearchFromSession = () => {
   })();
   const term = fromUrl ?? fromSession ?? "";
   if (!term) return;
-  filterGrid(term);
+  // 頁面載入時套用：不播篩選的淡入動畫。一般載入交給首頁入場動畫（index.js），從作品頁返回時由 gridViewMode.js 直接顯示；
+  // 兩個動畫疊在一起，字會停在透明的狀態
+  filterGrid(term, { skipAnimation: true });
   toggleClearButton(term);
   searchButton?.classList.add("search--active");
   setSearchToolbarLabel(term);
@@ -451,7 +461,8 @@ const applySearchFromSession = () => {
   }
 };
 
-/* 點擊專案卡片時，帶上 from_search 或 from=latest，讓專案頁 BACK 可回到篩選結果 */
+/* 點擊專案卡片時，帶上 from_search 或 from=latest，讓專案頁 BACK 可回到篩選結果。
+   用站內換頁（navigate）而不是整頁跳轉，字牆點字進作品頁的轉場才會保留（見 projectWordmark.js） */
 const handleGridCardClick = (e) => {
   const link = e.target.closest("a[href^='/projects/']");
   if (!link) return;
@@ -470,12 +481,12 @@ const handleGridCardClick = (e) => {
     e.preventDefault();
     const url = new URL(link.href);
     url.searchParams.set("from_search", term);
-    window.location.href = url.toString();
+    navigate(url.toString(), { sourceElement: link });
   } else if (viewMode === "latest") {
     e.preventDefault();
     const url = new URL(link.href);
     url.searchParams.set("from", "latest");
-    window.location.href = url.toString();
+    navigate(url.toString(), { sourceElement: link });
   }
 };
 
@@ -508,7 +519,18 @@ const init = () => {
   const hadFromLatest =
     new URLSearchParams(window.location.search).get("from") === "latest";
   applyViewModeFromUrl();
-  if (!hadFromLatest) applySessionOrder();
+  // 從作品頁返回（站內換頁的上一頁）時維持原本的「最新」排序；重新整理則照舊回到隨機
+  const returningToLatest =
+    window.__gridReturning &&
+    (() => {
+      try {
+        return sessionStorage.getItem(GRID_VIEW_MODE_KEY) === "latest";
+      } catch (_) {
+        return false;
+      }
+    })();
+  if (returningToLatest) sortGrid({ skipAnimation: true });
+  else if (!hadFromLatest) applySessionOrder();
   applyTagFromUrl();
   applySearchFromSession();
 };

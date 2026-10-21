@@ -15,6 +15,11 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-11-09
 tags: ["whatzurtype", "Azurite", "大地瑰寶", "字字字設計串連", "reels"]
+wordmark:
+  src: "/projects/藍銅礦/wordmark.webp"
+  source: "cutout"
+  accent: "#020ed0"
+  ink: 0.354
 ---
 
 藍銅礦很漂亮，大家去查照片！

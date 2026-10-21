@@ -27,6 +27,11 @@ hoverVideo:
   src: "/projects/菜雞/video_0.mp4"
 pubDate: 2024-04-12
 tags: ["韭菜","novice","newbie","🐣"]
+wordmark:
+  src: "/projects/菜雞/wordmark.webp"
+  source: "cutout"
+  accent: "#850c13"
+  ink: 0.419
 ---
 
 Me.

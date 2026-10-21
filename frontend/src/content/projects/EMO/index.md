@@ -21,6 +21,11 @@ hoverVideo:
   src: "/projects/EMO/video_0.mp4"
 pubDate: 2022-10-22
 tags: ["emo","🙂"]
+wordmark:
+  src: "/projects/EMO/wordmark.webp"
+  source: "cutout"
+  accent: "#32b720"
+  ink: 0.596
 ---
 
 又下雨ㄌ

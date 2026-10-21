@@ -21,6 +21,13 @@ video:
   src: "/projects/海巡/video_0.mp4"
 hoverVideo:
   src: "/projects/海巡/video_0.mp4"
+wordmark:
+  src: "/projects/海巡/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/海巡/wordmark-source.webp"
+  accent: "#2087cd"
+  ink: 0.402
+  scale: 1.05
 ---
 
 颱風平安。

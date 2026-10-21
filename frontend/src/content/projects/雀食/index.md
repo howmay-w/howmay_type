@@ -27,6 +27,12 @@ hoverVideo:
   src: "/projects/雀食/video_0.mp4"
 pubDate: 2023-04-26
 tags: ["indeed","🪶"]
+wordmark:
+  src: "/projects/雀食/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/雀食/wordmark-source.webp"
+  accent: "#e9c074"
+  ink: 0.344
 ---
 
 圖文無關但\

@@ -23,6 +23,11 @@ hoverVideo:
   src: "/projects/狗血/video_0.mp4"
 pubDate: 2024-04-30
 tags: ["drama","🥃"]
+wordmark:
+  src: "/projects/狗血/wordmark.webp"
+  source: "cutout"
+  accent: "#1384dc"
+  ink: 0.427
 ---
 
 隨著長大見識越來越多，\

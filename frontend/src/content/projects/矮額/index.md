@@ -25,6 +25,11 @@ hoverVideo:
   src: "/projects/矮額/video_0.mp4"
 pubDate: 2023-05-10
 tags: ["Eww","🤮"]
+wordmark:
+  src: "/projects/矮額/wordmark.webp"
+  source: "cutout"
+  accent: "#8a37d1"
+  ink: 0.669
 ---
 
 喜歡這種大家都會說，\

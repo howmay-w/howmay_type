@@ -23,6 +23,14 @@ hoverVideo:
   src: "/projects/聖誕快樂/video_0.mp4"
 pubDate: 2022-12-22
 tags: ["抽獎","merrychristmas","卡片設計","孔版印刷"]
+wordmark:
+  src: "/projects/聖誕快樂/wordmark.webp"
+  source: "cutout"
+  accent: "#fa7a7d"
+  ink: 0.272
+  scale: 1.25
+extraWordmarks:
+  - {"src":"/projects/聖誕快樂/wordmark-2.webp","source":"cutout","sourceImage":"/projects/聖誕快樂/wordmark-source-2.webp","ink":0.095,"scale":0.95}
 ---
 
 🎄快閃抽獎∣已截止🎄\

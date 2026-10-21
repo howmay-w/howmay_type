@@ -29,6 +29,13 @@ hoverVideo:
   src: "/projects/秋老虎/video_0.mp4"
 pubDate: 2022-10-03
 tags: ["toohot","whatzurtype","字字字設計串連","🥵"]
+wordmark:
+  src: "/projects/秋老虎/wordmark.webp"
+  source: "cutout"
+  accent: "#dfcfb4"
+  ink: 0.122
+  scale: 1.2
+  reviewed: true
 ---
 
 快熱死，不是十月了ㄇ⋯\

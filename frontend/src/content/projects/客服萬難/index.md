@@ -19,6 +19,12 @@ video:
   src: "/projects/客服萬難/video_0.mp4"
 hoverVideo:
   src: "/projects/客服萬難/video_0.mp4"
+wordmark:
+  src: "/projects/客服萬難/wordmark.webp"
+  source: "cutout"
+  accent: "#e1732f"
+  ink: 0.289
+  reviewed: true
 ---
 
 客服⋯⋯萬難⋯⋯

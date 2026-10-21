@@ -21,6 +21,12 @@ video:
   src: "/projects/美國時間/video_0.mp4"
 hoverVideo:
   src: "/projects/美國時間/video_0.mp4"
+wordmark:
+  src: "/projects/美國時間/wordmark.webp"
+  source: "cutout"
+  accent: "#078fe1"
+  ink: 0.346
+  reviewed: true
 ---
 
 感謝 TypeCon，度過了非常精彩愉快的美國時間！

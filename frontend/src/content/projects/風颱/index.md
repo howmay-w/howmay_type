@@ -23,6 +23,12 @@ hoverVideo:
   src: "/projects/風颱/video_0.mp4"
 pubDate: 2023-10-06
 tags: ["颱風","hong-thai","typhoon","🌀"]
+wordmark:
+  src: "/projects/風颱/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/風颱/wordmark-source.webp"
+  accent: "#9e8d06"
+  ink: 0.632
 ---
 
 今年颱風好多，明明都十月ㄌ。\

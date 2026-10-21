@@ -21,6 +21,12 @@ hoverVideo:
   src: "/projects/破/video_0.mp4"
 pubDate: 2024-12-28
 tags: ["whatzurtype","break","字字字設計串連","🏚️"]
+wordmark:
+  src: "/projects/破/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/破/wordmark-source.webp"
+  accent: "#e44075"
+  ink: 0.794
 ---
 
 今年最後的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 是年度回顧，決定用「破」紀錄這充滿破事，但仍有美好與驚奇的一年。

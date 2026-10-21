@@ -27,6 +27,11 @@ hoverVideo:
   src: "/projects/監控/video_0.mp4"
 pubDate: 2024-03-05
 tags: ["surveillance","👁️"]
+wordmark:
+  src: "/projects/監控/wordmark.webp"
+  source: "cutout"
+  accent: "#3a3f81"
+  ink: 0.282
 ---
 
 我家的貓貓 be like:

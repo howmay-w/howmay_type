@@ -29,6 +29,12 @@ hoverVideo:
   src: "/projects/別再晃了/video_0.mp4"
 pubDate: 2024-04-23
 tags: ["QQ","地震","🫨"]
+wordmark:
+  src: "/projects/別再晃了/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/別再晃了/wordmark-source.webp"
+  accent: "#cac816"
+  ink: 0.417
 ---
 
 晚上震半夜震早上又震，\

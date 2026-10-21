@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>字圖管理</title>
+<style>
+  :root {
+    --bg: #161616; --panel: #1f1f1f; --wall: #111; --fg: #eee; --mut: #8f8f8f;
+    --line: #2e2e2e; --accent: #d7ea06; --warn: #e6a23c; --bad: #e5604f; --ok: #6cc28a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 -apple-system, "PingFang TC", sans-serif; }
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+  h1 { font-size: 16px; margin: 0 6px 0 0; }
+  .count { color: var(--mut); }
+  .count b { color: var(--fg); font-size: 15px; }
+  .count b.todo { color: var(--accent); }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .seg button { border: 0; border-radius: 0; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button b { font-weight: 400; color: var(--mut); margin-left: 2px; }
+  .seg button.on b { color: inherit; }
+  button, select, input { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; }
+  button { cursor: pointer; }
+  button.on { color: var(--accent); }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  input[type=search] { width: 160px; }
+  kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 11px; }
+  /* 版面：左邊預覽卡片網格，右邊固定的共用編輯面板 */
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
+  main { padding: 12px 16px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-min, 270px), 1fr)); gap: 8px; align-items: start; }
+  main > p { grid-column: 1 / -1; }
+  .row { position: relative; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); overflow: hidden; cursor: pointer; }
+  .row.current { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .row.st-ok .stage { opacity: 0.7; }
+  .row.is-hidden .stage { opacity: 0.35; }
+  .row.st-ok.current .stage { opacity: 1; }
+  .stage { position: relative; height: var(--stage-h, 190px); background: var(--wall); display: flex; align-items: center; justify-content: center; padding: 4px; overflow: hidden; }
+  .stage.drop { outline: 2px dashed var(--accent); outline-offset: -6px; }
+  .wm { flex: none; max-width: 100%; max-height: 100%; height: auto !important; background: #f2f2f2; -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat; }
+  /* 右側面板 */
+  .panel { position: sticky; top: var(--head-h, 0px); height: calc(100vh - var(--head-h, 0px)); overflow-y: auto; border-left: 1px solid var(--line); background: var(--panel); padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 12px; }
+  .panel .empty { color: var(--mut); }
+  .panel h2 { font-size: 16px; margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .panel h2 a { color: var(--mut); font-size: 12px; font-weight: 400; }
+  .panel .pos { color: var(--mut); }
+  .panel .orig { background: #000; border-radius: 6px; overflow: hidden; aspect-ratio: 1; }
+  .panel .orig img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .panel .orig .none { height: 100%; display: grid; place-items: center; color: var(--mut); }
+  .flags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .flag { font-size: 11px; padding: 0 7px; border-radius: 99px; border: 1px solid var(--line); color: var(--mut); }
+  .flag.warn { color: var(--warn); border-color: #5a4320; }
+  .flag.bad { color: var(--bad); border-color: #5a2a24; }
+  .flag.ok { color: var(--ok); border-color: #24452f; }
+  .ctl { display: grid; grid-template-columns: 34px 1fr 58px; gap: 6px; align-items: center; color: var(--mut); }
+  .ctl input[type=range] { width: 100%; accent-color: var(--accent); }
+  .ctl input[type=number] { width: 58px; padding: 3px 5px; }
+  .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .acts button { padding: 6px 6px; }
+  .acts { grid-template-columns: 1fr 1fr; }
+  .acts #pHide, .acts .wide { grid-column: 1 / -1; }
+  .variants { display: flex; gap: 4px; flex-wrap: wrap; }
+  .variants button { padding: 3px 8px; font-size: 12px; }
+  .status-seg { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .status-seg button { padding: 6px 2px; }
+  .status-seg button.on.st-redo { background: #6b4a16; color: #fff; }
+  .status-seg button.on.st-swap { background: #6a2a22; color: #fff; }
+  .acts button.on { color: var(--accent); }
+  .res { color: var(--mut); }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    .panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; height: 46vh; border-left: 0; border-top: 1px solid var(--line); z-index: 6; }
+    main { padding-bottom: 50vh; }
+  }
+  .tools { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+  .zoom { display: flex; align-items: center; gap: 6px; color: var(--mut); font-size: 12px; }
+  .zoom input { width: 110px; accent-color: var(--accent); padding: 0; }
+  .status { font-size: 12px; color: var(--mut); min-height: 1.4em; }
+  /* 字牆檢視：用正式網站的排版規則排出整面牆，點字選取 */
+  main.is-wall { display: block; }
+  .wallbox { position: relative; overflow: hidden; }
+  .wall { position: absolute; left: 0; top: 0; background: var(--wall); transform-origin: top left; }
+  .wall .wmw { position: absolute; display: block; background: #f2f2f2; -webkit-mask: var(--src) center / contain no-repeat; mask: var(--src) center / contain no-repeat; cursor: pointer; }
+  .wall .wmw:hover { background: #fff; }
+  .wall .wmw.current { background: var(--accent); }
+  .wall .wmw.current::after { content: ""; position: absolute; inset: -6px; border: 1px solid var(--accent); border-radius: 4px; }
+  .wall-note { color: var(--mut); font-size: 12px; margin: 0 0 8px; }
+  body:not(.mode-wall) .wall-only, body.mode-wall .grid-only { display: none; }
+  .status.err { color: var(--bad); }
+  /* 精修視窗（/__wordmarks/editor）疊在整個管理頁上 */
+  #editorFrame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; z-index: 100; display: none; background: transparent; color-scheme: normal; }
+  #editorFrame.show { display: block; }
+</style>
+</head>
+<body>
+<header>
+  <h1>字圖管理</h1>
+  <div class="seg" id="filter">
+    <button data-f="all" class="on">全部 <b id="cAll"></b></button>
+    <button data-f="swap">需要換圖 <b id="cSwap"></b></button>
+    <button data-f="hidden">隱藏 <b id="cHidden"></b></button>
+  </div>
+  <div class="seg" id="mode" role="group" aria-label="檢視">
+    <button data-mode="grid" class="on">格子</button>
+    <button data-mode="wall">字牆</button>
+  </div>
+  <div class="tools">
+    <select id="wallW" class="wall-only" aria-label="字牆寬度">
+      <option value="1180">電腦（1180）</option>
+      <option value="1660">寬螢幕（1660）</option>
+      <option value="400">手機（400）</option>
+      <option value="320">小手機（320）</option>
+    </select>
+    <label class="zoom grid-only">預覽比例 <input type="range" id="zoom" min="0.3" max="1.5" step="0.05"> <span id="zoomVal"></span></label>
+    <select id="charsF" aria-label="依字數篩選"></select>
+    <select id="sort" aria-label="排序">
+      <option value="risk">依風險排序</option>
+      <option value="edited">最近編輯</option>
+      <option value="date">依日期（新到舊）</option>
+      <option value="name">依名稱</option>
+      <option value="size">依字牆大小（大→小）</option>
+    </select>
+    <input type="search" id="q" placeholder="搜尋作品名稱" aria-label="搜尋作品名稱">
+  </div>
+</header>
+<div class="layout"><main id="list"></main><aside class="panel" id="panel" aria-label="編輯面板"></aside></div>
+<input type="file" id="file" accept="image/*" hidden>
+<input type="file" id="files" accept="image/*" multiple hidden>
+<iframe id="editorFrame" title="字圖精修" allowtransparency="true"></iframe>
+<script>
+// 和字牆相同的尺寸公式（ProjectCard.astro + gridViewMode.js），D = 1180 的桌機分段
+const UNIT = Math.min(130, Math.max(68, 1180 * 0.074));
+const INK_REF = 0.3;
+const WORD_SCALE = 1;
+// 手動大小倍率的範圍
+const SCALE_MIN = 0.3, SCALE_MAX = 2.5;
+// 預覽比例：所有卡片用同一個比例縮放字牆尺寸，大小可以直接互相比較
+// 預設 0.85（原本 0.55 的 1.5 倍）；之前存過的比例也一併放大 1.5 倍
+let ZOOM = (() => {
+  try {
+    const v2 = parseFloat(localStorage.getItem("wm-admin-zoom2"));
+    if (v2) return v2;
+    const v1 = parseFloat(localStorage.getItem("wm-admin-zoom"));
+    return v1 ? Math.min(1.5, Math.round(v1 * 1.5 * 20) / 20) : 0.85;
+  } catch (_) { return 0.85; }
+})();
+function applyZoom() {
+  const main = document.querySelector("main");
+  // 格子大小跟著預覽比例；格子比字略大一點，讓字在格中佔得滿
+  main.style.setProperty("--stage-h", `${Math.round(Math.min(380, Math.max(110, 250 * ZOOM)))}px`);
+  main.style.setProperty("--card-min", `${Math.round(Math.min(420, Math.max(150, 240 * ZOOM)))}px`);
+  const z = document.getElementById("zoom");
+  if (z) { z.value = ZOOM; document.getElementById("zoomVal").textContent = `${Math.round(ZOOM * 100)}%`; }
+}
+const clampScale = (v) => Math.min(SCALE_MAX, Math.max(SCALE_MIN, Math.round(v * 100) / 100));
+const countChars = (t) => Math.max(1, (t.match(/[\p{Script=Han}\p{Script=Bopomofo}\p{Script=Hiragana}\p{Script=Katakana}]/gu)?.length ?? 0) + (t.match(/[A-Za-z0-9]/g)?.length ?? 0) * 0.5);
+function wallWidth(p) {
+  const wm = p.wordmark, aspect = p.size.width / p.size.height;
+  const chars = wm.chars ?? countChars(p.title);
+  const ink = Math.min(0.8, Math.max(0.08, wm.ink ?? INK_REF));
+  const sizeMul = ({ s: 0.8, m: 1, l: 1.3 })[wm.size ?? "m"];
+  const mass = Math.max(1.6, (chars * (INK_REF / ink) ** 0.2 * sizeMul ** 2) ** 0.8);
+  // 手動倍率最後直接乘在寬度上
+  // WORD_SCALE = 字牆的整體字級（和 gridViewMode.js 一致）
+  return Math.min(UNIT * Math.sqrt(mass * aspect) * WORD_SCALE * (wm.scale ?? 1), 1180);
+}
+// 面板上的提醒：只留需要注意的資訊（狀態、大小、字數在面板上本來就看得到）
+function tipsOf(p) {
+  const wm = p.wordmark, aspect = p.size.width / p.size.height, f = [];
+  if (wm.source === "auto") f.push(["warn", "自動去背，未手動處理"]);
+  if (aspect < 0.35 || aspect > 3.5) f.push(["warn", "長寬比極端"]);
+  if ((wm.ink ?? 0.3) < 0.1) f.push(["warn", "墨量很少，筆畫可能被吃掉"]);
+  const long = Math.max(p.size.width, p.size.height);
+  if (long < 800) f.push(["warn", `解析度偏低（長邊 ${long}px），大螢幕上可能不夠細`]);
+  return f;
+}
+function flagsOf(p) {
+  const wm = p.wordmark, f = [];
+  const aspect = p.size.width / p.size.height;
+  if (wm.hidden) f.push(["bad", "隱藏中"]);
+  if (wm.redo) f.push(["warn", "待重新去背"]);
+  if (wm.needsImage) f.push(["bad", "需要換圖"]);
+  f.push(wm.source === "auto" ? ["warn", "自動去背"] : ["", "手作去背"]);
+  if (aspect < 0.35 || aspect > 3.5) f.push(["warn", "長寬比極端"]);
+  if ((wm.ink ?? 0.3) < 0.1) f.push(["warn", "墨量很少"]);
+  if ((wm.ink ?? 0.3) > 0.6) f.push(["warn", "墨量很多，可能有底色"]);
+  if (wm.chars) f.push(["", `字數 ${wm.chars}`]);
+  if (wm.scale && wm.scale !== 1) f.push(["", `大小 ×${wm.scale}`]);
+  return f;
+}
+// 狀態標記：重新去背、需要換圖（互斥，可都不標）；不再區分已確認／待處理
+const STATUS = { redo: "重新去背", swap: "需要換圖" };
+const statusOf = (wm) => (wm.needsImage ? "swap" : wm.redo ? "redo" : "none");
+const risk = (p) => (statusOf(p.wordmark) !== "none" ? 50 : 0) + (p.wordmark.hidden ? 30 : 0) + (p.wordmark.source === "auto" ? 20 : 0) + flagsOf(p).filter((f) => f[0] === "warn").length * 10;
+
+let all = [], view = [], cur = 0, filter = "all";
+// 每一款字圖是一筆（key = slug#v）；v = 0 是主字圖，其他款從 1 起
+const nameOf = (p) => (p.v ? `${p.title}・第 ${p.v + 1} 款` : p.title);
+const imgOf = (p) => `/projects/${encodeURIComponent(p.slug)}/${encodeURIComponent(p.file)}?v=${p.mtime}`;
+const siblingsOf = (p) => all.filter((x) => x.slug === p.slug).sort((a, b) => a.v - b.v);
+const $ = (id) => document.getElementById(id);
+const api = async (url, opt) => {
+  const r = await fetch(url, opt);
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+};
+
+// ── 字牆檢視：和正式網站同一套排版規則（src/scripts/wallPacker.js） ─────────────
+let MODE = (() => { try { return localStorage.getItem("wm-admin-mode") === "wall" ? "wall" : "grid"; } catch (_) { return "grid"; } })();
+let WALL = null; // 排版模組
+let wallTimer = 0;
+import("/src/scripts/wallPacker.js").then((m) => { WALL = m; if (MODE === "wall") render(); });
+// 原始量感（和 ProjectCard.astro 相同）：字數 × 墨量修正 × 大小
+function massOf(p) {
+  const wm = p.wordmark;
+  const chars = wm.chars ?? countChars(p.title);
+  const ink = Math.min(0.8, Math.max(0.08, wm.ink ?? INK_REF));
+  const sizeMul = ({ s: 0.8, m: 1, l: 1.3 })[wm.size ?? "m"];
+  return chars * (INK_REF / ink) ** 0.2 * sizeMul ** 2;
+}
+function renderWall() {
+  const L = $("list");
+  if (!WALL) { L.innerHTML = `<p class="count">載入排版規則中…</p>`; return; }
+  const D = parseInt($("wallW").value, 10);
+  // 和正式網站一樣：隱藏的不出現；每件作品第一個顯示的款是本尊，其餘各款散在整面牆
+  const shown = view.filter((p) => !p.wordmark.hidden);
+  const cards = [], extras = new Map();
+  for (const p of shown) {
+    if (!extras.has(p.slug)) { extras.set(p.slug, []); cards.push(p); }
+    else extras.get(p.slug).push(p);
+  }
+  const keyed = cards.map((p, i) => ({ p, key: i }));
+  cards.forEach((card, home) => {
+    const list = extras.get(card.slug);
+    list.forEach((p, j) => keyed.push({ p, key: WALL.scatterIndex(`/projects/${card.slug}`, j, list.length, home, cards.length) + 0.5 }));
+  });
+  const items = keyed.sort((a, b) => a.key - b.key).map(({ p }) => ({
+    p,
+    getAttribute: () => `/projects/${p.slug}`,
+    dataset: { wmAspect: String(p.size.width / p.size.height), wmMass: String(massOf(p)), wmScale: String(p.wordmark.scale ?? 1) },
+  }));
+  // 正式網站每次 MORE 載入 24 件、接著排；這裡一次排完，但同樣分批
+  const packer = WALL.createPacker(D);
+  let res = { placed: [], height: 1 };
+  for (let i = 0; i < items.length; i += 24) res = packer.add(items.slice(i, i + 24));
+  const k = Math.min(1, (L.clientWidth - 32) / D);
+  L.innerHTML = `<p class="wall-note">依正式網站的排版規則（寬度 ${D}px${k < 1 ? `，縮小 ${Math.round(k * 100)}% 顯示` : ""}）排出 ${res.placed.length} 張；順序依上方排序，隱藏的不出現。點字選取、點兩下編輯去背，調整大小會立刻重排。</p>`;
+  const box = document.createElement("div");
+  box.className = "wallbox";
+  box.style.height = `${Math.ceil(res.height * k)}px`;
+  box.style.width = `${Math.ceil(D * k)}px`;
+  const wall = document.createElement("div");
+  wall.className = "wall";
+  wall.style.width = `${D}px`;
+  wall.style.height = `${Math.ceil(res.height)}px`;
+  wall.style.transform = `scale(${k})`;
+  for (const pl of res.placed) {
+    const p = pl.el.p;
+    const el = document.createElement("span");
+    el.className = "wmw";
+    el.dataset.key = p.key;
+    el.title = `${nameOf(p)}${p.wordmark.scale && p.wordmark.scale !== 1 ? `・大小 ×${p.wordmark.scale}` : ""}`;
+    el.style.cssText = `left:${pl.x.toFixed(1)}px;top:${pl.y.toFixed(1)}px;width:${pl.w.toFixed(1)}px;height:${pl.h.toFixed(1)}px;--src:url('${imgOf(p)}')`;
+    el.addEventListener("click", () => { cur = view.indexOf(p); highlight(false); });
+    el.addEventListener("dblclick", () => { cur = view.indexOf(p); highlight(false); openEditor(p); });
+    wall.appendChild(el);
+  }
+  box.appendChild(wall);
+  L.appendChild(box);
+}
+// 調整大小時重排字牆（拖滑桿時合併成每個畫面一次）
+function relayoutWall() {
+  if (MODE !== "wall") return;
+  cancelAnimationFrame(wallTimer);
+  wallTimer = requestAnimationFrame(() => {
+    const key = view[cur]?.key;
+    renderWall();
+    const el = key && document.querySelector(`.wmw[data-key="${CSS.escape(key)}"]`);
+    if (el) el.classList.add("current");
+  });
+}
+function setMode(m) {
+  MODE = m;
+  try { localStorage.setItem("wm-admin-mode", m); } catch (_) {}
+  document.body.classList.toggle("mode-wall", m === "wall");
+  $("list").classList.toggle("is-wall", m === "wall");
+  document.querySelectorAll("#mode button").forEach((b) => b.classList.toggle("on", b.dataset.mode === m));
+  render(view[cur]?.key);
+}
+
+async function load() {
+  all = (await api("/__wordmarks/api/list")).filter((p) => p.wordmark && p.size);
+  render();
+}
+function counts() {
+  $("cAll").textContent = all.length;
+  $("cSwap").textContent = all.filter((p) => p.wordmark.needsImage).length;
+  $("cHidden").textContent = all.filter((p) => p.wordmark.hidden).length;
+}
+// 是否符合目前的篩選；有輸入搜尋字時一律在全部作品中找
+// 字數：有手動填就用手動的，沒有就從標題推算（和字牆相同）；篩選依無條件進位分組，5 字以上合為一組
+const charsOf = (p) => p.wordmark.chars ?? countChars(p.title);
+const charsGroup = (p) => Math.min(5, Math.ceil(charsOf(p)));
+const CHARS_LABEL = { 1: "1 字", 2: "2 字", 3: "3 字", 4: "4 字", 5: "5 字以上" };
+function renderCharsFilter() {
+  const sel = $("charsF"), cur = sel.value || "all";
+  const n = (g) => all.filter((p) => charsGroup(p) === g).length;
+  sel.innerHTML = `<option value="all">全部字數</option>${[1, 2, 3, 4, 5].map((g) => `<option value="${g}">${CHARS_LABEL[g]}（${n(g)}）</option>`).join("")}`;
+  sel.value = cur;
+}
+const inFilter = (p) =>
+  (filter === "all" || (filter === "hidden" ? !!p.wordmark.hidden : statusOf(p.wordmark) === filter)) &&
+  ($("charsF").value === "all" || charsGroup(p) === parseInt($("charsF").value, 10));
+function render(keepSlug) {
+  counts();
+  renderCharsFilter();
+  const q = $("q").value.trim();
+  view = all.filter((p) =>
+    q ? nameOf(p).includes(q) || p.slug.includes(q) : inFilter(p));
+  const s = $("sort").value;
+  const wholeSize = (p) => wallWidth(p) / Math.sqrt(p.size.width / p.size.height);
+  view.sort(s === "edited" ? (a, b) => (b.edited ?? 0) - (a.edited ?? 0) : s === "size" ? (a, b) => wholeSize(b) - wholeSize(a) : s === "date" ? (a, b) => b.date.localeCompare(a.date) || a.v - b.v : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") || a.v - b.v : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date) || a.v - b.v);
+  const L = $("list");
+  L.innerHTML = view.length ? "" : `<p class="count">${q ? "找不到符合的作品。" : "這個篩選條件下沒有作品。"}</p>`;
+  if (MODE === "wall") { if (view.length) renderWall(); }
+  else view.forEach((p) => L.appendChild(rowEl(p)));
+  if (keepSlug) cur = Math.max(0, view.findIndex((p) => p.key === keepSlug));
+  cur = Math.min(cur, Math.max(0, view.length - 1));
+  highlight(false);
+}
+function rowEl(p) {
+  const wm = p.wordmark;
+  const el = document.createElement("section");
+  el.className = `row st-${statusOf(wm)}${wm.hidden ? " is-hidden" : ""}`;
+  el.dataset.key = p.key;
+  const w = wallWidth(p);
+  el.innerHTML = `
+    <div class="stage" title="${nameOf(p)}${wm.hidden ? "（字牆上隱藏中）" : ""}${wm.scale && wm.scale !== 1 ? `・大小 ×${wm.scale}` : ""}">
+      <span class="wm" style="--src:url('${imgOf(p)}');width:${(w * ZOOM).toFixed(0)}px;aspect-ratio:${p.size.width}/${p.size.height}" role="img" aria-label="${nameOf(p)} 字圖"></span>
+    </div>
+`;
+  el.addEventListener("click", () => { cur = view.indexOf(p); highlight(false); });
+  // 點兩下直接打開精修視窗
+  el.addEventListener("dblclick", () => { cur = view.indexOf(p); highlight(false); openEditor(p); });
+  const stage = el.querySelector(".stage");
+  stage.addEventListener("dragover", (e) => { e.preventDefault(); stage.classList.add("drop"); });
+  stage.addEventListener("dragleave", () => stage.classList.remove("drop"));
+  stage.addEventListener("drop", (e) => {
+    e.preventDefault(); e.stopPropagation(); stage.classList.remove("drop");
+    const f = e.dataTransfer.files?.[0];
+    if (f) replace(p, f);
+  });
+  return el;
+}
+
+// ── 右側共用面板：顯示目前選取的作品 ─────────────────────────────
+function renderPanel(p) {
+  const P = $("panel");
+  if (!p) { P.innerHTML = `<p class="empty">點選左邊的作品開始編輯。</p>`; return; }
+  const wm = p.wordmark;
+  const sibs = siblingsOf(p);
+  P.innerHTML = `
+    <h2><span>${nameOf(p)}</span><a href="/projects/${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">作品頁 ↗</a></h2>
+    <div class="pos">${view.indexOf(p) + 1} / ${view.length}${wm.hidden ? "　・字牆上隱藏中" : ""}</div>
+    ${sibs.length > 1 ? `<div class="variants" role="group" aria-label="這件作品的各款字圖">${sibs.map((x) => `<button data-key="${x.key}" class="${x.key === p.key ? "on" : ""}">${x.v ? `第 ${x.v + 1} 款` : "主字圖"}${x.wordmark.hidden ? "（隱藏）" : ""}</button>`).join("")}</div>` : ""}
+    <div class="seg status-seg" role="group" aria-label="狀態">
+      ${Object.entries(STATUS).map(([k, t]) => `<button data-st="${k}" class="st-${k}${statusOf(wm) === k ? " on" : ""}" title="${({ redo: "R", swap: "N：會一併隱藏" })[k]}">${t}</button>`).join("")}
+    </div>
+    ${tipsOf(p).length ? `<div class="flags">${tipsOf(p).map(([c, t]) => `<span class="flag ${c}">${t}</span>`).join("")}</div>` : ""}
+    <div class="ctl">
+      <label for="pScale">大小</label><input type="range" id="pScale" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${wm.scale ?? 1}"><input type="number" id="pScaleNum" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${(wm.scale ?? 1).toFixed(2)}" aria-label="大小倍率">
+      <label for="pChars">字數</label><input type="number" id="pChars" min="0.5" max="20" step="0.5" value="${charsOf(p)}" title="從標題推算為 ${countChars(p.title)}"><span>${wm.chars != null ? "手動" : "自動"}</span>
+    </div>
+    <div class="acts">
+      <button id="pEdit" title="E">編輯去背</button>
+      <button id="pDirectBtn" title="用面板下方的原圖重新產生字圖，不經過去背處理，保留灰階、光影與細節。想用別張圖：先「換圖…」再按這裡">原圖直接用</button>
+      <button id="pReplace" title="上傳別張圖">換圖…</button>
+      <button id="pHide" title="H">${wm.hidden ? "在字牆顯示" : "在字牆隱藏"}</button>
+      <button id="pAdd" class="${p.v ? "" : "wide"}" title="上傳一張或多張圖（可一次選多張），每張成為這件作品的另一款字圖">新增一款…</button>
+      ${p.v ? `<button id="pRemove" title="刪除這一款的字圖檔">刪除這款</button>` : ""}
+    </div>
+    <div class="res">${p.size.width}×${p.size.height}px${p.bytes ? `・${Math.round(p.bytes / 1024)} KB` : ""}${p.wordmark.source === "direct" ? "・原圖直接用" : ""}</div>
+    <div class="status" id="panelStatus" aria-live="polite"></div>
+    <div class="orig">${sourceOf(p) ? `<img src="${sourceOf(p)}" alt="${nameOf(p)} 原圖">` : `<div class="none">沒有原圖</div>`}</div>`;
+  const card = rowOf(p);
+  const range = $("pScale"), num = $("pScaleNum");
+  const preview = (v) => {
+    p.wordmark.scale = v;
+    range.value = v;
+    num.value = v.toFixed(2);
+    if (card) resizePreview(card, p);
+  };
+  range.addEventListener("input", () => preview(clampScale(parseFloat(range.value))));
+  range.addEventListener("change", () => save(p, { scale: clampScale(parseFloat(range.value)) }).then(() => refreshCard(p)));
+  num.addEventListener("change", () => {
+    const v = clampScale(parseFloat(num.value) || 1);
+    preview(v);
+    save(p, { scale: v }).then(() => refreshCard(p));
+  });
+  $("pChars").addEventListener("change", () => {
+    // 改回和標題推算相同（或清空）就不記錄，維持自動
+    const raw = $("pChars").value ? parseFloat($("pChars").value) : null;
+    const v = raw === null || raw === countChars(p.title) ? null : raw;
+    if (raw === null) $("pChars").value = countChars(p.title);
+    $("pChars").nextElementSibling.textContent = v === null ? "自動" : "手動";
+    p.wordmark.chars = v ?? undefined;
+    if (card) resizePreview(card, p);
+    save(p, { chars: v });
+  });
+  // 再按一次同一個標記就取消
+  P.querySelectorAll("[data-st]").forEach((b) => b.addEventListener("click", () => setStatus2(p, statusOf(p.wordmark) === b.dataset.st ? "none" : b.dataset.st)));
+  $("pEdit").addEventListener("click", () => openEditor(p));
+  $("pHide").addEventListener("click", () => toggleHide(p));
+  $("pReplace").addEventListener("click", () => pickFile(p));
+  $("pAdd").addEventListener("click", () => pickFile(p, true));
+  $("pDirectBtn").addEventListener("click", () => useSourceDirect(p));
+  $("pRemove")?.addEventListener("click", () => removeVariant(p));
+  P.querySelectorAll(".variants [data-key]").forEach((b) => b.addEventListener("click", () => select(b.dataset.key)));
+}
+// 跳到同一件作品的另一款；不在目前清單裡（例如被篩選掉）就先清掉搜尋與篩選
+function select(key) {
+  let i = view.findIndex((x) => x.key === key);
+  if (i < 0) {
+    $("q").value = "";
+    filter = "all";
+    document.querySelectorAll("#filter button").forEach((x) => x.classList.toggle("on", x.dataset.f === "all"));
+    render(key);
+    i = view.findIndex((x) => x.key === key);
+  }
+  cur = Math.max(0, i);
+  highlight(true);
+}
+async function removeVariant(p) {
+  if (!p.v || !confirm(`刪除「${nameOf(p)}」？字圖檔和它的原圖都會刪掉。`)) return;
+  try {
+    await api("/__wordmarks/api/remove", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: p.slug, v: p.v }) });
+    await load();
+    render(`${p.slug}#0`);
+    highlight(true);
+  } catch (e) {
+    setStatus(null, `刪除失敗：${e.message}`, true);
+  }
+}
+// 只更新卡片上的狀態標記（不重排整個清單）
+function refreshCard(p) {
+  if (MODE === "wall") return relayoutWall();
+  const el = rowOf(p);
+  if (!el) return;
+  el.className = `row st-${statusOf(p.wordmark)}${p.wordmark.hidden ? " is-hidden" : ""}${el.classList.contains("current") ? " current" : ""}`;
+}
+function resizePreview(el, p) {
+  if (MODE === "wall") return relayoutWall();
+  el.querySelector(".wm").style.width = `${(wallWidth(p) * ZOOM).toFixed(0)}px`;
+}
+function setStatus(_el, msg, err) {
+  const st = $("panelStatus");
+  if (!st) return;
+  st.textContent = msg;
+  st.classList.toggle("err", !!err);
+}
+async function save(p, fields, el) {
+  try {
+    const r = await api("/__wordmarks/api/update", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: p.slug, v: p.v, fields }) });
+    p.wordmark = r.wordmark;
+    setStatus(el, "已儲存");
+    counts();
+    return true;
+  } catch (e) {
+    setStatus(el, `儲存失敗：${e.message}`, true);
+    return false;
+  }
+}
+const rowOf = (p) => document.querySelector(`${MODE === "wall" ? ".wmw" : ".row"}[data-key="${CSS.escape(p.key)}"]`);
+// 設定狀態；需要換圖會一併隱藏。若新狀態不在目前的篩選裡，就停在原位置（等於自動跳到下一件）
+async function setStatus2(p, st) {
+  const fields = { redo: st === "redo" || null, needsImage: st === "swap" || null };
+  if (st === "swap") fields.hidden = true;
+  // 隱藏是「需要換圖」連帶加上的；取消時一併取消
+  else if (statusOf(p.wordmark) === "swap") fields.hidden = null;
+  const i = view.indexOf(p);
+  const next = view[i + 1]?.key ?? view[i - 1]?.key;
+  if (!(await save(p, fields))) return;
+  const stillShown = !!$("q").value.trim() || inFilter(p);
+  render(stillShown ? p.key : next);
+}
+async function toggleHide(p) {
+  if (await save(p, { hidden: !p.wordmark.hidden }, rowOf(p))) render(p.key);
+}
+
+// ── 換圖：在瀏覽器裡轉成白字透明背景的 webp ─────────────────────────
+// 換圖選一張；新增一款可以一次選多張，每張各新增一款
+let pickTarget = null;
+function pickFile(p, adding = false) {
+  pickTarget = p;
+  const input = $(adding ? "files" : "file");
+  input.value = "";
+  input.click();
+}
+$("file").addEventListener("change", (e) => { const f = e.target.files?.[0]; if (f && pickTarget) replace(pickTarget, f); });
+$("files").addEventListener("change", (e) => { const fs = [...(e.target.files ?? [])]; if (fs.length && pickTarget) addVariants(pickTarget, fs); });
+
+function otsu(lum) {
+  const hist = new Float64Array(256);
+  for (const v of lum) hist[v]++;
+  const total = lum.length;
+  let sum = 0; for (let i = 0; i < 256; i++) sum += i * hist[i];
+  let wB = 0, sumB = 0, best = 0, t = 128;
+  for (let i = 0; i < 256; i++) {
+    wB += hist[i]; if (!wB) continue;
+    const wF = total - wB; if (!wF) break;
+    sumB += i * hist[i];
+    const mB = sumB / wB, mF = (sum - sumB) / wF, between = wB * wF * (mB - mF) ** 2;
+    if (between > best) { best = between; t = i; }
+  }
+  return t;
+}
+async function toWordmark(file) {
+  const bmp = await createImageBitmap(file);
+  const scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+  const W = Math.round(bmp.width * scale), H = Math.round(bmp.height * scale);
+  const c = new OffscreenCanvas(W, H), ctx = c.getContext("2d", { willReadFrequently: true });
+  ctx.drawImage(bmp, 0, 0, W, H);
+  const d = ctx.getImageData(0, 0, W, H).data;
+  const alpha = new Uint8ClampedArray(W * H);
+  let transparent = 0;
+  for (let i = 0; i < W * H; i++) if (d[i * 4 + 3] < 250) transparent++;
+  const alreadyCut = transparent > W * H * 0.01;
+  if (alreadyCut) {
+    // 已去背：直接用透明度
+    for (let i = 0; i < W * H; i++) alpha[i] = d[i * 4 + 3];
+  } else {
+    // 沒有透明背景：和 wut-collage-tool 預設一樣，Otsu 分亮暗、依外圈判斷字是亮或暗、柔邊
+    const lum = new Uint8Array(W * H);
+    for (let i = 0; i < W * H; i++) lum[i] = Math.round(0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]);
+    const t = otsu(lum);
+    const band = Math.max(1, Math.min(32, Math.floor(Math.min(W, H) * 0.06)));
+    let bright = 0, dark = 0;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      if (x >= band && x < W - band && y >= band && y < H - band) continue;
+      const v = lum[y * W + x];
+      if (v >= t + 6) bright++; else if (v <= t - 6) dark++;
+    }
+    const keepBright = bright === dark ? t < 128 : bright < dark;
+    const half = 20;
+    for (let i = 0; i < W * H; i++) {
+      const dist = keepBright ? lum[i] - t : t - lum[i];
+      if (dist <= -half) continue;
+      if (dist >= half) { alpha[i] = 255; continue; }
+      let s = (dist + half) / (half * 2); s = s * s * (3 - 2 * s);
+      alpha[i] = Math.round(s * 255);
+    }
+  }
+  // 清掉零碎雜點：面積很小或很淡的連通區塊
+  const label = new Int32Array(W * H), areas = [0], peaks = [0], stack = [];
+  let n = 0;
+  for (let i = 0; i < W * H; i++) {
+    if (alpha[i] <= 40 || label[i]) continue;
+    n++; let area = 0, peak = 0; stack.push(i); label[i] = n;
+    while (stack.length) {
+      const j = stack.pop(); area++; if (alpha[j] > peak) peak = alpha[j];
+      const x = j % W, y = (j / W) | 0;
+      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+        const xx = x + dx, yy = y + dy;
+        if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue;
+        const k = yy * W + xx;
+        if (!label[k] && alpha[k] > 40) { label[k] = n; stack.push(k); }
+      }
+    }
+    areas.push(area); peaks.push(peak);
+  }
+  const big = Math.max(0, ...areas);
+  for (let i = 0; i < W * H; i++) {
+    const l = label[i];
+    if (l && (areas[l] < Math.max(30, big * 0.002) || peaks[l] < 110)) alpha[i] = 0;
+  }
+  // 去掉模板的頁首／頁尾：最上或最下、和主體之間有空白隔開、墨量又很少的橫帶
+  // 只用在沒有去背的原圖；已去背的圖（例如 wut 工具匯出的）照你調好的樣子保留
+  const rowInk = new Float64Array(H);
+  for (let y = 0; y < H; y++) { let s = 0; for (let x = 0; x < W; x++) if (alpha[y * W + x] > 40) s++; rowInk[y] = s; }
+  const bands = [];
+  for (let y = 0; y < H; ) {
+    if (!rowInk[y]) { y++; continue; }
+    const start = y; let ink = 0;
+    // 中間允許 1.5% 高度以內的小空白，避免把同一個字切成兩段
+    let gap = 0;
+    while (y < H && gap <= H * 0.015) { if (rowInk[y]) { ink += rowInk[y]; gap = 0; } else gap++; y++; }
+    bands.push({ start, end: y - gap, ink });
+  }
+  const totalInk = bands.reduce((s, b) => s + b.ink, 0);
+  const small = (b) => b.ink < totalInk * 0.08 && b.end - b.start < H * 0.14;
+  const clearRows = (b) => { for (let y = b.start; y < b.end; y++) for (let x = 0; x < W; x++) alpha[y * W + x] = 0; };
+  if (!alreadyCut) {
+    while (bands.length > 1 && small(bands[0])) clearRows(bands.shift());
+    while (bands.length > 1 && small(bands[bands.length - 1])) clearRows(bands.pop());
+  }
+  // 裁到字的範圍（留 8px）
+  let x0 = W, y0 = H, x1 = -1, y1 = -1;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (alpha[y * W + x] > 40) {
+    if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+  }
+  if (x1 < 0) throw new Error("圖裡找不到字");
+  x0 = Math.max(0, x0 - 8); y0 = Math.max(0, y0 - 8); x1 = Math.min(W - 1, x1 + 8); y1 = Math.min(H - 1, y1 + 8);
+  const cw = x1 - x0 + 1, ch = y1 - y0 + 1;
+  const crop = new OffscreenCanvas(cw, ch), cctx = crop.getContext("2d");
+  const img = cctx.createImageData(cw, ch);
+  let sum = 0;
+  for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) {
+    const a = alpha[(y + y0) * W + (x + x0)], k = (y * cw + x) * 4;
+    img.data[k] = img.data[k + 1] = img.data[k + 2] = 255; img.data[k + 3] = a; sum += a;
+  }
+  cctx.putImageData(img, 0, 0);
+  // 長邊縮到 800px
+  const s2 = Math.min(1, 800 / Math.max(cw, ch));
+  const out = new OffscreenCanvas(Math.round(cw * s2), Math.round(ch * s2));
+  out.getContext("2d").drawImage(crop, 0, 0, out.width, out.height);
+  const blob = await out.convertToBlob({ type: "image/webp", quality: 0.9 });
+  return { blob, ink: sum / 255 / (cw * ch) };
+}
+// 換圖時的原始圖：長邊最多 2400px、轉 webp（保留透明），給精修當原圖
+// ── 原圖直接用：不做臨界值、柔邊、雜點清除，只把字以外的地方變透明、裁掉外圍空白 ─────
+// - 已經有透明背景：照原本的透明度，再依深淺保留字裡的光影與外框
+// - 沒有透明背景（黑白或灰階原圖）：亮度直接換成透明度，紙色 → 全透明、最深的墨色 → 全不透明，
+//   中間的灰階照比例保留（筆觸、紙紋都在）；字比底亮（黑底白字）就自動反過來
+// 長邊最多 1200px（字牆在視網膜大螢幕上約需 1000px），WebP 品質 0.9
+const DIRECT_MAX = 1200;
+async function toWordmarkDirect(file) {
+  const bmp = await createImageBitmap(file);
+  const k0 = Math.min(1, 3200 / Math.max(bmp.width, bmp.height));
+  const W = Math.round(bmp.width * k0), H = Math.round(bmp.height * k0);
+  const c = new OffscreenCanvas(W, H), ctx = c.getContext("2d", { willReadFrequently: true });
+  ctx.drawImage(bmp, 0, 0, W, H);
+  const d = ctx.getImageData(0, 0, W, H).data;
+  const alpha = new Uint8ClampedArray(W * H);
+  let clear = 0;
+  for (let i = 0; i < W * H; i++) if (d[i * 4 + 3] < 250) clear++;
+  if (clear > W * H * 0.01) {
+    // 已經是透明背景：透明度照原本，再乘上深淺，字裡的光影、外框才不會被壓成一片剪影。
+    // 淺色字（白字、彩色立體字）越亮越不透明；深色字（黑字、黑色外框）越暗越不透明
+    let sumA = 0, sumL = 0;
+    for (let i = 0; i < W * H; i++) {
+      const a = d[i * 4 + 3];
+      sumA += a;
+      sumL += a * (0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]);
+    }
+    const lightInk = sumA ? sumL / sumA >= 128 : true;
+    // 以字裡最亮（深色字則最深）的 1% 當作完全不透明：單色字（粉紅、藍色）是實心，有光影的保留層次
+    const hist = new Float64Array(256);
+    for (let i = 0; i < W * H; i++) {
+      const a = d[i * 4 + 3];
+      if (a < 128) continue;
+      hist[Math.round(0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2])]++;
+    }
+    const total = hist.reduce((x, y) => x + y, 0);
+    let peak = lightInk ? 255 : 0, acc = 0;
+    if (lightInk) { for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc >= total * 0.01) { peak = v; break; } } }
+    else { for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= total * 0.01) { peak = v; break; } } }
+    const span = lightInk ? Math.max(1, peak) : Math.max(1, 255 - peak);
+    for (let i = 0; i < W * H; i++) {
+      const lum = 0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2];
+      const t = lightInk ? lum / span : (255 - lum) / span;
+      alpha[i] = Math.round(d[i * 4 + 3] * Math.min(1, t));
+    }
+  } else {
+    const lum = new Uint8Array(W * H);
+    for (let i = 0; i < W * H; i++) lum[i] = Math.round(0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]);
+    // 底色：外圈的中位數；墨色：最深（或最亮）的 0.5%
+    const ring = [];
+    const band = Math.max(1, Math.round(Math.min(W, H) * 0.03));
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      if (x >= band && x < W - band && y >= band && y < H - band) continue;
+      ring.push(lum[y * W + x]);
+    }
+    ring.sort((a, b) => a - b);
+    const bg = ring[ring.length >> 1];
+    const hist = new Uint32Array(256);
+    for (const v of lum) hist[v]++;
+    const darkInk = bg >= 128;
+    const tail = W * H * 0.005;
+    let ink = darkInk ? 0 : 255, acc = 0;
+    if (darkInk) { for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= tail) { ink = v; break; } } }
+    else { for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc >= tail) { ink = v; break; } } }
+    const span = Math.max(1, Math.abs(bg - ink));
+    for (let i = 0; i < W * H; i++) {
+      const t = (darkInk ? bg - lum[i] : lum[i] - bg) / span;
+      alpha[i] = Math.round(Math.max(0, Math.min(1, t)) * 255);
+    }
+  }
+  // 裁到有墨的範圍（留 8px）
+  let x0 = W, y0 = H, x1 = -1, y1 = -1;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (alpha[y * W + x] > 8) {
+    if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+  }
+  if (x1 < 0) throw new Error("圖裡找不到字");
+  x0 = Math.max(0, x0 - 8); y0 = Math.max(0, y0 - 8); x1 = Math.min(W - 1, x1 + 8); y1 = Math.min(H - 1, y1 + 8);
+  const cw = x1 - x0 + 1, ch = y1 - y0 + 1;
+  const crop = new OffscreenCanvas(cw, ch), cctx = crop.getContext("2d");
+  const img = cctx.createImageData(cw, ch);
+  let sum = 0;
+  for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) {
+    const a = alpha[(y + y0) * W + (x + x0)], k = (y * cw + x) * 4;
+    img.data[k] = img.data[k + 1] = img.data[k + 2] = 255; img.data[k + 3] = a; sum += a;
+  }
+  cctx.putImageData(img, 0, 0);
+  const s2 = Math.min(1, DIRECT_MAX / Math.max(cw, ch));
+  const out = new OffscreenCanvas(Math.round(cw * s2), Math.round(ch * s2));
+  const octx = out.getContext("2d");
+  octx.imageSmoothingQuality = "high";
+  octx.drawImage(crop, 0, 0, out.width, out.height);
+  const blob = await out.convertToBlob({ type: "image/webp", quality: 0.9 });
+  return { blob, ink: sum / 255 / (cw * ch), direct: true };
+}
+// 換圖、新增一款一律先經過去背處理；要改用原圖直接用，再按面板上的「原圖直接用」
+const makeWordmark = (file) => toWordmark(file);
+// 「原圖直接用」：拿面板下方顯示的原圖（換圖時上傳的那張；沒換過圖就是作品的第一張）重新產生字圖
+async function useSourceDirect(p) {
+  const src = sourceOf(p);
+  if (!src) return setStatus(null, "這件作品沒有原圖", true);
+  setStatus(null, "用原圖產生中…");
+  try {
+    const blob = await (await fetch(src)).blob();
+    const r = await toWordmarkDirect(new File([blob], "source", { type: blob.type }));
+    await api(`/__wordmarks/api/replace?slug=${encodeURIComponent(p.slug)}&v=${p.v}&ink=${r.ink.toFixed(3)}&mode=direct`, { method: "POST", body: r.blob });
+    await load();
+    select(p.key);
+    setStatus(null, "已改用原圖直接用；想回到去背處理，按「編輯去背」重新調整");
+  } catch (e) {
+    setStatus(null, `原圖直接用失敗：${e.message}`, true);
+  }
+}
+
+async function toSourceWebp(file) {
+  const bmp = await createImageBitmap(file);
+  const k = Math.min(1, 2400 / Math.max(bmp.width, bmp.height));
+  const c = new OffscreenCanvas(Math.round(bmp.width * k), Math.round(bmp.height * k));
+  c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+  return c.convertToBlob({ type: "image/webp", quality: 0.92 });
+}
+// 精修與面板用的原圖：換過圖就用上傳的原始圖，否則用貼文原圖
+const sourceOf = (p) => (p.wordmark.sourceImage ? `${p.wordmark.sourceImage}?v=${p.edited ?? p.mtime}` : p.post);
+// 一次新增多款：依序處理，每張接在現有最後一款後面
+async function addVariants(p, files) {
+  let firstKey = null, done = 0;
+  const failed = [];
+  for (const file of files) {
+    setStatus(null, `新增中… ${done + 1} / ${files.length}`);
+    try {
+      const key = await addOne(p, file);
+      firstKey ??= key;
+      done++;
+    } catch (e) {
+      failed.push(`${file.name}（${e.message}）`);
+    }
+  }
+  await load();
+  if (firstKey) select(firstKey);
+  setStatus(null, failed.length ? `已新增 ${done} 款；失敗：${failed.join("、")}` : `已新增 ${done} 款，請逐一確認效果`, failed.length > 0);
+}
+async function addOne(p, file) {
+  const { blob, ink, direct } = await makeWordmark(file);
+  const list = await api("/__wordmarks/api/list");
+  const v = Math.max(...list.filter((x) => x.slug === p.slug).map((x) => x.v)) + 1;
+  const q = `slug=${encodeURIComponent(p.slug)}&v=${v}`;
+  await api(`/__wordmarks/api/replace?${q}&ink=${ink.toFixed(3)}${direct ? "&mode=direct" : ""}`, { method: "POST", body: blob });
+  await api(`/__wordmarks/api/source?${q}`, { method: "POST", body: await toSourceWebp(file) });
+  return `${p.slug}#${v}`;
+}
+async function replace(p, file, adding = false) {
+  const el = rowOf(p);
+  setStatus(el, "處理中…");
+  try {
+    const { blob, ink, direct } = await makeWordmark(file);
+    // 新增一款：款號接在這件作品現有的最後一款後面
+    const v = adding ? Math.max(...siblingsOf(p).map((x) => x.v)) + 1 : p.v;
+    const q = `slug=${encodeURIComponent(p.slug)}&v=${v}`;
+    await api(`/__wordmarks/api/replace?${q}&ink=${ink.toFixed(3)}${direct ? "&mode=direct" : ""}`, { method: "POST", body: blob });
+    // 上傳的原始圖存成這款字圖的去背來源，之後「編輯去背」以它為原圖，不會跳回貼文原圖
+    await api(`/__wordmarks/api/source?${q}`, { method: "POST", body: await toSourceWebp(file) });
+    await load();
+    select(`${p.slug}#${v}`);
+    setStatus(null, adding ? "已新增一款，請確認效果" : "已換圖，請確認效果");
+  } catch (e) {
+    setStatus(el, `換圖失敗：${e.message}`, true);
+  }
+}
+
+// ── 精修視窗（iframe）：開啟、上一張／下一張、存檔後更新清單 ─────────────
+const editorFrame = $("editorFrame");
+let editorReady = false, editorPending = null, editorQueue = [], editorDone = new Set(), editorCurrent = null, editorChanged = false;
+const toEditor = (m) => editorFrame.contentWindow.postMessage(m, location.origin);
+function editorInfo(key) {
+  const p = all.find((x) => x.key === key);
+  return {
+    key, slug: p.slug, v: p.v, title: nameOf(p), post: sourceOf(p),
+    // 原圖直接用的字圖：只裁切、擦除時存檔保留原解析度與標記
+    direct: p.wordmark.source === "direct",
+    // 精修從目前的字圖開始，不重新自動去背
+    wordmark: imgOf(p),
+    index: editorQueue.indexOf(key), total: editorQueue.length,
+    note: editorDone.size ? `本輪已處理 ${editorDone.size}` : "",
+  };
+}
+function openEditor(p) {
+  // 依目前清單（篩選＋排序）逐張處理
+  editorQueue = view.map((x) => x.key);
+  if (!editorQueue.includes(p.key)) editorQueue = [p.key];
+  editorDone = new Set();
+  editorCurrent = p.key;
+  editorFrame.classList.add("show");
+  if (!editorReady) {
+    editorPending = p.key;
+    if (!editorFrame.src) editorFrame.src = "/__wordmarks/editor";
+  } else {
+    toEditor({ type: "open", info: editorInfo(p.key) });
+  }
+}
+window.addEventListener("message", async (e) => {
+  if (e.origin !== location.origin || e.source !== editorFrame.contentWindow) return;
+  const m = e.data || {};
+  if (m.source !== "wordmark-editor") return;
+  if (m.type === "ready") {
+    editorReady = true;
+    if (editorPending) { toEditor({ type: "open", info: editorInfo(editorPending) }); editorPending = null; }
+  } else if (m.type === "changed") {
+    editorDone.add(m.key);
+    editorChanged = true;
+  } else if (m.type === "navigate") {
+    const i = editorQueue.indexOf(m.key);
+    // 確認或標記換圖後跳到下一張還沒處理的；上一張／下一張則照順序
+    const next = m.unfinished
+      ? editorQueue.slice(i + 1).find((s) => !editorDone.has(s)) ?? editorQueue.slice(0, i).find((s) => !editorDone.has(s))
+      : editorQueue[i + m.dir];
+    if (next) { editorCurrent = next; toEditor({ type: "open", info: editorInfo(next) }); }
+    else toEditor({ type: "none" });
+  } else if (m.type === "closed") {
+    editorFrame.classList.remove("show");
+    if (editorChanged) { editorChanged = false; await load(); }
+    render(editorCurrent);
+    highlight(true);
+  }
+});
+
+// ── 鍵盤逐件檢查 ───────────────────────────────────────────────
+function highlight(scroll = true) {
+  document.querySelectorAll(".row.current, .wmw.current").forEach((r) => r.classList.remove("current"));
+  const p = view[cur];
+  const r = p && rowOf(p);
+  // 字牆上沒有隱藏的字圖，但面板仍可編輯它（例如取消隱藏）
+  renderPanel(p && (r || MODE === "wall") ? p : null);
+  if (!r) return;
+  r.classList.add("current");
+  if (scroll) r.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+function move(d) { cur = Math.min(view.length - 1, Math.max(0, cur + d)); highlight(); }
+document.addEventListener("keydown", (e) => {
+  // 打字的欄位不攔截；大小滑桿不擋 J／K 等快速鍵（方向鍵仍留給滑桿調整）
+  if (e.target.matches?.('input:not([type="range"]), select, textarea')) return;
+  if (e.target.matches?.('input[type="range"]') && e.key.startsWith("Arrow")) return;
+  const p = view[cur];
+  if (e.key === "j" || e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); move(1); }
+  else if (e.key === "k" || e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); move(-1); }
+  else if (e.key === "Enter" && p) { e.preventDefault(); move(1); }
+  else if (e.key === "r" && p) setStatus2(p, statusOf(p.wordmark) === "redo" ? "none" : "redo");
+  else if (e.key === "n" && p) setStatus2(p, statusOf(p.wordmark) === "swap" ? "none" : "swap");
+  else if (e.key === "e" && p) openEditor(p);
+  else if (e.key === "h" && p) toggleHide(p);
+  else if ((e.key === "-" || e.key === "=") && p) {
+    const v = clampScale((p.wordmark.scale ?? 1) + (e.key === "=" ? 0.05 : -0.05));
+    p.wordmark.scale = v;
+    if ($("pScale")) { $("pScale").value = v; $("pScaleNum").value = v.toFixed(2); }
+    const el = rowOf(p);
+    if (el) resizePreview(el, p);
+    save(p, { scale: v }).then(() => refreshCard(p));
+  }
+});
+document.querySelectorAll("#filter button").forEach((b) => b.addEventListener("click", () => {
+  filter = b.dataset.f;
+  document.querySelectorAll("#filter button").forEach((x) => x.classList.toggle("on", x === b));
+  cur = 0; render();
+}));
+$("sort").addEventListener("change", () => { cur = 0; render(); });
+$("charsF").addEventListener("change", () => { cur = 0; render(); });
+$("q").addEventListener("input", () => { cur = 0; render(); });
+$("zoom").addEventListener("input", () => {
+  ZOOM = parseFloat($("zoom").value);
+  try { localStorage.setItem("wm-admin-zoom2", String(ZOOM)); } catch (_) {}
+  applyZoom();
+  document.querySelectorAll(".row").forEach((el) => {
+    const p = all.find((x) => x.key === el.dataset.key);
+    if (!p) return;
+    resizePreview(el, p);
+  });
+});
+applyZoom();
+document.querySelectorAll("#mode button").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+$("wallW").value = (() => { try { return localStorage.getItem("wm-admin-wallw") || "1180"; } catch (_) { return "1180"; } })();
+$("wallW").addEventListener("change", () => { try { localStorage.setItem("wm-admin-wallw", $("wallW").value); } catch (_) {} relayoutWall(); });
+document.body.classList.toggle("mode-wall", MODE === "wall");
+$("list").classList.toggle("is-wall", MODE === "wall");
+document.querySelectorAll("#mode button").forEach((b) => b.classList.toggle("on", b.dataset.mode === MODE));
+// 寬度改變才重排（字牆本身改變高度不算）
+let listW = 0;
+new ResizeObserver(() => { const w = $("list").clientWidth; if (Math.abs(w - listW) > 1) { listW = w; relayoutWall(); } }).observe($("list"));
+// 右側面板固定在標頭下方：依標頭實際高度設定
+const syncHeadH = () => document.documentElement.style.setProperty("--head-h", `${document.querySelector("header").offsetHeight}px`);
+new ResizeObserver(syncHeadH).observe(document.querySelector("header"));
+syncHeadH();
+load().catch((e) => { $("list").innerHTML = `<p class="status err">載入失敗：${e.message}</p>`; });
+</script>
+</body>
+</html>

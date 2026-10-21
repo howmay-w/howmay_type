@@ -21,6 +21,13 @@ hoverVideo:
   src: "/projects/人生/video_0.mp4"
 pubDate: 2022-11-15
 tags: ["itsmylife","life","點字","🗺"]
+wordmark:
+  src: "/projects/人生/wordmark.webp"
+  source: "cutout"
+  accent: "#868dbb"
+  ink: 0.132
+  scale: 1.05
+  reviewed: true
 ---
 
 點字時大家投票想看黑暗ㄉ人生，\

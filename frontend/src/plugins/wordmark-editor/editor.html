@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>字圖精修</title>
+<link rel="stylesheet" href="/src/plugins/wordmark-editor/style.css?direct">
+<!-- 字圖管理頁的精修視窗：以 iframe 疊在 /__wordmarks 上方。介面與 wut-collage-tool 的精修視窗相同（只用亮度去背） -->
+<style>
+  html, body { background: transparent !important; }
+  body { margin: 0; }
+  .editor-loading { position: fixed; inset: 0; display: none; place-items: center; color: #fff; font: 14px/1.5 -apple-system, "PingFang TC", sans-serif; background: rgba(0,0,0,.4); }
+  .editor-loading.show { display: grid; }
+  .editor-error { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #d9534f; color: #fff; padding: 8px 14px; border-radius: 8px; font: 13px/1.5 -apple-system, "PingFang TC", sans-serif; display: none; z-index: 10; }
+  .editor-error.show { display: block; }
+  .key-hint { font-weight: 400; font-size: 11px; opacity: 0.55; margin-left: 4px; }
+</style>
+</head>
+<body class="wordmark-mode">
+<div class="editor-loading" id="editorLoading">載入中…</div>
+<div class="editor-error" id="editorError" role="alert"></div>
+    <dialog id="refineDialog">
+      <form method="dialog" class="refine-form">
+        <header>
+          <h3 id="refineTitle">精修</h3>
+          <button type="button" id="closeRefine" aria-label="關閉">×</button>
+        </header>
+        <div class="refine-body">
+          <div class="refine-canvas-wrap" id="refineCanvasWrap">
+            <canvas id="refineCanvas"></canvas>
+          </div>
+          <aside class="refine-tools" id="refineTools">
+            <!-- ① 去背方式 -->
+            <div class="refine-block refine-brush-only" id="refineBgSection">
+              <p class="refine-block-title">① 去背方式</p>
+              <div class="seg-ctrl" id="bgModeToggle">
+                <button type="button" data-bg-mode="lum" class="active">
+                  亮度
+                </button>
+                <button type="button" data-bg-mode="ai">AI</button>
+              </div>
+
+              <div id="lumControls" class="bg-sub-controls">
+                <div class="seg-ctrl" id="lumStyleToggle">
+                  <button type="button" data-lum-style="hard" class="active">
+                    黑白
+                  </button>
+                  <button type="button" data-lum-style="soft">灰階</button>
+                </div>
+
+                <div class="field">
+                  <p class="field-caption">臨界值 <span class="key-hint">← → 微調</span></p>
+                  <div class="slider-ends">
+                    <span id="lumThreshLabelLeft">保留少</span>
+                    <span id="lumThreshVal">140</span>
+                    <span id="lumThreshLabelRight">保留多</span>
+                  </div>
+                  <div class="slider-with-btn">
+                    <input
+                      id="lumThreshSlider"
+                      type="range"
+                      min="20"
+                      max="240"
+                      value="140"
+                      step="1"
+                    />
+                    <button
+                      type="button"
+                      id="autoThreshBtn"
+                      class="refine-accent-btn"
+                      title="依此圖自動判斷臨界值"
+                    >
+                      自動
+                    </button>
+                  </div>
+                </div>
+
+                <div class="field hidden" id="softContrastField">
+                  <p class="field-caption">對比度 <span class="key-hint">↑ ↓ 微調</span></p>
+                  <div class="slider-ends">
+                    <span>低</span><span id="softContrastVal">75%</span
+                    ><span>高</span>
+                  </div>
+                  <input
+                    id="softContrastSlider"
+                    type="range"
+                    min="10"
+                    max="100"
+                    value="75"
+                    step="1"
+                  />
+                </div>
+
+                <div class="seg-ctrl" id="brightDarkToggle">
+                  <button type="button" data-bright="true" class="active">
+                    白字深底
+                  </button>
+                  <button type="button" data-bright="false">黑字淺底</button>
+                </div>
+              </div>
+
+              <div id="aiControls" class="hidden bg-sub-controls">
+                <div class="field">
+                  <div class="slider-ends">
+                    <span>Alpha 閾值</span><span id="alphaThreshVal">36</span>
+                  </div>
+                  <input
+                    id="alphaThreshSlider"
+                    type="range"
+                    min="4"
+                    max="100"
+                    value="36"
+                    step="1"
+                  />
+                </div>
+                <div class="field">
+                  <div class="slider-ends">
+                    <span>雜訊去除</span><span id="noiseAreaVal">24</span>
+                  </div>
+                  <input
+                    id="noiseAreaSlider"
+                    type="range"
+                    min="0"
+                    max="200"
+                    value="24"
+                    step="4"
+                  />
+                </div>
+              </div>
+
+              <button type="button" id="applyBgBtn">套用去背</button>
+            </div>
+
+            <!-- ② 工具 -->
+            <div class="refine-block refine-brush-only">
+              <p class="refine-block-title">② 工具</p>
+              <div class="seg-ctrl">
+                <button type="button" data-tool="erase" class="active">
+                  橡皮擦
+                </button>
+                <button type="button" data-tool="crop">手動裁切</button>
+              </div>
+              <!-- 筆刷設定（橡皮擦） -->
+              <div id="brushSizeGroup">
+                <div class="slider-ends">
+                  <span>筆刷大小</span
+                  ><span><span id="brushVal">18</span>px</span>
+                </div>
+                <input
+                  id="brushSize"
+                  type="range"
+                  min="4"
+                  max="200"
+                  value="18"
+                />
+              </div>
+              <div class="crop-action-row hidden" id="cropActionBtns">
+                <button
+                  type="button"
+                  id="confirmCropBtn"
+                  class="primary hidden"
+                  disabled
+                >
+                  確認裁切
+                </button>
+                <button
+                  type="button"
+                  id="clearCropBtn"
+                  class="crop-clear-btn hidden"
+                  disabled
+                >
+                  重新選取
+                </button>
+              </div>
+            </div>
+
+            <!-- 底部操作 -->
+            <div class="refine-footer">
+              <div class="refine-footer-row refine-footer-utility">
+                <button type="button" id="undoBtn" disabled>↩ 復原</button>
+                <button type="button" id="redoBtn" disabled>↪ 重做</button>
+                <button
+                  type="button"
+                  id="restoreSmartCropBtn"
+                  class="refine-brush-only"
+                  title="找回自動裁切時被去除的邊框內容"
+                >
+                  找回邊框
+                </button>
+              </div>
+              <button
+                type="button"
+                id="trimBtn"
+                class="refine-brush-only refine-btn-full refine-accent-btn"
+                title="清掉邊框雜訊並裁去透明留白"
+              >
+                自動裁切
+              </button>
+              <button
+                type="button"
+                id="resetSessionBtn"
+                class="refine-brush-only"
+                title="放棄本次在精修視窗做的所有調整，回到開啟時的狀態"
+              >
+                重設本次編輯
+              </button>
+              <button type="button" id="confirmRefineBtn" class="export">
+                確認
+              </button>
+              <!-- 逐張處理：不關視窗直接切換上一張／下一張（Shift+← / Shift+→，Enter = 確認並下一張） -->
+              <div class="refine-footer-row refine-nav">
+                <button type="button" id="refinePrevBtn" title="上一張（Shift+←）">← 上一張</button>
+                <span id="refineNavPos" class="refine-nav-pos"></span>
+                <button type="button" id="refineNextBtn" title="下一張（Shift+→）">下一張 →</button>
+              </div>
+              <button type="button" id="confirmNextBtn" class="export refine-btn-full" title="確認這張並開啟下一張（Enter）">
+                確認並下一張
+              </button>
+              <!-- 字牆模式：去背救不回來時標記「需要換圖」並跳下一張 -->
+              <button type="button" id="needsImageBtn" class="danger refine-btn-full wall-only" title="去背無法完成，回字牆管理頁標記為需要換圖（N）">
+                需要換圖
+              </button>
+            </div>
+          </aside>
+        </div>
+      </form>
+    </dialog>
+<script type="module" src="/src/plugins/wordmark-editor/editor.js"></script>
+</body>
+</html>

@@ -23,6 +23,13 @@ hoverVideo:
   src: "/projects/自我感覺良好/video_0.mp4"
 pubDate: 2023-10-18
 tags: ["feelgood","😎"]
+wordmark:
+  src: "/projects/自我感覺良好/wordmark.webp"
+  source: "cutout"
+  accent: "#ecbc39"
+  ink: 0.307
+  chars: 4
+  reviewed: true
 ---
 
 看到這篇貼文的人！你很棒ㄛ！\

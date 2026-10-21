@@ -19,6 +19,11 @@ video:
   src: "/projects/電量焦慮/video_0.mp4"
 hoverVideo:
   src: "/projects/電量焦慮/video_0.mp4"
+wordmark:
+  src: "/projects/電量焦慮/wordmark.webp"
+  source: "cutout"
+  accent: "#06768e"
+  ink: 0.385
 ---
 
 最近發現跟男友非常不同的價值觀/習慣是有沒有電量焦慮。

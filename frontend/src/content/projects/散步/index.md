@@ -27,6 +27,12 @@ hoverVideo:
   src: "/projects/散步/video_0.mp4"
 pubDate: 2023-10-02
 tags: ["whatzurtype","字字字設計串連","stroll","🚶"]
+wordmark:
+  src: "/projects/散步/wordmark.webp"
+  source: "cutout"
+  accent: "#cfbda6"
+  ink: 0.339
+  reviewed: true
 ---
 
 這次的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是以大家投稿的字型散步照片（字體版路上觀察？）為靈感重現。

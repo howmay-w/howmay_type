@@ -23,6 +23,12 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2026-01-26
 tags: ["🤢"]
+wordmark:
+  src: "/projects/吃壞肚子/wordmark.webp"
+  source: "cutout"
+  accent: "#886433"
+  ink: 0.31
+  reviewed: true
 ---
 
 中午好像吃壞肚子嗚嗚\

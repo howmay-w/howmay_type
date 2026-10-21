@@ -23,6 +23,12 @@ hoverVideo:
   src: "/projects/好台北/video_0.mp4"
 pubDate: 2024-12-01
 tags: ["taipeicity","☀️"]
+wordmark:
+  src: "/projects/好台北/wordmark.webp"
+  source: "cutout"
+  accent: "#aed9f2"
+  ink: 0.26
+  chars: 2.5
 ---
 
 這幾天不是爛台北，是好台北！\

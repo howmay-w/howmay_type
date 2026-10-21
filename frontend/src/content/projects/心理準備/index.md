@@ -25,6 +25,12 @@ hoverVideo:
   src: "/projects/心理準備/video_0.mp4"
 pubDate: 2023-12-05
 tags: ["mentallyprepared","🫨"]
+wordmark:
+  src: "/projects/心理準備/wordmark.webp"
+  source: "cutout"
+  accent: "#d25d79"
+  ink: 0.234
+  reviewed: true
 ---
 
 對於 2024 不到幾週就要到來，\

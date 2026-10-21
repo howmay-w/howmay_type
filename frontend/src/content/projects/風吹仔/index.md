@@ -27,6 +27,11 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2025-11-30
 tags: ["whatzurtype","台語","🖨️"]
+wordmark:
+  src: "/projects/風吹仔/wordmark.webp"
+  source: "cutout"
+  accent: "#536339"
+  ink: 0.448
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 與 《2025 城西生活節｜印一個所在》合作，參考高鵬翔老師的《臺灣活版時代》中的各種印刷設備與流程，製作一組印刷關鍵字！

@@ -10,6 +10,13 @@ hoverVideo:
   src: "/projects/選擇障礙/video_0.mp4"
 pubDate: 2023-08-26
 tags: ["選障","decidophobia","👉👈"]
+wordmark:
+  src: "/projects/選擇障礙/wordmark.webp"
+  source: "cutout"
+  accent: "#aeb7e1"
+  ink: 0.255
+  chars: 3.5
+  reviewed: true
 ---
 
 選障的朋朋站出來👀\

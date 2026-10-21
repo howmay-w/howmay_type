@@ -2,7 +2,7 @@
 title: 翡翠樹蛙
 description: 8 月 #whatzurtype 主題是台灣特有種，決定畫翡翠樹蛙！
 pubDate: 2026-08-31
-tags: ["台灣特有種", "青蛙", "🐸", "whatzurtype"]
+tags: ["台灣特有種", "青蛙", "🐸", "whatzurtype", "台灣", "臺灣"]
 image:
   src: "/projects/翡翠樹蛙/media_0.webp"
   alt: "IMG_8682.jpg"
@@ -19,6 +19,12 @@ video:
   src: "/projects/翡翠樹蛙/video_0.mp4"
 hoverVideo:
   src: "/projects/翡翠樹蛙/video_0.mp4"
+wordmark:
+  src: "/projects/翡翠樹蛙/wordmark.webp"
+  source: "cutout"
+  accent: "#9dbe25"
+  ink: 0.304
+  reviewed: true
 ---
 
 8 月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題是台灣特有種，決定畫翡翠樹蛙！

@@ -25,6 +25,12 @@ hoverVideo:
   src: "/projects/遺憾/video_0.mp4"
 pubDate: 2024-06-05
 tags: ["regret","🥲"]
+wordmark:
+  src: "/projects/遺憾/wordmark.webp"
+  source: "cutout"
+  accent: "#927be4"
+  ink: 0.502
+  reviewed: true
 ---
 
 即便仍然會遺憾，\

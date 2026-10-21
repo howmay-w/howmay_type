@@ -15,6 +15,11 @@ hoverVideo:
 hoverVideoFit: contain
 pubDate: 2024-08-14
 tags: ["黑冠麻鷺","地瓜鳥","山暗光","MalayanNightHeron","reels"]
+wordmark:
+  src: "/projects/大笨鳥/wordmark.webp"
+  source: "cutout"
+  accent: "#e99f1b"
+  ink: 0.323
 ---
 
 沒人教，但全世界都叫他大笨鳥。

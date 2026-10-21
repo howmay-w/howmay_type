@@ -21,6 +21,12 @@ hoverVideo:
   src: "/projects/太極/video_0.mp4"
 pubDate: 2022-11-09
 tags: ["taichi","點字","☯️"]
+wordmark:
+  src: "/projects/太極/wordmark.webp"
+  source: "cutout"
+  accent: "#da6e5f"
+  ink: 0.239
+  reviewed: true
 ---
 
 太極，有一說的是天地未分的渾沌態。\

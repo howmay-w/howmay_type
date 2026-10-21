@@ -23,6 +23,12 @@ video:
   src: "/projects/下次一定/video_0.mp4"
 hoverVideo:
   src: "/projects/下次一定/video_0.mp4"
+wordmark:
+  src: "/projects/下次一定/wordmark.webp"
+  source: "direct"
+  sourceImage: "/projects/下次一定/wordmark-source.webp"
+  accent: "#fba325"
+  ink: 0.396
 ---
 
 身為一個台北人：

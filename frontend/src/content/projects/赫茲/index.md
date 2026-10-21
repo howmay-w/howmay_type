@@ -23,6 +23,13 @@ hoverVideo:
   src: "/projects/赫茲/video_0.mp4"
 pubDate: 2023-05-19
 tags: ["whatzurtype","hertz","字字字設計串連","🎧"]
+wordmark:
+  src: "/projects/赫茲/wordmark.webp"
+  source: "cutout"
+  accent: "#4e538f"
+  ink: 0.419
+  scale: 0.95
+  reviewed: true
 ---
 
 這次 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 的主題是從大家出題的音樂中抽出一首，試著用字表達出來。

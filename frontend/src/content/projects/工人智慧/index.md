@@ -25,6 +25,12 @@ hoverVideo:
   src: "/projects/工人智慧/video_0.mp4"
 pubDate: 2023-12-08
 tags: ["workerintelligence","stencil","💪"]
+wordmark:
+  src: "/projects/工人智慧/wordmark.webp"
+  source: "cutout"
+  accent: "#6d51ef"
+  ink: 0.53
+  chars: 3.5
 ---
 
 「哦這個是我們用工人智慧做的！」

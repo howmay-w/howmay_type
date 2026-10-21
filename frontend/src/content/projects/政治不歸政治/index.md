@@ -24,7 +24,13 @@ hoverVideo:
   src: "/projects/政治不歸政治/video_0.mp4"
 hoverVideoFit: contain
 pubDate: 2025-07-24
-tags: ["govote","🛤️"]
+tags: ["govote","🛤️","台灣","臺灣"]
+wordmark:
+  src: "/projects/政治不歸政治/wordmark.webp"
+  source: "cutout"
+  accent: "#cd5829"
+  ink: 0.406
+  reviewed: true
 ---
 
 「＿＿歸＿＿，政治歸政治」，\

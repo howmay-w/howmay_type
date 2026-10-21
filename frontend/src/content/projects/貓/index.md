@@ -27,6 +27,12 @@ hoverVideo:
   src: "/projects/貓/video_0.mp4"
 pubDate: 2023-08-23
 tags: ["whatzurtype", "正字標記", "字字字設計串連", "cat", "🐈"]
+wordmark:
+  src: "/projects/貓/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/貓/wordmark-source.webp"
+  accent: "#fba325"
+  ink: 0.521
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 題目是新活水[@fountain.tw](https://www.instagram.com/fountain.tw/)出的：「如果世界要毀滅了，只能留下⼀個字在地球，你想留下哪個字？」

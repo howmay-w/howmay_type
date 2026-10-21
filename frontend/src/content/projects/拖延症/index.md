@@ -21,6 +21,12 @@ hoverVideo:
   src: "/projects/拖延症/video_0.mp4"
 pubDate: 2022-11-17
 tags: ["Procrastination","🫥"]
+wordmark:
+  src: "/projects/拖延症/wordmark.webp"
+  source: "cutout"
+  accent: "#a67117"
+  ink: 0.529
+  reviewed: true
 ---
 
 經（個人）實驗證實，\

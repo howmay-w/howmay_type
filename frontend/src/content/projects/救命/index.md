@@ -29,6 +29,12 @@ hoverVideo:
   src: "/projects/救命/video_0.mp4"
 pubDate: 2023-08-02
 tags: ["help","🆘"]
+wordmark:
+  src: "/projects/救命/wordmark.webp"
+  source: "cutout"
+  accent: "#eaa04b"
+  ink: 0.502
+  scale: 1.1
 ---
 
 來自最近諸事不順ㄉ朋朋的點字，辛苦ㄌQQ

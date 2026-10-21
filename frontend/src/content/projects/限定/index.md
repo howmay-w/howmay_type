@@ -29,6 +29,11 @@ hoverVideo:
   src: "/projects/限定/video_0.mp4"
 pubDate: 2024-04-26
 tags: ["limited","期間限定","🈺"]
+wordmark:
+  src: "/projects/限定/wordmark.webp"
+  source: "cutout"
+  accent: "#322162"
+  ink: 0.615
 ---
 
 讓商品變得吸引人的魔法🪄

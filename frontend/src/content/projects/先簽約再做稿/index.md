@@ -25,6 +25,12 @@ hoverVideo:
   src: "/projects/先簽約再做稿/video_0.mp4"
 pubDate: 2024-06-18
 tags: ["學籽", "法律知識", "📜"]
+wordmark:
+  src: "/projects/先簽約再做稿/wordmark.webp"
+  source: "cutout"
+  accent: "#32469d"
+  ink: 0.228
+  reviewed: true
 ---
 
 接案鬼故事聽多了，有句箴言想跟大家分享：「先簽約，再做稿。」

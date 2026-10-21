@@ -23,6 +23,13 @@ hoverVideo:
   src: "/projects/喔某/video_0.mp4"
 pubDate: 2023-02-26
 tags: ["어머","😯"]
+wordmark:
+  src: "/projects/喔某/wordmark.webp"
+  source: "cutout"
+  sourceImage: "/projects/喔某/wordmark-source.webp"
+  accent: "#065670"
+  ink: 0.358
+  scale: 1.1
 ---
 
 最近莫名很常看到，但我韓劇好像看太少ㄌ，還特別去查才知道意思🥲

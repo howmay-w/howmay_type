@@ -25,6 +25,12 @@ hoverVideo:
   src: "/projects/免洗/video_0.mp4"
 pubDate: 2026-02-09
 tags: ["typodesign","🥡"]
+wordmark:
+  src: "/projects/免洗/wordmark.webp"
+  source: "cutout"
+  accent: "#115544"
+  ink: 0.384
+  reviewed: true
 ---
 
 覺得「免洗」這個詞相當厲害。

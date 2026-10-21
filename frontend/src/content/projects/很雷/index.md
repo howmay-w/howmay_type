@@ -27,6 +27,12 @@ hoverVideo:
   src: "/projects/很雷/video_0.mp4"
 pubDate: 2023-10-14
 tags: ["slacker","⚡"]
+wordmark:
+  src: "/projects/很雷/wordmark.webp"
+  source: "cutout"
+  accent: "#e7c725"
+  ink: 0.323
+  scale: 1.05
 ---
 
 用途廣泛ㄉ詞，但還是不要太常遇到比較好🫠

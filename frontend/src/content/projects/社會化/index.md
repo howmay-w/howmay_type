@@ -21,6 +21,12 @@ hoverVideo:
   src: "/projects/社會化/video_0.mp4"
 pubDate: 2024-02-07
 tags: ["plz","Socialization","🤦‍♂️"]
+wordmark:
+  src: "/projects/社會化/wordmark.webp"
+  source: "cutout"
+  accent: "#dcc109"
+  ink: 0.349
+  scale: 1.15
 ---
 
 來自一位不具名現役高中教師的怒吼。
