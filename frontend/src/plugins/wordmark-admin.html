@@ -67,6 +67,9 @@
   .status-seg button.on.st-redo { background: #6b4a16; color: #fff; }
   .status-seg button.on.st-swap { background: #6a2a22; color: #fff; }
   .acts button.on { color: var(--accent); }
+  .direct { display: flex; gap: 6px; align-items: flex-start; color: var(--mut); line-height: 1.4; cursor: pointer; }
+  .direct input { margin: 2px 0 0; accent-color: var(--accent); }
+  .res { color: var(--mut); }
   @media (max-width: 760px) {
     .layout { grid-template-columns: 1fr; }
     .panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; height: 46vh; border-left: 0; border-top: 1px solid var(--line); z-index: 6; }
@@ -170,6 +173,8 @@ function tipsOf(p) {
   if (wm.source === "auto") f.push(["warn", "自動去背，未手動處理"]);
   if (aspect < 0.35 || aspect > 3.5) f.push(["warn", "長寬比極端"]);
   if ((wm.ink ?? 0.3) < 0.1) f.push(["warn", "墨量很少，筆畫可能被吃掉"]);
+  const long = Math.max(p.size.width, p.size.height);
+  if (long < 800) f.push(["warn", `解析度偏低（長邊 ${long}px），大螢幕上可能不夠細`]);
   return f;
 }
 function flagsOf(p) {
@@ -377,6 +382,8 @@ function renderPanel(p) {
       <button id="pAdd" class="${p.v ? "" : "wide"}" title="上傳一張或多張圖（可一次選多張），每張成為這件作品的另一款字圖">新增一款…</button>
       ${p.v ? `<button id="pRemove" title="刪除這一款的字圖檔">刪除這款</button>` : ""}
     </div>
+    <label class="direct"><input type="checkbox" id="pDirect" ${DIRECT ? "checked" : ""}> 原圖直接用：換圖、新增時不經過去背處理，保留灰階與細節（已去背的透明圖、或白底黑字的黑白圖）</label>
+    <div class="res">${p.size.width}×${p.size.height}px${p.bytes ? `・${Math.round(p.bytes / 1024)} KB` : ""}${p.wordmark.source === "direct" ? "・原圖直接用" : ""}</div>
     <div class="status" id="panelStatus" aria-live="polite"></div>
     <div class="orig">${sourceOf(p) ? `<img src="${sourceOf(p)}" alt="${nameOf(p)} 原圖">` : `<div class="none">沒有原圖</div>`}</div>`;
   const card = rowOf(p);
@@ -410,6 +417,10 @@ function renderPanel(p) {
   $("pHide").addEventListener("click", () => toggleHide(p));
   $("pReplace").addEventListener("click", () => pickFile(p));
   $("pAdd").addEventListener("click", () => pickFile(p, true));
+  $("pDirect").addEventListener("change", () => {
+    DIRECT = $("pDirect").checked;
+    try { localStorage.setItem("wm-admin-direct", DIRECT ? "1" : ""); } catch (_) {}
+  });
   $("pRemove")?.addEventListener("click", () => removeVariant(p));
   P.querySelectorAll(".variants [data-key]").forEach((b) => b.addEventListener("click", () => select(b.dataset.key)));
 }
@@ -613,6 +624,76 @@ async function toWordmark(file) {
   return { blob, ink: sum / 255 / (cw * ch) };
 }
 // 換圖時的原始圖：長邊最多 2400px、轉 webp（保留透明），給精修當原圖
+// ── 原圖直接用：不做臨界值、柔邊、雜點清除，只把字以外的地方變透明、裁掉外圍空白 ─────
+// - 已經有透明背景：照原本的透明度
+// - 沒有透明背景（黑白或灰階原圖）：亮度直接換成透明度，紙色 → 全透明、最深的墨色 → 全不透明，
+//   中間的灰階照比例保留（筆觸、紙紋都在）；字比底亮（黑底白字）就自動反過來
+// 長邊最多 1600px（字牆在視網膜大螢幕上約需 1000px），WebP 品質 0.92
+let DIRECT = (() => { try { return localStorage.getItem("wm-admin-direct") === "1"; } catch (_) { return false; } })();
+const DIRECT_MAX = 1600;
+async function toWordmarkDirect(file) {
+  const bmp = await createImageBitmap(file);
+  const k0 = Math.min(1, 3200 / Math.max(bmp.width, bmp.height));
+  const W = Math.round(bmp.width * k0), H = Math.round(bmp.height * k0);
+  const c = new OffscreenCanvas(W, H), ctx = c.getContext("2d", { willReadFrequently: true });
+  ctx.drawImage(bmp, 0, 0, W, H);
+  const d = ctx.getImageData(0, 0, W, H).data;
+  const alpha = new Uint8ClampedArray(W * H);
+  let clear = 0;
+  for (let i = 0; i < W * H; i++) if (d[i * 4 + 3] < 250) clear++;
+  if (clear > W * H * 0.01) {
+    for (let i = 0; i < W * H; i++) alpha[i] = d[i * 4 + 3];
+  } else {
+    const lum = new Uint8Array(W * H);
+    for (let i = 0; i < W * H; i++) lum[i] = Math.round(0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]);
+    // 底色：外圈的中位數；墨色：最深（或最亮）的 0.5%
+    const ring = [];
+    const band = Math.max(1, Math.round(Math.min(W, H) * 0.03));
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      if (x >= band && x < W - band && y >= band && y < H - band) continue;
+      ring.push(lum[y * W + x]);
+    }
+    ring.sort((a, b) => a - b);
+    const bg = ring[ring.length >> 1];
+    const hist = new Uint32Array(256);
+    for (const v of lum) hist[v]++;
+    const darkInk = bg >= 128;
+    const tail = W * H * 0.005;
+    let ink = darkInk ? 0 : 255, acc = 0;
+    if (darkInk) { for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= tail) { ink = v; break; } } }
+    else { for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc >= tail) { ink = v; break; } } }
+    const span = Math.max(1, Math.abs(bg - ink));
+    for (let i = 0; i < W * H; i++) {
+      const t = (darkInk ? bg - lum[i] : lum[i] - bg) / span;
+      alpha[i] = Math.round(Math.max(0, Math.min(1, t)) * 255);
+    }
+  }
+  // 裁到有墨的範圍（留 8px）
+  let x0 = W, y0 = H, x1 = -1, y1 = -1;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (alpha[y * W + x] > 8) {
+    if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+  }
+  if (x1 < 0) throw new Error("圖裡找不到字");
+  x0 = Math.max(0, x0 - 8); y0 = Math.max(0, y0 - 8); x1 = Math.min(W - 1, x1 + 8); y1 = Math.min(H - 1, y1 + 8);
+  const cw = x1 - x0 + 1, ch = y1 - y0 + 1;
+  const crop = new OffscreenCanvas(cw, ch), cctx = crop.getContext("2d");
+  const img = cctx.createImageData(cw, ch);
+  let sum = 0;
+  for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) {
+    const a = alpha[(y + y0) * W + (x + x0)], k = (y * cw + x) * 4;
+    img.data[k] = img.data[k + 1] = img.data[k + 2] = 255; img.data[k + 3] = a; sum += a;
+  }
+  cctx.putImageData(img, 0, 0);
+  const s2 = Math.min(1, DIRECT_MAX / Math.max(cw, ch));
+  const out = new OffscreenCanvas(Math.round(cw * s2), Math.round(ch * s2));
+  const octx = out.getContext("2d");
+  octx.imageSmoothingQuality = "high";
+  octx.drawImage(crop, 0, 0, out.width, out.height);
+  const blob = await out.convertToBlob({ type: "image/webp", quality: 0.92 });
+  return { blob, ink: sum / 255 / (cw * ch), direct: true };
+}
+const makeWordmark = (file) => (DIRECT ? toWordmarkDirect(file) : toWordmark(file));
+
 async function toSourceWebp(file) {
   const bmp = await createImageBitmap(file);
   const k = Math.min(1, 2400 / Math.max(bmp.width, bmp.height));
@@ -641,11 +722,11 @@ async function addVariants(p, files) {
   setStatus(null, failed.length ? `已新增 ${done} 款；失敗：${failed.join("、")}` : `已新增 ${done} 款，請逐一確認效果`, failed.length > 0);
 }
 async function addOne(p, file) {
-  const { blob, ink } = await toWordmark(file);
+  const { blob, ink, direct } = await makeWordmark(file);
   const list = await api("/__wordmarks/api/list");
   const v = Math.max(...list.filter((x) => x.slug === p.slug).map((x) => x.v)) + 1;
   const q = `slug=${encodeURIComponent(p.slug)}&v=${v}`;
-  await api(`/__wordmarks/api/replace?${q}&ink=${ink.toFixed(3)}`, { method: "POST", body: blob });
+  await api(`/__wordmarks/api/replace?${q}&ink=${ink.toFixed(3)}${direct ? "&mode=direct" : ""}`, { method: "POST", body: blob });
   await api(`/__wordmarks/api/source?${q}`, { method: "POST", body: await toSourceWebp(file) });
   return `${p.slug}#${v}`;
 }
@@ -653,11 +734,11 @@ async function replace(p, file, adding = false) {
   const el = rowOf(p);
   setStatus(el, "處理中…");
   try {
-    const { blob, ink } = await toWordmark(file);
+    const { blob, ink, direct } = await makeWordmark(file);
     // 新增一款：款號接在這件作品現有的最後一款後面
     const v = adding ? Math.max(...siblingsOf(p).map((x) => x.v)) + 1 : p.v;
     const q = `slug=${encodeURIComponent(p.slug)}&v=${v}`;
-    await api(`/__wordmarks/api/replace?${q}&ink=${ink.toFixed(3)}`, { method: "POST", body: blob });
+    await api(`/__wordmarks/api/replace?${q}&ink=${ink.toFixed(3)}${direct ? "&mode=direct" : ""}`, { method: "POST", body: blob });
     // 上傳的原始圖存成這款字圖的去背來源，之後「編輯去背」以它為原圖，不會跳回貼文原圖
     await api(`/__wordmarks/api/source?${q}`, { method: "POST", body: await toSourceWebp(file) });
     await load();

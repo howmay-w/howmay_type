@@ -3,7 +3,7 @@
  *  - 從字牆點進來時網址帶 ?wm=n，顯示點的那一款；沒帶就顯示第一款
  *  - 寬螢幕從字牆點字進作品頁時，字圖從牆上的位置移到作品頁右側（view transition），
  *    速度曲線和字牆跨分段重排的滑動相同，其他部分照常淡入淡出；返回、手機、圖片模式都不做
- *  - 拉動視窗跨過版型分界（手機 → 中等 → 寬螢幕）時，字圖從原位置滑到新位置，和首頁字牆跨分段重排一樣
+ *  - 拉動視窗跨過版型分界（手機 → 中等 → 寬螢幕）時，字圖、圖片欄、內文從原位置滑到新位置，和首頁字牆跨分段重排一樣
  * 換頁時新頁面在 astro:before-swap 就要選好款、設好轉場名稱，瀏覽器才拍得到正確的「之後」畫面。
  */
 const MORPH = "wm-morph";
@@ -45,34 +45,41 @@ const onAfterSwap = () => {
   morphFrom = null;
 };
 
-// ── 拉動視窗時：版型改變就讓字圖從上一個畫面的位置滑到新位置（FLIP） ──
-// 同一個版型裡跟著版面自然移動；只有跨過分界、位置跳動時才補動畫
-let lastRect = null;
+// ── 拉動視窗時：版型改變就讓字圖、圖片欄、內文從上一個畫面的位置滑到新位置（FLIP） ──
+// 同一個版型裡跟著版面自然移動；只有跨過分界、位置跳動時才補動畫。
+// 圖片欄與字圖連大小一起過渡；內文只移動位置（縮放文字會變形，寬度直接換成新的）
+const GLIDE_TARGETS = [
+  { selector: ".media-column", scale: true },
+  { selector: ".content-wrap > .content", scale: false },
+  { selector: ".wm-page.is-on", scale: true },
+];
+let lastRects = new Map();
 let lastLayout = "";
 let lastWidth = 0;
 const layoutKey = () => LAYOUT_MQ.map((q) => (window.matchMedia(q).matches ? 1 : 0)).join("");
-const currentWordmark = () => document.querySelector(".wm-page.is-on");
+const glideTargets = () =>
+  GLIDE_TARGETS.map((t) => ({ ...t, el: document.querySelector(t.selector) })).filter((t) => t.el);
 const remember = () => {
-  const el = currentWordmark();
-  lastRect = el ? el.getBoundingClientRect() : null;
+  lastRects = new Map(glideTargets().map((t) => [t.el, t.el.getBoundingClientRect()]));
   lastLayout = layoutKey();
   lastWidth = window.innerWidth;
 };
 // 頁面尺寸改變後、畫面更新前執行（ResizeObserver），量到的就是新版型的位置
 const onResize = () => {
-  const el = currentWordmark();
   const key = layoutKey();
-  if (el && lastRect && key !== lastLayout) {
-    // 先停掉還在跑的滑動，量到的才是新版型的實際位置（起點 lastRect 是上一個畫面看到的位置）
-    el.getAnimations().forEach((a) => a.cancel());
-    const now = el.getBoundingClientRect();
-    if (now.width && now.height) {
-      const dx = lastRect.left - now.left;
-      const dy = lastRect.top - now.top;
-      const sx = lastRect.width / now.width;
-      const sy = lastRect.height / now.height;
+  if (key !== lastLayout) {
+    for (const { el, scale } of glideTargets()) {
+      const from = lastRects.get(el);
+      if (!from) continue;
+      // 先停掉還在跑的滑動，量到的才是新版型的實際位置（起點是上一個畫面看到的位置）
+      el.getAnimations().forEach((a) => a.cancel());
+      const now = el.getBoundingClientRect();
+      if (!now.width || !now.height) continue;
+      const dx = from.left - now.left;
+      const dy = from.top - now.top;
+      const s = scale ? ` scale(${from.width / now.width}, ${from.height / now.height})` : "";
       el.animate(
-        [{ transformOrigin: "0 0", transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` }, { transformOrigin: "0 0", transform: "none" }],
+        [{ transformOrigin: "0 0", transform: `translate(${dx}px, ${dy}px)${s}` }, { transformOrigin: "0 0", transform: "none" }],
         GLIDE,
       );
     }

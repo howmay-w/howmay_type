@@ -150,6 +150,7 @@ function listProjects() {
           file: path.basename(file),
           wordmark,
           size: exists ? webpSize(file) : null,
+          bytes: exists ? fs.statSync(file).size : 0,
           mtime,
           // 最近編輯：index.md 或字圖最後修改的時間（管理頁「最近編輯」排序用）
           edited: Math.max(mdTime, mtime),
@@ -245,7 +246,8 @@ export function wordmarkAdminPlugin() {
             const name = v === 0 ? "wordmark.webp" : current.src ? path.basename(current.src) : newExtraName(dir, md);
             fs.writeFileSync(path.join(dir, name), body);
             current.src = `/projects/${slug}/${name}`;
-            current.source = "cutout";
+            // 原圖直接用（不經過去背處理）另外標記，方便之後辨認
+            current.source = url.searchParams.get("mode") === "direct" ? "direct" : "cutout";
             const ink = parseFloat(url.searchParams.get("ink") ?? "");
             if (Number.isFinite(ink)) current.ink = Math.round(ink * 1000) / 1000;
             delete current.hidden;

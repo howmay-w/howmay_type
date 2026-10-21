@@ -4,7 +4,8 @@ import { glob } from "astro/loaders";
 // 字圖欄位（主字圖 wordmark 與其他款 extraWordmarks 共用）
 const wordmarkSchema = z.object({
   src: z.string(),
-  source: z.enum(["cutout", "auto", "ai"]).optional(),
+  // cutout = 去背處理、auto = 從貼文圖自動提取、direct = 原圖直接用（不經過去背處理）
+  source: z.enum(["cutout", "auto", "ai", "direct"]).optional(),
   // 換圖時上傳的原始圖（wordmark-source.webp），只給本機精修當原圖用，不會複製到正式網站
   sourceImage: z.string().optional(),
   accent: z.string().optional(),
