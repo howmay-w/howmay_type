@@ -208,7 +208,9 @@ const applySessionOrder = () => {
 };
 
 /* 最新：重設回「全部專案依日期排序後的最新 LOAD_BATCH 張」，其餘重新隱藏 */
-const sortGrid = () => {
+// skipAnimation：頁面載入時套用（BACK 回「最新」）不播卡片浮上動畫，交給首頁入場動畫；
+// 兩個動畫同時跑時，入場動畫會從「透明」動到「透明」，卡片就一直不出現
+const sortGrid = ({ skipAnimation = false } = {}) => {
   // 使用者主動切回日期排序 → 清除 session，下次重整會重新隨機
   try {
     sessionStorage.removeItem(SESSION_ORDER_KEY);
@@ -234,7 +236,10 @@ const sortGrid = () => {
       item.style.display = ""; // 清除殘留 inline display，讓 CSS 規則接管
     }
   });
-  appearCards(visible);
+  if (skipAnimation) {
+    gsap.killTweensOf(visible);
+    gsap.set(visible, { yPercent: 0, autoAlpha: 1 });
+  } else appearCards(visible);
   updateLoadMoreVisibility();
   document.dispatchEvent(new CustomEvent("grid:reordered"));
 };
@@ -423,7 +428,7 @@ const applyTagFromUrl = () => {
 const applyViewModeFromUrl = () => {
   const params = new URLSearchParams(window.location.search);
   if (params.get("from") !== "latest") return;
-  sortGrid();
+  sortGrid({ skipAnimation: true });
   const url = new URL(window.location.href);
   url.searchParams.delete("from");
   window.history.replaceState({}, "", url);
@@ -524,7 +529,7 @@ const init = () => {
         return false;
       }
     })();
-  if (returningToLatest) sortGrid();
+  if (returningToLatest) sortGrid({ skipAnimation: true });
   else if (!hadFromLatest) applySessionOrder();
   applyTagFromUrl();
   applySearchFromSession();

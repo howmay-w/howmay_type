@@ -73,8 +73,9 @@ const visibleItems = () => {
       const v = scatterIndex(href, j, n, home, pool.length);
       const target = pool[v];
       if (target && at.has(target)) key = at.get(target) + 0.5;
-      else if (target && !target.hasAttribute("data-deferred") && at.has(parent)) {
+      else if (target && (target.style.display === "none" || !target.hasAttribute("data-deferred")) && at.has(parent)) {
         // 被搜尋篩掉：排在本尊後面，各款之間隔開
+        // （搜尋把不符合的卡片設成 inline display: none，還沒載入的卡片也一樣，所以不能只看 data-deferred）
         key = at.get(parent) + (j + 1) * Math.max(3, Math.floor((cards.length - at.get(parent)) / (n + 1))) + 0.5;
       }
       // 其餘（那個位置的卡片還沒載入）：先不顯示，載入到那裡時才出現

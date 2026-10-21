@@ -343,6 +343,8 @@ dd {
 .title-header--initial > .view-toggle {
   grid-column: 1;
   grid-row: 1;
+  font-size: var(--font-size-xl);
+  line-height: 1;
 }
 
 .title-header--initial > .view-toggle button {
