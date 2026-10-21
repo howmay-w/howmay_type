@@ -371,3 +371,16 @@ dd {
     grid-row: auto;
   }
 }
+
+/* 字牆點字進作品頁時，字圖從牆上移到作品頁右側（見 scripts/projectWordmark.js）；
+   速度曲線和字牆跨分段重排的滑動相同，不另外加效果 */
+::view-transition-group(wm-morph) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(wm-morph),
+::view-transition-new(wm-morph) {
+  height: 100%;
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}

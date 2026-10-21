@@ -5,6 +5,11 @@ import ImageCarousel from "../../components/ImageCarousel.astro";
 import VideoWithOverlay from "../../components/VideoWithOverlay.astro";
 import Separator from "../../components/Separator.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { createHash } from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
+import { hoverColor } from "../../utils/hoverColor";
+import { getWebpSize } from "../../utils/webpSize";
 
 /** 專案資料夾名稱 = URL slug（index.md 時為 example-project-a，非 index 時為 project.id） */
 function getProjectSlug(id: string) {
@@ -97,6 +102,30 @@ const allSlugs = sortedProjects.map((p) => getProjectSlug(p.id)).filter((s) => s
 const fromSearch = Astro.url.searchParams.get("from_search") ?? "";
 const fromLatest = Astro.url.searchParams.get("from") === "latest";
 const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fromLatest ? "/?from=latest" : "/";
+
+// ── 作品字圖：電腦版小小的放在右側空白（捲動時固定），手機放在內文下方 ──
+// 顯示中的各款都輸出、預設顯示第一款；從字牆點進來時網址帶 ?wm=n，換成點的那一款（見頁尾 script）
+const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ?? [])]
+	.filter((w): w is NonNullable<typeof w> => Boolean(w && !w.hidden))
+	.map((w) => {
+		const file = path.join(process.cwd(), "src/content/projects", currentSlug, path.basename(w.src));
+		const size = getWebpSize(file);
+		if (!size) return null;
+		const aspect = size.width / size.height;
+		// 每張面積相同，再用最大寬高框住（超出就等比例縮小）
+		const fit = (area: number, maxW: number, maxH: number) => {
+			const width = Math.sqrt(area * aspect);
+			const k = Math.min(1, maxW / width, maxH / (width / aspect));
+			return { w: Math.round(width * k), h: Math.round((width / aspect) * k) };
+		};
+		const d = fit(22000, 220, 220);
+		const m = fit(14000, 200, 160);
+		// 換圖時檔名不變，用內容雜湊當版本號
+		const version = createHash("md5").update(new Uint8Array(fs.readFileSync(file))).digest("hex").slice(0, 8);
+		const accent = hoverColor(w.accent);
+		return `--wm:url("${w.src}?v=${version}");--wd:${d.w}px;--hd:${d.h}px;--wmo:${m.w}px;--hmo:${m.h}px${accent ? `;--accent:${accent}` : ""}`;
+	})
+	.filter((x): x is string => x !== null);
 ---
 
 <BaseLayout title={title} description={seoDescription} ogImage={shareImageSrc} ogImageAlt={shareImageAlt}>
@@ -193,6 +222,13 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 					<div class="prose hover-underline-animated" set:html={bodyHtml} />
 				)}
 			</div>
+			{pageWordmarks.length > 0 && (
+				<div class="wm-side" aria-hidden="true">
+					{pageWordmarks.map((style, i) => (
+						<span class:list={["wm-page", i === 0 && "is-on"]} data-wm-index={i} style={style}></span>
+					))}
+				</div>
+			)}
 		</div>
 		<nav class="project-nav">
 			<Separator />
@@ -236,6 +272,9 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 			</div>
 		</nav>
 	</section>
+	<script>
+		import "../../scripts/projectWordmark.js";
+	</script>
 </BaseLayout>
 
 <script>
@@ -276,6 +315,74 @@ const backHref = fromSearch ? `/?search=${encodeURIComponent(fromSearch)}` : fro
 	.back svg {
 		display: block;
 		flex-shrink: 0;
+	}
+	/* 作品字圖：白字透明的字圖用遮罩染成內文顏色；滑過時換成原作色（和字牆一致） */
+	.wm-page {
+		display: none;
+		width: var(--wmo);
+		height: var(--hmo);
+		max-width: 100%;
+		background-color: var(--color-text);
+		-webkit-mask: var(--wm) left center / contain no-repeat;
+		mask: var(--wm) left center / contain no-repeat;
+		transition: background-color 0.35s;
+	}
+	.wm-page.is-on {
+		display: block;
+	}
+	@media (hover: hover) {
+		.wm-page:hover {
+			background-color: var(--accent, var(--color-text));
+		}
+	}
+	/* 手機與中等寬度：放在內文下方，齊左 */
+	.wm-side {
+		grid-area: wm;
+		align-self: start;
+	}
+	@media screen and (max-width: 43.99em) {
+		.content-wrap {
+			grid-template-areas: "img" "content" "wm";
+		}
+	}
+	@media screen and (min-width: 44em) and (max-width: 49.99em) {
+		.content-wrap:has(.wm-side) {
+			grid-template-areas: "img content" "img wm";
+			grid-template-rows: auto 1fr;
+		}
+		.media-column {
+			grid-area: img;
+		}
+		.content {
+			grid-area: content;
+		}
+	}
+	@media screen and (min-width: 50em) and (max-width: 79.99em) {
+		.content-wrap:has(.wm-side) {
+			grid-template-areas: "media content" "media wm";
+			grid-template-rows: auto 1fr;
+		}
+	}
+	/* 寬螢幕：右側空白多開第三欄，字圖小小的、捲動時固定 */
+	@media screen and (min-width: 80em) {
+		.content-wrap:has(.wm-side) {
+			max-width: none;
+			grid-template-columns: minmax(320px, 45vw) 34ch minmax(0, 1fr);
+			grid-template-areas: "media content wm";
+		}
+		.wm-side {
+			position: sticky;
+			top: 2rem;
+			align-self: start;
+			display: flex;
+			justify-content: center;
+		}
+		.wm-page {
+			width: var(--wd);
+			height: var(--hd);
+			-webkit-mask-position: center;
+			mask-position: center;
+		}
 	}
 	.content-wrap {
 		display: grid;

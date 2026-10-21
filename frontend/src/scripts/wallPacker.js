@@ -246,7 +246,8 @@ export const createPacker = (D) => {
     }
     const queue = items.map((el) => {
       const { aspect, mass } = metrics(el);
-      return { el, href: el.getAttribute("href"), aspect, target: Math.min(unit * Math.sqrt(mass * aspect) * WORD_SCALE * pre, D) };
+      // 其他款的連結帶 ?wm=n，同一件作品用 data-wm-extra（本尊的網址）辨認
+      return { el, href: el.dataset?.wmExtra ?? el.getAttribute("href"), aspect, target: Math.min(unit * Math.sqrt(mass * aspect) * WORD_SCALE * pre, D) };
     });
     const apart = (it) => (placed.length - (lastAt.get(it.href) ?? -Infinity) < APART ? 1 : 0);
 

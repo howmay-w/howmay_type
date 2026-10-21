@@ -123,7 +123,7 @@ const tagsStr = tags?.length ? tags.join("、") : "";
 		data-wm-mass={x.mass}
 		data-wm-scale={x.scale}
 		style={`--wm:url("${x.src}");--a:${x.aspect}${(x.accent ?? wm?.accent) ? `;--accent:${x.accent ?? wm?.accent}` : ""}`}
-		href={`/projects/${slug}`}
+		href={`/projects/${slug}?wm=${i + 1}`}
 		tabindex="-1"
 		aria-hidden="true"
 	>

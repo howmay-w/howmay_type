@@ -1,5 +1,6 @@
 import gsap from "gsap";
 import { bandOf, createPacker, scatterIndex, testParam } from "./wallPacker.js";
+import "./projectWordmark.js";
 
 // 首頁「圖 / 字」切換：在 <html> 設 data-view，樣式由 CSS 接管（見 ProjectGrid.astro）
 // 首次繪製前的套用在 index.astro 的 inline script，避免先閃一次圖片模式
