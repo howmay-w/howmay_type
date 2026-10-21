@@ -329,7 +329,7 @@ dd {
 
 .title-header--initial {
   font-size: var(--font-size-l);
-  /* 手機版：Works 與作品數量同一行，數字靠右 */
+  /* 手機版：「字 ／ 圖」與作品數量同一行，數字靠右 */
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
 }
@@ -337,6 +337,16 @@ dd {
 .title-header--initial h2 {
   grid-column: 1;
   grid-row: 1;
+}
+
+/* 「字 ／ 圖」切換放在原本 Works 標題的位置，字級跟標題一樣 */
+.title-header--initial > .view-toggle {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.title-header--initial > .view-toggle button {
+  font-size: inherit;
 }
 
 .title-header--initial > span {
@@ -364,7 +374,7 @@ dd {
     gap: 1rem;
   }
 
-  .title-header--initial h2,
+  .title-header--initial > .view-toggle,
   .title-header--initial > span,
   .title-header--initial > div {
     grid-column: auto;

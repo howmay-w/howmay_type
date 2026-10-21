@@ -20,9 +20,10 @@ const readView = () => {
   const fromUrl = new URLSearchParams(window.location.search).get("view");
   if (fromUrl === "type" || fromUrl === "image") return fromUrl;
   try {
-    return localStorage.getItem(GRID_VIEW_KEY) === "type" ? "type" : "image";
+    // 預設「字」；選過「圖」才記住
+    return localStorage.getItem(GRID_VIEW_KEY) === "image" ? "image" : "type";
   } catch (_) {
-    return "image";
+    return "type";
   }
 };
 

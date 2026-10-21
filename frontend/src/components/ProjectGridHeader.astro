@@ -12,13 +12,14 @@ const { projectsTotal } = Astro.props;
 ---
 
 <header class="title-header title-header--initial">
-	<h2><TextSlider content="Works" /></h2>
+	<h2 class="sr-only">作品</h2>
+	<!-- 「字 ／ 圖」就是這一段的標題：顯示中的模式全亮，另一個淡色、滑過亮起 -->
+	<div class="view-toggle" role="group" aria-label="瀏覽方式">
+		<button data-view-option="type" aria-pressed="true" aria-label="單色字"><TextSlider content="字" /></button>
+		<span aria-hidden="true">/</span>
+		<button data-view-option="image" aria-pressed="false" aria-label="圖片"><TextSlider content="圖" /></button>
+	</div>
 	<div>
-		<div class="view-toggle" role="group" aria-label="瀏覽方式">
-			<button data-view-option="image" aria-pressed="true" aria-label="圖片"><TextSlider content="圖" /></button>
-			<span aria-hidden="true">/</span>
-			<button data-view-option="type" aria-pressed="false" aria-label="單色字"><TextSlider content="字" /></button>
-		</div>
 		<button data-sort><TextSlider content="最新" /></button>
 		<button data-shuffle><TextSlider content="隨機" /></button>
 		<div>

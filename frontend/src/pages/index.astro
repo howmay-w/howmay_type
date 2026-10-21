@@ -17,10 +17,10 @@ const description = "皓梅 Howmay，台灣漢字美術字（Lettering）與標�
 
 <BaseLayout title={title} description={description}>
 	<script is:inline>
-		// 在格線繪製前套用上次選的「圖 / 字」，避免閃一下圖片模式
+		// 在格線繪製前套用「字 / 圖」（預設字，選過圖才記住），避免閃一下圖片模式
 		try {
 			const v = new URLSearchParams(location.search).get("view") || localStorage.getItem("grid-view");
-			if (v === "type") document.documentElement.dataset.view = "type";
+			if (v !== "image") document.documentElement.dataset.view = "type";
 		} catch (_) {}
 	</script>
 	<Preloader />
