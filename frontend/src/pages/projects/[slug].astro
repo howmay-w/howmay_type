@@ -152,7 +152,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 			</div>
 		</header>
 		<Separator />
-		<div class="content-wrap">
+		<div class:list={["content-wrap", isReelsLayout && firstVideo && "content-wrap--reels"]}>
 			<div class="media-column">
 				{hasMedia ? (
 					isReelsLayout ? (
@@ -367,7 +367,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 	@media screen and (min-width: 80em) {
 		.content-wrap:has(.wm-side) {
 			max-width: none;
-			grid-template-columns: minmax(320px, 45vw) 34ch minmax(0, 1fr);
+			grid-template-columns: minmax(320px, var(--media-w)) 34ch minmax(0, 1fr);
 			grid-template-areas: "media content wm";
 		}
 		.wm-side {
@@ -385,17 +385,23 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		}
 	}
 	.content-wrap {
+		/* 圖片欄寬度：最多 45vw，而且方形的圖要整張放得進一個畫面（扣掉上方標頭與標題約 17rem），寬螢幕上才不會被切掉 */
+		--media-w: min(45vw, calc(100svh - 17rem));
 		display: grid;
 		gap: 2rem;
 		max-width: 90ch;
 		align-items: start;
+	}
+	/* Reels：左欄寬度跟著直式影片（9:16），影片高度不超過一個畫面；下方的圖也用同一個寬度，左欄上下對齊 */
+	.content-wrap--reels {
+		--media-w: min(45vw, calc((100svh - 17rem) * 9 / 16));
 	}
 	.content {
 		max-width: 34ch;
 	}
 	@media screen and (min-width: 50em) {
 		.content-wrap {
-			grid-template-columns: minmax(320px, 45vw) 34ch;
+			grid-template-columns: minmax(320px, var(--media-w)) 34ch;
 			grid-template-areas: "media content";
 		}
 		.media-column {
