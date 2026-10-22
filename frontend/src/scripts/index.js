@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { floatUp, revealCards } from "./cardReady.js";
 
 // DOM elements and animation-related variables
 let lines;
@@ -18,7 +19,8 @@ const initializeVariables = () => {
 		? Array.from(gridContainer.children).filter(
 				(el) =>
 					!el.hasAttribute("data-deferred") &&
-					!el.hasAttribute("data-wm-extra") &&
+					// 其他款字圖：已經跟著所屬作品排上字牆的才算（gridViewMode.js 加上 data-wm-on）
+					(!el.hasAttribute("data-wm-extra") || el.hasAttribute("data-wm-on")) &&
 					el.style.display !== "none",
 			)
 		: [];
@@ -36,6 +38,9 @@ const ensureGridVisible = () => {
 	endIntro();
 };
 
+// 入場動畫的代號：換頁後還在等圖的卡片不再播放
+let introRun = 0;
+
 // Animate the homepage elements using a GSAP timeline.
 const animateHomepageElements = () => {
 	if (!gridContainer) return;
@@ -47,21 +52,19 @@ const animateHomepageElements = () => {
 	}
 
 	// Hide the grid container before starting the animation.
-	animationTimeline = gsap.set(gridContainer, { autoAlpha: 0 });
+	gsap.set(gridContainer, { autoAlpha: 0 });
+	const run = ++introRun;
+	const grid = gridContainer;
+	const items = gridItems;
 
 	try {
-		gsap
+		animationTimeline = gsap
 			.timeline({
 				defaults: {
 					duration: 1.4,
 					ease: "power4",
 				},
-				onComplete: () => {
-					const event = new CustomEvent("gridRendered");
-					document.dispatchEvent(event);
-				},
 				onInterrupt: ensureGridVisible,
-				onKill: ensureGridVisible,
 			})
 			.fromTo(
 				lines,
@@ -69,19 +72,28 @@ const animateHomepageElements = () => {
 				{ duration: 1.6, ease: "power2", stagger: 0.9, scaleX: 1 },
 			)
 			.from(textSliders, { yPercent: 100, stagger: 0.1 }, 0.2)
-			.set(gridContainer, { autoAlpha: 1 }, "<+=1")
-			.from(gridItems, { yPercent: 100, stagger: 0.04, duration: 0.8 }, "<")
-			.from(gridItems, { ease: "sine", autoAlpha: 0, stagger: 0.04, duration: 0.8 }, "<")
 			// 工具列文字浮上來後（約 1.6 秒，頁頭的字先依序浮上）才畫底線；用絕對時間，不影響上面各段的相對位置
 			.call(endIntro, undefined, 1.6);
+		// 頁頭的字浮上來約 1 秒後，牆面開始出現。每張卡片等自己的字圖（或縮圖）載好才浮上來，
+		// 沒載好就先播動畫的話，字會在動畫結束後才突然閃出來；圖從現在就開始載
+		gsap.set(items, { yPercent: 100, autoAlpha: 0 });
+		gsap.delayedCall(1.2, () => {
+			if (run !== introRun) return;
+			gsap.set(grid, { autoAlpha: 1 });
+			revealCards(items, { animate: floatUp }).then(() => {
+				if (run === introRun) document.dispatchEvent(new CustomEvent("gridRendered"));
+			});
+		});
 	} catch (err) {
 		console.error("Homepage animation error:", err);
 		ensureGridVisible();
+		gsap.set(gridItems, { yPercent: 0, autoAlpha: 1 });
 	}
 };
 
 // Clean up animations and DOM references to prevent memory leaks.
 const cleanup = () => {
+	introRun++;
 	if (animationTimeline) {
 		animationTimeline.kill(); // Stop the timeline
 		animationTimeline = null;

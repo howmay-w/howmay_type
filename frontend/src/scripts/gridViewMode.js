@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import { bandOf, createPacker, scatterIndex, testParam } from "./wallPacker.js";
 import "./projectWordmark.js";
+import { floatUp, revealCards } from "./cardReady.js";
 
 // 首頁「圖 / 字」切換：在 <html> 設 data-view，樣式由 CSS 接管（見 ProjectGrid.astro）
 // 首次繪製前的套用在 index.astro 的 inline script，避免先閃一次圖片模式
@@ -42,6 +43,8 @@ const applyView = (view) => {
  * 等那個位置的卡片顯示出來（例如按 MORE 載入到那裡）就出現在它旁邊；本尊還沒載入也沒關係，點進去都是同一篇。
  * 搜尋時：本尊被篩掉，其他款也不出現；本尊符合但那個位置的卡片被篩掉，就改排在本尊後面幾件。
  */
+// 這次排版才出現的其他款字圖：和卡片一樣等字圖載好才浮上來（不然會突然閃出來）
+let newlyShown = [];
 const byOrder = (a, b) => (parseInt(a.style.order) || 0) - (parseInt(b.style.order) || 0);
 const visibleItems = () => {
   const children = Array.from(grid.children);
@@ -80,6 +83,7 @@ const visibleItems = () => {
       }
       // 其餘（那個位置的卡片還沒載入）：先不顯示，載入到那裡時才出現
     }
+    if (key !== null && !el.hasAttribute("data-wm-on")) newlyShown.push(el);
     el.toggleAttribute("data-wm-on", key !== null);
     if (key !== null) keyed.push({ el, key });
   }
@@ -97,6 +101,7 @@ const layout = () => {
   const W = grid.clientWidth;
   if (!W) return;
   const D = bandOf(W);
+  newlyShown = [];
   const items = visibleItems();
   const signature = `${D}|${items.map((el) => `${el.getAttribute("href")}#${el.dataset.wmIndex ?? 0}`).join(",")}`;
   if (signature === lastSignature) return;
@@ -134,6 +139,7 @@ const layout = () => {
     p.el.style.setProperty("--w", `${((w / D) * 100).toFixed(3)}%`);
   }
   grid.style.setProperty("--wall-ratio", `${D} / ${Math.ceil(height)}`);
+  if (newlyShown.length) revealCards(newlyShown, { animate: floatUp });
   observe();
 };
 
@@ -150,7 +156,25 @@ const scheduleLayout = () => {
   frameTimer = setTimeout(run, 80);
 };
 
-// 排序、搜尋、MORE 都會改動卡片的 style / data-deferred，統一在這裡重排
+// 排序、搜尋、MORE 都會改動卡片的 style / data-deferred，統一在這裡重排。
+// 動畫每一格都會改 style（transform、opacity），只有 display 或 order 真的變了才需要重排，
+// 不然動畫期間每一格都要把整面牆的卡片量一次，動畫會卡
+const styleKeys = new WeakMap();
+const layoutStyle = (el) => `${el.style.display}|${el.style.order}`;
+const onMutations = (records) => {
+  for (const r of records) {
+    if (r.type !== "attributes" || r.attributeName !== "style") {
+      scheduleLayout();
+      return;
+    }
+    const key = layoutStyle(r.target);
+    if (styleKeys.get(r.target) !== key) {
+      styleKeys.set(r.target, key);
+      scheduleLayout();
+      return;
+    }
+  }
+};
 const observe = () => {
   observer?.observe(grid, {
     subtree: false,
@@ -178,11 +202,12 @@ const replayCards = () => {
     visible.filter((el) => !inView.includes(el)),
     { yPercent: 0, autoAlpha: 1 },
   );
-  gsap.fromTo(
-    inView,
-    { yPercent: 30, autoAlpha: 0 },
-    { yPercent: 0, autoAlpha: 1, duration: 0.6, ease: "power3", stagger: 0.02 },
-  );
+  // 切到另一種模式時圖可能還沒載（字圖、縮圖），等載好才浮上來
+  revealCards(inView, {
+    gap: 0.02,
+    from: { yPercent: 30 },
+    animate: (el) => gsap.to(el, { yPercent: 0, autoAlpha: 1, duration: 0.6, ease: "power3" }),
+  });
 };
 
 const handleClick = (e) => {
@@ -210,7 +235,7 @@ const init = () => {
   grid.addEventListener("pointerup", onPointerUp);
   lastSignature = "";
   packer = null;
-  observer = new MutationObserver(scheduleLayout);
+  observer = new MutationObserver(onMutations);
   resizeObserver = new ResizeObserver(scheduleLayout);
   resizeObserver.observe(grid);
   observe();

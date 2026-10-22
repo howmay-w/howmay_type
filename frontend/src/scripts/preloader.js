@@ -8,14 +8,14 @@ const initializeElements = () => {
   loading = document.querySelector(".loading");
 };
 
-// Load only above-the-fold, non-lazy images.
-// Lazy images haven't started loading yet so their load events never fire,
-// which would cause the preloader to always hit the timeout.
+// Load only above-the-fold images that are actually rendered.
+// 字牆模式下卡片縮圖是 display: none（量到的位置是 0，會被誤算成在畫面內），不必等；
+// 字牆的字圖由首頁入場動畫（index.js）逐張等候
 const loadImages = () => {
   return new Promise((resolve) => {
     const vh = window.innerHeight;
     const aboveFoldImgs = [...document.querySelectorAll("img")].filter((img) => {
-      if (img.loading === "lazy") return false;
+      if (!img.getClientRects().length) return false;
       const rect = img.getBoundingClientRect();
       return rect.top < vh;
     });

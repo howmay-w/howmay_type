@@ -78,12 +78,13 @@ const tagsStr = tags?.length ? tags.join("、") : "";
 	<article>
 		{heroImage && (
 			<span class="project-card__img-wrap">
+				{/* 縮圖一律 lazy：預設的字牆模式不顯示縮圖，不必下載；圖片模式下瀏覽器會先載畫面內的 */}
 				<picture>
 					<img
 						src={heroImage.src}
 						alt={heroImage.alt ?? title}
 						width="800"
-						loading={deferred ? "lazy" : "eager"}
+						loading="lazy"
 						decoding="async"
 					/>
 				</picture>

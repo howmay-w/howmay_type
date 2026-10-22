@@ -1,5 +1,6 @@
 import gsap from "gsap";
 import { navigate } from "astro:transitions/client";
+import { floatUp, revealCards } from "./cardReady.js";
 
 const SESSION_ORDER_KEY = "grid-session-order";
 const GRID_SEARCH_KEY = "grid-search-term";
@@ -138,22 +139,8 @@ const initializeVariables = () => {
   searchNoResults = document.getElementById("search-no-results-wrap");
 };
 
-/* 以 GSAP 複製首頁入場動畫：yPercent 100 上浮 + autoAlpha 淡入 */
-const appearCards = (items) => {
-  if (!items.length) return;
-  gsap.killTweensOf(items);
-  const tl = gsap.timeline();
-  tl.fromTo(
-    items,
-    { yPercent: 100 },
-    { yPercent: 0, duration: 0.8, ease: "power4", stagger: 0.04 },
-  ).fromTo(
-    items,
-    { autoAlpha: 0 },
-    { autoAlpha: 1, duration: 0.8, ease: "sine", stagger: 0.04 },
-    "<",
-  );
-};
+/* 和首頁入場動畫相同的浮上動畫；每張卡片等圖載好才浮上來（見 cardReady.js），回傳全部開始播放後 resolve 的 promise */
+const appearCards = (items) => revealCards(items, { animate: floatUp });
 
 /* Shuffle：從全部專案中隨機抽選 LOAD_BATCH 張顯示，其餘重新隱藏 */
 const shuffleGrid = () => {
@@ -349,11 +336,11 @@ const filterGrid = (searchValue, options = {}) => {
     } else if (isSearching) {
       // 搜尋模式：全部同時淡入，不用 stagger
       // fromTo + stagger 會把所有 items 先設成 autoAlpha:0，後段 items 長時間透明 → 看起來消失
-      gsap.fromTo(
-        toAnimate,
-        { yPercent: 15, autoAlpha: 0 },
-        { yPercent: 0, autoAlpha: 1, duration: 0.45, ease: "power2.out" },
-      );
+      revealCards(toAnimate, {
+        gap: 0,
+        from: { yPercent: 15 },
+        animate: (el) => gsap.to(el, { yPercent: 0, autoAlpha: 1, duration: 0.45, ease: "power2.out" }),
+      });
     } else {
       appearCards(toAnimate);
     }
@@ -386,8 +373,12 @@ const loadMore = () => {
     item.removeAttribute("data-deferred");
     item.style.display = "";
   });
-  appearCards(batch);
   updateLoadMoreVisibility();
+  return appearCards(batch);
+};
+
+const handleLoadMoreClick = () => {
+  loadMore();
 };
 
 /* 自動載入：「更多」按鈕進到畫面下方一個螢幕高的範圍內，就自動載入下一批，牆面看起來是連續的。
@@ -395,6 +386,9 @@ const loadMore = () => {
    載完一批後牆面重排需要一點時間，之後按鈕若還在範圍內（螢幕很高時）就再載一批，直到填滿 */
 let autoLoadObserver = null;
 let autoLoadTimer = 0;
+// 上一批的圖還在載入時不載下一批，網路先留給畫面上的字（換頁後作廢）
+let autoLoadBusy = false;
+let autoLoadRun = 0;
 const AUTO_LOAD_SETTLE = 450;
 const gridShown = () => {
   const grid = document.querySelector("[data-grid]");
@@ -405,14 +399,26 @@ const loadMoreNear = () =>
   Boolean(loadMoreBtn) &&
   !loadMoreBtn.classList.contains("hidden") &&
   loadMoreBtn.getBoundingClientRect().top < window.innerHeight * 2;
-const tryAutoLoad = () => {
-  if (autoLoadTimer || !loadMoreNear()) return;
-  // 首頁入場動畫還在跑（牆面還沒顯示）時先不載，等一下再檢查
-  if (gridShown()) loadMore();
+const retryAutoLoad = () => {
   autoLoadTimer = window.setTimeout(() => {
     autoLoadTimer = 0;
     tryAutoLoad();
   }, AUTO_LOAD_SETTLE);
+};
+const tryAutoLoad = () => {
+  if (autoLoadTimer || autoLoadBusy || !loadMoreNear()) return;
+  // 首頁入場動畫還在跑（牆面還沒顯示）時先不載，等一下再檢查
+  if (!gridShown()) {
+    retryAutoLoad();
+    return;
+  }
+  const run = autoLoadRun;
+  autoLoadBusy = true;
+  loadMore().then(() => {
+    if (run !== autoLoadRun) return;
+    autoLoadBusy = false;
+    retryAutoLoad();
+  });
 };
 const setupAutoLoad = () => {
   if (!loadMoreBtn || !("IntersectionObserver" in window)) return;
@@ -429,6 +435,8 @@ const teardownAutoLoad = () => {
   autoLoadObserver = null;
   clearTimeout(autoLoadTimer);
   autoLoadTimer = 0;
+  autoLoadBusy = false;
+  autoLoadRun++;
 };
 
 /* 更新「載入更多」按鈕的顯示狀態。搜尋／篩選中時隱藏（已顯示全部符合結果） */
@@ -575,7 +583,7 @@ const init = () => {
       searchInput.value = toolbarTerm;
     filterGrid(toolbarTerm, { skipAnimation: true });
   });
-  loadMoreBtn?.addEventListener("click", loadMore);
+  loadMoreBtn?.addEventListener("click", handleLoadMoreClick);
   setupAutoLoad();
   gridContainer?.addEventListener("click", handleGridCardClick);
   const hadFromLatest =
@@ -607,7 +615,7 @@ const cleanup = () => {
   searchOverlay?.removeEventListener("click", handleCloseClick);
   searchClearButton?.removeEventListener("click", handleSearchClearClick);
   searchInput?.removeEventListener("input", handleSearchInput);
-  loadMoreBtn?.removeEventListener("click", loadMore);
+  loadMoreBtn?.removeEventListener("click", handleLoadMoreClick);
   teardownAutoLoad();
   gridContainer?.removeEventListener("click", handleGridCardClick);
   gridContainer = null;
