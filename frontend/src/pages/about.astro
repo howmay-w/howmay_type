@@ -60,13 +60,14 @@ const description = "皓梅 Howmay，台灣漢字美術字與標準字設計師�
 <style>
   h1 {
     font-size: clamp(2rem, 6vw, 2.8rem);
-    font-weight: 600;
+    /* Zen Kaku 沒有 600，原本的 600 一律改 700（中文本來就顯示 700，英文跟著一致） */
+    font-weight: 700;
     line-height: 1.1;
     margin: 0 0 1rem;
   }
   h2 {
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-faded);
@@ -95,7 +96,7 @@ const description = "皓梅 Howmay，台灣漢字美術字與標準字設計師�
   }
   a {
     color: inherit;
-    font-weight: 600;
+    font-weight: 700;
   }
   .related-links ul,
   .credits ul {

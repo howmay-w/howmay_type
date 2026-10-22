@@ -106,7 +106,8 @@ const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
     display: grid;
     grid-template-columns: min-content auto;
     align-items: baseline;
-    font-weight: 600;
+    /* 字重只用實際載入的 400／500／700：Zen Kaku 沒有 600，設 600 時中文顯示 700、英文 600，粗細不一致 */
+    font-weight: 700;
     padding: 1rem 0;
     gap: 1rem;
     z-index: 3;
@@ -119,12 +120,15 @@ const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
      （和首頁「最新／隨機」標示目前排序相同） */
   ul a {
     position: relative;
+    /* 字級縮小後依基線對齊，字頂會比左側低約 0.9px，往上補回，三組字上緣對齊 */
+    top: -0.055em;
   }
   ul a::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: 0;
+    /* 底線和字底留約 5px（上緣對齊後連結的框變矮，貼著框底會太靠近字） */
+    bottom: -0.22em;
     height: 1px;
     width: 0;
     background: var(--color-link-underline);
@@ -152,9 +156,10 @@ const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
   h1 {
     font-weight: inherit;
   }
-  /* 讓 TextSlider 的 inline-block 不拉高行高，兩欄換行後行距一致 */
+  /* 讓 TextSlider 的 inline-block 不拉高行高，兩欄換行後行距一致；導覽也一樣，三組字才會上緣對齊 */
   h1 :global(.oh),
-  .header-subtitle :global(.oh) {
+  .header-subtitle :global(.oh),
+  ul :global(.oh) {
     vertical-align: top;
   }
   .header-subtitle__line2::before {
@@ -175,12 +180,15 @@ const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
   }
   ul {
     display: flex;
-    /* 導覽是操作，字重 500（全站操作類統一），比左側站名 600 細一級 */
+    /* 導覽是操作，字重 500（全站操作類統一），比左側站名 700 細一級；
+       細字看起來比粗字大，字級縮一點點做光學補正 */
     font-weight: 500;
+    font-size: 15.5px;
     /* 中文字比英文高，行高 1 時 TextSlider 會切掉字頂；和左側副標同樣用 1.3 */
     line-height: 1.3;
     list-style: none;
-    gap: 1rem;
+    /* 關於我和委託／合作之間略寬一點 */
+    gap: 1.25rem;
     margin: 0;
     padding: 0;
     grid-column: auto / span 2;
