@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import ProjectCard from "./ProjectCard.astro";
 import ProjectTooltip from "./ProjectTooltip.astro";
+import { useTranslations } from "../i18n/ui";
 
 const INITIAL_BATCH = 24;
 
@@ -11,6 +12,7 @@ type Props = {
 
 const { projects } = Astro.props;
 const grid = "projects";
+const t = useTranslations();
 ---
 
 <section class="project-grid" id="grid" data-grid={grid}>
@@ -27,9 +29,8 @@ const grid = "projects";
 	<button
 		id="load-more"
 		class={projects.length <= INITIAL_BATCH ? "hidden" : ""}
-		aria-label="Load more"
 	>
-		MORE
+		{t("grid.more")}
 		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
 	</button>
 </div>
@@ -80,7 +81,7 @@ const grid = "projects";
 	#load-more {
 		font-family: inherit;
 		font-size: 0.9rem;
-		font-weight: 600;
+		font-weight: 500;
 		cursor: pointer;
 		background: none;
 		border: none;
@@ -92,8 +93,10 @@ const grid = "projects";
 		align-items: center;
 		gap: 0.1rem;
 	}
-	#load-more:hover {
-		color: var(--color-link-hover);
+	@media (hover: hover) {
+		#load-more:hover {
+			color: var(--color-link-hover);
+		}
 	}
 	#load-more.hidden {
 		display: none;
@@ -177,6 +180,11 @@ const grid = "projects";
 		:global(html[data-view="type"] .project-grid > a:hover .project-card__wordmark) {
 			background-color: var(--accent, var(--color-link-underline));
 		}
+	}
+	/* 手機沒有 hover：手指按下時就換成原作色（gridViewMode.js 加 .is-pressed），換頁前不會像卡住 */
+	:global(html[data-view="type"] .project-grid > a.is-pressed .project-card__wordmark) {
+		background-color: var(--accent, var(--color-link-underline));
+		transition-duration: 0.12s;
 	}
 	/* 黑底上黑色提示框看不出來，改成淺色 */
 	:global(html[data-view="type"] .tooltip) {

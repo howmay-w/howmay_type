@@ -3,28 +3,33 @@ import Cross from "../assets/images/cross.svg";
 import Search from "../components/Search.astro";
 import Separator from "../components/Separator.astro";
 import TextSlider from "../components/TextSlider.astro";
+import { useTranslations } from "../i18n/ui";
 
 type Props = {
 	projectsTotal: number;
 };
 
 const { projectsTotal } = Astro.props;
+const t = useTranslations();
 ---
 
-<header class="title-header title-header--initial">
+<!-- is-intro：入場動畫期間先不畫排序底線，文字浮上來後由 index.js 拿掉，底線才畫出 -->
+<header class="title-header title-header--initial is-intro">
 	<h2 class="sr-only">作品</h2>
 	<!-- 「字 ／ 圖」就是這一段的標題：顯示中的模式全亮，另一個淡色、滑過亮起 -->
-	<div class="view-toggle" role="group" aria-label="瀏覽方式">
-		<button data-view-option="type" aria-pressed="true" aria-label="單色字"><TextSlider content="字" /></button>
-		<span aria-hidden="true">/</span>
-		<button data-view-option="image" aria-pressed="false" aria-label="圖片"><TextSlider content="圖" /></button>
+	<div class="view-toggle" role="group" aria-label={t("grid.viewGroup")}>
+		<button data-view-option="type" aria-pressed="true" aria-label={t("grid.viewTypeLabel")}><TextSlider content={t("grid.viewType")} /></button>
+		<!-- 斜線也包在 TextSlider 裡，入場時和「字」「圖」一起浮上來 -->
+		<span class="view-toggle__sep" aria-hidden="true"><TextSlider content="／" /></span>
+		<button data-view-option="image" aria-pressed="false" aria-label={t("grid.viewImageLabel")}><TextSlider content={t("grid.viewImage")} /></button>
 	</div>
 	<div>
-		<button data-sort><TextSlider content="最新" /></button>
-		<button data-shuffle><TextSlider content="隨機" /></button>
+		<!-- 目前的排序（aria-pressed="true"）下方加細底線；搜尋中兩個都不加 -->
+		<button data-sort aria-pressed="false"><TextSlider content={t("grid.latest")} /></button>
+		<button data-shuffle aria-pressed="true"><TextSlider content={t("grid.random")} /></button>
 		<div>
-			<button data-search class="search"><TextSlider content="搜尋" /></button>
-			<button data-clear class="clear hidden" aria-label="清除搜尋">
+			<button data-search class="search"><TextSlider content={t("grid.search")} /></button>
+			<button data-clear class="clear hidden" aria-label={t("grid.clearSearch")}>
 				<Cross width={14} height={14} />
 			</button>
 		</div>
@@ -36,7 +41,11 @@ const { projectsTotal } = Astro.props;
 <Search />
 
 <style>
+	/* 層級：「字／圖」是標題用粗體；最新、隨機、搜尋是操作，用 500（全站操作類統一） */
 	button {
+		font-weight: 500;
+	}
+	.view-toggle button {
 		font-weight: 700;
 	}
 	div {
@@ -53,19 +62,70 @@ const { projectsTotal } = Astro.props;
 	.clear {
 		flex-shrink: 0;
 	}
+	/* 全形「／」本身左右已有空間，不再另加間距 */
 	.view-toggle {
 		flex-shrink: 0;
-		gap: 0.35rem;
+		gap: 0;
 	}
-	.view-toggle span {
+	/* 全形「／」比字略小、往下對齊字身，左右收窄 */
+	.view-toggle__sep {
 		opacity: 0.35;
+		font-size: 0.95em;
+		position: relative;
+		top: 0.14em;
+		margin: 0 -0.06em;
+	}
+	/* 手機字級較小，斜線稍微往上一點 */
+	@media screen and (max-width: 49.99em) {
+		.view-toggle__sep {
+			top: 0.12em;
+		}
+	}
+	/* 斜線包在 TextSlider 裡：動畫外框靠上對齊，不多出下方空白，位置才和「字」「圖」對齊 */
+	.view-toggle__sep :global(.oh) {
+		vertical-align: top;
 	}
 	[data-view-option][aria-pressed="false"] {
 		opacity: 0.35;
 		transition: opacity 0.3s;
 	}
-	[data-view-option][aria-pressed="false"]:hover {
-		opacity: 1;
+	/* 「最新／隨機」都全亮（是操作，不是二選一）。底線和內文連結相同（螢光綠、從左畫出）：
+	   目前的排序一直有底線，其他的滑過時畫出（和導覽的「目前頁」相同） */
+	[data-sort],
+	[data-shuffle] {
+		position: relative;
+	}
+	[data-sort]::after,
+	[data-shuffle]::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		height: 1px;
+		width: 0;
+		background: var(--color-link-underline);
+		transition: width 0.3s ease;
+	}
+	[data-sort][aria-pressed="true"]::after,
+	[data-shuffle][aria-pressed="true"]::after {
+		width: 100%;
+	}
+	.is-intro [data-sort]::after,
+	.is-intro [data-shuffle]::after {
+		width: 0;
+	}
+	@media (hover: hover) {
+		[data-view-option][aria-pressed="false"]:hover {
+			opacity: 1;
+		}
+		[data-sort]:hover::after,
+		[data-shuffle]:hover::after {
+			width: 100%;
+		}
+		/* 滑到另一個排序、新底線畫出時，目前排序的底線照原本的動畫收回 */
+		div:has(> [data-sort]:hover, > [data-shuffle]:hover) > [aria-pressed="true"]:not(:hover)::after {
+			width: 0;
+		}
 	}
 	div:has(> .search) {
 		position: relative;

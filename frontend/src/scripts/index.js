@@ -25,9 +25,15 @@ const initializeVariables = () => {
 	hasPreloaderComponent = document.querySelector(".loading");
 };
 
+// 入場動畫結束：拿掉工具列的 is-intro，「最新／隨機」的底線才從左畫出（不會比文字早出現）
+const endIntro = () => {
+	document.querySelector(".title-header--initial")?.classList.remove("is-intro");
+};
+
 // 確保 grid 一定會顯示（動畫出錯時仍可看到內容）
 const ensureGridVisible = () => {
 	if (gridContainer) gsap.set(gridContainer, { autoAlpha: 1 });
+	endIntro();
 };
 
 // Animate the homepage elements using a GSAP timeline.
@@ -65,7 +71,9 @@ const animateHomepageElements = () => {
 			.from(textSliders, { yPercent: 100, stagger: 0.1 }, 0.2)
 			.set(gridContainer, { autoAlpha: 1 }, "<+=1")
 			.from(gridItems, { yPercent: 100, stagger: 0.04, duration: 0.8 }, "<")
-			.from(gridItems, { ease: "sine", autoAlpha: 0, stagger: 0.04, duration: 0.8 }, "<");
+			.from(gridItems, { ease: "sine", autoAlpha: 0, stagger: 0.04, duration: 0.8 }, "<")
+			// 工具列文字浮上來後（約 1.6 秒，頁頭的字先依序浮上）才畫底線；用絕對時間，不影響上面各段的相對位置
+			.call(endIntro, undefined, 1.6);
 	} catch (err) {
 		console.error("Homepage animation error:", err);
 		ensureGridVisible();

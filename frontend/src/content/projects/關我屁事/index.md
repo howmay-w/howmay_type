@@ -18,8 +18,9 @@ tags: ["noneofmybusiness", "金屬", "特效", "3D", "😇"]
 wordmark:
   src: "/projects/關我屁事/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/關我屁事/wordmark-source.webp"
   accent: "#a8b4e4"
-  ink: 0.172
+  ink: 0.174
   chars: 4.5
 ---
 

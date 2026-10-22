@@ -10,6 +10,8 @@
 /* 防止手機雙擊放大（保留雙指縮放） */
 html {
   touch-action: manipulation;
+  /* 電腦版：不論頁面需不需要捲動都預留捲動軸的位置，換頁時頁頭右側的導覽不會左右跳動 */
+  scrollbar-gutter: stable;
 }
 
 /* 移除手機點擊時預設的圓角灰底（tap highlight） */
@@ -73,9 +75,18 @@ a {
   cursor: pointer;
   transition: color 0.3s;
 
-  &:hover {
-    color: var(--color-link-hover);
-    outline: none;
+  /* 只在有滑鼠的裝置轉灰：手機點擊後 :hover 會黏著，點過的按鈕會一直是灰的 */
+  @media (hover: hover) {
+    &:hover {
+      color: var(--color-link-hover);
+      outline: none;
+    }
+  }
+  /* 手機：手指按下時轉灰，放開就恢復，讓人知道有按到 */
+  @media (hover: none) {
+    &:active {
+      color: var(--color-link-hover);
+    }
   }
 
   &:focus {
@@ -146,8 +157,15 @@ button {
   fill: currentColor;
   transition: color 0.3s;
 
-  &:hover {
-    color: var(--color-link-hover);
+  @media (hover: hover) {
+    &:hover {
+      color: var(--color-link-hover);
+    }
+  }
+  @media (hover: none) {
+    &:active {
+      color: var(--color-link-hover);
+    }
   }
 
   &:focus {
@@ -364,8 +382,24 @@ dd {
 }
 
 @media screen and (max-width: 49.99em) {
+  /* 手機：標題區和上下分隔線、兩行之間的距離收小（電腦版維持 2rem / 1.5rem / 1rem） */
+  .title-header--initial {
+    padding: 16px 0 16px;
+    row-gap: 4px;
+  }
+  /* 手機：最新、隨機、搜尋比標題小一級 */
   .title-header--initial > div button {
-    font-size: 21px;
+    font-size: 18px;
+  }
+  /* 手機：「字 ／ 圖」再放大 1.2 倍 */
+  .title-header--initial > .view-toggle {
+    font-size: calc(var(--font-size-xl) * 1.2);
+  }
+  /* 手機：作品數和「字 ／ 圖」頂端對齊 */
+  .title-header--initial > span {
+    align-self: start;
+    /* 中文字在行框裡比數字低，往下補到和「字」的字頂齊 */
+    margin-top: 0.4em;
   }
 }
 

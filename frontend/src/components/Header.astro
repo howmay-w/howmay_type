@@ -1,6 +1,9 @@
 ---
 import Separator from "../components/Separator.astro";
 import TextSlider from "../components/TextSlider.astro";
+import { useTranslations } from "../i18n/ui";
+
+const t = useTranslations();
 
 // Get the current pathname
 const currentPath = Astro.url.pathname;
@@ -13,12 +16,16 @@ const routes = {
 	"/contact": "Contact",
 };
 // Determine the active route
-const activeRoute = routes[currentPath] || null;
+// 正式站網址結尾有斜線（/about/），先去掉再比對
+const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
 ---
 
-<header>
+<!-- 換頁時保留同一個頁頭元素（不重新產生、不參與淡入淡出），手機上就不會閃一下；
+     「目前頁」的底線由下方的 script 在換頁後更新 -->
+<header transition:persist="site-header" transition:animate="none">
   <h1>
-   <TextSlider content="Howmay 皓梅" /></a>
+    <!-- 站名也可以回首頁（和右邊副標相同），滑過轉灰 -->
+    <a href="/" data-astro-prefetch><TextSlider content="Howmay 皓梅" /></a>
   </h1>
   <a href="/" class={`header-subtitle ${activeRoute === "Home" ? "current" : ""}`} data-astro-prefetch>
     <TextSlider content="Lettering & Logotype" />
@@ -29,17 +36,28 @@ const activeRoute = routes[currentPath] || null;
       <a
         href="/about"
         class={activeRoute === "About" ? "current" : ""}
-        data-astro-prefetch><TextSlider content="關於我" /></a>
+        data-astro-prefetch><TextSlider content={t("nav.about")} /></a>
     </li>
     <li>
       <a
         href="/contact"
         class={activeRoute === "Contact" ? "current" : ""}
-        data-astro-prefetch><TextSlider content="委託／合作" /></a>
+        data-astro-prefetch><TextSlider content={t("nav.contact")} /></a>
     </li>
   </ul>
 </header>
 <Separator />
+
+<script>
+  // 頁頭在換頁時保留（transition:persist），伺服器端算好的 .current 不會跟著換，換頁後依網址重設
+  const markCurrent = () => {
+    const path = location.pathname.replace(/(.)\/$/, "$1");
+    for (const a of document.querySelectorAll<HTMLAnchorElement>("header[data-astro-transition-persist] a[href]")) {
+      a.classList.toggle("current", a.getAttribute("href") === path);
+    }
+  };
+  document.addEventListener("astro:after-swap", markCurrent);
+</script>
 
 <style>
   header {
@@ -52,8 +70,36 @@ const activeRoute = routes[currentPath] || null;
     gap: 1rem;
     z-index: 3;
   }
-  header a.current {
+  /* 已在該頁的導覽不能再點；副標（回首頁）不受影響，在首頁滑過也會轉灰 */
+  ul a.current {
     pointer-events: none;
+  }
+  /* 導覽底線和內文連結相同（螢光綠、從左畫出）：目前所在的頁面一直有底線，其他滑過時畫出
+     （和首頁「最新／隨機」標示目前排序相同） */
+  ul a {
+    position: relative;
+  }
+  ul a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 0;
+    background: var(--color-link-underline);
+    transition: width 0.3s ease;
+  }
+  ul a.current::after {
+    width: 100%;
+  }
+  @media (hover: hover) {
+    ul a:hover::after {
+      width: 100%;
+    }
+    /* 滑到其他項目、新底線畫出時，目前頁的底線照原本的動畫收回 */
+    ul:has(a:not(.current):hover) a.current::after {
+      width: 0;
+    }
   }
   h1,
   header > a {
@@ -88,6 +134,8 @@ const activeRoute = routes[currentPath] || null;
   }
   ul {
     display: flex;
+    /* 導覽是操作，字重 500（全站操作類統一），比左側站名 600 細一級 */
+    font-weight: 500;
     /* 中文字比英文高，行高 1 時 TextSlider 會切掉字頂；和左側副標同樣用 1.3 */
     line-height: 1.3;
     list-style: none;
@@ -95,6 +143,12 @@ const activeRoute = routes[currentPath] || null;
     margin: 0;
     padding: 0;
     grid-column: auto / span 2;
+  }
+  /* 手機：導覽和右欄的「Lettering & Logotype」左邊對齊 */
+  @media screen and (max-width: 49.99em) {
+    ul {
+      grid-column: 2;
+    }
   }
   @media screen and (min-width: 50em) {
     header {

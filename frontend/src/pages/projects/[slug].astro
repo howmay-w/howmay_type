@@ -10,6 +10,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { hoverColor } from "../../utils/hoverColor";
 import { getWebpSize } from "../../utils/webpSize";
+import { useTranslations } from "../../i18n/ui";
+
+const t = useTranslations();
 
 /** 專案資料夾名稱 = URL slug（index.md 時為 example-project-a，非 index 時為 project.id） */
 function getProjectSlug(id: string) {
@@ -148,7 +151,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		<header class="title-header">
 			<h2>{title}</h2>
 			<div>
-				<a class="back" href={backHref} data-back data-from-search={fromSearch || undefined} data-from-latest={fromLatest || undefined}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg> BACK</a>
+				<a class="back" href={backHref} data-back data-from-search={fromSearch || undefined} data-from-latest={fromLatest || undefined}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg> {t("project.back")}</a>
 			</div>
 		</header>
 		<Separator />
@@ -237,8 +240,8 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 				{prevProject && prevSlug ? (
 					<a href={fromSearch ? `/projects/${prevSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${prevSlug}?from=latest` : `/projects/${prevSlug}`} class="nav-link">
 						<span class="nav-label">
-							<span class="nav-meta">Prev</span>
 							<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg></span>
+							<span class="nav-meta">{t("project.prev")}</span>
 						</span>
 						<span class="nav-title">{prevProject.data.title}</span>
 					</a>
@@ -248,13 +251,13 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 				<a href="/" class="nav-link nav-link--center">
 					<span class="nav-label">
 						<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6" /></svg></span>
-						<span class="nav-meta">HOME</span>
+						<span class="nav-meta">{t("project.home")}</span>
 					</span>
 				</a>
 				<button class="nav-link nav-link--center nav-random" data-slugs={JSON.stringify(allSlugs)} data-from-search={fromSearch || undefined} data-from-latest={fromLatest || undefined}>
 					<span class="nav-label">
 						<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg></span>
-						<span class="nav-meta">Random</span>
+						<span class="nav-meta">{t("project.random")}</span>
 					</span>
 				</button>
 			</div>
@@ -262,8 +265,8 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 				{nextProject && nextSlug ? (
 					<a href={fromSearch ? `/projects/${nextSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${nextSlug}?from=latest` : `/projects/${nextSlug}`} class="nav-link nav-link--right">
 						<span class="nav-label">
+							<span class="nav-meta">{t("project.next")}</span>
 							<span class="nav-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" /></svg></span>
-							<span class="nav-meta">Next</span>
 						</span>
 						<span class="nav-title">{nextProject.data.title}</span>
 					</a>
@@ -303,18 +306,34 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 </script>
 
 <style>
+	/* 返回、上下篇、標籤都是操作：字重 500，滑過（手機按下）轉灰，和首頁工具列一致 */
 	.back {
 		font-size: 1rem;
-		font-weight: 600;
+		font-weight: 500;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.25rem;
 	}
-	.back svg {
+	/* 箭頭配合中文字：箭頭線段只占 svg 的一半高，svg 約字級 1.45 倍，折線比中文字高（約 0.81em）略小一點，
+	   視覺比較平衡；負邊距抵掉放大後多出的空白，按鈕高度和間距不變 */
+	.back svg,
+	.nav-arrow svg {
 		display: block;
 		flex-shrink: 0;
+		width: var(--arrow, 23px);
+		height: var(--arrow, 23px);
+		margin: calc((1em - var(--arrow, 23px)) / 2) -2px;
+		/* 中文字的視覺中心比行框中心略高，箭頭跟著往上一點才對齊 */
+		position: relative;
+		top: -0.06em;
+	}
+	/* 左右箭頭（返回、上一篇、下一篇）再靠近文字一點 */
+	.back svg,
+	.nav-prev .nav-arrow svg,
+	.nav-next .nav-arrow svg {
+		margin-inline: -4px;
 	}
 	/* 作品字圖：白字透明的字圖用遮罩染成內文顏色；滑過時換成原作色（和字牆一致） */
 	.wm-page {
@@ -454,10 +473,17 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		white-space: nowrap;
 		text-decoration: none;
 		color: inherit;
-		transition: opacity 0.2s;
+		transition: color 0.3s;
 	}
-	.tag:hover {
-		opacity: 0.6;
+	@media (hover: hover) {
+		.tag:hover {
+			color: var(--color-link-hover);
+		}
+	}
+	@media (hover: none) {
+		.tag:active {
+			color: var(--color-link-hover);
+		}
 	}
 	.tag::before {
 		content: "#";
@@ -482,9 +508,8 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		.back {
 			font-size: 0.85rem;
 		}
-		.back svg {
-			width: 16px;
-			height: 16px;
+		.back {
+			--arrow: 20px;
 		}
 	}
 	.prose :global(h2) {
@@ -543,7 +568,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		text-decoration: none;
 		color: var(--color-text);
 		transition: color 0.3s;
-		font-weight: 600;
+		font-weight: 500;
 	}
 	.nav-label {
 		display: flex;
@@ -551,34 +576,37 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		align-items: center;
 		gap: 0.25rem;
 	}
-	.nav-link:hover {
-		color: var(--color-link-hover);
+	@media (hover: hover) {
+		.nav-link:hover {
+			color: var(--color-link-hover);
+		}
 	}
 	.nav-arrow {
 		display: flex;
 		align-items: center;
 		flex-shrink: 0;
 	}
-	.nav-arrow svg {
-		display: block;
-	}
+
 	.nav-meta {
 		font-size: 1rem;
-		font-weight: 600;
+		font-weight: 500;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 	}
 	.nav-title {
 		font-size: 0.95rem;
-		font-weight: 600;
+		font-weight: 500;
 		line-height: 1.3;
 		color: var(--color-faded);
+		/* 作品名稱和上方「上一篇／下一篇」拉開一點 */
+		margin-top: 0.25rem;
 	}
+	/* 首頁和隨機上下拉開一點，看起來是兩個分開的選項 */
 	.nav-center {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.25rem;
+		gap: 0.75rem;
 	}
 	.nav-random {
 		background: none;
@@ -590,6 +618,10 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 	.nav-link--center {
 		align-items: center;
 		text-align: center;
+	}
+	/* 「隨機」是 button，瀏覽器預設行高較高，改成和其他連結相同，箭頭才對齊 */
+	.nav-random {
+		line-height: inherit;
 	}
 	.nav-next {
 		display: flex;
@@ -606,9 +638,12 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		.nav-title {
 			font-size: 0.75rem;
 		}
-		.nav-arrow svg {
-			width: 16px;
-			height: 16px;
+		.nav-label {
+			--arrow: 19px;
+		}
+		/* 手機：首頁和隨機的距離收小 */
+		.nav-center {
+			gap: 8px;
 		}
 	}
 </style>

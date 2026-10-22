@@ -70,6 +70,7 @@ const clearSearchState = () => {
     sessionStorage.removeItem(GRID_SEARCH_KEY);
     sessionStorage.setItem(GRID_VIEW_MODE_KEY, "random");
   } catch (_) {}
+  syncSortButtons();
 };
 
 // 工具列顯示搜尋字。過長時由 CSS 省略，title 保留完整字串。
@@ -99,6 +100,22 @@ const handleSearchInput = (e) => {
       sessionStorage.removeItem(GRID_SEARCH_KEY);
     }
   } catch (_) {}
+  syncSortButtons();
+};
+
+/* 「最新／隨機」：目前的排序全亮、另一個淡色（和「字／圖」相同）；搜尋或標籤篩選中兩個都淡 */
+const syncSortButtons = () => {
+  const mode = (() => {
+    try {
+      return sessionStorage.getItem(GRID_VIEW_MODE_KEY);
+    } catch (_) {
+      return null;
+    }
+  })();
+  // 網址 ?search= 或標籤進來時不一定寫入 mode，直接看搜尋鈕是否在搜尋狀態
+  const searching = mode === "search" || Boolean(searchButton?.classList.contains("search--active"));
+  sortButton?.setAttribute("aria-pressed", String(!searching && mode === "latest"));
+  shuffleButton?.setAttribute("aria-pressed", String(!searching && mode !== "latest"));
 };
 
 /* Initialize DOM elements and states */
@@ -164,6 +181,7 @@ const shuffleGrid = () => {
   appearCards(visible);
   updateLoadMoreVisibility();
   document.dispatchEvent(new CustomEvent("grid:reordered"));
+  syncSortButtons();
 };
 
 /* 套用 session 內儲存的排序，或在首次進入時產生新的隨機排序 */
@@ -242,6 +260,7 @@ const sortGrid = ({ skipAnimation = false } = {}) => {
   } else appearCards(visible);
   updateLoadMoreVisibility();
   document.dispatchEvent(new CustomEvent("grid:reordered"));
+  syncSortButtons();
 };
 
 /* Filter grid items based on the search input */
@@ -371,6 +390,47 @@ const loadMore = () => {
   updateLoadMoreVisibility();
 };
 
+/* 自動載入：「更多」按鈕進到畫面下方一個螢幕高的範圍內，就自動載入下一批，牆面看起來是連續的。
+   按鈕保留在牆底，網路慢或沒觸發時還能手動按；全部載完按鈕消失，頁尾才出現。
+   載完一批後牆面重排需要一點時間，之後按鈕若還在範圍內（螢幕很高時）就再載一批，直到填滿 */
+let autoLoadObserver = null;
+let autoLoadTimer = 0;
+const AUTO_LOAD_SETTLE = 450;
+const gridShown = () => {
+  const grid = document.querySelector("[data-grid]");
+  return Boolean(grid) && getComputedStyle(grid).visibility !== "hidden";
+};
+// 直接量按鈕位置（不沿用觀察器的狀態：自己改寫的話，觀察器會以為沒變化而不再通知）
+const loadMoreNear = () =>
+  Boolean(loadMoreBtn) &&
+  !loadMoreBtn.classList.contains("hidden") &&
+  loadMoreBtn.getBoundingClientRect().top < window.innerHeight * 2;
+const tryAutoLoad = () => {
+  if (autoLoadTimer || !loadMoreNear()) return;
+  // 首頁入場動畫還在跑（牆面還沒顯示）時先不載，等一下再檢查
+  if (gridShown()) loadMore();
+  autoLoadTimer = window.setTimeout(() => {
+    autoLoadTimer = 0;
+    tryAutoLoad();
+  }, AUTO_LOAD_SETTLE);
+};
+const setupAutoLoad = () => {
+  if (!loadMoreBtn || !("IntersectionObserver" in window)) return;
+  autoLoadObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) tryAutoLoad();
+    },
+    { rootMargin: "0px 0px 100% 0px" },
+  );
+  autoLoadObserver.observe(loadMoreBtn);
+};
+const teardownAutoLoad = () => {
+  autoLoadObserver?.disconnect();
+  autoLoadObserver = null;
+  clearTimeout(autoLoadTimer);
+  autoLoadTimer = 0;
+};
+
 /* 更新「載入更多」按鈕的顯示狀態。搜尋／篩選中時隱藏（已顯示全部符合結果） */
 const updateLoadMoreVisibility = (isFilterActive = false) => {
   if (!loadMoreBtn) return;
@@ -422,6 +482,7 @@ const applyTagFromUrl = () => {
   const url = new URL(window.location.href);
   url.searchParams.delete("tag");
   window.history.replaceState({}, "", url);
+  syncSortButtons();
 };
 
 /* 從專案頁 BACK 回「最新」：套用 ?from=latest */
@@ -515,6 +576,7 @@ const init = () => {
     filterGrid(toolbarTerm, { skipAnimation: true });
   });
   loadMoreBtn?.addEventListener("click", loadMore);
+  setupAutoLoad();
   gridContainer?.addEventListener("click", handleGridCardClick);
   const hadFromLatest =
     new URLSearchParams(window.location.search).get("from") === "latest";
@@ -533,6 +595,7 @@ const init = () => {
   else if (!hadFromLatest) applySessionOrder();
   applyTagFromUrl();
   applySearchFromSession();
+  syncSortButtons();
 };
 
 /* Cleanup event listeners and reset variables */
@@ -545,6 +608,7 @@ const cleanup = () => {
   searchClearButton?.removeEventListener("click", handleSearchClearClick);
   searchInput?.removeEventListener("input", handleSearchInput);
   loadMoreBtn?.removeEventListener("click", loadMore);
+  teardownAutoLoad();
   gridContainer?.removeEventListener("click", handleGridCardClick);
   gridContainer = null;
   gridItems = [];
