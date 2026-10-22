@@ -17,7 +17,7 @@ export const ui = {
 		"project.back": "返回",
 		"project.prev": "上一篇",
 		"project.next": "下一篇",
-		"project.home": "全部作品",
+		"project.home": "首頁",
 		"project.random": "隨機",
 	},
 	en: {
@@ -36,7 +36,7 @@ export const ui = {
 		"project.back": "Back",
 		"project.prev": "Prev",
 		"project.next": "Next",
-		"project.home": "All works",
+		"project.home": "Home",
 		"project.random": "Random",
 	},
 } as const;
