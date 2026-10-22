@@ -50,27 +50,66 @@ const title = "委託／合作 — 王皓梅 Howmay Wang";
 </BaseLayout>
 
 <script>
+  // 複製信箱：先用 Clipboard API；不能用時（非 HTTPS、LINE／IG 等 App 內建瀏覽器常會擋）
+  // 改用舊的 execCommand 複製；都失敗就把信箱文字選起來，讓使用者長按複製
+  const legacyCopy = (text: string) => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    // 字級 16px 避免 iOS 聚焦時放大畫面；放在畫面外
+    ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0;font-size:16px;';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    let ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } catch {
+      ok = false;
+    }
+    ta.remove();
+    return ok;
+  };
+  const selectText = (el: Element) => {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+  };
+  const copyText = async (text: string) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        // 被擋（權限、App 內建瀏覽器）時往下用舊方法
+      }
+    }
+    return legacyCopy(text);
+  };
+
   // 站內換頁（ClientRouter）時這段只會執行一次，所以每次進到委託頁都要重新綁定
   document.addEventListener('astro:page-load', () => {
     document.querySelectorAll('.copy-email').forEach((btn) => {
       btn.addEventListener('click', async () => {
         const email = btn.getAttribute('data-email') ?? '';
         const feedback = btn.parentElement?.querySelector('.copy-feedback');
-        try {
-          await navigator.clipboard.writeText(email);
-          if (feedback) {
-            feedback.classList.remove('fade-out');
-            feedback.textContent = '已複製';
+        const ok = await copyText(email);
+        if (!feedback) return;
+        feedback.classList.remove('fade-out');
+        if (ok) {
+          feedback.textContent = '已複製';
+          setTimeout(() => {
+            feedback.classList.add('fade-out');
             setTimeout(() => {
-              feedback.classList.add('fade-out');
-              setTimeout(() => {
-                feedback.textContent = '';
-                feedback.classList.remove('fade-out');
-              }, 300);
-            }, 1500);
-          }
-        } catch {
-          if (feedback) feedback.textContent = '請手動複製';
+              feedback.textContent = '';
+              feedback.classList.remove('fade-out');
+            }, 300);
+          }, 1500);
+        } else {
+          selectText(btn);
+          feedback.textContent = '已選取，請長按複製';
         }
       });
     });
@@ -113,6 +152,9 @@ const title = "委託／合作 — 王皓梅 Howmay Wang";
     background: none;
     border: none;
     padding: 0;
+    /* 複製失敗時會把信箱選起來讓人長按複製，按鈕預設不能選字，這裡打開 */
+    -webkit-user-select: text;
+    user-select: text;
     font: inherit;
     color: inherit;
     font-weight: 600;
