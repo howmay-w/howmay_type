@@ -11,9 +11,12 @@ const title = "委託／合作 — 王皓梅 Howmay Wang";
     <section>
       <h2>工作信箱 / Email</h2>
       <p class="email-row">
+        {/* Cloudflare 會把 email 改寫成 [email protected]，站內換頁時又不會解碼回來，所以這段請它略過 */}
+        <Fragment set:html={"<!--email_off-->"} />
         <button type="button" class="copy-email" data-email="howmayw@gmail.com" aria-label="複製信箱 howmayw@gmail.com">
           howmayw@gmail.com
         </button>
+        <Fragment set:html={"<!--/email_off-->"} />
         <span class="copy-feedback" aria-live="polite"></span>
       </p>
     </section>
