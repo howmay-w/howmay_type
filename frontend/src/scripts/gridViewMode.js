@@ -205,6 +205,9 @@ const init = () => {
   for (const btn of options) btn.addEventListener("click", handleClick);
   applyView(readView());
   if (!grid) return;
+  grid.addEventListener("pointerdown", onPointerDown);
+  grid.addEventListener("pointercancel", release);
+  grid.addEventListener("pointerup", onPointerUp);
   lastSignature = "";
   packer = null;
   observer = new MutationObserver(scheduleLayout);
@@ -214,7 +217,34 @@ const init = () => {
   layout();
 };
 
+// 手機點字：手指一按下就讓字變色（和電腦版 hover 一樣），等換頁時不會以為卡住。
+// 手指開始捲動時瀏覽器會送 pointercancel，就把顏色收回
+let pressed = null;
+const release = () => {
+  pressed?.classList.remove("is-pressed");
+  pressed = null;
+};
+const onPointerDown = (e) => {
+  if (e.pointerType === "mouse" || !isTypeView()) return;
+  const card = e.target.closest?.("a[data-wordmark], a[data-wm-extra]");
+  if (!card || !grid?.contains(card)) return;
+  release();
+  pressed = card;
+  card.classList.add("is-pressed");
+};
+// 長按、或按了沒換頁（例如拖出卡片外才放開）：放開一下後收回
+const onPointerUp = () => {
+  const card = pressed;
+  setTimeout(() => {
+    if (pressed === card) release();
+  }, 1200);
+};
+
 const cleanup = () => {
+  grid?.removeEventListener("pointerdown", onPointerDown);
+  grid?.removeEventListener("pointercancel", release);
+  grid?.removeEventListener("pointerup", onPointerUp);
+  release();
   for (const btn of options) btn.removeEventListener("click", handleClick);
   observer?.disconnect();
   resizeObserver?.disconnect();

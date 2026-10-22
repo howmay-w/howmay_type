@@ -10,6 +10,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { hoverColor } from "../../utils/hoverColor";
 import { getWebpSize } from "../../utils/webpSize";
+import { useTranslations } from "../../i18n/ui";
+
+const t = useTranslations();
 
 /** 專案資料夾名稱 = URL slug（index.md 時為 example-project-a，非 index 時為 project.id） */
 function getProjectSlug(id: string) {
@@ -148,7 +151,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		<header class="title-header">
 			<h2>{title}</h2>
 			<div>
-				<a class="back" href={backHref} data-back data-from-search={fromSearch || undefined} data-from-latest={fromLatest || undefined}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg> BACK</a>
+				<a class="back" href={backHref} data-back data-from-search={fromSearch || undefined} data-from-latest={fromLatest || undefined}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg> {t("project.back")}</a>
 			</div>
 		</header>
 		<Separator />
@@ -237,7 +240,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 				{prevProject && prevSlug ? (
 					<a href={fromSearch ? `/projects/${prevSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${prevSlug}?from=latest` : `/projects/${prevSlug}`} class="nav-link">
 						<span class="nav-label">
-							<span class="nav-meta">Prev</span>
+							<span class="nav-meta">{t("project.prev")}</span>
 							<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg></span>
 						</span>
 						<span class="nav-title">{prevProject.data.title}</span>
@@ -248,13 +251,13 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 				<a href="/" class="nav-link nav-link--center">
 					<span class="nav-label">
 						<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6" /></svg></span>
-						<span class="nav-meta">HOME</span>
+						<span class="nav-meta">{t("project.home")}</span>
 					</span>
 				</a>
 				<button class="nav-link nav-link--center nav-random" data-slugs={JSON.stringify(allSlugs)} data-from-search={fromSearch || undefined} data-from-latest={fromLatest || undefined}>
 					<span class="nav-label">
 						<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg></span>
-						<span class="nav-meta">Random</span>
+						<span class="nav-meta">{t("project.random")}</span>
 					</span>
 				</button>
 			</div>
@@ -263,7 +266,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 					<a href={fromSearch ? `/projects/${nextSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${nextSlug}?from=latest` : `/projects/${nextSlug}`} class="nav-link nav-link--right">
 						<span class="nav-label">
 							<span class="nav-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" /></svg></span>
-							<span class="nav-meta">Next</span>
+							<span class="nav-meta">{t("project.next")}</span>
 						</span>
 						<span class="nav-title">{nextProject.data.title}</span>
 					</a>
@@ -303,9 +306,10 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 </script>
 
 <style>
+	/* 返回、上下篇、標籤都是操作：字重 500，滑過（手機按下）轉灰，和首頁工具列一致 */
 	.back {
 		font-size: 1rem;
-		font-weight: 600;
+		font-weight: 500;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 		display: inline-flex;
@@ -454,10 +458,17 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		white-space: nowrap;
 		text-decoration: none;
 		color: inherit;
-		transition: opacity 0.2s;
+		transition: color 0.3s;
 	}
-	.tag:hover {
-		opacity: 0.6;
+	@media (hover: hover) {
+		.tag:hover {
+			color: var(--color-link-hover);
+		}
+	}
+	@media (hover: none) {
+		.tag:active {
+			color: var(--color-link-hover);
+		}
 	}
 	.tag::before {
 		content: "#";
@@ -543,7 +554,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		text-decoration: none;
 		color: var(--color-text);
 		transition: color 0.3s;
-		font-weight: 600;
+		font-weight: 500;
 	}
 	.nav-label {
 		display: flex;
@@ -551,8 +562,10 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		align-items: center;
 		gap: 0.25rem;
 	}
-	.nav-link:hover {
-		color: var(--color-link-hover);
+	@media (hover: hover) {
+		.nav-link:hover {
+			color: var(--color-link-hover);
+		}
 	}
 	.nav-arrow {
 		display: flex;
@@ -564,13 +577,13 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 	}
 	.nav-meta {
 		font-size: 1rem;
-		font-weight: 600;
+		font-weight: 500;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 	}
 	.nav-title {
 		font-size: 0.95rem;
-		font-weight: 600;
+		font-weight: 500;
 		line-height: 1.3;
 		color: var(--color-faded);
 	}

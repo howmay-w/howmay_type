@@ -50,26 +50,29 @@ const title = "委託／合作 — 王皓梅 Howmay Wang";
 </BaseLayout>
 
 <script>
-  document.querySelectorAll('.copy-email').forEach((btn) => {
-    btn.addEventListener('click', async () => {
-      const email = btn.getAttribute('data-email') ?? '';
-      const feedback = btn.parentElement?.querySelector('.copy-feedback');
-      try {
-        await navigator.clipboard.writeText(email);
-        if (feedback) {
-          feedback.classList.remove('fade-out');
-          feedback.textContent = '已複製';
-          setTimeout(() => {
-            feedback.classList.add('fade-out');
+  // 站內換頁（ClientRouter）時這段只會執行一次，所以每次進到委託頁都要重新綁定
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll('.copy-email').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const email = btn.getAttribute('data-email') ?? '';
+        const feedback = btn.parentElement?.querySelector('.copy-feedback');
+        try {
+          await navigator.clipboard.writeText(email);
+          if (feedback) {
+            feedback.classList.remove('fade-out');
+            feedback.textContent = '已複製';
             setTimeout(() => {
-              feedback.textContent = '';
-              feedback.classList.remove('fade-out');
-            }, 300);
-          }, 1500);
+              feedback.classList.add('fade-out');
+              setTimeout(() => {
+                feedback.textContent = '';
+                feedback.classList.remove('fade-out');
+              }, 300);
+            }, 1500);
+          }
+        } catch {
+          if (feedback) feedback.textContent = '請手動複製';
         }
-      } catch {
-        if (feedback) feedback.textContent = '請手動複製';
-      }
+      });
     });
   });
 </script>
