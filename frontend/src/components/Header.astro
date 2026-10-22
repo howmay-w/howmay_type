@@ -49,14 +49,55 @@ const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
 <Separator />
 
 <script>
-  // 頁頭在換頁時保留（transition:persist），伺服器端算好的 .current 不會跟著換，換頁後依網址重設
-  const markCurrent = () => {
-    const path = location.pathname.replace(/(.)\/$/, "$1");
-    for (const a of document.querySelectorAll<HTMLAnchorElement>("header[data-astro-transition-persist] a[href]")) {
-      a.classList.toggle("current", a.getAttribute("href") === path);
+  // 頁頭在換頁時保留（transition:persist），伺服器端算好的 .current 不會跟著換，要自己依網址更新。
+  // 一點下去（開始換頁前）就換：舊底線收回、新底線畫出，和下方頁面的轉換同時進行。
+  // 換頁時頁頭會被暫時移出頁面，CSS 轉場會被瀏覽器取消而直接跳到結果，
+  // 所以底線改用 Web Animations 播，換頁後從同一個進度接著播完
+  const DURATION = 300; // 和 CSS 的 width 0.3s ease 一致
+  let startedAt = 0;
+  let moves: { el: HTMLAnchorElement; from: string; to: string }[] = [];
+
+  const links = () => document.querySelectorAll<HTMLAnchorElement>("header[data-astro-transition-persist] ul a[href]");
+  const play = (elapsed: number) => {
+    for (const { el, from, to } of moves) {
+      for (const a of el.getAnimations({ subtree: true })) if (a.id === "nav-underline") a.cancel();
+      const anim = el.animate([{ width: from }, { width: to }], {
+        duration: DURATION,
+        easing: "ease",
+        pseudoElement: "::after",
+        id: "nav-underline",
+      });
+      anim.currentTime = Math.min(elapsed, DURATION);
     }
   };
-  document.addEventListener("astro:after-swap", markCurrent);
+  const markCurrent = (pathname: string, animate: boolean) => {
+    const path = pathname.replace(/(.)\/$/, "$1");
+    const next: typeof moves = [];
+    for (const a of links()) {
+      const on = a.getAttribute("href") === path;
+      if (on !== a.classList.contains("current")) next.push({ el: a, from: on ? "0%" : "100%", to: on ? "100%" : "0%" });
+      a.classList.toggle("current", on);
+    }
+    // 子連結（站名、副標）也同步 .current
+    for (const a of document.querySelectorAll<HTMLAnchorElement>("header[data-astro-transition-persist] > a[href], header[data-astro-transition-persist] h1 a[href]")) {
+      a.classList.toggle("current", a.getAttribute("href") === path);
+    }
+    if (!animate || !next.length) return;
+    moves = next;
+    startedAt = performance.now();
+    play(0);
+  };
+
+  document.addEventListener("astro:before-preparation", (e) => {
+    markCurrent((e as Event & { to: URL }).to.pathname, true);
+  });
+  document.addEventListener("astro:after-swap", () => {
+    // 換頁後：動畫若還沒播完就從原本的進度接著播；網址和預期不同（上一頁、被導向）時照實際網址重新播
+    const elapsed = performance.now() - startedAt;
+    const before = moves;
+    markCurrent(location.pathname, true);
+    if (moves === before && elapsed < DURATION) play(elapsed);
+  });
 </script>
 
 <style>
