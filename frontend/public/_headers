@@ -1,2 +1,8 @@
-/*    # Matches all routes
-  Cache-Control: max-age=31536000, immutable
+# Cloudflare Pages 快取設定。
+# 以前所有路徑都設成 immutable 一年，連 HTML 都會被瀏覽器快取一年：部署後還會看到舊頁面，
+# 舊頁面引用的舊 JS 也可能已經不存在。現在只有檔名含內容雜湊的檔案永久快取，
+# 其他（HTML、作品圖片與影片）沿用 Cloudflare 預設：每次向伺服器確認，沒變就回 304、不重新下載。
+
+# Astro 輸出的 JS、CSS、字型：內容變了檔名就變，可以永久快取
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
