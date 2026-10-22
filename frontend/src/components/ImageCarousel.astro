@@ -172,6 +172,12 @@ function getSlideRealIndex(i: number): number {
 	.carousel__video {
 		vertical-align: middle;
 	}
+	/* iOS 在影片播完時會蓋上系統的重播圓箭頭，改由下面的播放鈕接手 */
+	.carousel__video::-webkit-media-controls-overlay-play-button,
+	.carousel__video::-webkit-media-controls-start-playback-button {
+		display: none !important;
+		-webkit-appearance: none;
+	}
 	/* 自訂影片 overlay：播放／暫停 + 進度條，hover 與箭頭一起出現，僅圓圈半透明黑底 */
 	.carousel__video-overlay {
 		position: absolute;
@@ -407,7 +413,13 @@ function getSlideRealIndex(i: number): number {
 					if (hideTimer === null) overlay.removeAttribute("data-show");
 				});
 				video.addEventListener("pause", updateUI);
-				video.addEventListener("ended", () => overlay.setAttribute("data-show", ""));
+				video.addEventListener("ended", () => {
+					overlay.setAttribute("data-show", "");
+					// 離開 ended，iOS 才不會顯示系統的重播圖示；停在片尾，按鈕維持播放
+					const hold = Math.max(0, (video.duration || 0) - 0.05);
+					if (hold > 0) video.currentTime = hold;
+					updateUI();
+				});
 				video.addEventListener("timeupdate", updateUI);
 				video.addEventListener("loadedmetadata", updateUI);
 				updateUI();

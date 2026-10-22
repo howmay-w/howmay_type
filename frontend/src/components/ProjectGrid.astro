@@ -52,6 +52,9 @@ const t = useTranslations();
 		min-height: 400px;
 		gap: 0;
 		line-height: 0;
+		/* 換頁進來時先藏起，避免整面作品先一起閃出來，再被入場動畫藏起重播。
+		   入場動畫與「返回」會用 inline style 蓋過這裡 */
+		opacity: 0;
 	}
 	.project-grid.grid--no-results {
 		min-height: 0;

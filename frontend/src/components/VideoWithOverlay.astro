@@ -52,6 +52,12 @@ const { src, poster, class: className = "" } = Astro.props;
 		object-fit: contain;
 		vertical-align: middle;
 	}
+	/* iOS 在影片播完時會蓋上系統的重播圓箭頭，改由下面的播放鈕接手 */
+	.video-with-overlay__video::-webkit-media-controls-overlay-play-button,
+	.video-with-overlay__video::-webkit-media-controls-start-playback-button {
+		display: none !important;
+		-webkit-appearance: none;
+	}
 	.video-with-overlay__overlay {
 		position: absolute;
 		inset: 0;
@@ -166,7 +172,13 @@ const { src, poster, class: className = "" } = Astro.props;
 		}
 		// 還沒播放、或播完時，觸控裝置上也要看得到播放鈕
 		if (window.matchMedia("(hover: none)").matches) overlay.setAttribute("data-show", "");
-		video.addEventListener("ended", () => overlay.setAttribute("data-show", ""));
+		video.addEventListener("ended", () => {
+			overlay.setAttribute("data-show", "");
+			// 離開 ended，iOS 才不會顯示系統的重播圖示；停在片尾，按鈕維持播放
+			const hold = Math.max(0, (video.duration || 0) - 0.05);
+			if (hold > 0) video.currentTime = hold;
+			updateUI();
+		});
 		video.addEventListener("play", () => {
 			if (hideTimer === null) overlay.removeAttribute("data-show");
 		});

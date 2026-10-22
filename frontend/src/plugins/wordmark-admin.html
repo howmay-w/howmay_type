@@ -122,6 +122,8 @@
       <option value="size">依字牆大小（大→小）</option>
     </select>
     <input type="search" id="q" placeholder="搜尋作品名稱" aria-label="搜尋作品名稱">
+    <button type="button" id="compressBtn" title="把超過 100KB 的字圖重新壓縮，尺寸不變，字牆載入會比較快">壓縮過大的字圖</button>
+    <span class="status" id="toolStatus"></span>
   </div>
 </header>
 <div class="layout"><main id="list"></main><aside class="panel" id="panel" aria-label="編輯面板"></aside></div>
@@ -879,6 +881,25 @@ document.querySelectorAll("#filter button").forEach((b) => b.addEventListener("c
   document.querySelectorAll("#filter button").forEach((x) => x.classList.toggle("on", x === b));
   cur = 0; render();
 }));
+$("compressBtn").addEventListener("click", async () => {
+  const btn = $("compressBtn");
+  const st = $("toolStatus");
+  btn.disabled = true;
+  st.classList.remove("err");
+  st.textContent = "壓縮中…";
+  try {
+    const r = await api("/__wordmarks/api/compress", { method: "POST" });
+    const saved = Math.max(0, r.before - r.after);
+    st.textContent = r.changed
+      ? `已壓縮 ${r.changed} 張，少了 ${Math.round(saved / 1024)} KB`
+      : "沒有需要再壓縮的字圖";
+    await load();
+  } catch (e) {
+    st.textContent = `壓縮失敗：${e.message}`;
+    st.classList.add("err");
+  }
+  btn.disabled = false;
+});
 $("sort").addEventListener("change", () => { cur = 0; render(); });
 $("charsF").addEventListener("change", () => { cur = 0; render(); });
 $("q").addEventListener("input", () => { cur = 0; render(); });

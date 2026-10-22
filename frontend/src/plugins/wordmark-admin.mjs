@@ -5,7 +5,8 @@
  * - GET  /__wordmarks/editor      精修視窗（wordmark-editor/，以 iframe 疊在管理頁上）
  * - GET  /__wordmarks/api/list    所有作品的字圖資料
  * - POST /__wordmarks/api/update  修改字圖欄位（hidden / scale / chars / redo / needsImage）
- * - POST /__wordmarks/api/replace?slug=&v=&ink=  上傳處理好的 webp，取代該款字圖；v 等於現有款數時新增一款
+ * - POST /__wordmarks/api/replace?slug=&v=&ink=  上傳處理好的 webp，取代該款字圖；v 等於現有款數時新增一款。超過 100KB 會自動再壓縮
+ * - POST /__wordmarks/api/compress  把目前偏大的字圖（超過 100KB）重新壓小，尺寸與外觀維持不變
  * - POST /__wordmarks/api/source?slug=&v=  換圖時上傳的原始圖，存成 wordmark-source*.webp，之後精修以它為原圖（不會進正式網站）
  * - POST /__wordmarks/api/remove  刪除其他款字圖（主字圖不能刪，只能隱藏）
  * v 是第幾款：0 = 主字圖（index.md 的 wordmark 區塊、wordmark.webp），
@@ -159,6 +160,53 @@ function listProjects() {
     });
 }
 
+// 字牆用 CSS mask 顯示，檔案一大整面牆就慢。超過這個大小才壓，小圖維持原檔
+const COMPRESS_MIN = 100 * 1024;
+
+async function compressWordmark(buf) {
+  if (!buf || buf.length < COMPRESS_MIN) return null;
+  if (buf.toString("ascii", 0, 4) !== "RIFF" || buf.toString("ascii", 8, 12) !== "WEBP") return null;
+  const sharp = (await import("sharp")).default;
+  const before = await sharp(buf).metadata();
+  const out = await sharp(buf).webp({ quality: 60, alphaQuality: 70, effort: 6 }).toBuffer();
+  const after = await sharp(out).metadata();
+  // 壓完沒有明顯變小，或透明／尺寸走樣，就留原檔
+  if (!after.hasAlpha || after.width !== before.width || after.height !== before.height) return null;
+  if (out.length > buf.length * 0.75) return null;
+  return out;
+}
+
+// 掃過所有字圖（不含精修用的 wordmark-source），把偏大的壓小。可重複執行
+export async function compressOversizedWordmarks() {
+  let changed = 0;
+  let before = 0;
+  let after = 0;
+  const dirs = fs.readdirSync(contentProjects, { withFileTypes: true }).filter((d) => d.isDirectory());
+  for (const d of dirs) {
+    const dir = path.join(contentProjects, d.name);
+    for (const name of fs.readdirSync(dir)) {
+      if (!/^wordmark(-\d+)?\.webp$/.test(name)) continue;
+      const file = path.join(dir, name);
+      const buf = fs.readFileSync(file);
+      before += buf.length;
+      let out = null;
+      try {
+        out = await compressWordmark(buf);
+      } catch {
+        out = null;
+      }
+      if (!out) {
+        after += buf.length;
+        continue;
+      }
+      fs.writeFileSync(file, out);
+      after += out.length;
+      changed++;
+    }
+  }
+  return { changed, before, after };
+}
+
 const readBody = (req) =>
   new Promise((resolve, reject) => {
     const chunks = [];
@@ -244,7 +292,8 @@ export function wordmarkAdminPlugin() {
             // v 等於現有款數：新增一款
             const current = (v === 0 ? readWordmark(md) : extras[v - 1]) ?? {};
             const name = v === 0 ? "wordmark.webp" : current.src ? path.basename(current.src) : newExtraName(dir, md);
-            fs.writeFileSync(path.join(dir, name), body);
+            const stored = (await compressWordmark(body).catch(() => null)) ?? body;
+            fs.writeFileSync(path.join(dir, name), stored);
             current.src = `/projects/${slug}/${name}`;
             // 原圖直接用（不經過去背處理）另外標記，方便之後辨認
             current.source = url.searchParams.get("mode") === "direct" ? "direct" : "cutout";
@@ -256,6 +305,9 @@ export function wordmarkAdminPlugin() {
             delete current.reviewed;
             fs.writeFileSync(mdFile, writeVariant(md, v, current));
             return send(res, 200, { ok: true, v, wordmark: current });
+          }
+          if (req.method === "POST" && url.pathname === "/api/compress") {
+            return send(res, 200, await compressOversizedWordmarks());
           }
           if (req.method === "POST" && url.pathname === "/api/source") {
             const slug = url.searchParams.get("slug");

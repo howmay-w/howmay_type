@@ -2,7 +2,7 @@
 title: 圈起來打一個問號
 description: 很喜歡「圈起來打一個問號」跟「我是打一個問號」這種略顯復古的用法，很有禮貌地沒禮貌。
 pubDate: 2026-09-10
-tags: ["？❓"]
+tags: ["❓", "？"]
 image:
   src: "/projects/圈起來打一個問號/media_0.webp"
   alt: "IMG_8707.jpg"

@@ -140,6 +140,17 @@ const handlePageEvent = (_, callback) => {
 	if (page === "home") callback();
 };
 
+// 換頁當下就決定字牆要不要先藏起來。page-load 大約晚一幀，
+// 那一幀裡整面作品會以完整透明度一起閃出來
+document.addEventListener("astro:after-swap", () => {
+	if (document.documentElement.getAttribute("data-page") !== "home") return;
+	const grid = document.querySelector("[data-grid]");
+	if (!grid) return;
+	// 從作品頁按返回：直接顯示，不播入場動畫
+	if (window.__gridReturning) gsap.set(grid, { autoAlpha: 1 });
+	else gsap.set(grid, { autoAlpha: 0 });
+});
+
 // Astro lifecycle hook: initialize animations on page load.
 document.addEventListener("astro:page-load", () => {
 	handlePageEvent("page-load", init);
