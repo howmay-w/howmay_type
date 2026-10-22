@@ -184,7 +184,14 @@ function getSlideRealIndex(i: number): number {
 		transition: opacity 0.25s ease;
 		cursor: pointer;
 	}
-	.carousel:hover .carousel__video-overlay {
+	/* 觸控裝置沒有 hover，點一下後 :hover 會一直留著，按鈕就不會消失；hover 只給滑鼠用，
+	   觸控時由 script 加 data-show（點按後短暫顯示、暫停或播完時保留） */
+	@media (hover: hover) {
+		.carousel:hover .carousel__video-overlay {
+			opacity: 1;
+		}
+	}
+	.carousel__video-overlay[data-show] {
 		opacity: 1;
 	}
 	.carousel__video-play-btn {
@@ -322,20 +329,37 @@ function getSlideRealIndex(i: number): number {
 			);
 		}
 
-		// 依「目前可見的 slide」切換播放，避免 Safari 在捲動中頻繁切換導致卡頓／glitch
+		// 依「目前可見的 slide」切換播放，避免 Safari 在捲動中頻繁切換導致卡頓／glitch。
+		// 停在同一支影片上就不動：捲動停止後會呼叫好幾次（傳送檢查、捲動計時器），iOS 回彈或版面變動也會送出捲動事件，
+		// 每次都暫停、跳回開頭再播放的話，影片會一直重播、按鈕在播放／暫停之間閃動
+		let activeVideo: HTMLVideoElement | null = null;
+		const overlayOf = (video: HTMLVideoElement) =>
+			video.closest(".carousel__slide")?.querySelector("[data-video-overlay]") as HTMLElement | null;
+
+		function playVideo(video: HTMLVideoElement) {
+			// 明確設定靜音：沒有靜音的影片，瀏覽器不允許自動播放
+			video.muted = true;
+			video.play().catch((err: DOMException) => {
+				// 被之後的暫停打斷（已經滑到別張）不算失敗
+				if (err.name === "AbortError") return;
+				console.warn("[carousel] 影片無法自動播放：", err.name, err.message);
+				if (activeVideo === video) overlayOf(video)?.setAttribute("data-show", "");
+			});
+		}
+
 		function updateVideoPlayback() {
 			if (!carousel.hasAttribute("data-has-video")) return;
-			track.querySelectorAll("video").forEach((v) => {
-				v.pause();
-			});
 			const domIndex = Math.round(track.scrollLeft / sw());
 			const slide = track.children[domIndex];
-			const video = slide?.querySelector("video");
+			const video = slide?.querySelector("video") ?? null;
+			if (video === activeVideo) return;
+			track.querySelectorAll("video").forEach((v) => {
+				if (v !== video && !v.paused) v.pause();
+			});
+			activeVideo = video;
 			if (video) {
-				requestAnimationFrame(() => {
-					video.currentTime = 0;
-					video.play().catch(() => {});
-				});
+				video.currentTime = 0;
+				playVideo(video);
 			}
 		}
 
@@ -347,6 +371,7 @@ function getSlideRealIndex(i: number): number {
 				if (!video || !overlay) return;
 				const playBtn = overlay.querySelector(".carousel__video-play-btn") as HTMLButtonElement | null;
 				const progressFill = overlay.querySelector(".carousel__video-progress-fill") as HTMLElement | null;
+				let hideTimer: ReturnType<typeof setTimeout> | null = null;
 
 				function updateUI() {
 					const playing = !video.paused;
@@ -359,13 +384,30 @@ function getSlideRealIndex(i: number): number {
 					}
 				}
 
-				function togglePlay() {
-					if (video.paused) video.play().catch(() => {});
-					else video.pause();
+				// 點按後短暫顯示按鈕；播放中 1.5 秒後收起，暫停時留著
+				function flash() {
+					overlay.setAttribute("data-show", "");
+					if (hideTimer !== null) clearTimeout(hideTimer);
+					hideTimer = setTimeout(() => {
+						hideTimer = null;
+						if (!video.paused) overlay.removeAttribute("data-show");
+					}, 1500);
 				}
 
-				video.addEventListener("play", updateUI);
+				function togglePlay() {
+					if (video.paused) {
+						// 停在片尾附近時直接播放只會播一下就結束，要先回到開頭
+						if (Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.15) video.currentTime = 0;
+						playVideo(video);
+					} else video.pause();
+				}
+
+				video.addEventListener("play", () => {
+					updateUI();
+					if (hideTimer === null) overlay.removeAttribute("data-show");
+				});
 				video.addEventListener("pause", updateUI);
+				video.addEventListener("ended", () => overlay.setAttribute("data-show", ""));
 				video.addEventListener("timeupdate", updateUI);
 				video.addEventListener("loadedmetadata", updateUI);
 				updateUI();
@@ -374,6 +416,7 @@ function getSlideRealIndex(i: number): number {
 					e.preventDefault();
 					e.stopPropagation();
 					togglePlay();
+					flash();
 				});
 			});
 		}

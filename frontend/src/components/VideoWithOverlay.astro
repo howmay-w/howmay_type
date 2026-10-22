@@ -63,7 +63,13 @@ const { src, poster, class: className = "" } = Astro.props;
 		transition: opacity 0.25s ease;
 		cursor: pointer;
 	}
-	.video-with-overlay:hover .video-with-overlay__overlay {
+	/* 觸控裝置點一下後 :hover 會一直留著，按鈕不會消失；hover 只給滑鼠用，觸控時由 script 加 data-show */
+	@media (hover: hover) {
+		.video-with-overlay:hover .video-with-overlay__overlay {
+			opacity: 1;
+		}
+	}
+	.video-with-overlay__overlay[data-show] {
 		opacity: 1;
 	}
 	.video-with-overlay__play-btn {
@@ -139,9 +145,31 @@ const { src, poster, class: className = "" } = Astro.props;
 		}
 
 		function togglePlay() {
-			if (video.paused) video.play().catch(() => {});
-			else video.pause();
+			if (video.paused) {
+				// 沒有 poster 時停在片尾當縮圖，直接播放只會播 0.1 秒就結束，要先回到開頭
+				if (video.ended || (Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.15)) {
+					video.currentTime = 0;
+				}
+				video.play().catch(() => {});
+			} else video.pause();
 		}
+
+		// 觸控時點按後短暫顯示按鈕；播放中 1.5 秒後收起，暫停時留著
+		let hideTimer: ReturnType<typeof setTimeout> | null = null;
+		function flash() {
+			overlay.setAttribute("data-show", "");
+			if (hideTimer !== null) clearTimeout(hideTimer);
+			hideTimer = setTimeout(() => {
+				hideTimer = null;
+				if (!video.paused) overlay.removeAttribute("data-show");
+			}, 1500);
+		}
+		// 還沒播放、或播完時，觸控裝置上也要看得到播放鈕
+		if (window.matchMedia("(hover: none)").matches) overlay.setAttribute("data-show", "");
+		video.addEventListener("ended", () => overlay.setAttribute("data-show", ""));
+		video.addEventListener("play", () => {
+			if (hideTimer === null) overlay.removeAttribute("data-show");
+		});
 
 		// 沒有 poster 時 seek 到最後 0.1 秒顯示縮圖
 		if (!video.getAttribute("poster")) {
@@ -162,12 +190,14 @@ const { src, poster, class: className = "" } = Astro.props;
 			e.preventDefault();
 			e.stopPropagation();
 			togglePlay();
+			flash();
 		});
 		// 點影片本體也可播放（overlay 透明時仍可點到）
 		video.addEventListener("click", (e) => {
 			e.preventDefault();
 			e.stopPropagation();
 			togglePlay();
+			flash();
 		});
 	}
 
