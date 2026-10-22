@@ -304,7 +304,9 @@ const handlePageEvent = (type) => {
   if (type === "load") {
     tooltip = new Tooltip(document.querySelector("[data-grid]"));
   } else if (type === "before-swap") {
-    tooltip.destroy();
+    // 首頁還沒初始化完就換頁時 tooltip 還沒建立
+    tooltip?.destroy();
+    tooltip = null;
   }
 };
 
