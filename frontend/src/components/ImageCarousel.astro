@@ -318,16 +318,49 @@ function getSlideRealIndex(i: number): number {
 		let teleportTimer: ReturnType<typeof setTimeout> | null = null;
 		let isReady = false;
 
-		// 等兩個 rAF，確保 View Transition 與 layout 都穩定後再設定起始位置
-		requestAnimationFrame(() => {
-			requestAnimationFrame(() => {
+		// 隨機是整頁重新載入，沒有換頁動畫，輪播一出現就可以定位、播放。
+		// 首頁點進來、上一篇、下一篇走站內換頁：astro:page-load 時動畫還在跑
+		// （html 上有 data-astro-transition）。這時候設定的捲動位置不會留住，
+		// 影片也被瀏覽器凍結，播了也不動。等動畫拿掉那個屬性再開始。
+		const begin = (afterTransition: boolean) => {
+			if (isReady) return;
+			if (afterTransition) {
+				track.querySelectorAll("video").forEach((node) => {
+					(node as HTMLVideoElement).load();
+				});
+			}
+			const place = () => {
+				const width = sw();
+				if (!width) {
+					requestAnimationFrame(place);
+					return;
+				}
 				track.style.scrollBehavior = "auto";
-				track.scrollLeft = sw();
+				track.scrollLeft = width;
 				track.style.scrollBehavior = "smooth";
 				isReady = true;
 				updateVideoPlayback();
+			};
+			requestAnimationFrame(place);
+		};
+		const root = document.documentElement;
+		if (!root.hasAttribute("data-astro-transition")) {
+			begin(false);
+		} else {
+			let settled = false;
+			const finish = () => {
+				if (settled) return;
+				settled = true;
+				obs.disconnect();
+				clearTimeout(backup);
+				begin(true);
+			};
+			const obs = new MutationObserver(() => {
+				if (!root.hasAttribute("data-astro-transition")) finish();
 			});
-		});
+			obs.observe(root, { attributes: true, attributeFilter: ["data-astro-transition"] });
+			const backup = setTimeout(finish, 1200);
+		}
 
 		function setDots(i: number) {
 			dots.forEach((dot, j) =>
@@ -339,18 +372,68 @@ function getSlideRealIndex(i: number): number {
 		// 停在同一支影片上就不動：捲動停止後會呼叫好幾次（傳送檢查、捲動計時器），iOS 回彈或版面變動也會送出捲動事件，
 		// 每次都暫停、跳回開頭再播放的話，影片會一直重播、按鈕在播放／暫停之間閃動
 		let activeVideo: HTMLVideoElement | null = null;
+		// 換片或使用者按暫停時，作廢還沒完成的「拉回開頭再播」
+		let playGen = 0;
 		const overlayOf = (video: HTMLVideoElement) =>
 			video.closest(".carousel__slide")?.querySelector("[data-video-overlay]") as HTMLElement | null;
 
-		function playVideo(video: HTMLVideoElement) {
+		function playVideo(video: HTMLVideoElement, attempt = 0) {
+			const gen = playGen;
 			// 明確設定靜音：沒有靜音的影片，瀏覽器不允許自動播放
 			video.muted = true;
-			video.play().catch((err: DOMException) => {
-				// 被之後的暫停打斷（已經滑到別張）不算失敗
-				if (err.name === "AbortError") return;
+			video.play().then(() => {
+				// 已經換到別張，把這次補播停掉
+				if (activeVideo !== video && !video.paused) video.pause();
+			}).catch((err: DOMException) => {
+				if (gen !== playGen || activeVideo !== video) return;
+				// 從首頁點進來時，換頁動畫會把這次播放打斷（AbortError，Safari 有時報 NotAllowedError）。
+				// 打斷之後這張已被記成正在處理，不再試的話影片就停在開頭
+				if ((err.name === "AbortError" || err.name === "NotAllowedError") && attempt < 8) {
+					setTimeout(() => {
+						if (gen !== playGen || activeVideo !== video || !video.paused) return;
+						playVideo(video, attempt + 1);
+					}, 250);
+					return;
+				}
 				console.warn("[carousel] 影片無法自動播放：", err.name, err.message);
-				if (activeVideo === video) overlayOf(video)?.setAttribute("data-show", "");
+				overlayOf(video)?.setAttribute("data-show", "");
 			});
+		}
+
+		// 先拉回開頭，等這次 seek 完成再播放。
+		// 同一個回合裡又設定 currentTime 又 play()，瀏覽器會把播放送到片尾並立刻結束，
+		// 畫面停住，再按播放也一樣。首頁預覽過同一支影片、或這支剛播完時最容易發生。
+		// 資料還沒到就設定 currentTime，Safari 會丟 InvalidStateError，play() 跟著沒被呼叫
+		function playFromStart(video: HTMLVideoElement) {
+			const gen = ++playGen;
+			const begin = () => {
+				if (gen !== playGen || activeVideo !== video) return;
+				if (video.currentTime < 0.05 && !video.seeking && !video.ended) {
+					playVideo(video);
+					return;
+				}
+				const onSeeked = () => {
+					video.removeEventListener("seeked", onSeeked);
+					if (gen !== playGen || activeVideo !== video) return;
+					playVideo(video);
+				};
+				video.addEventListener("seeked", onSeeked);
+				try {
+					video.currentTime = 0;
+				} catch {
+					video.removeEventListener("seeked", onSeeked);
+					if (video.readyState === 0) video.addEventListener("loadedmetadata", begin, { once: true });
+					else playVideo(video);
+					return;
+				}
+				// 已經在開頭時，設定 currentTime 不會送出 seeked，要直接播
+				if (!video.seeking && video.currentTime < 0.05) {
+					video.removeEventListener("seeked", onSeeked);
+					playVideo(video);
+				}
+			};
+			if (video.readyState >= 1) begin();
+			else video.addEventListener("loadedmetadata", begin, { once: true });
 		}
 
 		function updateVideoPlayback() {
@@ -363,10 +446,8 @@ function getSlideRealIndex(i: number): number {
 				if (v !== video && !v.paused) v.pause();
 			});
 			activeVideo = video;
-			if (video) {
-				video.currentTime = 0;
-				playVideo(video);
-			}
+			if (video) playFromStart(video);
+			else playGen++;
 		}
 
 		function initVideoOverlays() {
@@ -402,10 +483,14 @@ function getSlideRealIndex(i: number): number {
 
 				function togglePlay() {
 					if (video.paused) {
-						// 停在片尾附近時直接播放只會播一下就結束，要先回到開頭
-						if (Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.15) video.currentTime = 0;
-						playVideo(video);
-					} else video.pause();
+						activeVideo = video;
+						// 停在片尾時要等拉回開頭完成再播，否則會立刻又被送到片尾
+						if (video.ended || (Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.15)) playFromStart(video);
+						else playVideo(video);
+					} else {
+						playGen++;
+						video.pause();
+					}
 				}
 
 				video.addEventListener("play", () => {

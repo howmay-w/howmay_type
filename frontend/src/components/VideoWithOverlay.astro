@@ -129,6 +129,29 @@ const { src, poster, class: className = "" } = Astro.props;
 </style>
 
 <script>
+	// 和輪播相同：隨機是整頁載入；首頁、上一篇、下一篇在動畫結束前 html 帶著 data-astro-transition。
+	// 這段時間裡的影片會被瀏覽器凍結。
+	function whenSettled(fn: (afterTransition: boolean) => void) {
+		const root = document.documentElement;
+		if (!root.hasAttribute("data-astro-transition")) {
+			fn(false);
+			return;
+		}
+		let settled = false;
+		const finish = () => {
+			if (settled) return;
+			settled = true;
+			obs.disconnect();
+			clearTimeout(backup);
+			fn(true);
+		};
+		const obs = new MutationObserver(() => {
+			if (!root.hasAttribute("data-astro-transition")) finish();
+		});
+		obs.observe(root, { attributes: true, attributeFilter: ["data-astro-transition"] });
+		const backup = setTimeout(finish, 1200);
+	}
+
 	function initVideoWithOverlay(container: HTMLElement) {
 		if ((container as HTMLElement & { _videoOverlayInited?: boolean })._videoOverlayInited) return;
 		(container as HTMLElement & { _videoOverlayInited?: boolean })._videoOverlayInited = true;
@@ -138,6 +161,8 @@ const { src, poster, class: className = "" } = Astro.props;
 		if (!video || !overlay) return;
 		const playBtn = overlay.querySelector(".video-with-overlay__play-btn") as HTMLButtonElement | null;
 		const progressFill = overlay.querySelector(".video-with-overlay__progress-fill") as HTMLElement | null;
+		let playGen = 0;
+		let userPaused = false;
 
 		function updateUI() {
 			const playing = !video.paused;
@@ -150,14 +175,67 @@ const { src, poster, class: className = "" } = Astro.props;
 			}
 		}
 
+		function playVideo(attempt = 0) {
+			const gen = playGen;
+			video.muted = true;
+			video.play().catch((err: DOMException) => {
+				if (gen !== playGen || userPaused) return;
+				if ((err.name === "AbortError" || err.name === "NotAllowedError") && attempt < 8) {
+					setTimeout(() => {
+						if (gen !== playGen || userPaused || !video.paused) return;
+						playVideo(attempt + 1);
+					}, 250);
+					return;
+				}
+				overlay.setAttribute("data-show", "");
+			});
+		}
+
+		// 先回到開頭再播。同一個回合裡又 seek 又 play()，會立刻被送到片尾停住
+		function playFromStart() {
+			const gen = ++playGen;
+			const begin = () => {
+				if (gen !== playGen || userPaused) return;
+				const go = () => {
+					if (gen !== playGen || userPaused) return;
+					playVideo();
+				};
+				if (video.currentTime < 0.05 && !video.seeking && !video.ended) {
+					go();
+					return;
+				}
+				const onSeeked = () => {
+					video.removeEventListener("seeked", onSeeked);
+					go();
+				};
+				video.addEventListener("seeked", onSeeked);
+				try {
+					video.currentTime = 0;
+				} catch {
+					video.removeEventListener("seeked", onSeeked);
+					if (video.readyState === 0) video.addEventListener("loadedmetadata", begin, { once: true });
+					else go();
+					return;
+				}
+				if (!video.seeking && video.currentTime < 0.05) {
+					video.removeEventListener("seeked", onSeeked);
+					go();
+				}
+			};
+			if (video.readyState >= 1) begin();
+			else video.addEventListener("loadedmetadata", begin, { once: true });
+		}
+
 		function togglePlay() {
 			if (video.paused) {
-				// 沒有 poster 時停在片尾當縮圖，直接播放只會播 0.1 秒就結束，要先回到開頭
-				if (video.ended || (Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.15)) {
-					video.currentTime = 0;
-				}
-				video.play().catch(() => {});
-			} else video.pause();
+				userPaused = false;
+				if (video.ended || (Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.15)) playFromStart();
+				else playVideo();
+			} else {
+				userPaused = true;
+				playGen++;
+				video.pause();
+			}
 		}
 
 		// 觸控時點按後短暫顯示按鈕；播放中 1.5 秒後收起，暫停時留著
@@ -183,15 +261,6 @@ const { src, poster, class: className = "" } = Astro.props;
 			if (hideTimer === null) overlay.removeAttribute("data-show");
 		});
 
-		// 沒有 poster 時 seek 到最後 0.1 秒顯示縮圖
-		if (!video.getAttribute("poster")) {
-			video.addEventListener("loadedmetadata", () => {
-				if (video.paused && Number.isFinite(video.duration) && video.duration > 0.1) {
-					video.currentTime = video.duration - 0.1;
-				}
-			}, { once: true });
-		}
-
 		video.addEventListener("play", updateUI);
 		video.addEventListener("pause", updateUI);
 		video.addEventListener("timeupdate", updateUI);
@@ -210,6 +279,13 @@ const { src, poster, class: className = "" } = Astro.props;
 			e.stopPropagation();
 			togglePlay();
 			flash();
+		});
+
+		// 進頁就播。換頁動畫結束後要先 load()，否則這支影片會停在封面上
+		whenSettled((afterTransition) => {
+			if (userPaused) return;
+			if (afterTransition) video.load();
+			playFromStart();
 		});
 	}
 
