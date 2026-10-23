@@ -3,7 +3,7 @@
 export const ui = {
 	zh: {
 		"nav.about": "關於我",
-		"nav.contact": "委託／合作",
+		"nav.contact": "合作／委託",
 		"grid.viewGroup": "瀏覽方式",
 		"grid.viewType": "字",
 		"grid.viewTypeLabel": "單色字",
