@@ -110,6 +110,12 @@ a {
   opacity: 1;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    transition: none;
+  }
+}
+
 /* Animated underline hover (Alex Tkachev style) */
 .hover-underline-animated a,
 .hover-underline-animated .copy-email,

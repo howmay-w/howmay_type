@@ -1,4 +1,6 @@
 ---
+import { webpDimensions } from "../utils/projectHero";
+
 type MediaItem =
 	| { type: "image"; src: string; alt?: string }
 	| { type: "video"; src: string; poster?: string };
@@ -36,6 +38,9 @@ function getSlideRealIndex(i: number): number {
 		{slides.map((item, i) => {
 			const realIndex = getSlideRealIndex(i);
 			const isVideo = item.type === "video";
+			const size = !isVideo ? webpDimensions(item.src) : null;
+			// 有迴圈時第 0 張是最後一張的複本，真正的第一張在 i === 1
+			const isHero = total > 1 ? i === 1 : i === 0;
 			return (
 				<div class={`carousel__slide${isVideo ? " carousel__slide--video" : ""}`} role="listitem" data-index={realIndex}>
 					{isVideo ? (
@@ -73,12 +78,17 @@ function getSlideRealIndex(i: number): number {
 						</>
 					) : (
 						<img
+							class="fade-in"
 							src={item.src}
 							alt={item.alt ?? `${title} - 圖 ${realIndex + 1}`}
-							width="800"
-							loading={i <= 1 ? "eager" : "lazy"}
-							decoding="async"
+							width={size?.width}
+							height={size?.height}
+							loading={isHero ? "eager" : "lazy"}
+							fetchpriority={isHero ? "high" : undefined}
+							decoding={isHero ? "auto" : "async"}
 							draggable="false"
+							onload="this.classList.add('loaded')"
+							onerror="this.classList.add('loaded')"
 						/>
 					)}
 				</div>
@@ -146,6 +156,8 @@ function getSlideRealIndex(i: number): number {
 		flex: 0 0 100%;
 		scroll-snap-align: start;
 		scroll-snap-stop: always;
+		/* 圖還沒到時透出這層灰，淡入的是圖片本身 */
+		background: var(--color-placeholder, #f8f8f8);
 	}
 	/* 最前面是最後一張的複本，捲動位置 0 會先露出它。
 	   對準第一張之前先把這張複本收成寬度 0，換頁動畫拍到的就是第一張。
@@ -154,9 +166,13 @@ function getSlideRealIndex(i: number): number {
 		flex: 0 0 0;
 		width: 0;
 		min-width: 0;
+		min-height: 0;
 		overflow: hidden;
 		visibility: hidden;
 		scroll-snap-align: none;
+	}
+	.carousel[data-loop]:not([data-carousel-placed]) .carousel__slide:first-child img {
+		height: 0;
 	}
 	.carousel[data-loop]:not([data-carousel-placed]) .carousel__track {
 		pointer-events: none;

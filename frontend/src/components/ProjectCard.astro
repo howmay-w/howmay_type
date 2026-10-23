@@ -5,6 +5,7 @@ import path from "node:path";
 import type { CollectionEntry } from "astro:content";
 import { hoverColor } from "../utils/hoverColor";
 import { getWebpSize } from "../utils/webpSize";
+import { projectHeroSrc } from "../utils/projectHero";
 
 function getProjectSlug(id: string) {
 	return id.replace(/\/index$/, "") || id;
@@ -59,6 +60,8 @@ const thumbVideoSrc = !heroImage && video?.src ? video.src : null;
 const year = pubDate ? new Date(pubDate).getFullYear().toString() : "";
 const dateStr = pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "";
 const tagsStr = tags?.length ? tags.join("、") : "";
+// 作品頁第一張圖。字牆不顯示照片，滑過卡片時用這個網址先抓
+const heroSrc = projectHeroSrc(project.data);
 ---
 
 <a
@@ -70,6 +73,7 @@ const tagsStr = tags?.length ? tags.join("、") : "";
 	data-hover-video={hoverVideo?.src ?? ""}
 	data-hover-video-fit={hoverVideoFit ?? ""}
 	data-astro-prefetch="tap"
+	data-hero={heroSrc}
 	{...(deferred ? { "data-deferred": "" } : {})}
 	{...(wm ? { "data-wordmark": "", "data-wm-aspect": wm.aspect, "data-wm-mass": wm.mass, "data-wm-scale": wm.scale } : {})}
 	style={wm ? `--wm:url("${wm.src}");--a:${wm.aspect}${wm.accent ? `;--accent:${wm.accent}` : ""}` : undefined}
@@ -123,6 +127,7 @@ const tagsStr = tags?.length ? tags.join("、") : "";
 		data-wm-aspect={x.aspect}
 		data-wm-mass={x.mass}
 		data-wm-scale={x.scale}
+		data-hero={heroSrc}
 		style={`--wm:url("${x.src}");--a:${x.aspect}${(x.accent ?? wm?.accent) ? `;--accent:${x.accent ?? wm?.accent}` : ""}`}
 		href={`/projects/${slug}?wm=${i + 1}`}
 		tabindex="-1"

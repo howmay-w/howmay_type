@@ -2,6 +2,7 @@
 import { getCollection, getEntry } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import ImageCarousel from "../../components/ImageCarousel.astro";
+import ProjectPhoto from "../../components/ProjectPhoto.astro";
 import VideoWithOverlay from "../../components/VideoWithOverlay.astro";
 import Separator from "../../components/Separator.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -11,6 +12,7 @@ import path from "node:path";
 import { hoverColor } from "../../utils/hoverColor";
 import { getWebpSize } from "../../utils/webpSize";
 import { useTranslations } from "../../i18n/ui";
+import { projectHeroSrc } from "../../utils/projectHero";
 
 const t = useTranslations();
 
@@ -102,6 +104,8 @@ const prevProject = currentIndex > 0 ? sortedProjects[currentIndex - 1] : null;
 const nextProject = currentIndex < sortedProjects.length - 1 ? sortedProjects[currentIndex + 1] : null;
 const prevSlug = prevProject ? getProjectSlug(prevProject.id) : null;
 const nextSlug = nextProject ? getProjectSlug(nextProject.id) : null;
+const prevHero = prevProject ? projectHeroSrc(prevProject.data) : undefined;
+const nextHero = nextProject ? projectHeroSrc(nextProject.data) : undefined;
 const currentSlug = getProjectSlug(project.id);
 const allSlugs = sortedProjects.map((p) => getProjectSlug(p.id)).filter((s) => s !== currentSlug);
 const fromSearch = Astro.url.searchParams.get("from_search") ?? "";
@@ -175,12 +179,10 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 									title={title}
 								/>
 							) : reelsCarouselItems.length === 1 ? (
-								<img
+								<ProjectPhoto
 									src={reelsCarouselItems[0].src}
 									alt={reelsCarouselItems[0].type === "image" ? (reelsCarouselItems[0].alt ?? title) : title}
-									width="1000"
-									loading="lazy"
-									class="project-image"
+									priority
 								/>
 							) : null}
 						</>
@@ -190,12 +192,10 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 							title={title}
 						/>
 					) : mediaItems[0].type === "image" ? (
-						<img
+						<ProjectPhoto
 							src={mediaItems[0].src}
-							alt={'alt' in mediaItems[0] ? mediaItems[0].alt : title}
-							width="1000"
-							loading="lazy"
-							class="project-image"
+							alt={"alt" in mediaItems[0] ? mediaItems[0].alt : title}
+							priority
 						/>
 					) : (
 						<VideoWithOverlay
@@ -240,7 +240,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 			<div class="nav-links">
 			<div class="nav-prev">
 				{prevProject && prevSlug ? (
-					<a href={fromSearch ? `/projects/${prevSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${prevSlug}?from=latest` : `/projects/${prevSlug}`} class="nav-link">
+					<a href={fromSearch ? `/projects/${prevSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${prevSlug}?from=latest` : `/projects/${prevSlug}`} class="nav-link" data-hero={prevHero}>
 						<span class="nav-label">
 							<span class="nav-arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6" /></svg></span>
 							<span class="nav-meta">{t("project.prev")}</span>
@@ -265,7 +265,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 			</div>
 			<div class="nav-next">
 				{nextProject && nextSlug ? (
-					<a href={fromSearch ? `/projects/${nextSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${nextSlug}?from=latest` : `/projects/${nextSlug}`} class="nav-link nav-link--right">
+					<a href={fromSearch ? `/projects/${nextSlug}?from_search=${encodeURIComponent(fromSearch)}` : fromLatest ? `/projects/${nextSlug}?from=latest` : `/projects/${nextSlug}`} class="nav-link nav-link--right" data-hero={nextHero}>
 						<span class="nav-label">
 							<span class="nav-meta">{t("project.next")}</span>
 							<span class="nav-arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6" /></svg></span>
@@ -507,7 +507,6 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 		margin-top: 0;
 		width: 100%;
 	}
-	.project-image,
 	.project-video-wrap {
 		width: 100%;
 		max-width: 100%;

@@ -1,0 +1,42 @@
+---
+import { webpDimensions } from "../utils/projectHero";
+
+type Props = {
+	src: string;
+	alt?: string;
+	/** 這一頁的第一張：立刻載，並提高優先順序 */
+	priority?: boolean;
+};
+
+const { src, alt = "", priority = false } = Astro.props;
+const size = webpDimensions(src);
+---
+
+<span class="project-image-slot">
+	<img
+		class="project-image fade-in"
+		src={src}
+		alt={alt}
+		width={size?.width}
+		height={size?.height}
+		loading={priority ? "eager" : "lazy"}
+		fetchpriority={priority ? "high" : undefined}
+		decoding={priority ? "auto" : "async"}
+		onload="this.classList.add('loaded')"
+		onerror="this.classList.add('loaded')"
+	/>
+</span>
+
+<style>
+	.project-image-slot {
+		display: block;
+		width: 100%;
+		background: var(--color-placeholder, #f8f8f8);
+	}
+	.project-image {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+</style>
