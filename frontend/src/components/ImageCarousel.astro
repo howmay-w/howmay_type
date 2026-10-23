@@ -30,7 +30,7 @@ function getSlideRealIndex(i: number): number {
 }
 ---
 
-<div class="carousel" data-carousel data-total={total} data-has-video={items.some((x) => x.type === "video") ? "true" : undefined}>
+<div class="carousel" data-carousel data-total={total} data-loop={total > 1 ? "true" : undefined} data-has-video={items.some((x) => x.type === "video") ? "true" : undefined}>
 	<div class="carousel__track-wrap">
 	<div class="carousel__track" role="list">
 		{slides.map((item, i) => {
@@ -146,6 +146,20 @@ function getSlideRealIndex(i: number): number {
 		flex: 0 0 100%;
 		scroll-snap-align: start;
 		scroll-snap-stop: always;
+	}
+	/* 最前面是最後一張的複本，捲動位置 0 會先露出它。
+	   對準第一張之前先把這張複本收成寬度 0，換頁動畫拍到的就是第一張。
+	   不用位移：位移和捲動會各跳一格，停下來會多一張。 */
+	.carousel[data-loop]:not([data-carousel-placed]) .carousel__slide:first-child {
+		flex: 0 0 0;
+		width: 0;
+		min-width: 0;
+		overflow: hidden;
+		visibility: hidden;
+		scroll-snap-align: none;
+	}
+	.carousel[data-loop]:not([data-carousel-placed]) .carousel__track {
+		pointer-events: none;
 	}
 	.carousel__slide--video {
 		position: relative;
@@ -329,6 +343,7 @@ function getSlideRealIndex(i: number): number {
 					(node as HTMLVideoElement).load();
 				});
 			}
+			let placeAttempts = 0;
 			const place = () => {
 				const width = sw();
 				if (!width) {
@@ -336,7 +351,17 @@ function getSlideRealIndex(i: number): number {
 					return;
 				}
 				track.style.scrollBehavior = "auto";
-				track.scrollLeft = width;
+				// 先展開複本，同一輪再把捲動對到第一張，瀏覽器才不會先畫出最後一張。
+				(carousel as HTMLElement).dataset.carouselPlaced = "true";
+				const slideWidth = (track.firstElementChild as HTMLElement | null)?.offsetWidth || width;
+				track.scrollLeft = slideWidth;
+				// 換頁動畫期間寫進去的位置會被清掉。複本先收回去，畫面仍是第一張，下一幀再對一次。
+				if (Math.abs(track.scrollLeft - slideWidth) > 1 && placeAttempts < 10) {
+					delete (carousel as HTMLElement).dataset.carouselPlaced;
+					placeAttempts += 1;
+					requestAnimationFrame(place);
+					return;
+				}
 				track.style.scrollBehavior = "smooth";
 				isReady = true;
 				updateVideoPlayback();
@@ -557,6 +582,7 @@ function getSlideRealIndex(i: number): number {
 
 		// scroll 期間即時更新點點與 index（供按鈕用），停止後安排傳送；影片切換改為捲動停止後才執行，減少 Safari glitch
 		function onScroll() {
+			if (!isReady) return;
 			const s = sw();
 			const dom = Math.round(track.scrollLeft / s);
 			const di = dom <= 0 ? total - 1 : dom >= total + 1 ? 0 : dom - 1;
