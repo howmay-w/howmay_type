@@ -21,9 +21,11 @@ type Props = {
 	/** 社群分享預覽圖：以 / 開頭的站內路徑或完整 https URL；未指定時用預設網站圖示 */
 	ogImage?: string;
 	ogImageAlt?: string;
+	/** 範本頁等不該出現在搜尋結果的頁面 */
+	noindex?: boolean;
 };
 
-const { title, description = "皓梅的畫字創作頻道", ogImage, ogImageAlt } = Astro.props;
+const { title, description = "皓梅的畫字創作頻道", ogImage, ogImageAlt, noindex = false } = Astro.props;
 
 const defaultOgPath = "/favicon/apple-touch-icon.png";
 const rawOgImage = ogImage ?? defaultOgPath;
@@ -44,6 +46,7 @@ const currentPage =
       title={title}
       description={description}
       charset="UTF-8"
+      noindex={noindex}
       openGraph={{
         basic: {
           title: title,
@@ -124,7 +127,10 @@ const currentPage =
       "knowsAbout": ["Lettering", "Logotype", "Chinese lettering", "漢字設計", "美術字", "標準字", "標準字精修", "字體設計", "台語字", "Typography"],
       "knowsLanguage": ["zh-Hant", "nan", "en"],
       "worksFor": { "@type": "Organization", "name": "justfont", "url": "https://justfont.com" },
-      "sameAs": ["https://www.instagram.com/howmay__/"]
+      "sameAs": [
+        "https://www.instagram.com/howmay__/",
+        "https://www.behance.net/howmeiwang"
+      ]
     })} />
     <ClientRouter />
 <!-- Google tag (gtag.js) -->

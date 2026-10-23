@@ -19,7 +19,14 @@ export default defineConfig({
   prefetch: true,
   trailingSlash: "never",
   site: SITE_URL,
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => {
+        const path = new URL(page).pathname.replace(/\/$/, "") || "/";
+        return !["/history", "/releases", "/success"].includes(path);
+      },
+    }),
+  ],
   image: {
     remotePatterns: [{ protocol: "https" }],
   },
