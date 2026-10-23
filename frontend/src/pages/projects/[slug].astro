@@ -87,6 +87,8 @@ bodyHtml = bodyHtml.replace(
 const bodyText = bodyHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 130);
 const seoBase = description ?? (bodyText || "");
 const seoDescription = seoBase ? `${seoBase}　— 皓梅 Howmay 漢字美術字 Lettering` : undefined;
+// 分頁與分享標題才加品牌；頁面上的作品名維持 title
+const pageTitle = `${title} - 皓梅 Howmay`;
 
 // 上一篇 / 下一篇：依 pubDate 升冪排序（越新越後）
 const allProjects = await getCollection("projects");
@@ -131,7 +133,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 	.filter((x): x is string => x !== null);
 ---
 
-<BaseLayout title={title} description={seoDescription} ogImage={shareImageSrc} ogImageAlt={shareImageAlt}>
+<BaseLayout title={pageTitle} description={seoDescription} ogImage={shareImageSrc} ogImageAlt={shareImageAlt}>
 	<script type="application/ld+json" set:html={JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "CreativeWork",
@@ -281,38 +283,92 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 </BaseLayout>
 
 <script>
-	document.addEventListener("astro:page-load", () => {
-		const btn = document.querySelector<HTMLButtonElement>(".nav-random");
-		if (btn) {
-			btn.addEventListener("click", () => {
-				const slugs: string[] = JSON.parse(btn.dataset.slugs ?? "[]");
-				if (!slugs.length) return;
-				const slug = slugs[Math.floor(Math.random() * slugs.length)];
-				const q = btn.dataset.fromSearch ? `?from_search=${encodeURIComponent(btn.dataset.fromSearch)}` : btn.dataset.fromLatest ? "?from=latest" : "";
-				window.location.href = `/projects/${slug}${q}`;
-			});
-		}
-		// 有 from_search 或 from_latest 時用 href；否則上一頁是本站時用 history.back()。
-		// 從 IG、搜尋引擎直接開作品頁時 history.length 也大於 1，只看它的話「返回」會離開網站：
-		// 站內換頁（Astro 的 history.state.index 大於 0）或從本站整頁跳轉（referrer 同網域）才算本站
-		const cameFromSite = () => {
-			if ((window.history.state?.index ?? 0) > 0) return true;
-			try {
-				return new URL(document.referrer).origin === location.origin;
-			} catch {
-				return false;
+	import { navigate } from "astro:transitions/client";
+
+	const pageWindow = window as Window & { __projectBackInit?: boolean };
+	// 這支 script 在每次換頁可能再執行一次，事件只登記一次
+	if (!pageWindow.__projectBackInit) {
+		pageWindow.__projectBackInit = true;
+
+		// 回到另一篇作品時從頁面頂端開始。
+		// 站內換頁會把捲動位置記在 history.state，返回上一篇（下一篇、隨機、瀏覽器上一頁）會停在半途。
+		// 回到首頁作品牆不在這裡改：那是 traverse 回「/」，捲動位置仍由 gridViewMode 還原。
+		const isProjectPath = (path: string) => path.startsWith("/projects/");
+		const pinProjectTop = () => {
+			if (!isProjectPath(location.pathname)) return;
+			window.scrollTo(0, 0);
+			const state = history.state;
+			if (state && (state.scrollX || state.scrollY)) {
+				history.replaceState({ ...state, scrollX: 0, scrollY: 0 }, "");
 			}
 		};
-		document.querySelectorAll<HTMLAnchorElement>("a[data-back]").forEach((a) => {
-			a.addEventListener("click", (e) => {
-				if (a.dataset.fromSearch || a.dataset.fromLatest) return;
-				if (window.history.length > 1 && cameFromSite()) {
-					e.preventDefault();
-					window.history.back();
+		let traverseToProject = false;
+		document.addEventListener("astro:before-preparation", (e) => {
+			const ev = e as Event & { navigationType?: string; to?: URL };
+			traverseToProject = ev.navigationType === "traverse" && isProjectPath(ev.to?.pathname ?? "");
+		});
+		// 換頁動畫拍「之後」的畫面之前就捲到頂，才不會先閃一下半途的位置
+		document.addEventListener("astro:after-swap", () => {
+			if (traverseToProject) pinProjectTop();
+		});
+		document.addEventListener("astro:page-load", () => {
+			if (!traverseToProject) return;
+			traverseToProject = false;
+			pinProjectTop();
+		});
+		// 隨機是整頁跳轉。返回時若整頁重新載入，或從往返快取把舊的捲動位置一起帶回，同樣拉回頂端
+		const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+		if (navEntry?.type === "back_forward") pinProjectTop();
+		window.addEventListener("pageshow", (e) => {
+			if (e.persisted) pinProjectTop();
+		});
+
+		document.addEventListener("astro:page-load", () => {
+			const btn = document.querySelector<HTMLButtonElement>(".nav-random");
+			if (btn) {
+				btn.addEventListener("click", () => {
+					const slugs: string[] = JSON.parse(btn.dataset.slugs ?? "[]");
+					if (!slugs.length) return;
+					const slug = slugs[Math.floor(Math.random() * slugs.length)];
+					const q = btn.dataset.fromSearch ? `?from_search=${encodeURIComponent(btn.dataset.fromSearch)}` : btn.dataset.fromLatest ? "?from=latest" : "";
+					window.location.href = `/projects/${slug}${q}`;
+				});
+			}
+			// 有 from_search 或 from_latest 時用 href，回到帶篩選的首頁。
+			// 否則上一頁是這次瀏覽推上去的站內頁，才用 history.back()（作品牆才回得了原本的位置）。
+			// 從 IG、搜尋引擎、新分頁直接打開作品時，history.length 常常大於 1，但上一頁不是本站：
+			// 這時 history.back() 會離開網站，或在 App 內瀏覽器裡完全沒反應。改走連結，回到首頁。
+			const cameFromSite = () => {
+				if ((window.history.state?.index ?? 0) > 0) return true;
+				try {
+					return new URL(document.referrer).origin === location.origin;
+				} catch {
+					return false;
 				}
+			};
+			document.querySelectorAll<HTMLAnchorElement>("a[data-back]").forEach((a) => {
+				a.addEventListener("click", (e) => {
+					if (a.dataset.fromSearch || a.dataset.fromLatest) return;
+					if (!(window.history.length > 1 && cameFromSite())) return;
+					e.preventDefault();
+					const here = location.href;
+					let moved = false;
+					const mark = () => {
+						moved = true;
+					};
+					window.addEventListener("popstate", mark, { once: true });
+					window.addEventListener("pagehide", mark, { once: true });
+					// Safari 會把同一個點擊裡的 preventDefault 和 history.back() 一起吃掉，所以延後一拍
+					setTimeout(() => history.back(), 0);
+					setTimeout(() => {
+						window.removeEventListener("popstate", mark);
+						window.removeEventListener("pagehide", mark);
+						if (!moved && location.href === here) navigate(a.href);
+					}, 400);
+				});
 			});
 		});
-	});
+	}
 </script>
 
 <style>
