@@ -33,9 +33,8 @@ wordmark:
   src: "/projects/選/wordmark.webp"
   source: "cutout"
   accent: "#941515"
-  ink: 0.677
+  ink: 0.742
   scale: 1.05
-  reviewed: true
 ---
 
 總是要做決定。\

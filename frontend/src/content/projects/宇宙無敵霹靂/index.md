@@ -26,9 +26,9 @@ hoverVideo:
 wordmark:
   src: "/projects/宇宙無敵霹靂/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/宇宙無敵霹靂/wordmark-source.webp"
   accent: "#ba9254"
-  ink: 0.28
-  reviewed: true
+  ink: 0.268
 ---
 
 最近以前的流行不知不覺地重新出現在身邊？
