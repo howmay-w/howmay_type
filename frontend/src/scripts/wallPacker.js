@@ -5,17 +5,24 @@
 export const STEP = 6; // 排版格子的解析度（px）
 
 export const EXTRA_APART = 6;
-// 由字串算出 0–1 的固定亂數：同一款每次都落在同一個位置（卡片順序本身已經是隨機或依日期）
+// 由字串算出 0–1 的固定亂數，只用來在「本尊附近的那一段」裡稍微錯開，不決定落在牆的哪裡
 export const hash01 = (str) => {
   let h = 2166136261;
   for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619);
   return ((h >>> 0) % 100000) / 100000;
 };
-// 同一篇作品的其他款散在整面牆：第 j 款（共 n 款）在 poolLength 件卡片裡分到的位置，
-// 把清單切成 n 段、每段裡依作品與款號隨機挑一個，且離本尊（home）至少 EXTRA_APART 件
+// 同一篇作品的其他款散在整面牆：以本尊目前在清單裡的位置（home）為起點，
+// 把後面的清單切成 n 段、每段依作品與款號稍微錯開。隨機或改排序時本尊一換位，其他款跟著換。
+// 環狀距離離本尊至少 EXTRA_APART 件。
 export const scatterIndex = (href, j, n, home, poolLength) => {
-  let v = Math.floor(((j + hash01(`${href}#${j}`)) / n) * poolLength);
-  if (Math.abs(v - home) < EXTRA_APART) v = (home + EXTRA_APART + j) % poolLength;
+  if (!poolLength) return 0;
+  const hash = hash01(`${href}#${j}`);
+  if (home == null || Number.isNaN(home)) return Math.floor(((j + hash) / Math.max(1, n)) * poolLength) % poolLength;
+  const span = poolLength / (n + 1);
+  let v = Math.floor(home + span * (j + 1) + (hash - 0.5) * span * 0.5);
+  v = ((v % poolLength) + poolLength) % poolLength;
+  const dist = Math.min(Math.abs(v - home), poolLength - Math.abs(v - home));
+  if (dist < EXTRA_APART) v = (home + EXTRA_APART + j + 1) % poolLength;
   return v;
 };
 

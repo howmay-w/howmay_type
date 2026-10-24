@@ -38,8 +38,8 @@ const applyView = (view) => {
 
 /*
  * 字牆上要排的作品：顯示中的卡片照順序，再把其他款字圖（data-wm-extra）穿插進去。
- * 其他款要散在整面牆、不和本尊擠在一起：每一款在「全部卡片的順序」裡分到一個隨機位置
- * （把整個清單切成和款數一樣多段，每段裡隨機挑一個，且離本尊至少 EXTRA_APART 件），
+ * 其他款要散在整面牆、不和本尊擠在一起：以本尊在這次順序裡的位置為起點，
+ * 把後面的清單切成和款數一樣多段、每段稍微錯開，且離本尊至少 EXTRA_APART 件。隨機換位時跟著本尊走，
  * 等那個位置的卡片顯示出來（例如按 MORE 載入到那裡）就出現在它旁邊；本尊還沒載入也沒關係，點進去都是同一篇。
  * 搜尋時：本尊被篩掉，其他款也不出現；本尊符合但那個位置的卡片被篩掉，就改排在本尊後面幾件。
  */
@@ -72,7 +72,7 @@ const visibleItems = () => {
       const n = count.get(href);
       const j = (parseInt(el.dataset.wmIndex) || 1) - 1;
       const home = poolAt.get(href);
-      // 第 j 段裡的隨機位置；太靠近本尊就往後挪
+      // 跟在本尊這次的位置後面散開；太靠近本尊就再往後挪
       const v = scatterIndex(href, j, n, home, pool.length);
       const target = pool[v];
       if (target && at.has(target)) key = at.get(target) + 0.5;
