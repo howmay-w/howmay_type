@@ -24,7 +24,9 @@ import Separator from "../components/Separator.astro";
     align-items: baseline;
   }
   :global(html[data-page="about"]) footer,
-  :global(html[data-page="contact"]) footer {
+  :global(html[data-page="contact"]) footer,
+  :global(body:has(.page-404)) footer,
+  :global(body.is-search-empty) footer {
     margin-top: 0;
     padding-top: 0.75rem;
     padding-bottom: 1rem;

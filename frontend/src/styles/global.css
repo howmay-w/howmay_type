@@ -256,8 +256,11 @@ img {
   }
 }
 
+/* 短頁把頁尾釘在視窗底：關於我、合作、404（含任意網址的找不到頁），以及首頁搜尋無果 */
 html[data-page="about"] body,
-html[data-page="contact"] body {
+html[data-page="contact"] body,
+body:has(.page-404),
+body.is-search-empty {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -265,11 +268,24 @@ html[data-page="contact"] body {
 
 html[data-page="about"] body > header,
 html[data-page="contact"] body > header,
+body:has(.page-404) > header,
+body.is-search-empty > header,
 html[data-page="about"] body > hr,
 html[data-page="contact"] body > hr,
+body:has(.page-404) > hr,
+body.is-search-empty > hr,
 html[data-page="about"] body > footer,
-html[data-page="contact"] body > footer {
+html[data-page="contact"] body > footer,
+body:has(.page-404) > footer,
+body.is-search-empty > footer {
   flex-shrink: 0;
+}
+
+/* 404 與搜尋無果的訊息仍置中，多餘高度讓給這塊，頁尾分隔線才會落在和關於我、合作同一處 */
+body:has(.page-404) .content--page,
+body.is-search-empty .search-no-results-wrap {
+  flex: 1;
+  min-height: 0;
 }
 
 html[data-page="about"] .content--page,

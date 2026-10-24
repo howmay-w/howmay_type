@@ -359,6 +359,8 @@ const filterGrid = (searchValue, options = {}) => {
   if (gridContainer) {
     gridContainer.classList.toggle("grid--no-results", noResults);
   }
+  // 無果時頁尾改跟關於我、合作同一套：釘在視窗底。換頁前 cleanup 會拿掉
+  document.body.classList.toggle("is-search-empty", noResults);
 };
 
 /* 顯示下一批尚未載入的卡片（依目前 CSS order 視覺順序揭示） */
@@ -633,6 +635,7 @@ const cleanup = () => {
   loadMoreBtn = null;
   loadMoreWrap = null;
   searchNoResults = null;
+  document.body.classList.remove("is-search-empty");
 };
 
 /* Handle Astro page events on the home page */
