@@ -19,7 +19,6 @@
     "@astrojs/sitemap": "^3.3.0",
     "@fontsource-variable/instrument-sans": "^5.2.5",
     "@fontsource-variable/tasa-explorer": "^5.2.2",
-    "@fontsource/zen-kaku-gothic-new": "^5.2.7",
     "astro": "^5.7.4",
     "astro-seo": "^0.8.4",
     "gsap": "^3.12.7",

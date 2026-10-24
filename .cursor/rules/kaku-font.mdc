@@ -1,0 +1,38 @@
+---
+description: 更新或載入 Zen Kaku／howmay sitever 時必讀。漢字用 sitever 切 unicode-range，假名留原版 Kaku。
+globs: frontend/src/fonts/kaku/**,frontend/scripts/build-kaku-fonts.py,frontend/src/layouts/BaseLayout.astro,frontend/src/styles/global.css
+alwaysApply: false
+---
+
+# Kaku 字體
+
+網站字體家族名維持 `Zen Kaku Gothic New`。`BaseLayout.astro` 載入 `frontend/src/fonts/kaku/kaku.css`，不要改回 `@fontsource/zen-kaku-gothic-new`。
+
+備援順序：`TASA Explorer Variable` → `Zen Kaku Gothic New` → `GenKiGothicTW`。
+
+## 兩個來源
+
+- 漢字、符號、拉丁、補字，以及改過造型的字：桌面 `~/Desktop/howmay_verkaku` 的 `ZenKakuGothic_howmay_sitever-{Regular,Medium,Bold}.otf`
+- 假名：原版 Zen Kaku Gothic New（腳本會下載）。含平假名、片假名、半形假名、長音「ー」、濁音與重複記號。中點「・」留在 sitever
+
+只產出網站有用的字重：400 Regular、500 Medium、700 Bold。Light、Black 不要加。
+
+## 更新字體
+
+換上新的 OTF 後，在 repo 根目錄執行：
+
+```bash
+python3 frontend/scripts/build-kaku-fonts.py --sitever ~/Desktop/howmay_verkaku
+```
+
+需要已安裝的 `fontTools` 與 `brotli`。原版字體會下載到 `frontend/scripts/.cache/zen-kaku/`（已 gitignore）。產物在 `frontend/src/fonts/kaku/`：`kaku.css`、`files/*.woff2`、`OFL.txt`。不要手改這些產物。
+
+每個字重大約 76 個區段檔，瀏覽器只下載頁面上有出現的區段；假名每字重一個約 22KB 的檔。`url` 要保留 `?no-inline`，避免 Vite 把小檔內嵌進 CSS。
+
+sitever 的 Use Typo Metrics 會被腳本清掉，基線才跟原版假名一致。不要改回。
+
+## 不要做
+
+- 不要把整包 OTF 或 woff2 直接換上網站
+- 不要只疊那 33 個補字；造型有大量修改，非假名全部用 sitever
+- 不要改 CSS 家族名，也不要讓假名改走 sitever

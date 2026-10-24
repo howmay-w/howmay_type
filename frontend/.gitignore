@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # Visual Studio Code settings
 .vscode/
+
+# upstream Kaku download cache for scripts/build-kaku-fonts.py
+scripts/.cache/

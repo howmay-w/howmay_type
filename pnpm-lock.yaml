@@ -34,9 +34,6 @@ importers:
       '@fontsource-variable/tasa-explorer':
         specifier: ^5.2.2
         version: 5.2.2
-      '@fontsource/zen-kaku-gothic-new':
-        specifier: ^5.2.7
-        version: 5.2.7
       astro:
         specifier: ^5.7.4
         version: 5.7.4(@types/node@22.13.17)(rollup@4.38.0)(typescript@5.8.3)(yaml@2.7.1)
@@ -1296,9 +1293,6 @@ packages:
 
   '@fontsource-variable/tasa-explorer@5.2.2':
     resolution: {integrity: sha512-AL36qT/EJfQQtdlsewKaAvgxePSok6A0mffaA1mza83MWck4LEi8EnQTIkmxZ1+Jy7mJDcXARtDiwUoqubPRpQ==}
-
-  '@fontsource/zen-kaku-gothic-new@5.2.7':
-    resolution: {integrity: sha512-tfGiyBqeeBjUURHm+RIuBJCxIKhZFp46/+LEc+zCxR4sLslKwlVpWda0ZOnX/mTvOHpfr4DYjiV/pVosRXHWaw==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -7892,8 +7886,6 @@ snapshots:
   '@fontsource-variable/instrument-sans@5.2.5': {}
 
   '@fontsource-variable/tasa-explorer@5.2.2': {}
-
-  '@fontsource/zen-kaku-gothic-new@5.2.7': {}
 
   '@humanfs/core@0.19.1': {}
 
