@@ -32,8 +32,9 @@ tags: ["miserable", "金屬", "手繪特效", "🤢"]
 wordmark:
   src: "/projects/慘兮兮/wordmark.webp"
   source: "cutout"
+  sourceImage: "/projects/慘兮兮/wordmark-source.webp"
   accent: "#868dbb"
-  ink: 0.077
+  ink: 0.048
   scale: 1.05
 ---
 
