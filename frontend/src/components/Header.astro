@@ -184,11 +184,12 @@ const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
        細字看起來比粗字大，字級縮一點點做光學補正 */
     font-weight: 500;
     font-size: 15.5px;
+    letter-spacing: 0.05em;
     /* 中文字比英文高，行高 1 時 TextSlider 會切掉字頂；和左側副標同樣用 1.3 */
     line-height: 1.3;
     list-style: none;
     /* 關於我和合作／委託之間略寬一點 */
-    gap: 1.25rem;
+    gap: 1.15rem;
     margin: 0;
     padding: 0;
     grid-column: auto / span 2;
