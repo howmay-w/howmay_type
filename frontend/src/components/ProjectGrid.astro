@@ -141,6 +141,14 @@ const t = useTranslations();
 		margin-bottom: 1rem;
 		overflow: visible;
 	}
+	/* 沒有結果時字牆的間距與長寬比比 .grid--no-results 更具體，會把空狀態往下推。
+	   這裡蓋回去，讓黑底和白底落在同一個高度，只差顏色。 */
+	:global(html[data-view="type"]) .project-grid.grid--no-results {
+		height: 0;
+		aspect-ratio: auto;
+		margin: 0;
+		overflow: hidden;
+	}
 	/* 沒有字圖（或標成 hidden）的作品不出現在字牆；!important 是為了蓋過搜尋時寫入的 inline display */
 	:global(html[data-view="type"] .project-grid > a:not([data-wordmark])) {
 		display: none !important;
