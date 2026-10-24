@@ -110,6 +110,10 @@ a {
   opacity: 1;
 }
 
+.fade-in.is-instant {
+  transition: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fade-in {
     transition: none;
