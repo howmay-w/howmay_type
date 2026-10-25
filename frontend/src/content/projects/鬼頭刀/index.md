@@ -27,6 +27,7 @@ wordmark:
   source: "cutout"
   accent: "#88aacc"
   ink: 0.164
+  scale: 0.9
 ---
 
 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 花蓮常見漁獲第二彈。\
