@@ -16,7 +16,7 @@ const t = useTranslations();
 <!-- is-intro：入場動畫期間先不畫排序底線，文字浮上來後由 index.js 拿掉，底線才畫出 -->
 <header class="title-header title-header--initial is-intro">
 	<h2 class="sr-only">作品</h2>
-	<!-- 「字 ／ 圖」就是這一段的標題：顯示中的模式全亮，另一個淡色、滑過亮起 -->
+	<!-- 「字 ／ 圖」是互斥切換：目前模式全亮、不能點；另一個淡色，滑過只亮起（不轉灰） -->
 	<div class="view-toggle" role="group" aria-label={t("grid.viewGroup")}>
 		<button data-view-option="type" aria-pressed="true" aria-label={t("grid.viewTypeLabel")}><TextSlider content={t("grid.viewType")} /></button>
 		<!-- 斜線也包在 TextSlider 裡，入場時和「字」「圖」一起浮上來 -->
@@ -47,6 +47,8 @@ const t = useTranslations();
 	}
 	.view-toggle button {
 		font-weight: 700;
+		/* 拿掉全站 button 的內距，避免和中間「／」的 hover 區重疊而閃爍 */
+		padding: 0;
 	}
 	div {
 		display: flex;
@@ -85,6 +87,10 @@ const t = useTranslations();
 	.view-toggle__sep :global(.oh) {
 		vertical-align: top;
 	}
+	/* 互斥切換：目前這項不能再點，和導覽「目前頁」一樣關掉滑鼠互動，才不會誤以為能按 */
+	[data-view-option][aria-pressed="true"] {
+		pointer-events: none;
+	}
 	[data-view-option][aria-pressed="false"] {
 		opacity: 0.35;
 		transition: opacity 0.3s;
@@ -115,8 +121,10 @@ const t = useTranslations();
 		width: 0;
 	}
 	@media (hover: hover) {
+		/* 只亮起、不轉灰：全站 button hover 會把字變成 #999，和亮度回饋互搶，看起來像閃爍 */
 		[data-view-option][aria-pressed="false"]:hover {
 			opacity: 1;
+			color: inherit;
 		}
 		[data-sort]:hover::after,
 		[data-shuffle]:hover::after {
@@ -125,6 +133,13 @@ const t = useTranslations();
 		/* 滑到另一個排序、新底線畫出時，目前排序的底線照原本的動畫收回 */
 		div:has(> [data-sort]:hover, > [data-shuffle]:hover) > [aria-pressed="true"]:not(:hover)::after {
 			width: 0;
+		}
+	}
+	/* 手機：按下可切換的那邊亮起，不要走全站 button 轉灰 */
+	@media (hover: none) {
+		[data-view-option][aria-pressed="false"]:active {
+			opacity: 1;
+			color: inherit;
 		}
 	}
 	div:has(> .search) {
