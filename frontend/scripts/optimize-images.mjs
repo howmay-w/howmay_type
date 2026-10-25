@@ -37,6 +37,8 @@ async function processImage(filePath) {
   if (!IMAGE_EXT.has(ext)) return;
 
   const base = path.basename(filePath, extActual); // 用原始大小寫才能正確切掉
+  // 字圖由上傳流程另外轉成透明 WebP，不走作品照片的壓縮
+  if (/^wordmark(-source)?(-\d+)?$/i.test(base)) return;
   const dir = path.dirname(filePath);
   const outPath = path.join(dir, `${base}.webp`);
 

@@ -1,6 +1,7 @@
 /**
  * 方案 C + 表單：/新作品 開 Modal 填標題、標籤、內文；
- * 送出後請在同一頻道發一則帶圖/影片的訊息即建立專案。
+ * 送出後請在同一頻道發一則作品照片或影片，即建立專案（已有的字圖會留下）。
+ * 字圖另外發一則：第一行只寫同一個標題，只附透明圖或黑白字圖，不改照片與內文。
  * description 自動從內文第一段擷取。內文或標籤含 whatzurtype 時自動加投稿資訊：
  * 月份跟內文的「N 月／上個月／本月」，否則用台北時間的發文日；已有投稿句則不重複。
  * 標籤裡還沒有 whatzurtype 時會自動補上。
@@ -508,7 +509,7 @@ function runCreateProject(payload) {
     child.on("error", reject);
     child.on("close", (code) => {
       if (code !== 0) return reject(new Error(`腳本結束碼 ${code}\n${stderr || stdout}`));
-      const statusMatch = stdout.match(/STATUS:\s*(created|overwritten|updated)/);
+      const statusMatch = stdout.match(/STATUS:\s*(created|overwritten|updated|wordmarks)/);
       const status = statusMatch ? statusMatch[1] : "created";
       resolve({ stdout, stderr, status });
     });
@@ -542,7 +543,7 @@ client.on(Events.ClientReady, async () => {
   const commands = [
     new SlashCommandBuilder()
       .setName("新作品")
-      .setDescription("填寫標題、標籤、內文後，再發一則帶圖/影片的訊息即可建立專案")
+      .setDescription("填寫標題、標籤、內文後，再發一則作品照片或影片即可建立專案")
       .toJSON(),
     new SlashCommandBuilder()
       .setName("修改作品")
@@ -622,11 +623,75 @@ client.on(Events.InteractionCreate, async (interaction) => {
     const key = `${interaction.channelId}_${interaction.user.id}`;
     pendingByChannelUser.set(key, { title, tags, body, description, pubDate });
     await interaction.reply({
-      content: "已收到！請在**本頻道**發送一則**帶有圖片或影片**的訊息，我將為你建立專案。",
+      content:
+        "已收到！請在**本頻道**發送一則**作品照片或影片**（可只發附件）。\n字圖不要放在這則。作品建好後，另外發一則：第一行寫同一個標題，只附透明圖或黑白字圖。",
       ephemeral: true,
     });
   }
 });
+
+function wordmarkNote(stdout) {
+  const kept = Number(stdout.match(/PRESERVED_WORDMARKS:\s*(\d+)/)?.[1] || 0);
+  if (kept > 0) return `\n原本的字圖留著（${kept} 款）。`;
+  return "\n字圖請另外發一則：第一行寫同一個標題，只附透明圖或黑白字圖。";
+}
+
+async function publishPayload(update, { title, payload }) {
+  if (GITHUB_TOKEN) {
+    const sync = syncOriginBeforeLocalChanges();
+    if (!sync.ok) {
+      await update(`❌ 無法與 GitHub 同步：${sync.error}`);
+      return;
+    }
+  }
+  const { status, stdout } = await runCreateProject(payload);
+  const slug = slugify(title);
+  let resultMsg;
+  let commitMsg;
+  if (status === "wordmarks") {
+    const n = Number(stdout.match(/WORDMARKS:\s*(\d+)/)?.[1] || 0);
+    resultMsg = `✅ 已更新字圖：\`${title}\`（${n} 款）。照片與內文未改。`;
+    commitMsg = `feat: 更新作品「${title}」字圖`;
+    await update(`${resultMsg}\n正在處理 push…`);
+  } else {
+    const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
+    if (SKIP_OPTIMIZE_IMAGES) {
+      await update(`✅ ${statusLabel}：\`${title}\`\n正在處理 push…（圖片壓縮由 GitHub Actions 執行）`);
+      resultMsg = `✅ ${statusLabel}：\`${title}\`，已 push；GitHub Actions 將自動轉 WebP`;
+    } else {
+      await update(`✅ ${statusLabel}：\`${title}\`\n正在優化圖片…`);
+      await runOptimizeImages();
+      resultMsg = `✅ ${statusLabel}：\`${title}\`，已執行 \`optimize-images\``;
+    }
+    resultMsg += wordmarkNote(stdout);
+    commitMsg = status === "overwritten" ? `feat: 覆寫作品「${title}」` : `feat: 新增作品「${title}」`;
+  }
+  if (GITHUB_TOKEN) {
+    if (GITHUB_PUSH_DIRECT) {
+      await update(`${resultMsg}\n正在 push…`);
+      const { ok, error } = pushDirectToCurrentBranch(title, slug, commitMsg);
+      resultMsg += ok
+        ? "\n已 **push** 到目前分支，部署會自動進行。"
+        : `\n（push 失敗：${(error || "未知原因").slice(0, 180)}）`;
+    } else {
+      await update(`${resultMsg}\n正在開 PR…`);
+      try {
+        const { prUrl, manualPrUrl } = await createPrAndReply(title, slug, commitMsg);
+        resultMsg += prUrl
+          ? `\n**PR：** ${prUrl}`
+          : manualPrUrl
+            ? `\n（API 開 PR 失敗）**手動開 PR：** ${manualPrUrl}`
+            : "\n（開 PR 失敗，請手動 push）";
+      } catch (e) {
+        console.error(e);
+        resultMsg += "\n（開 PR 失敗，請手動 push）";
+      }
+    }
+  } else {
+    resultMsg += "。請手動 push 或開 PR 部署。";
+  }
+  await update(resultMsg);
+}
 
 client.on("messageCreate", async (message) => {
   if (message.channelId !== DISCORD_CHANNEL_ID) return;
@@ -656,51 +721,7 @@ client.on("messageCreate", async (message) => {
     const reply = await message.reply("正在建立專案…").catch(() => null);
     const update = (text) => reply?.edit(text).catch(() => {});
     try {
-      if (GITHUB_TOKEN) {
-        const sync = syncOriginBeforeLocalChanges();
-        if (!sync.ok) {
-          await update(`❌ 無法與 GitHub 同步：${sync.error}`);
-          return;
-        }
-      }
-      const { status } = await runCreateProject(payload);
-      const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
-      if (SKIP_OPTIMIZE_IMAGES) {
-        await update(`✅ ${statusLabel}：\`${pending.title}\`\n正在處理 push…（圖片壓縮由 GitHub Actions 執行）`);
-      } else {
-        await update(`✅ ${statusLabel}：\`${pending.title}\`\n正在優化圖片…`);
-        await runOptimizeImages();
-      }
-      let resultMsg = SKIP_OPTIMIZE_IMAGES
-        ? `✅ ${statusLabel}：\`${pending.title}\`，已 push；GitHub Actions 將自動轉 WebP`
-        : `✅ ${statusLabel}：\`${pending.title}\`，已執行 \`optimize-images\``;
-      if (GITHUB_TOKEN) {
-        const slug = slugify(pending.title);
-        const commitMsg = status === "overwritten" ? `feat: 覆寫作品「${pending.title}」` : `feat: 新增作品「${pending.title}」`;
-        if (GITHUB_PUSH_DIRECT) {
-          await update(`${resultMsg}\n正在 push…`);
-          const { ok, error } = pushDirectToCurrentBranch(pending.title, slug, commitMsg);
-          resultMsg += ok
-            ? "\n已 **push** 到目前分支，部署會自動進行。"
-            : `\n（push 失敗：${(error || "未知原因").slice(0, 180)}）`;
-        } else {
-          await update(`${resultMsg}\n正在開 PR…`);
-          try {
-            const { prUrl, manualPrUrl } = await createPrAndReply(pending.title, slug, commitMsg);
-            resultMsg += prUrl
-              ? `\n**PR：** ${prUrl}`
-              : manualPrUrl
-                ? `\n（API 開 PR 失敗）**手動開 PR：** ${manualPrUrl}`
-                : "\n（開 PR 失敗，請手動 push）";
-          } catch (e) {
-            console.error(e);
-            resultMsg += "\n（開 PR 失敗，請手動 push）";
-          }
-        }
-      } else {
-        resultMsg += "。請手動 push 或開 PR 部署。";
-      }
-      await update(resultMsg);
+      await publishPayload(update, { title: pending.title, payload });
     } catch (err) {
       console.error(err);
       const hint =
@@ -716,6 +737,27 @@ client.on("messageCreate", async (message) => {
   const content = (message.content || "").trim();
   if (attachments.length === 0) return;
   if (images.length === 0 && videos.length === 0) return;
+
+  const textLines = content.split("\n").map((line) => line.trim()).filter(Boolean);
+  // 只有標題一行、沒有影片：這則是字圖，不猜圖裡是不是字
+  if (videos.length === 0 && textLines.length === 1) {
+    const title = textLines[0];
+    const payload = {
+      title,
+      slug: slugify(title),
+      onlyUpdateWordmarks: true,
+      wordmarks: images.map((a) => ({ url: a.url })),
+    };
+    const reply = await message.reply("正在更新字圖…").catch(() => null);
+    const update = (text) => reply?.edit(text).catch(() => {});
+    try {
+      await publishPayload(update, { title, payload });
+    } catch (err) {
+      console.error(err);
+      await update(`❌ 字圖更新失敗：${err.message}`);
+    }
+    return;
+  }
 
   const firstLine = content.split("\n")[0]?.trim() || "";
   const rest = content.slice(firstLine.length).trim();
@@ -739,53 +781,8 @@ client.on("messageCreate", async (message) => {
 
   const reply = await message.reply("正在建立專案…").catch(() => null);
   const update = (text) => reply?.edit(text).catch(() => {});
-
   try {
-    if (GITHUB_TOKEN) {
-      const sync = syncOriginBeforeLocalChanges();
-      if (!sync.ok) {
-        await update(`❌ 無法與 GitHub 同步：${sync.error}`);
-        return;
-      }
-    }
-    const { status } = await runCreateProject(payload);
-    const statusLabel = status === "overwritten" ? "已覆寫專案" : "已建立專案";
-    if (SKIP_OPTIMIZE_IMAGES) {
-      await update(`✅ ${statusLabel}：\`${title}\`\n正在處理 push…（圖片壓縮由 GitHub Actions 執行）`);
-    } else {
-      await update(`✅ ${statusLabel}：\`${title}\`\n正在優化圖片…`);
-      await runOptimizeImages();
-    }
-    let resultMsg = SKIP_OPTIMIZE_IMAGES
-      ? `✅ ${statusLabel}：\`${title}\`，已 push；GitHub Actions 將自動轉 WebP`
-      : `✅ ${statusLabel}：\`${title}\`，已執行 \`optimize-images\``;
-    if (GITHUB_TOKEN) {
-      const slug = slugify(title);
-      const commitMsg = status === "overwritten" ? `feat: 覆寫作品「${title}」` : `feat: 新增作品「${title}」`;
-      if (GITHUB_PUSH_DIRECT) {
-        await update(`${resultMsg}\n正在 push…`);
-        const { ok, error } = pushDirectToCurrentBranch(title, slug, commitMsg);
-        resultMsg += ok
-          ? "\n已 **push** 到目前分支，部署會自動進行。"
-          : `\n（push 失敗：${(error || "未知原因").slice(0, 180)}）`;
-      } else {
-        await update(`${resultMsg}\n正在開 PR…`);
-        try {
-          const { prUrl, manualPrUrl } = await createPrAndReply(title, slug, commitMsg);
-          resultMsg += prUrl
-            ? `\n**PR：** ${prUrl}`
-            : manualPrUrl
-              ? `\n（API 開 PR 失敗）**手動開 PR：** ${manualPrUrl}`
-              : "\n（開 PR 失敗，請手動 push）";
-        } catch (e) {
-          console.error(e);
-          resultMsg += "\n（開 PR 失敗，請手動 push）";
-        }
-      }
-    } else {
-      resultMsg += "。請手動 push 或開 PR 部署。";
-    }
-    await update(resultMsg);
+    await publishPayload(update, { title, payload });
   } catch (err) {
     console.error(err);
     const hint =

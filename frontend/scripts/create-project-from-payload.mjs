@@ -10,8 +10,10 @@
  */
 
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { renderWordmark } from "./wordmark-image.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECTS_DIR = path.resolve(__dirname, "../src/content/projects");
@@ -33,8 +35,10 @@ const PROJECTS_DIR = path.resolve(__dirname, "../src/content/projects");
  *     { "url": "https://...", "posterUrl": "https://..." } 或 { "path": "/tmp/v.mp4", "posterPath": "/tmp/p.jpg" }
  *   ],
  *   "hoverVideoIndex": 0,         // 選填，用第幾個影片當 hover（預設 0）
- *   "overwrite": true,            // 選填，若為 true 且同 slug 專案已存在則清空後覆寫
- *   "onlyUpdateBody": true        // 選填，若為 true 僅更新該專案 index.md 的內文／標題／描述／標籤，不碰圖片
+ *   "overwrite": true,            // 選填，若為 true 且同 slug 專案已存在則清空後覆寫（字圖檔與 wordmark 欄位會留下）
+ *   "onlyUpdateBody": true,       // 選填，若為 true 僅更新該專案 index.md 的內文／標題／描述／標籤，不碰圖片
+ *   "onlyUpdateWordmarks": true,  // 選填，僅換成這批字圖（透明圖用透明度，黑白圖把亮度換成透明度）
+ *   "wordmarks": [ { "url": "https://..." } 或 { "path": "/tmp/wm.png" } ]
  * }
  */
 
@@ -68,9 +72,107 @@ function escapeYamlString(s) {
 }
 
 /** 清空目錄內所有檔案與子目錄（不刪除目錄本身） */
+const WORDMARK_FILE = /^wordmark(-source)?(-\d+)?\.webp$/;
+const WORDMARK_BLOCK = /^wordmark:\r?\n(?:[ \t]+.*\r?\n)*/m;
+const EXTRA_BLOCK = /^extraWordmarks:\r?\n(?:[ \t]+.*\r?\n)*/m;
+
+function wordmarkBlockText(md) {
+  return `${md.match(WORDMARK_BLOCK)?.[0] || ""}${md.match(EXTRA_BLOCK)?.[0] || ""}`;
+}
+
+function countWordmarks(block) {
+  if (!block) return 0;
+  const extras = (block.match(/^\s+-\s*\{/gm) || []).length;
+  return (/^wordmark:/m.test(block) ? 1 : 0) + extras;
+}
+
+function stripWordmarkBlocks(md) {
+  return md.replace(WORDMARK_BLOCK, "").replace(EXTRA_BLOCK, "");
+}
+
+function insertFrontmatter(md, block) {
+  if (!block) return md;
+  const end = md.indexOf("\n---", 3);
+  if (end < 0) throw new Error("無法解析 index.md 的 frontmatter");
+  return `${md.slice(0, end + 1)}${block}${md.slice(end + 1)}`;
+}
+
+function removeWordmarkFiles(dir) {
+  for (const name of fs.readdirSync(dir)) {
+    if (WORDMARK_FILE.test(name)) fs.unlinkSync(path.join(dir, name));
+  }
+}
+
+function wordmarkFields(slug, name, rendered) {
+  const fields = {
+    src: `/projects/${slug}/${name}`,
+    source: rendered.source,
+    ink: rendered.ink,
+  };
+  if (rendered.accent) fields.accent = rendered.accent;
+  return fields;
+}
+
+function wordmarkYaml(slug, renderedList) {
+  const mainName = "wordmark.webp";
+  const main = wordmarkFields(slug, mainName, renderedList[0]);
+  const order = ["src", "source", "accent", "ink"];
+  const line = (fields) => {
+    const keys = [...order.filter((k) => k in fields), ...Object.keys(fields).filter((k) => !order.includes(k))];
+    return keys.map((k) => `  ${k}: ${JSON.stringify(fields[k])}\n`).join("");
+  };
+  let block = `wordmark:\n${line(main)}`;
+  if (renderedList.length > 1) {
+    const extras = renderedList.slice(1).map((rendered, i) => wordmarkFields(slug, `wordmark-${i + 2}.webp`, rendered));
+    block += `extraWordmarks:\n${extras.map((fields) => `  - ${JSON.stringify(fields)}\n`).join("")}`;
+  }
+  return block;
+}
+
+async function updateWordmarksOnly(projectDir, payload) {
+  const indexPath = path.join(projectDir, "index.md");
+  if (!fs.existsSync(indexPath)) {
+    console.error(`找不到作品「${payload.title}」。請先用 /新作品 上架，字圖再另外傳。`);
+    process.exit(1);
+  }
+  const wordmarks = payload.wordmarks || [];
+  if (!wordmarks.length) {
+    console.error("沒有字圖可更新");
+    process.exit(1);
+  }
+  const slug = path.basename(projectDir);
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "wm-in-"));
+  const rendered = [];
+  try {
+    for (let i = 0; i < wordmarks.length; i++) {
+      const dest = path.join(tmp, `in-${i}`);
+      await downloadOrCopy(wordmarks[i], dest);
+      try {
+        rendered.push(await renderWordmark(fs.readFileSync(dest)));
+      } catch (err) {
+        throw new Error(`第 ${i + 1} 張字圖：${err.message}`);
+      }
+    }
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+
+  removeWordmarkFiles(projectDir);
+  rendered.forEach((item, i) => {
+    const name = i === 0 ? "wordmark.webp" : `wordmark-${i + 2}.webp`;
+    fs.writeFileSync(path.join(projectDir, name), item.webp);
+  });
+  const md = insertFrontmatter(stripWordmarkBlocks(fs.readFileSync(indexPath, "utf8")), wordmarkYaml(slug, rendered));
+  fs.writeFileSync(indexPath, md, "utf8");
+  console.log(`已更新字圖：${projectDir}（${rendered.length} 款）`);
+  console.log(`WORDMARKS: ${rendered.length}`);
+  console.log("STATUS: wordmarks");
+}
+
 function clearDir(dir) {
   const names = fs.readdirSync(dir);
   for (const name of names) {
+    if (WORDMARK_FILE.test(name)) continue;
     const full = path.join(dir, name);
     const stat = fs.statSync(full);
     if (stat.isDirectory()) {
@@ -150,18 +252,29 @@ async function main() {
     return;
   }
 
+  if (payload.onlyUpdateWordmarks) {
+    await updateWordmarksOnly(projectDir, payload);
+    return;
+  }
+
   let overwritten = false;
+  let keptWordmarkBlock = "";
+  let previousMd = null;
   if (fs.existsSync(projectDir)) {
     if (!payload.overwrite) {
       console.error(`資料夾已存在: ${projectDir}`);
       process.exit(1);
     }
+    const indexPath = path.join(projectDir, "index.md");
+    previousMd = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : null;
+    keptWordmarkBlock = previousMd ? wordmarkBlockText(previousMd) : "";
     clearDir(projectDir);
     overwritten = true;
   } else {
     fs.mkdirSync(projectDir, { recursive: true });
   }
 
+  try {
   const images = payload.images || [];
   const videos = payload.videos || [];
   const basePath = `/projects/${slug}`;
@@ -250,8 +363,17 @@ async function main() {
   }
 
   const body = (payload.body || "").trim();
-  const indexMd = `---\n${yamlLines.join("\n")}\n---\n\n${body}\n`;
+  let indexMd = `---\n${yamlLines.join("\n")}\n---\n\n${body}\n`;
+  if (keptWordmarkBlock) {
+    indexMd = insertFrontmatter(indexMd, keptWordmarkBlock);
+    const kept = countWordmarks(keptWordmarkBlock);
+    if (kept > 0) console.log(`PRESERVED_WORDMARKS: ${kept}`);
+  }
   fs.writeFileSync(path.join(projectDir, "index.md"), indexMd, "utf8");
+  } catch (err) {
+    if (previousMd != null) fs.writeFileSync(path.join(projectDir, "index.md"), previousMd);
+    throw err;
+  }
 
   console.log(overwritten ? `已覆寫：${projectDir}` : `已建立：${projectDir}`);
   console.log("請在 frontend 目錄執行：pnpm optimize-images");
