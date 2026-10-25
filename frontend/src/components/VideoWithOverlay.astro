@@ -186,8 +186,11 @@ const size = poster ? webpDimensions(poster) : null;
 	}
 
 	function onFirstFrame(video: HTMLVideoElement, callback: () => void) {
-		if ("requestVideoFrameCallback" in video) {
-			video.requestVideoFrameCallback(() => callback());
+		const withFrameCallback = video as HTMLVideoElement & {
+			requestVideoFrameCallback?: (cb: () => void) => number;
+		};
+		if (typeof withFrameCallback.requestVideoFrameCallback === "function") {
+			withFrameCallback.requestVideoFrameCallback(() => callback());
 			return;
 		}
 		const run = () => requestAnimationFrame(() => requestAnimationFrame(callback));
