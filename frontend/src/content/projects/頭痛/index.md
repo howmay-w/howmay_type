@@ -15,4 +15,5 @@ wordmark:
   source: "cutout"
   accent: "#4a96fc"
   ink: 0.598
+  scale: 1.1
 ---
