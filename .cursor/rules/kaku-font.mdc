@@ -29,6 +29,14 @@ python3 frontend/scripts/build-kaku-fonts.py --sitever ~/Desktop/howmay_verkaku
 
 每個字重大約 76 個區段檔，瀏覽器只下載頁面上有出現的區段；假名每字重一個約 22KB 的檔。`url` 要保留 `?no-inline`，避免 Vite 把小檔內嵌進 CSS。
 
+只修了幾個字、字表沒變時，可以只重切那些字所在的區段（三個字重各一檔），`kaku.css` 和其他區段不動：
+
+```bash
+python3 frontend/scripts/build-kaku-fonts.py --sitever ~/Desktop/howmay_verkaku --only 梅海
+```
+
+新 OTF 若增刪了字，區段會錯位，腳本會擋下，這時改用完整重產。假名不能用 `--only` 換。
+
 sitever 的 Use Typo Metrics 會被腳本清掉，基線才跟原版假名一致。不要改回。
 
 ## 不要做
