@@ -193,6 +193,11 @@ const t = useTranslations();
 		border-radius: 2rem;
 		box-sizing: border-box;
 	}
+	/* 點 tag／還原搜尋時 JS 才加上 search--active，入場動畫可能已開始；
+	   先用 CSS 把框藏在裁切下方，才不會比文字先停在畫面上 */
+	.is-intro .search-frame {
+		transform: translateY(calc(100% + 4px));
+	}
 	.search--active {
 		&:focus-visible {
 			color: inherit;

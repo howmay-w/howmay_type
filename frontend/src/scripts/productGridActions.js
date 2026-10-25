@@ -496,6 +496,12 @@ const toggleClearButton = (searchTerm = "") => {
   }
 };
 
+/* 入場動畫期間套用搜尋／tag 時，圓角框先跟著藏在裁切下方，交給 index.js 和文字同一拍浮上 */
+const hideSearchFrameDuringIntro = () => {
+  const frame = document.querySelector(".title-header.is-intro .search-frame");
+  if (frame) gsap.set(frame, { yPercent: 100, y: 4 });
+};
+
 /* Apply tag filter from URL ?tag= parameter */
 const applyTagFromUrl = () => {
   const params = new URLSearchParams(window.location.search);
@@ -505,6 +511,7 @@ const applyTagFromUrl = () => {
   filterGrid(tag, { skipAnimation: true });
   toggleClearButton(tag);
   searchButton?.classList.add("search--active");
+  hideSearchFrameDuringIntro();
   setSearchToolbarLabel(tag);
   if (searchInput) searchInput.value = tag;
   try {
@@ -546,6 +553,7 @@ const applySearchFromSession = () => {
   filterGrid(term, { skipAnimation: true });
   toggleClearButton(term);
   searchButton?.classList.add("search--active");
+  hideSearchFrameDuringIntro();
   setSearchToolbarLabel(term);
   if (searchInput) searchInput.value = term;
   if (fromUrl) {
