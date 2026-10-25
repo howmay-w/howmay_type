@@ -142,6 +142,29 @@ const initializeVariables = () => {
 /* 和首頁入場動畫相同的浮上動畫；每張卡片等圖載好才浮上來（見 cardReady.js），回傳全部開始播放後 resolve 的 promise */
 const appearCards = (items) => revealCards(items, { animate: floatUp });
 
+/* 目前畫面上的作品（含已排上字牆的其他款），順序和牆上看到的一樣 */
+const visibleWallCards = () =>
+  Array.from(gridContainer?.children || [])
+    .filter(
+      (el) =>
+        !el.hasAttribute("data-deferred") &&
+        (!el.hasAttribute("data-wm-extra") || el.hasAttribute("data-wm-on")) &&
+        el.style.display !== "none" &&
+        getComputedStyle(el).display !== "none",
+    )
+    .sort((a, b) => (parseInt(a.style.order) || 0) - (parseInt(b.style.order) || 0));
+
+/* 點頁首站名／副標：不要整頁重載，用和「隨機」相同的上浮重播目前的牆 */
+const handleHomeReplay = () => {
+  if (!gridContainer) return;
+  window.scrollTo(0, 0);
+  if (searchButton?.classList.contains("search--active")) {
+    clearSearchState();
+    return;
+  }
+  appearCards(visibleWallCards());
+};
+
 /* Shuffle：從全部專案中隨機抽選 LOAD_BATCH 張顯示，其餘重新隱藏 */
 const shuffleGrid = () => {
   const shuffled = [...gridItems].sort(() => Math.random() - 0.5);
@@ -566,6 +589,7 @@ const init = () => {
   initializeVariables();
   shuffleButton?.addEventListener("click", handleShuffleClick);
   sortButton?.addEventListener("click", handleSortClick);
+  document.addEventListener("home:replay", handleHomeReplay);
   searchButton?.addEventListener("click", handleSearchClick);
   closeDialog?.addEventListener("click", handleCloseClick);
   searchOverlay?.addEventListener("click", handleCloseClick);
@@ -612,6 +636,7 @@ const init = () => {
 const cleanup = () => {
   shuffleButton?.removeEventListener("click", handleShuffleClick);
   sortButton?.removeEventListener("click", handleSortClick);
+  document.removeEventListener("home:replay", handleHomeReplay);
   searchButton?.removeEventListener("click", handleSearchClick);
   closeDialog?.removeEventListener("click", handleCloseClick);
   searchOverlay?.removeEventListener("click", handleCloseClick);

@@ -25,9 +25,9 @@ const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
 <header transition:persist="site-header" transition:animate="none">
   <h1>
     <!-- 站名也可以回首頁（和右邊副標相同），滑過轉灰 -->
-    <a href="/" data-astro-prefetch><TextSlider content="Howmay 皓梅" /></a>
+    <a href="/" data-home-link data-astro-prefetch><TextSlider content="Howmay 皓梅" /></a>
   </h1>
-  <a href="/" class={`header-subtitle ${activeRoute === "Home" ? "current" : ""}`} data-astro-prefetch>
+  <a href="/" class={`header-subtitle ${activeRoute === "Home" ? "current" : ""}`} data-home-link data-astro-prefetch>
     <TextSlider content="Lettering & Logotype" />
     <span class="header-subtitle__line2"><TextSlider content="美術字 & 標準字" /></span>
   </a>
@@ -87,6 +87,25 @@ const activeRoute = routes[currentPath.replace(/(.)\/$/, "$1")] || null;
     startedAt = performance.now();
     play(0);
   };
+
+  // 已在首頁時不要整頁重載：View Transition 會把整面字牆一起淡出／閃現。
+  // 改通知作品牆用和「隨機」相同的上浮動畫。新分頁、其他頁回首頁仍走原本的連結。
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = (e.target as Element | null)?.closest?.<HTMLAnchorElement>(
+        "a[data-home-link], header[data-astro-transition-persist] h1 a[href='/'], header[data-astro-transition-persist] > a[href='/']",
+      );
+      if (!a) return;
+      const here = location.pathname.replace(/\/$/, "") || "/";
+      if (here !== "/") return;
+      e.preventDefault();
+      e.stopPropagation();
+      document.dispatchEvent(new CustomEvent("home:replay"));
+    },
+    true,
+  );
 
   document.addEventListener("astro:before-preparation", (e) => {
     markCurrent((e as Event & { to: URL }).to.pathname, true);
