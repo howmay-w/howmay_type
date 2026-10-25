@@ -25,7 +25,8 @@ type Props = {
 
 const { title, description = "皓梅的畫字創作頻道", ogImage, ogImageAlt, noindex = false } = Astro.props;
 
-const defaultOgPath = "/favicon/apple-touch-icon.png";
+/** 全站預設圖：黃方塊。只有作品頁會另外傳 ogImage（該篇首圖） */
+const defaultOgPath = "/favicon/android-chrome-512x512.png";
 const rawOgImage = ogImage ?? defaultOgPath;
 const ogImageUrl = /^https?:\/\//i.test(rawOgImage)
 	? rawOgImage
@@ -77,6 +78,13 @@ const currentPage =
             rel: "stylesheet",
             href: "https://font.emtech.cc/css/GenKiGothicTW",
           },
+          { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+          {
+            rel: "icon",
+            type: "image/png",
+            sizes: "32x32",
+            href: "/favicon/favicon-32x32.png",
+          },
           {
             rel: "icon",
             type: "image/png",
@@ -86,8 +94,14 @@ const currentPage =
           {
             rel: "icon",
             type: "image/png",
-            sizes: "32x32",
-            href: "/favicon/favicon-32x32.png",
+            sizes: "192x192",
+            href: "/favicon/android-chrome-192x192.png",
+          },
+          {
+            rel: "icon",
+            type: "image/png",
+            sizes: "512x512",
+            href: "/favicon/android-chrome-512x512.png",
           },
           {
             rel: "apple-touch-icon",
@@ -119,6 +133,7 @@ const currentPage =
       "name": "王皓梅 Howmay Wang",
       "alternateName": ["皓梅 Howmay", "Howmay Wang", "王皓梅", "howmay__"],
       "url": "https://howmaywang.com",
+      "image": new URL(defaultOgPath, Astro.site ?? Astro.url).href,
       "email": "mailto:howmayw@gmail.com",
       "jobTitle": ["美術字與標準字設計師", "Lettering & Logotype Designer"],
       "nationality": { "@type": "Country", "name": "Taiwan" },
