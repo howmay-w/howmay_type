@@ -4,13 +4,13 @@
 平假名、片假名、半形假名、長音「ー」、濁音與重複記號來自原版。
 
   python3 frontend/scripts/build-kaku-fonts.py \
-    --sitever ~/Desktop/howmay_verkaku \
+    --sitever ~/創作/字/howmay_verkakufont \
     --official /tmp/zenkaku-official
 
 只換某幾個字（不動 kaku.css 與其他區段）：
 
   python3 frontend/scripts/build-kaku-fonts.py \
-    --sitever ~/Desktop/howmay_verkaku --only 梅海
+    --sitever ~/創作/字/howmay_verkakufont --only 梅海
 """
 
 from __future__ import annotations
@@ -126,7 +126,7 @@ def ensure_official(directory: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sitever", type=Path, default=Path.home() / "Desktop" / "howmay_verkaku")
+    parser.add_argument("--sitever", type=Path, default=Path.home() / "創作" / "字" / "howmay_verkakufont")
     parser.add_argument("--official", type=Path, default=ROOT / "scripts" / ".cache" / "zen-kaku")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--chunk-size", type=int, default=CHUNK_SIZE)
