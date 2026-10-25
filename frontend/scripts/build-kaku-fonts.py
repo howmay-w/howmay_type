@@ -4,13 +4,19 @@
 平假名、片假名、半形假名、長音「ー」、濁音與重複記號來自原版。
 
   python3 frontend/scripts/build-kaku-fonts.py \
-    --sitever ~/Desktop/howmay_verkaku \
+    --sitever ~/創作/字/howmay_verkakufont \
     --official /tmp/zenkaku-official
+
+只換某幾個字（不動 kaku.css 與其他區段）：
+
+  python3 frontend/scripts/build-kaku-fonts.py \
+    --sitever ~/創作/字/howmay_verkakufont --only 梅海
 """
 
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
@@ -120,11 +126,16 @@ def ensure_official(directory: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sitever", type=Path, default=Path.home() / "Desktop" / "howmay_verkaku")
+    parser.add_argument("--sitever", type=Path, default=Path.home() / "創作" / "字" / "howmay_verkakufont")
     parser.add_argument("--official", type=Path, default=ROOT / "scripts" / ".cache" / "zen-kaku")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--chunk-size", type=int, default=CHUNK_SIZE)
+    parser.add_argument("--only", help="只重切這些字所在的 sitever 區段，沿用現有 kaku.css 的 unicode-range")
     args = parser.parse_args()
+
+    if args.only:
+        rebuild_only(args)
+        return
 
     ensure_official(args.official)
     files_dir = args.out / "files"
@@ -238,6 +249,48 @@ def main() -> None:
         print(f"weight {weight}: {size / 1024:.0f} KB")
     print(f"total {total / 1024:.0f} KB, largest {largest[1]} {largest[0] / 1024:.1f} KB")
     print(f"wrote {css_path}")
+
+
+def rebuild_only(args: argparse.Namespace) -> None:
+    css_path = args.out / "kaku.css"
+    if not css_path.exists():
+        raise SystemExit(f"找不到 {css_path}，請先完整產生一次")
+    rules = re.findall(
+        r'font-weight: (\d+);\s*src: url\("\./files/([^?"]+)\?no-inline"\) format\("woff2"\);\s*unicode-range: ([^;]+);',
+        css_path.read_text(encoding="utf-8"),
+    )
+    targets = sorted({ord(char) for char in args.only if not char.isspace()})
+    kana = [codepoint for codepoint in targets if is_kana(codepoint)]
+    if kana:
+        raise SystemExit("假名來自原版，不從 sitever 換：" + "".join(chr(codepoint) for codepoint in kana))
+
+    styles = dict(WEIGHTS)
+    jobs = []
+    for weight, filename, unicode_range in rules:
+        if not filename.startswith("kaku-"):
+            continue
+        group = parse_range(unicode_range)
+        hits = [codepoint for codepoint in targets if codepoint in group]
+        if not hits:
+            continue
+        site_path = args.sitever / f"ZenKakuGothic_howmay_sitever-{styles[int(weight)]}.otf"
+        if not site_path.exists():
+            raise SystemExit(f"找不到 {site_path}")
+        site_cmap = cmap_of(site_path)
+        missing = [codepoint for codepoint in group if codepoint not in site_cmap]
+        if missing:
+            raise SystemExit(f"{site_path.name} 少了 {filename} 的字，例如 U+{missing[0]:04X}；字表有變請完整重產")
+        jobs.append((str(site_path), group, str(args.out / "files" / filename), True))
+        print(f"{filename} <- {''.join(chr(codepoint) for codepoint in hits)}")
+
+    found = {codepoint for _w, filename, unicode_range in rules if filename.startswith("kaku-") for codepoint in parse_range(unicode_range)}
+    absent = [codepoint for codepoint in targets if codepoint not in found]
+    if absent:
+        raise SystemExit("kaku.css 沒有這些字的區段：" + "".join(chr(codepoint) for codepoint in absent))
+
+    for job in jobs:
+        subset_font(*job)
+    print(f"rebuilt {len(jobs)} files")
 
 
 def parse_range(text: str) -> list[int]:

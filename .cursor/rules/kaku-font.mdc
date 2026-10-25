@@ -12,7 +12,7 @@ alwaysApply: false
 
 ## 兩個來源
 
-- 漢字、符號、拉丁、補字，以及改過造型的字：桌面 `~/Desktop/howmay_verkaku` 的 `ZenKakuGothic_howmay_sitever-{Regular,Medium,Bold}.otf`
+- 漢字、符號、拉丁、補字，以及改過造型的字：`~/創作/字/howmay_verkakufont` 的 `ZenKakuGothic_howmay_sitever-{Regular,Medium,Bold}.otf`
 - 假名：原版 Zen Kaku Gothic New（腳本會下載）。含平假名、片假名、半形假名、長音「ー」、濁音與重複記號。中點「・」留在 sitever
 
 只產出網站有用的字重：400 Regular、500 Medium、700 Bold。Light、Black 不要加。
@@ -22,12 +22,20 @@ alwaysApply: false
 換上新的 OTF 後，在 repo 根目錄執行：
 
 ```bash
-python3 frontend/scripts/build-kaku-fonts.py --sitever ~/Desktop/howmay_verkaku
+python3 frontend/scripts/build-kaku-fonts.py --sitever ~/創作/字/howmay_verkakufont
 ```
 
 需要已安裝的 `fontTools` 與 `brotli`。原版字體會下載到 `frontend/scripts/.cache/zen-kaku/`（已 gitignore）。產物在 `frontend/src/fonts/kaku/`：`kaku.css`、`files/*.woff2`、`OFL.txt`。不要手改這些產物。
 
 每個字重大約 76 個區段檔，瀏覽器只下載頁面上有出現的區段；假名每字重一個約 22KB 的檔。`url` 要保留 `?no-inline`，避免 Vite 把小檔內嵌進 CSS。
+
+只修了幾個字、字表沒變時，可以只重切那些字所在的區段（三個字重各一檔），`kaku.css` 和其他區段不動：
+
+```bash
+python3 frontend/scripts/build-kaku-fonts.py --sitever ~/創作/字/howmay_verkakufont --only 梅海
+```
+
+新 OTF 若增刪了字，區段會錯位，腳本會擋下，這時改用完整重產。假名不能用 `--only` 換。
 
 sitever 的 Use Typo Metrics 會被腳本清掉，基線才跟原版假名一致。不要改回。
 
