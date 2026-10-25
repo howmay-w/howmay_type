@@ -27,10 +27,14 @@ const t = useTranslations();
 		<!-- 目前的排序（aria-pressed="true"）下方加細底線；搜尋中兩個都不加 -->
 		<button data-sort aria-pressed="false"><TextSlider content={t("grid.latest")} /></button>
 		<button data-shuffle aria-pressed="true"><TextSlider content={t("grid.random")} /></button>
-		<div>
+		<div class="search-tools">
+			<!-- 圓角框改成真實元素，入場時才能和文字一樣從下方浮出（::before 無法被 overflow 裁切） -->
+			<span class="search-frame-clip" aria-hidden="true"><span class="search-frame"></span></span>
 			<button data-search class="search"><TextSlider content={t("grid.search")} /></button>
 			<button data-clear class="clear hidden" aria-label={t("grid.clearSearch")}>
-				<Cross width={14} height={14} />
+				<TextSlider>
+					<Cross width={14} height={14} />
+				</TextSlider>
 			</button>
 		</div>
 	</div>
@@ -142,7 +146,7 @@ const t = useTranslations();
 			color: inherit;
 		}
 	}
-	div:has(> .search) {
+	.search-tools {
 		position: relative;
 		flex: 0 1 auto;
 	}
@@ -164,19 +168,30 @@ const t = useTranslations();
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	div:has(> .search--active) {
+	.clear :global(.oh) {
+		display: block;
+		line-height: 0;
+	}
+	.search-tools:has(> .search--active) {
 		margin-left: 1rem;
 	}
-	div:has(> .search--active)::before {
-		pointer-events: none;
-		content: "";
+	.search-frame-clip {
 		position: absolute;
-		left: -1rem;
-		right: -1rem;
-		top: -0.5rem;
-		bottom: -0.5rem;
+		inset: -0.5rem -1rem;
+		overflow: hidden;
+		pointer-events: none;
+		/* 不用 display:none：換頁時 GSAP 還量得到高度，yPercent 才會真的整框移出裁切 */
+		opacity: 0;
+	}
+	.search-tools:has(> .search--active) .search-frame-clip {
+		opacity: 1;
+	}
+	.search-frame {
+		position: absolute;
+		inset: 0;
 		border: 1px solid;
 		border-radius: 2rem;
+		box-sizing: border-box;
 	}
 	.search--active {
 		&:focus-visible {

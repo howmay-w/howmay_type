@@ -4,6 +4,7 @@ import { floatUp, revealCards } from "./cardReady.js";
 // DOM elements and animation-related variables
 let lines;
 let textSliders;
+let searchFrame;
 let gridContainer;
 let gridItems;
 let hasPreloaderComponent;
@@ -13,6 +14,7 @@ let animationTimeline; // GSAP timeline instance
 const initializeVariables = () => {
 	lines = document.querySelectorAll("hr");
 	textSliders = document.querySelectorAll("header .oh > .oh__inner");
+	searchFrame = document.querySelector(".title-header .search-frame");
 	gridContainer = document.querySelector("[data-grid]");
 	// 只取畫面上顯示的卡片（不含還沒載入、被搜尋或標籤篩掉的），避免對全部 N 個元素建 tween
 	gridItems = gridContainer
@@ -32,10 +34,22 @@ const endIntro = () => {
 	document.querySelector(".title-header--initial")?.classList.remove("is-intro");
 };
 
+// 搜尋圓角框和文字同一套浮上；先藏在裁切框下方，避免套用搜尋狀態時先卡在畫面上。
+// 多加 4px：yPercent:100 剛好貼齊裁切底，1px 邊線會因四捨五入露出一點頂端
+const SEARCH_FRAME_HIDDEN = { yPercent: 100, y: 4 };
+const SEARCH_FRAME_SHOWN = { yPercent: 0, y: 0 };
+const hideSearchFrame = () => {
+	if (searchFrame) gsap.set(searchFrame, { ...SEARCH_FRAME_HIDDEN });
+};
+const showSearchFrame = () => {
+	if (searchFrame) gsap.set(searchFrame, { ...SEARCH_FRAME_SHOWN });
+};
+
 // 確保 grid 一定會顯示（動畫出錯時仍可看到內容）
 const ensureGridVisible = () => {
 	if (gridContainer) gsap.set(gridContainer, { autoAlpha: 1 });
 	endIntro();
+	showSearchFrame();
 };
 
 // 入場動畫的代號：換頁後還在等圖的卡片不再播放
@@ -58,6 +72,10 @@ const animateHomepageElements = () => {
 	const items = gridItems;
 
 	try {
+		hideSearchFrame();
+		const searchInner = document.querySelector(".title-header [data-search] .oh__inner");
+		const searchIdx = [...textSliders].indexOf(searchInner);
+		const frameStart = 0.2 + Math.max(searchIdx, 0) * 0.1;
 		animationTimeline = gsap
 			.timeline({
 				defaults: {
@@ -72,6 +90,8 @@ const animateHomepageElements = () => {
 				{ duration: 1.6, ease: "power2", stagger: 0.9, scaleX: 1 },
 			)
 			.from(textSliders, { yPercent: 100, stagger: 0.1 }, 0.2)
+			// 圓角框和「搜尋」文字同一拍浮上，不要比文字先停在畫面上
+			.fromTo(searchFrame || [], { ...SEARCH_FRAME_HIDDEN }, { ...SEARCH_FRAME_SHOWN }, frameStart)
 			// 工具列文字浮上來後（約 1.6 秒，頁頭的字先依序浮上）才畫底線；用絕對時間，不影響上面各段的相對位置
 			.call(endIntro, undefined, 1.6);
 		// 頁頭的字浮上來約 1 秒後，牆面開始出現。每張卡片等自己的字圖（或縮圖）載好才浮上來，
@@ -100,6 +120,7 @@ const cleanup = () => {
 	}
 	lines = null;
 	textSliders = null;
+	searchFrame = null;
 	gridContainer = null;
 	gridItems = null;
 	hasPreloaderComponent = null;
@@ -148,7 +169,12 @@ document.addEventListener("astro:after-swap", () => {
 	if (!grid) return;
 	// 從作品頁按返回：直接顯示，不播入場動畫
 	if (window.__gridReturning) gsap.set(grid, { autoAlpha: 1 });
-	else gsap.set(grid, { autoAlpha: 0 });
+	else {
+		gsap.set(grid, { autoAlpha: 0 });
+		// 換頁後立刻把圓角框藏到裁切下方；page-load 才會套用搜尋狀態，晚一拍會先看到框
+		const frame = document.querySelector(".title-header .search-frame");
+		if (frame) gsap.set(frame, { ...SEARCH_FRAME_HIDDEN });
+	}
 });
 
 // Astro lifecycle hook: initialize animations on page load.
