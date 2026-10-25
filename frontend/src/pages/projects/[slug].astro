@@ -171,18 +171,19 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 									src={firstVideo.src}
 									poster={firstVideo.poster}
 									class="project-video-wrap project-video-wrap--reels"
+									priority
 								/>
 							)}
 							{reelsCarouselItems.length > 1 ? (
 								<ImageCarousel
 									items={reelsCarouselItems}
 									title={title}
+									priority={false}
 								/>
 							) : reelsCarouselItems.length === 1 ? (
 								<ProjectPhoto
 									src={reelsCarouselItems[0].src}
 									alt={reelsCarouselItems[0].type === "image" ? (reelsCarouselItems[0].alt ?? title) : title}
-									priority
 								/>
 							) : null}
 						</>
@@ -202,6 +203,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 							src={mediaItems[0].src}
 							poster={mediaItems[0].poster}
 							class="project-video-wrap"
+							priority
 						/>
 					)
 				) : null}

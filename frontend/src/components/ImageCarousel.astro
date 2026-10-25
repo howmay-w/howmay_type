@@ -11,9 +11,11 @@ type Props = {
 	/** 僅圖片時可沿用舊介面 */
 	images?: { src: string; alt?: string }[];
 	title: string;
+	/** 這一頁的第一張媒體在輪播裡時才提高優先順序；影片在上面時關掉 */
+	priority?: boolean;
 };
 
-const { items: rawItems, images, title } = Astro.props;
+const { items: rawItems, images, title, priority = true } = Astro.props;
 const items: MediaItem[] =
 	rawItems?.length
 		? rawItems
@@ -40,7 +42,7 @@ function getSlideRealIndex(i: number): number {
 			const isVideo = item.type === "video";
 			const size = !isVideo ? webpDimensions(item.src) : null;
 			// 有迴圈時第 0 張是最後一張的複本，真正的第一張在 i === 1
-			const isHero = total > 1 ? i === 1 : i === 0;
+			const isHero = priority && (total > 1 ? i === 1 : i === 0);
 			return (
 				<div class={`carousel__slide${isVideo ? " carousel__slide--video" : ""}`} role="listitem" data-index={realIndex}>
 					{isVideo ? (
@@ -356,7 +358,8 @@ function getSlideRealIndex(i: number): number {
 			if (isReady) return;
 			if (afterTransition) {
 				track.querySelectorAll("video").forEach((node) => {
-					(node as HTMLVideoElement).load();
+					const clip = node as HTMLVideoElement;
+					if (clip.readyState < 1) clip.load();
 				});
 			}
 			let placeAttempts = 0;

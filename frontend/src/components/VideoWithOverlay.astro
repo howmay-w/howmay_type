@@ -1,11 +1,16 @@
 ---
+import { webpDimensions } from "../utils/projectHero";
+
 type Props = {
 	src: string;
 	poster?: string;
 	class?: string;
+	/** 這一頁的第一眼：立刻載封面，讓預載圖可以接上去 */
+	priority?: boolean;
 };
 
-const { src, poster, class: className = "" } = Astro.props;
+const { src, poster, class: className = "", priority = false } = Astro.props;
+const size = poster ? webpDimensions(poster) : null;
 ---
 
 <div class={`video-with-overlay ${className}`.trim()} data-video-with-overlay>
@@ -20,6 +25,20 @@ const { src, poster, class: className = "" } = Astro.props;
 	>
 		<track kind="captions" />
 	</video>
+	{poster && (
+		<img
+			class="video-with-overlay__cover fade-in"
+			src={poster}
+			alt=""
+			width={size?.width}
+			height={size?.height}
+			loading={priority ? "eager" : "lazy"}
+			fetchpriority={priority ? "high" : undefined}
+			decoding={priority ? "auto" : "async"}
+			onload="this.classList.add('loaded')"
+			onerror="this.classList.add('loaded')"
+		/>
+	)}
 	<div class="video-with-overlay__overlay" data-video-overlay>
 		<button type="button" class="video-with-overlay__play-btn" aria-label="播放／暫停">
 			<span class="video-with-overlay__icon video-with-overlay__icon--play" aria-hidden="true">
@@ -52,6 +71,19 @@ const { src, poster, class: className = "" } = Astro.props;
 		object-fit: contain;
 		vertical-align: middle;
 	}
+	.video-with-overlay__cover {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		pointer-events: none;
+		z-index: 1;
+	}
+	.video-with-overlay__cover.fade-in.loaded.is-revealed {
+		opacity: 0;
+		transition: opacity 0.2s ease-out;
+	}
 	/* iOS 在影片播完時會蓋上系統的重播圓箭頭，改由下面的播放鈕接手 */
 	.video-with-overlay__video::-webkit-media-controls-overlay-play-button,
 	.video-with-overlay__video::-webkit-media-controls-start-playback-button {
@@ -61,6 +93,7 @@ const { src, poster, class: className = "" } = Astro.props;
 	.video-with-overlay__overlay {
 		position: absolute;
 		inset: 0;
+		z-index: 2;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -152,6 +185,16 @@ const { src, poster, class: className = "" } = Astro.props;
 		const backup = setTimeout(finish, 1200);
 	}
 
+	function onFirstFrame(video: HTMLVideoElement, callback: () => void) {
+		if ("requestVideoFrameCallback" in video) {
+			video.requestVideoFrameCallback(() => callback());
+			return;
+		}
+		const run = () => requestAnimationFrame(() => requestAnimationFrame(callback));
+		if (!video.paused && video.readyState >= 3) run();
+		else video.addEventListener("playing", run, { once: true });
+	}
+
 	function initVideoWithOverlay(container: HTMLElement) {
 		if ((container as HTMLElement & { _videoOverlayInited?: boolean })._videoOverlayInited) return;
 		(container as HTMLElement & { _videoOverlayInited?: boolean })._videoOverlayInited = true;
@@ -159,10 +202,15 @@ const { src, poster, class: className = "" } = Astro.props;
 		const video = container.querySelector("video");
 		const overlay = container.querySelector("[data-video-overlay]") as HTMLElement | null;
 		if (!video || !overlay) return;
+		const cover = container.querySelector<HTMLImageElement>(".video-with-overlay__cover");
 		const playBtn = overlay.querySelector(".video-with-overlay__play-btn") as HTMLButtonElement | null;
 		const progressFill = overlay.querySelector(".video-with-overlay__progress-fill") as HTMLElement | null;
 		let playGen = 0;
 		let userPaused = false;
+
+		function revealVideo() {
+			cover?.classList.add("is-revealed");
+		}
 
 		function updateUI() {
 			const playing = !video.paused;
@@ -178,7 +226,10 @@ const { src, poster, class: className = "" } = Astro.props;
 		function playVideo(attempt = 0) {
 			const gen = playGen;
 			video.muted = true;
-			video.play().catch((err: DOMException) => {
+			video.play().then(() => {
+				if (gen !== playGen || userPaused) return;
+				onFirstFrame(video, revealVideo);
+			}).catch((err: DOMException) => {
 				if (gen !== playGen || userPaused) return;
 				if ((err.name === "AbortError" || err.name === "NotAllowedError") && attempt < 8) {
 					setTimeout(() => {
@@ -281,10 +332,13 @@ const { src, poster, class: className = "" } = Astro.props;
 			flash();
 		});
 
-		// 進頁就播。換頁動畫結束後要先 load()，否則這支影片會停在封面上
+		// 進頁就播。封面已在、資料也到了就直接播；無條件 load() 會把畫面重設回封面再閃一次
 		whenSettled((afterTransition) => {
 			if (userPaused) return;
-			if (afterTransition) video.load();
+			if (afterTransition && video.readyState < 1) {
+				cover?.classList.remove("is-revealed");
+				video.load();
+			}
 			playFromStart();
 		});
 	}
