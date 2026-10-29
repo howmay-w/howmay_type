@@ -21,6 +21,10 @@ video:
   src: "/projects/地牛/video_0.mp4"
 hoverVideo:
   src: "/projects/地牛/video_0.mp4"
+wordmark:
+  src: "/projects/地牛/wordmark.webp"
+  source: "direct"
+  ink: 0.294
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題台灣的妖怪傳說（適逢萬聖節）（嗯？）
