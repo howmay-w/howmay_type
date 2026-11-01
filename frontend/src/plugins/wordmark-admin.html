@@ -135,6 +135,9 @@
 const UNIT = Math.min(130, Math.max(68, 1180 * 0.074));
 const INK_REF = 0.3;
 const WORD_SCALE = 1;
+// 自動倍率（src/utils/wordmarkScale.js，和 ProjectCard.astro 共用）；載入前先當 1
+let autoScale = () => 1, cappedChars = (n) => n;
+import("/src/utils/wordmarkScale.js").then((m) => { ({ autoScale, cappedChars } = m); render(); });
 // 手動大小倍率的範圍
 const SCALE_MIN = 0.3, SCALE_MAX = 2.5;
 // 預覽比例：所有卡片用同一個比例縮放字牆尺寸，大小可以直接互相比較
@@ -157,16 +160,20 @@ function applyZoom() {
 }
 const clampScale = (v) => Math.min(SCALE_MAX, Math.max(SCALE_MIN, Math.round(v * 100) / 100));
 const countChars = (t) => Math.max(1, (t.match(/[\p{Script=Han}\p{Script=Bopomofo}\p{Script=Hiragana}\p{Script=Katakana}]/gu)?.length ?? 0) + (t.match(/[A-Za-z0-9]/g)?.length ?? 0) * 0.5);
+// 從標題推算的字數（新作品有上限，見 src/utils/wordmarkScale.js）
+const autoChars = (p) => cappedChars(countChars(p.title), p.date);
 function wallWidth(p) {
   const wm = p.wordmark, aspect = p.size.width / p.size.height;
-  const chars = wm.chars ?? countChars(p.title);
+  const chars = wm.chars ?? autoChars(p);
   const ink = Math.min(0.8, Math.max(0.08, wm.ink ?? INK_REF));
   const sizeMul = ({ s: 0.8, m: 1, l: 1.3 })[wm.size ?? "m"];
   const mass = Math.max(1.6, (chars * (INK_REF / ink) ** 0.2 * sizeMul ** 2) ** 0.8);
-  // 手動倍率最後直接乘在寬度上
+  // 自動倍率 × 手動倍率最後直接乘在寬度上
   // WORD_SCALE = 字牆的整體字級（和 gridViewMode.js 一致）
-  return Math.min(UNIT * Math.sqrt(mass * aspect) * WORD_SCALE * (wm.scale ?? 1), 1180);
+  return Math.min(UNIT * Math.sqrt(mass * aspect) * WORD_SCALE * scaleOf(p), 1180);
 }
+const autoOf = (p) => autoScale({ chars: p.wordmark.chars ?? autoChars(p), ink: p.wordmark.ink, aspect: p.size.width / p.size.height, pubDate: p.date });
+const scaleOf = (p) => autoOf(p) * (p.wordmark.scale ?? 1);
 // 面板上的提醒：只留需要注意的資訊（狀態、大小、字數在面板上本來就看得到）
 function tipsOf(p) {
   const wm = p.wordmark, aspect = p.size.width / p.size.height, f = [];
@@ -217,7 +224,7 @@ import("/src/scripts/wallPacker.js").then((m) => { WALL = m; if (MODE === "wall"
 // 原始量感（和 ProjectCard.astro 相同）：字數 × 墨量修正 × 大小
 function massOf(p) {
   const wm = p.wordmark;
-  const chars = wm.chars ?? countChars(p.title);
+  const chars = wm.chars ?? autoChars(p);
   const ink = Math.min(0.8, Math.max(0.08, wm.ink ?? INK_REF));
   const sizeMul = ({ s: 0.8, m: 1, l: 1.3 })[wm.size ?? "m"];
   return chars * (INK_REF / ink) ** 0.2 * sizeMul ** 2;
@@ -241,7 +248,7 @@ function renderWall() {
   const items = keyed.sort((a, b) => a.key - b.key).map(({ p }) => ({
     p,
     getAttribute: () => `/projects/${p.slug}`,
-    dataset: { wmAspect: String(p.size.width / p.size.height), wmMass: String(massOf(p)), wmScale: String(p.wordmark.scale ?? 1) },
+    dataset: { wmAspect: String(p.size.width / p.size.height), wmMass: String(massOf(p)), wmScale: String(scaleOf(p)) },
   }));
   // 正式網站每次 MORE 載入 24 件、接著排；這裡一次排完，但同樣分批
   const packer = WALL.createPacker(D);
@@ -303,7 +310,7 @@ function counts() {
 }
 // 是否符合目前的篩選；有輸入搜尋字時一律在全部作品中找
 // 字數：有手動填就用手動的，沒有就從標題推算（和字牆相同）；篩選依無條件進位分組，5 字以上合為一組
-const charsOf = (p) => p.wordmark.chars ?? countChars(p.title);
+const charsOf = (p) => p.wordmark.chars ?? autoChars(p);
 const charsGroup = (p) => Math.min(5, Math.ceil(charsOf(p)));
 const CHARS_LABEL = { 1: "1 字", 2: "2 字", 3: "3 字", 4: "4 字", 5: "5 字以上" };
 function renderCharsFilter() {
@@ -372,8 +379,8 @@ function renderPanel(p) {
     </div>
     ${tipsOf(p).length ? `<div class="flags">${tipsOf(p).map(([c, t]) => `<span class="flag ${c}">${t}</span>`).join("")}</div>` : ""}
     <div class="ctl">
-      <label for="pScale">大小</label><input type="range" id="pScale" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${wm.scale ?? 1}"><input type="number" id="pScaleNum" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${(wm.scale ?? 1).toFixed(2)}" aria-label="大小倍率">
-      <label for="pChars">字數</label><input type="number" id="pChars" min="0.5" max="20" step="0.5" value="${charsOf(p)}" title="從標題推算為 ${countChars(p.title)}"><span>${wm.chars != null ? "手動" : "自動"}</span>
+      <label for="pScale">大小</label><input type="range" id="pScale" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${wm.scale ?? 1}"><input type="number" id="pScaleNum" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${(wm.scale ?? 1).toFixed(2)}" aria-label="大小倍率"><span style="grid-column: 2 / 4; font-size: 12px" title="字牆依字數、墨量、長寬比自動放大的倍率，手動倍率再乘在上面">自動 ×${autoOf(p).toFixed(2)}，上面的手動倍率再乘在這之上</span>
+      <label for="pChars">字數</label><input type="number" id="pChars" min="0.5" max="20" step="0.5" value="${charsOf(p)}" title="從標題推算為 ${autoChars(p)}"><span>${wm.chars != null ? "手動" : "自動"}</span>
     </div>
     <div class="acts">
       <button id="pEdit" title="E">編輯去背</button>
@@ -404,8 +411,8 @@ function renderPanel(p) {
   $("pChars").addEventListener("change", () => {
     // 改回和標題推算相同（或清空）就不記錄，維持自動
     const raw = $("pChars").value ? parseFloat($("pChars").value) : null;
-    const v = raw === null || raw === countChars(p.title) ? null : raw;
-    if (raw === null) $("pChars").value = countChars(p.title);
+    const v = raw === null || raw === autoChars(p) ? null : raw;
+    if (raw === null) $("pChars").value = autoChars(p);
     $("pChars").nextElementSibling.textContent = v === null ? "自動" : "手動";
     p.wordmark.chars = v ?? undefined;
     if (card) resizePreview(card, p);
