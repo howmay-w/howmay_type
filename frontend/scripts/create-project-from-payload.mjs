@@ -13,7 +13,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { renderWordmark } from "./wordmark-image.mjs";
+import { accentFromImage, renderWordmark } from "./wordmark-image.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECTS_DIR = path.resolve(__dirname, "../src/content/projects");
@@ -129,6 +129,15 @@ function wordmarkYaml(slug, renderedList) {
   return block;
 }
 
+/** 作品主圖的檔案路徑：index.md 的 image.src，找不到就用資料夾裡的 media_0.* */
+function mainImageFile(projectDir, md) {
+  const src = md.match(/^image:\r?\n\s+src:\s*"?([^"\n]+)"?/m)?.[1];
+  const named = src && path.join(projectDir, path.basename(src));
+  if (named && fs.existsSync(named)) return named;
+  const fallback = fs.readdirSync(projectDir).find((name) => /^media_0\.(webp|jpe?g|png)$/i.test(name));
+  return fallback ? path.join(projectDir, fallback) : null;
+}
+
 async function updateWordmarksOnly(projectDir, payload) {
   const indexPath = path.join(projectDir, "index.md");
   if (!fs.existsSync(indexPath)) {
@@ -155,6 +164,13 @@ async function updateWordmarksOnly(projectDir, payload) {
     }
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
+  }
+
+  // 黑白字圖沒有顏色：hover 色改從作品主圖取（之後可在字圖管理頁改）
+  if (rendered.some((item) => !item.accent)) {
+    const main = mainImageFile(projectDir, fs.readFileSync(indexPath, "utf8"));
+    const accent = main ? await accentFromImage(main).catch(() => undefined) : undefined;
+    for (const item of rendered) item.accent ??= accent;
   }
 
   removeWordmarkFiles(projectDir);

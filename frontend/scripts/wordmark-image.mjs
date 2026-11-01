@@ -177,3 +177,53 @@ export async function renderWordmark(buf) {
   const ink = Math.round((sum / 255 / (cw * ch)) * 1000) / 1000;
   return { webp, ink, accent, source: fromAlpha ? "cutout" : "direct" };
 }
+
+/**
+ * 黑白字圖沒有顏色時，改從作品主圖取 hover 色：主圖裡最多的鮮豔色相，取那一群像素的平均色。
+ * 鮮豔的像素太少（幾乎是黑白灰的作品）就回傳 undefined，交給網站的強調色。
+ */
+export async function accentFromImage(input) {
+  const { data, info } = await sharp(input).rotate().resize(240, 240, { fit: "inside" }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const n = info.width * info.height;
+  const BINS = 24;
+  const weight = new Float64Array(BINS);
+  const sum = Array.from({ length: BINS }, () => [0, 0, 0, 0]);
+  let vivid = 0;
+  for (let i = 0; i < n; i++) {
+    const r = data[i * 3];
+    const g = data[i * 3 + 1];
+    const b = data[i * 3 + 2];
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const c = max - min;
+    if (c < 50 || max < 50) continue;
+    vivid++;
+    let h = max === r ? ((g - b) / c) % 6 : max === g ? (b - r) / c + 2 : (r - g) / c + 4;
+    if (h < 0) h += 6;
+    const bin = Math.floor((h / 6) * BINS) % BINS;
+    weight[bin] += c;
+    const s = sum[bin];
+    s[0] += r * c;
+    s[1] += g * c;
+    s[2] += b * c;
+    s[3] += c;
+  }
+  if (vivid < n * 0.03) return undefined;
+  // 相鄰色相合併看：取「自己＋左右」權重最大的那一格為中心
+  let best = 0;
+  let bestW = -1;
+  for (let k = 0; k < BINS; k++) {
+    const w = weight[(k + BINS - 1) % BINS] + weight[k] + weight[(k + 1) % BINS];
+    if (w > bestW) {
+      bestW = w;
+      best = k;
+    }
+  }
+  const acc = [0, 0, 0, 0];
+  for (const k of [best - 1, best, best + 1]) {
+    const s = sum[(k + BINS) % BINS];
+    for (let j = 0; j < 4; j++) acc[j] += s[j];
+  }
+  const hex = (v) => Math.round(v / acc[3]).toString(16).padStart(2, "0");
+  return `#${hex(acc[0])}${hex(acc[1])}${hex(acc[2])}`;
+}

@@ -20,6 +20,7 @@ hoverVideo:
 wordmark:
   src: "/projects/投給你想要的生活/wordmark.webp"
   source: "direct"
+  accent: "#40b756"
   ink: 0.399
   chars: 6
 ---

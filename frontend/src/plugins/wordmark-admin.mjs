@@ -4,7 +4,7 @@
  * - GET  /__wordmarks/compare-scale  字牆空隙比較（原本／先縮再排／加大間距三欄並排，可調倍率與寬度）
  * - GET  /__wordmarks/editor      精修視窗（wordmark-editor/，以 iframe 疊在管理頁上）
  * - GET  /__wordmarks/api/list    所有作品的字圖資料
- * - POST /__wordmarks/api/update  修改字圖欄位（hidden / scale / chars / redo / needsImage）
+ * - POST /__wordmarks/api/update  修改字圖欄位（hidden / scale / chars / redo / needsImage / accent）
  * - POST /__wordmarks/api/replace?slug=&v=&ink=  上傳處理好的 webp，取代該款字圖；v 等於現有款數時新增一款。超過 100KB 會自動再壓縮
  * - POST /__wordmarks/api/compress  把目前偏大的字圖（超過 100KB）重新壓小，尺寸與外觀維持不變
  * - POST /__wordmarks/api/source?slug=&v=  換圖時上傳的原始圖，存成 wordmark-source*.webp，之後精修以它為原圖（不會進正式網站）
@@ -22,7 +22,7 @@ const pageFile = path.join(__dirname, "wordmark-admin.html");
 // 精修視窗（以 iframe 疊在管理頁上），程式在 wordmark-editor/，由 Vite 轉譯
 const editorFile = path.join(__dirname, "wordmark-editor", "editor.html");
 const compareFile = path.join(__dirname, "wordmark-compare.html");
-const EDITABLE = new Set(["reviewed", "hidden", "scale", "chars", "redo", "needsImage"]);
+const EDITABLE = new Set(["reviewed", "hidden", "scale", "chars", "redo", "needsImage", "accent"]);
 
 function webpSize(file) {
   const b = fs.readFileSync(file);

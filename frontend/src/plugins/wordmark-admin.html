@@ -46,7 +46,8 @@
   .panel h2 a { color: var(--mut); font-size: 12px; font-weight: 400; }
   .panel .pos { color: var(--mut); }
   .panel .orig { background: #000; border-radius: 6px; overflow: hidden; aspect-ratio: 1; }
-  .panel .orig img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .panel .orig img { width: 100%; height: 100%; object-fit: contain; display: block; cursor: crosshair; }
+  .ctl input[type=color] { width: 100%; height: 26px; padding: 0 2px; background: none; border: 1px solid var(--line); border-radius: 4px; }
   .panel .orig .none { height: 100%; display: grid; place-items: center; color: var(--mut); }
   .flags { display: flex; gap: 4px; flex-wrap: wrap; }
   .flag { font-size: 11px; padding: 0 7px; border-radius: 99px; border: 1px solid var(--line); color: var(--mut); }
@@ -381,6 +382,8 @@ function renderPanel(p) {
     <div class="ctl">
       <label for="pScale">大小</label><input type="range" id="pScale" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${wm.scale ?? 1}"><input type="number" id="pScaleNum" min="${SCALE_MIN}" max="${SCALE_MAX}" step="0.05" value="${(wm.scale ?? 1).toFixed(2)}" aria-label="大小倍率"><span style="grid-column: 2 / 4; font-size: 12px" title="字牆依字數、墨量、長寬比自動放大的倍率，手動倍率再乘在上面">自動 ×${autoOf(p).toFixed(2)}，上面的手動倍率再乘在這之上</span>
       <label for="pChars">字數</label><input type="number" id="pChars" min="0.5" max="20" step="0.5" value="${charsOf(p)}" title="從標題推算為 ${autoChars(p)}"><span>${wm.chars != null ? "手動" : "自動"}</span>
+      <label for="pAccent">顏色</label><input type="color" id="pAccent" value="${wm.accent ?? "#000000"}" title="字牆 hover 時的顏色（太暗會自動提亮）"><button id="pAccentClear" title="不設定，hover 用網站的強調色">${wm.accent ? "清除" : "未設定"}</button>
+      <span style="grid-column: 2 / 4; font-size: 12px">點下方原圖可直接取色</span>
     </div>
     <div class="acts">
       <button id="pEdit" title="E">編輯去背</button>
@@ -407,6 +410,28 @@ function renderPanel(p) {
     const v = clampScale(parseFloat(num.value) || 1);
     preview(v);
     save(p, { scale: v }).then(() => refreshCard(p));
+  });
+  const setAccent = (v) => {
+    $("pAccent").value = v ?? "#000000";
+    $("pAccentClear").textContent = v ? "清除" : "未設定";
+    save(p, { accent: v });
+  };
+  $("pAccent").addEventListener("change", () => setAccent($("pAccent").value));
+  $("pAccentClear").addEventListener("click", () => setAccent(null));
+  // 點原圖取色：取點擊處 5×5 的平均色
+  P.querySelector(".orig img")?.addEventListener("click", (e) => {
+    const img = e.currentTarget;
+    const scale = Math.min(img.clientWidth / img.naturalWidth, img.clientHeight / img.naturalHeight);
+    const ox = (img.clientWidth - img.naturalWidth * scale) / 2, oy = (img.clientHeight - img.naturalHeight * scale) / 2;
+    const x = Math.round((e.offsetX - ox) / scale), y = Math.round((e.offsetY - oy) / scale);
+    if (x < 0 || y < 0 || x >= img.naturalWidth || y >= img.naturalHeight) return;
+    const c = document.createElement("canvas");
+    c.width = img.naturalWidth; c.height = img.naturalHeight;
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0);
+    const d = ctx.getImageData(Math.max(0, x - 2), Math.max(0, y - 2), 5, 5).data;
+    const avg = [0, 1, 2].map((k) => { let t = 0; for (let i = k; i < d.length; i += 4) t += d[i]; return Math.round(t / (d.length / 4)); });
+    setAccent(`#${avg.map((v) => v.toString(16).padStart(2, "0")).join("")}`);
   });
   $("pChars").addEventListener("change", () => {
     // 改回和標題推算相同（或清空）就不記錄，維持自動

@@ -24,6 +24,7 @@ hoverVideo:
 wordmark:
   src: "/projects/地牛/wordmark.webp"
   source: "cutout"
+  accent: "#394e6c"
   ink: 0.415
   scale: 1.2
 ---
