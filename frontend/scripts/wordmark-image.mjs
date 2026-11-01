@@ -1,7 +1,7 @@
 /**
  * 把上傳的字圖轉成網站用的白字透明 WebP。
  * - 已有透明背景：透明度就是字，不再用亮度算一次
- * - 沒有透明背景（黑白、灰階）：外圈當紙色，紙色全透明、墨色不透明，中間灰階照比例保留；黑底白字會反過來
+ * - 沒有透明背景（黑白、灰階）：外圈當紙色，紙色全透明、筆畫的中間色以上不透明，中間灰階照比例保留再略往不透明推；黑底白字會反過來
  * 長邊收到 800px。超過 100KB 才再壓，並保住透明。
  */
 import sharp from "sharp";
@@ -9,6 +9,7 @@ import sharp from "sharp";
 const ANALYZE_MAX = 1600;
 const OUT_MAX = 800;
 const COMPRESS_MIN = 100 * 1024;
+const INK_CURVE = 0.7;
 
 function luminance(r, g, b) {
   return Math.round(0.299 * r + 0.587 * g + 0.114 * b);
@@ -36,34 +37,43 @@ function alphaFromInk(data, width, height) {
   ring.sort((a, b) => a - b);
   const bg = ring[ring.length >> 1] ?? 255;
 
-  const hist = new Uint32Array(256);
-  for (const v of lum) hist[v]++;
+  // 深度 = 比紙色深多少（黑底白字則是亮多少），0～255
   const darkInk = bg >= 128;
-  const tail = n * 0.005;
-  let inkLevel = darkInk ? 0 : 255;
+  const depth = new Uint8Array(n);
+  const hist = new Uint32Array(256);
+  for (let i = 0; i < n; i++) {
+    const d = Math.max(0, darkInk ? bg - lum[i] : lum[i] - bg);
+    depth[i] = d;
+    hist[d]++;
+  }
+  // 最深 0.5% 的深度，只用來分出哪些是筆畫
+  let deepest = 0;
   let acc = 0;
-  if (darkInk) {
-    for (let v = 0; v < 256; v++) {
-      acc += hist[v];
-      if (acc >= tail) {
-        inkLevel = v;
-        break;
-      }
-    }
-  } else {
-    for (let v = 255; v >= 0; v--) {
-      acc += hist[v];
-      if (acc >= tail) {
-        inkLevel = v;
-        break;
-      }
+  for (let d = 255; d >= 0; d--) {
+    acc += hist[d];
+    if (acc >= n * 0.005) {
+      deepest = d;
+      break;
     }
   }
-  const span = Math.max(1, Math.abs(bg - inkLevel));
+  // 筆畫（深度過最深的一半）的中位數當全不透明的基準：有紙紋、顆粒的筆畫主體才會是實心，不會整片半透明
+  const half = Math.ceil(deepest / 2);
+  let strokes = 0;
+  for (let d = half; d < 256; d++) strokes += hist[d];
+  let inkDepth = deepest;
+  acc = 0;
+  for (let d = half; d < 256; d++) {
+    acc += hist[d];
+    if (acc >= strokes / 2) {
+      inkDepth = d;
+      break;
+    }
+  }
+  const span = Math.max(1, inkDepth);
   const alpha = new Uint8ClampedArray(n);
   for (let i = 0; i < n; i++) {
-    const t = (darkInk ? bg - lum[i] : lum[i] - bg) / span;
-    const a = Math.round(Math.max(0, Math.min(1, t)) * 255);
+    // 0.7 次方：把半透明往不透明推一點，字更濃
+    const a = Math.round(Math.min(1, depth[i] / span) ** INK_CURVE * 255);
     alpha[i] = a < 8 ? 0 : a;
   }
   return alpha;

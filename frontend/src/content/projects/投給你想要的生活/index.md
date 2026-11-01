@@ -20,7 +20,8 @@ hoverVideo:
 wordmark:
   src: "/projects/投給你想要的生活/wordmark.webp"
   source: "direct"
-  ink: 0.266
+  ink: 0.399
+  chars: 6
 ---
 
 「當你把票投給你想要的那個生活的時候，你就贏了。」
