@@ -17,6 +17,10 @@ video:
   src: "/projects/投給你想要的生活/video_0.mp4"
 hoverVideo:
   src: "/projects/投給你想要的生活/video_0.mp4"
+wordmark:
+  src: "/projects/投給你想要的生活/wordmark.webp"
+  source: "direct"
+  ink: 0.266
 ---
 
 「當你把票投給你想要的那個生活的時候，你就贏了。」
