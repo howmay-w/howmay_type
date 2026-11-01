@@ -29,7 +29,7 @@ wordmark:
   src: "/projects/情緒勞動/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/情緒勞動/wordmark-source.webp"
-  accent: "#57861a"
+  accent: "#de68b0"
   ink: 0.418
 ---
 

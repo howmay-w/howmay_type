@@ -29,7 +29,7 @@ wordmark:
   src: "/projects/得失心/wordmark.webp"
   source: "direct"
   sourceImage: "/projects/得失心/wordmark-source.webp"
-  accent: "#e38266"
+  accent: "#81c845"
   ink: 0.347
 ---
 

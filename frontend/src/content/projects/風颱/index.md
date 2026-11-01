@@ -27,7 +27,7 @@ wordmark:
   src: "/projects/風颱/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/風颱/wordmark-source.webp"
-  accent: "#9e8d06"
+  accent: "#047d6e"
   ink: 0.632
 ---
 

@@ -25,7 +25,7 @@ wordmark:
   src: "/projects/編織星空的人/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/編織星空的人/wordmark-source.webp"
-  accent: "#bbb471"
+  accent: "#142978"
   ink: 0.029
 ---
 

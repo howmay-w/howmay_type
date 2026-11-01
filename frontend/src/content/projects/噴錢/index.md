@@ -27,7 +27,7 @@ wordmark:
   src: "/projects/噴錢/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/噴錢/wordmark-source.webp"
-  accent: "#5d88aa"
+  accent: "#880405"
   ink: 0.335
 ---
 

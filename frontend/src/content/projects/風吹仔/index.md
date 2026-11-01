@@ -30,7 +30,7 @@ tags: ["whatzurtype","台語","🖨️"]
 wordmark:
   src: "/projects/風吹仔/wordmark.webp"
   source: "cutout"
-  accent: "#536339"
+  accent: "#762f39"
   ink: 0.448
 ---
 

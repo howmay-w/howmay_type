@@ -19,7 +19,7 @@ wordmark:
   src: "/projects/白紙/wordmark.webp"
   source: "direct"
   sourceImage: "/projects/白紙/wordmark-source.webp"
-  accent: "#1ec62d"
+  accent: "#6b0201"
   ink: 0.619
   scale: 1.15
 ---

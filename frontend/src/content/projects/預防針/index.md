@@ -23,7 +23,7 @@ wordmark:
   src: "/projects/預防針/wordmark.webp"
   source: "direct"
   sourceImage: "/projects/預防針/wordmark-source.webp"
-  accent: "#8567a1"
+  accent: "#5198b0"
   ink: 0.455
   scale: 0.95
 ---
