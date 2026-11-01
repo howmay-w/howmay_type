@@ -22,6 +22,8 @@
   .seg button b { font-weight: 400; color: var(--mut); margin-left: 2px; }
   .seg button.on b { color: inherit; }
   button, select, input { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; }
+  /* 下拉選單用自己畫的箭頭：系統箭頭在圓角框裡會被切到邊 */
+  select { appearance: none; padding-right: 28px; background: var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23aaa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center; }
   button { cursor: pointer; }
   button.on { color: var(--accent); }
   button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
@@ -86,7 +88,6 @@
   .wall .wmw:hover { background: #fff; }
   .wall .wmw.current { background: var(--accent); }
   .wall .wmw.current::after { content: ""; position: absolute; inset: -6px; border: 1px solid var(--accent); border-radius: 4px; }
-  .wall-note { color: var(--mut); font-size: 12px; margin: 0 0 8px; }
   body:not(.mode-wall) .wall-only, body.mode-wall .grid-only { display: none; }
   .status.err { color: var(--bad); }
   /* 精修視窗（/__wordmarks/editor）疊在整個管理頁上 */
@@ -256,7 +257,7 @@ function renderWall() {
   let res = { placed: [], height: 1 };
   for (let i = 0; i < items.length; i += 24) res = packer.add(items.slice(i, i + 24));
   const k = Math.min(1, (L.clientWidth - 32) / D);
-  L.innerHTML = `<p class="wall-note">依正式網站的排版規則（寬度 ${D}px${k < 1 ? `，縮小 ${Math.round(k * 100)}% 顯示` : ""}）排出 ${res.placed.length} 張；順序依上方排序，隱藏的不出現。點字選取、點兩下編輯去背，調整大小會立刻重排。</p>`;
+  L.innerHTML = "";
   const box = document.createElement("div");
   box.className = "wallbox";
   box.style.height = `${Math.ceil(res.height * k)}px`;
