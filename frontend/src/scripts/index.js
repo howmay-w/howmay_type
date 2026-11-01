@@ -16,9 +16,14 @@ const initializeVariables = () => {
 	textSliders = document.querySelectorAll("header .oh > .oh__inner");
 	searchFrame = document.querySelector(".title-header .search-frame");
 	gridContainer = document.querySelector("[data-grid]");
-	// 只取畫面上顯示的卡片（不含還沒載入、被搜尋或標籤篩掉的），避免對全部 N 個元素建 tween
-	gridItems = gridContainer
-		? Array.from(gridContainer.children).filter(
+	gridItems = shownItems(gridContainer);
+	hasPreloaderComponent = document.querySelector(".loading");
+};
+
+// 只取畫面上顯示的卡片（不含還沒載入、被搜尋或標籤篩掉的），避免對全部 N 個元素建 tween
+const shownItems = (container) =>
+	container
+		? Array.from(container.children).filter(
 				(el) =>
 					!el.hasAttribute("data-deferred") &&
 					// 其他款字圖：已經跟著所屬作品排上字牆的才算（gridViewMode.js 加上 data-wm-on）
@@ -26,8 +31,6 @@ const initializeVariables = () => {
 					el.style.display !== "none",
 			)
 		: [];
-	hasPreloaderComponent = document.querySelector(".loading");
-};
 
 // 入場動畫結束：拿掉工具列的 is-intro，「最新／隨機」的底線才從左畫出（不會比文字早出現）
 const endIntro = () => {
@@ -69,7 +72,7 @@ const animateHomepageElements = () => {
 	gsap.set(gridContainer, { autoAlpha: 0 });
 	const run = ++introRun;
 	const grid = gridContainer;
-	const items = gridItems;
+	let items = gridItems;
 
 	try {
 		hideSearchFrame();
@@ -99,6 +102,9 @@ const animateHomepageElements = () => {
 		gsap.set(items, { yPercent: 100, autoAlpha: 0 });
 		gsap.delayedCall(1.2, () => {
 			if (run !== introRun) return;
+			// 重新收集一次：等待期間字牆才排上的其他款字圖（gridViewMode.js 在牆藏著時不自己播）也要一起浮上來
+			items = shownItems(grid);
+			gsap.set(items, { yPercent: 100, autoAlpha: 0 });
 			gsap.set(grid, { autoAlpha: 1 });
 			revealCards(items, { animate: floatUp }).then(() => {
 				if (run === introRun) document.dispatchEvent(new CustomEvent("gridRendered"));

@@ -139,7 +139,9 @@ const layout = () => {
     p.el.style.setProperty("--w", `${((w / D) * 100).toFixed(3)}%`);
   }
   grid.style.setProperty("--wall-ratio", `${D} / ${Math.ceil(height)}`);
-  if (newlyShown.length) revealCards(newlyShown, { animate: floatUp });
+  // 首頁入場時整面牆還藏著（index.js 1.2 秒後才顯示）：這時播的話動畫在看不見時就播完，牆一出現字就直接閃出來。
+  // 交給入場動畫在顯示牆時一起浮上來
+  if (newlyShown.length && grid.style.visibility !== "hidden") revealCards(newlyShown, { animate: floatUp });
   observe();
 };
 
