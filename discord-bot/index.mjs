@@ -2,6 +2,7 @@
  * 方案 C + 表單：/新作品 開 Modal 填標題、標籤、內文；
  * 送出後請在同一頻道發一則作品照片或影片，即建立專案（已有的字圖會留下）。
  * 字圖另外發一則：第一行只寫同一個標題，只附透明圖或黑白字圖，不改照片與內文。
+ * 沒寫標題的附件不會直接建立作品：回覆按鈕問是「哪件最近作品的字圖」、「新作品（開表單補標題）」或取消。
  * description 自動從內文第一段擷取。內文或標籤含 whatzurtype 時自動加投稿資訊：
  * 月份跟內文的「N 月／上個月／本月」，否則用台北時間的發文日；已有投稿句則不重複。
  * 標籤裡還沒有 whatzurtype 時會自動補上。
@@ -20,11 +21,13 @@ import {
   TextInputBuilder,
   ActionRowBuilder,
   TextInputStyle,
+  ButtonBuilder,
+  ButtonStyle,
   Events,
 } from "discord.js";
 import { spawn, spawnSync, execSync } from "node:child_process";
 import http from "node:http";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -61,6 +64,12 @@ if (PORT) {
 
 /** 暫存：channelId_userId -> { title, tags, body, description, pubDate } */
 const pendingByChannelUser = new Map();
+/** 暫存：沒寫標題的附件，等按鈕決定用途。id -> { userId, images, videos, candidates, createdAt } */
+const untitledById = new Map();
+const UNTITLED_TTL_MS = 30 * 60 * 1000;
+/** 沒標題時列出的「可能是這件的字圖」：最近幾天的作品，最多幾件 */
+const RECENT_DAYS = 14;
+const RECENT_MAX = 4;
 
 const WHATZURTYPE_FOOTER =
   "\n\n---\n\n本作品投稿 {year} 年 {month} 月 [@justfont](https://www.instagram.com/justfont/) [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 設計串聯。";
@@ -191,6 +200,28 @@ function withWhatzurtypeFooter(body, tags, base) {
 
 function readProjectFile(slug) {
   return readFileSync(path.join(FRONTEND_DIR, "src/content/projects", slug, "index.md"), "utf8");
+}
+
+/** 最近 RECENT_DAYS 天的作品，還沒有字圖的排前面，再依日期新到舊。回傳 [{ slug, title, hasWordmark }] */
+function recentProjects() {
+  const dir = path.join(FRONTEND_DIR, "src/content/projects");
+  const since = new Date(Date.now() - RECENT_DAYS * 86400000).toISOString().slice(0, 10);
+  const list = [];
+  for (const slug of readdirSync(dir)) {
+    let md;
+    try {
+      md = readProjectFile(slug);
+    } catch {
+      continue;
+    }
+    const date = md.match(/^pubDate:\s*(\d{4}-\d{2}-\d{2})/m)?.[1];
+    if (!date || date < since) continue;
+    const title = md.match(/^title:\s*(.*)$/m)?.[1]?.trim().replace(/^["']|["']$/g, "") || slug;
+    list.push({ slug, title, date, hasWordmark: /^wordmark:/m.test(md) });
+  }
+  return list
+    .sort((a, b) => a.hasWordmark - b.hasWordmark || b.date.localeCompare(a.date))
+    .slice(0, RECENT_MAX);
 }
 
 function readProjectPubDate(slug) {
@@ -575,53 +606,14 @@ client.on(Events.ClientReady, async () => {
 
 client.on(Events.InteractionCreate, async (interaction) => {
   if (interaction.isChatInputCommand() && interaction.commandName === "新作品") {
-    const modal = new ModalBuilder()
-      .setCustomId("new_project_modal")
-      .setTitle("新作品")
-      .addComponents(
-        new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId("title")
-            .setLabel("標題")
-            .setStyle(TextInputStyle.Short)
-            .setPlaceholder("作品標題")
-            .setRequired(true)
-            .setMaxLength(256)
-        ),
-        new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId("tags")
-            .setLabel("標籤")
-            .setStyle(TextInputStyle.Short)
-            .setPlaceholder("空格或逗號分隔。內文或標籤有 whatzurtype 會自動加投稿資訊")
-            .setRequired(false)
-            .setMaxLength(256)
-        ),
-        new ActionRowBuilder().addComponents(
-          new TextInputBuilder()
-            .setCustomId("body")
-            .setLabel("內文（支援 Markdown，如 --- 分隔線）")
-            .setStyle(TextInputStyle.Paragraph)
-            .setPlaceholder("第一段會自動當 description；@ # 會變 IG 連結，中英混排自動補空格")
-            .setRequired(false)
-            .setMaxLength(4000)
-        )
-      );
+    const modal = newProjectModal("new_project_modal");
     await interaction.showModal(modal);
     return;
   }
 
   if (interaction.isModalSubmit() && interaction.customId === "new_project_modal") {
-    const title = interaction.fields.getTextInputValue("title").trim() || "未命名作品";
-    const tagsRaw = interaction.fields.getTextInputValue("tags")?.trim() || "";
-    const rawBody = interaction.fields.getTextInputValue("body")?.trim() || "";
-    const normalizedBody = normalizeBodyText(rawBody);
-    const body = linkifyInstagram(normalizedBody);
-    const tags = parseTags(tagsRaw);
-    const description = descriptionFromBody(normalizedBody);
-    const pubDate = taipeiYmd().iso;
     const key = `${interaction.channelId}_${interaction.user.id}`;
-    pendingByChannelUser.set(key, { title, tags, body, description, pubDate });
+    pendingByChannelUser.set(key, formFromModal(interaction));
     await interaction.reply({
       content:
         "已收到！請在**本頻道**發送一則**作品照片或影片**（可只發附件）。\n字圖不要放在這則。作品建好後，另外發一則：第一行寫同一個標題，只附透明圖或黑白字圖。",
@@ -693,6 +685,178 @@ async function publishPayload(update, { title, payload }) {
   await update(resultMsg);
 }
 
+/** 表單內容（/新作品 或沒標題時按「這是新作品」）＋附件 → 建立專案 */
+async function publishFromForm(update, form, images, videos) {
+  const tags = ensureWhatzurtypeTag(form.tags, form.body);
+  const body = withWhatzurtypeFooter(form.body, tags, dateFromIso(form.pubDate));
+  const payload = {
+    title: form.title,
+    description: form.description,
+    body,
+    tags: tags.length ? tags : undefined,
+    pubDate: form.pubDate,
+    images: images.map((a) => ({ url: a.url, alt: a.name || undefined })),
+    videos: videos.map((a) => ({ url: a.url })),
+    hoverVideoIndex: 0,
+    overwrite: true,
+  };
+  try {
+    await publishPayload(update, { title: form.title, payload });
+  } catch (err) {
+    console.error(err);
+    const hint =
+      /圖片壓縮|optimize-images|sharp/.test(err.message)
+        ? "\n\n💡 若為圖片壓縮失敗，可在**本地**於專案根目錄執行 `pnpm optimize-images` 後再 push。"
+        : "";
+    await update(`❌ 建立失敗：${err.message}${hint}`);
+  }
+}
+
+/** 字圖附件 → 只更新該作品的字圖 */
+async function publishWordmarks(update, title, slug, images) {
+  const payload = { title, slug, onlyUpdateWordmarks: true, wordmarks: images.map((a) => ({ url: a.url })) };
+  try {
+    await publishPayload(update, { title, payload });
+  } catch (err) {
+    console.error(err);
+    await update(`❌ 字圖更新失敗：${err.message}`);
+  }
+}
+
+/** /新作品 的表單；沒標題時按「這是新作品」也用同一個 */
+function newProjectModal(customId) {
+  return new ModalBuilder()
+    .setCustomId(customId)
+    .setTitle("新作品")
+    .addComponents(
+      new ActionRowBuilder().addComponents(
+        new TextInputBuilder()
+          .setCustomId("title")
+          .setLabel("標題")
+          .setStyle(TextInputStyle.Short)
+          .setPlaceholder("作品標題")
+          .setRequired(true)
+          .setMaxLength(256)
+      ),
+      new ActionRowBuilder().addComponents(
+        new TextInputBuilder()
+          .setCustomId("tags")
+          .setLabel("標籤")
+          .setStyle(TextInputStyle.Short)
+          .setPlaceholder("空格或逗號分隔。內文或標籤有 whatzurtype 會自動加投稿資訊")
+          .setRequired(false)
+          .setMaxLength(256)
+      ),
+      new ActionRowBuilder().addComponents(
+        new TextInputBuilder()
+          .setCustomId("body")
+          .setLabel("內文（支援 Markdown，如 --- 分隔線）")
+          .setStyle(TextInputStyle.Paragraph)
+          .setPlaceholder("第一段會自動當 description；@ # 會變 IG 連結，中英混排自動補空格")
+          .setRequired(false)
+          .setMaxLength(4000)
+      )
+    );
+}
+
+/** 讀出表單欄位 */
+function formFromModal(interaction) {
+  const rawBody = interaction.fields.getTextInputValue("body")?.trim() || "";
+  const normalizedBody = normalizeBodyText(rawBody);
+  return {
+    title: interaction.fields.getTextInputValue("title").trim(),
+    tags: parseTags(interaction.fields.getTextInputValue("tags")?.trim() || ""),
+    body: linkifyInstagram(normalizedBody),
+    description: descriptionFromBody(normalizedBody),
+    pubDate: taipeiYmd().iso,
+  };
+}
+
+/**
+ * 沒寫標題的附件：不直接建立「未命名作品」，回覆按鈕讓發文者選
+ *  - 「字圖 → 某作品」：最近的作品（沒字圖的排前面），只在附件全是圖片時出現
+ *  - 「這是新作品」：開表單補標題、標籤、內文
+ *  - 「取消」
+ */
+async function askUntitled(message, images, videos) {
+  for (const [id, x] of untitledById) if (Date.now() - x.createdAt > UNTITLED_TTL_MS) untitledById.delete(id);
+  if (GITHUB_TOKEN) syncOriginBeforeLocalChanges();
+  const candidates = videos.length ? [] : recentProjects();
+  const id = message.id;
+  untitledById.set(id, { userId: message.author.id, images, videos, candidates, createdAt: Date.now() });
+  const rows = [];
+  if (candidates.length) {
+    rows.push(
+      new ActionRowBuilder().addComponents(
+        candidates.map((c, i) =>
+          new ButtonBuilder()
+            .setCustomId(`untitled:${id}:wm:${i}`)
+            .setLabel(`字圖 → ${c.title}${c.hasWordmark ? "（換掉現有字圖）" : ""}`.slice(0, 80))
+            .setStyle(c.hasWordmark ? ButtonStyle.Secondary : ButtonStyle.Primary)
+        )
+      )
+    );
+  }
+  rows.push(
+    new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setCustomId(`untitled:${id}:new`).setLabel("這是新作品").setStyle(ButtonStyle.Success),
+      new ButtonBuilder().setCustomId(`untitled:${id}:cancel`).setLabel("取消").setStyle(ButtonStyle.Danger)
+    )
+  );
+  await message
+    .reply({
+      content: `這則沒有寫標題，還沒建立任何東西。這${images.length + videos.length > 1 ? "些附件" : "張圖"}是？\n（${UNTITLED_TTL_MS / 60000} 分鐘內有效；以後第一行寫標題就不會再問）`,
+      components: rows,
+    })
+    .catch(() => null);
+}
+
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (interaction.isButton() && interaction.customId.startsWith("untitled:")) {
+    const [, id, action, idx] = interaction.customId.split(":");
+    const entry = untitledById.get(id);
+    if (!entry) {
+      await interaction.update({ content: "這個選單已過期，請重新發一次（第一行寫標題）。", components: [] });
+      return;
+    }
+    if (interaction.user.id !== entry.userId) {
+      await interaction.reply({ content: "只有發這則訊息的人可以選。", ephemeral: true });
+      return;
+    }
+    if (action === "cancel") {
+      untitledById.delete(id);
+      await interaction.update({ content: "已取消，什麼都沒建立。", components: [] });
+      return;
+    }
+    if (action === "new") {
+      // 表單送出前不刪暫存：使用者關掉表單還可以再按
+      await interaction.showModal(newProjectModal(`untitled_new:${id}`));
+      return;
+    }
+    if (action === "wm") {
+      const c = entry.candidates[Number(idx)];
+      untitledById.delete(id);
+      await interaction.update({ content: `正在更新「${c.title}」的字圖…`, components: [] });
+      await publishWordmarks((text) => interaction.editReply(text).catch(() => {}), c.title, c.slug, entry.images);
+    }
+    return;
+  }
+
+  if (interaction.isModalSubmit() && interaction.customId.startsWith("untitled_new:")) {
+    const id = interaction.customId.slice("untitled_new:".length);
+    const entry = untitledById.get(id);
+    if (!entry) {
+      await interaction.reply({ content: "附件已過期，請重新發一次（第一行寫標題）。", ephemeral: true });
+      return;
+    }
+    untitledById.delete(id);
+    const form = formFromModal(interaction);
+    // 按鈕那則改成進度訊息（表單從按鈕開出來，可以直接 update 那則）
+    await interaction.update({ content: `正在建立專案「${form.title}」…`, components: [] });
+    await publishFromForm((text) => interaction.editReply(text).catch(() => {}), form, entry.images, entry.videos);
+  }
+});
+
 client.on("messageCreate", async (message) => {
   if (message.channelId !== DISCORD_CHANNEL_ID) return;
   if (message.author.bot) return;
@@ -705,31 +869,8 @@ client.on("messageCreate", async (message) => {
 
   if (pending && images.length + videos.length > 0) {
     pendingByChannelUser.delete(key);
-    const tags = ensureWhatzurtypeTag(pending.tags, pending.body);
-    const body = withWhatzurtypeFooter(pending.body, tags, dateFromIso(pending.pubDate));
-    const payload = {
-      title: pending.title,
-      description: pending.description,
-      body,
-      tags: tags.length ? tags : undefined,
-      pubDate: pending.pubDate,
-      images: images.map((a) => ({ url: a.url, alt: a.name || undefined })),
-      videos: videos.map((a) => ({ url: a.url })),
-      hoverVideoIndex: 0,
-      overwrite: true,
-    };
     const reply = await message.reply("正在建立專案…").catch(() => null);
-    const update = (text) => reply?.edit(text).catch(() => {});
-    try {
-      await publishPayload(update, { title: pending.title, payload });
-    } catch (err) {
-      console.error(err);
-      const hint =
-        /圖片壓縮|optimize-images|sharp/.test(err.message)
-          ? "\n\n💡 若為圖片壓縮失敗，可在**本地**於專案根目錄執行 `pnpm optimize-images` 後再 push。"
-          : "";
-      await update(`❌ 建立失敗：${err.message}${hint}`);
-    }
+    await publishFromForm((text) => reply?.edit(text).catch(() => {}), pending, images, videos);
     return;
   }
 
@@ -742,26 +883,20 @@ client.on("messageCreate", async (message) => {
   // 只有標題一行、沒有影片：這則是字圖，不猜圖裡是不是字
   if (videos.length === 0 && textLines.length === 1) {
     const title = textLines[0];
-    const payload = {
-      title,
-      slug: slugify(title),
-      onlyUpdateWordmarks: true,
-      wordmarks: images.map((a) => ({ url: a.url })),
-    };
     const reply = await message.reply("正在更新字圖…").catch(() => null);
-    const update = (text) => reply?.edit(text).catch(() => {});
-    try {
-      await publishPayload(update, { title, payload });
-    } catch (err) {
-      console.error(err);
-      await update(`❌ 字圖更新失敗：${err.message}`);
-    }
+    await publishWordmarks((text) => reply?.edit(text).catch(() => {}), title, slugify(title), images);
     return;
   }
 
-  const firstLine = content.split("\n")[0]?.trim() || "";
-  const rest = content.slice(firstLine.length).trim();
-  const title = firstLine || "未命名作品";
+  // 沒寫標題：先問用途，不直接建立「未命名作品」
+  if (textLines.length === 0) {
+    await askUntitled(message, images, videos);
+    return;
+  }
+
+  const firstLine = textLines[0];
+  const rest = content.slice(content.indexOf(firstLine) + firstLine.length).trim();
+  const title = firstLine;
   const normalizedRest = normalizeBodyText(rest);
   const linkedBody = linkifyInstagram(normalizedRest);
   const pub = taipeiYmd();
