@@ -19,6 +19,10 @@ export default defineConfig({
   prefetch: true,
   trailingSlash: "never",
   site: SITE_URL,
+  // 作品改名後舊網址轉到新網址，已分享出去的連結才不會失效
+  redirects: {
+    "/projects/下雨": "/projects/雨",
+  },
   integrations: [
     sitemap({
       filter: (page) => {
