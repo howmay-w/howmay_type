@@ -116,12 +116,11 @@
     <label class="zoom grid-only">預覽比例 <input type="range" id="zoom" min="0.3" max="1.5" step="0.05"> <span id="zoomVal"></span></label>
     <select id="charsF" aria-label="依字數篩選"></select>
     <select id="sort" aria-label="排序">
-      <option value="risk">依風險排序</option>
-      <option value="edited">最近編輯</option>
-      <option value="date">依日期（新到舊）</option>
-      <option value="name">依名稱</option>
-      <option value="size">依字牆大小（大→小）</option>
+      <option value="date" selected>依上傳日期</option>
+      <option value="edited">依編輯時間</option>
+      <option value="size">依字牆大小</option>
     </select>
+    <button type="button" id="sortDir" title="反轉排序"></button>
     <input type="search" id="q" placeholder="搜尋作品名稱" aria-label="搜尋作品名稱">
     <button type="button" id="compressBtn" title="把超過 100KB 的字圖重新壓縮，尺寸不變，字牆載入會比較快">壓縮過大的字圖</button>
     <span class="status" id="toolStatus"></span>
@@ -202,9 +201,10 @@ function flagsOf(p) {
 // 狀態標記：重新去背、需要換圖（互斥，可都不標）；不再區分已確認／待處理
 const STATUS = { redo: "重新去背", swap: "需要換圖" };
 const statusOf = (wm) => (wm.needsImage ? "swap" : wm.redo ? "redo" : "none");
-const risk = (p) => (statusOf(p.wordmark) !== "none" ? 50 : 0) + (p.wordmark.hidden ? 30 : 0) + (p.wordmark.source === "auto" ? 20 : 0) + flagsOf(p).filter((f) => f[0] === "warn").length * 10;
 
 let all = [], view = [], cur = 0, filter = "all";
+// 排序是否反序（見下方 sortDir 按鈕）
+let SORT_REVERSED = false;
 // 每一款字圖是一筆（key = slug#v）；v = 0 是主字圖，其他款從 1 起
 const nameOf = (p) => (p.v ? `${p.title}・第 ${p.v + 1} 款` : p.title);
 const imgOf = (p) => `/projects/${encodeURIComponent(p.slug)}/${encodeURIComponent(p.file)}?v=${p.mtime}`;
@@ -331,7 +331,10 @@ function render(keepSlug) {
     q ? nameOf(p).includes(q) || p.slug.includes(q) : inFilter(p));
   const s = $("sort").value;
   const wholeSize = (p) => wallWidth(p) / Math.sqrt(p.size.width / p.size.height);
-  view.sort(s === "edited" ? (a, b) => (b.edited ?? 0) - (a.edited ?? 0) : s === "size" ? (a, b) => wholeSize(b) - wholeSize(a) : s === "date" ? (a, b) => b.date.localeCompare(a.date) || a.v - b.v : s === "name" ? (a, b) => a.title.localeCompare(b.title, "zh-Hant") || a.v - b.v : (a, b) => risk(b) - risk(a) || b.date.localeCompare(a.date) || a.v - b.v);
+  // 預設都是「新到舊／大到小」，反序時整個倒過來；同一件作品的各款維持主字圖在前
+  const by = { edited: (a, b) => (b.edited ?? 0) - (a.edited ?? 0), size: (a, b) => wholeSize(b) - wholeSize(a), date: (a, b) => b.date.localeCompare(a.date) }[s] ?? (() => 0);
+  const dir = SORT_REVERSED ? -1 : 1;
+  view.sort((a, b) => dir * by(a, b) || a.v - b.v);
   const L = $("list");
   L.innerHTML = view.length ? "" : `<p class="count">${q ? "找不到符合的作品。" : "這個篩選條件下沒有作品。"}</p>`;
   if (MODE === "wall") { if (view.length) renderWall(); }
@@ -932,7 +935,13 @@ $("compressBtn").addEventListener("click", async () => {
   }
   btn.disabled = false;
 });
-$("sort").addEventListener("change", () => { cur = 0; render(); });
+// 排序方向：按鈕顯示目前的方向，按一下反過來
+const SORT_DIR_LABEL = { date: ["新→舊", "舊→新"], edited: ["新→舊", "舊→新"], size: ["大→小", "小→大"] };
+const syncSortDir = () => { $("sortDir").textContent = (SORT_DIR_LABEL[$("sort").value] ?? ["↓", "↑"])[SORT_REVERSED ? 1 : 0]; };
+syncSortDir();
+// 換排序種類時回到預設方向（新到舊／大到小）
+$("sort").addEventListener("change", () => { cur = 0; SORT_REVERSED = false; syncSortDir(); render(); });
+$("sortDir").addEventListener("click", () => { SORT_REVERSED = !SORT_REVERSED; cur = 0; syncSortDir(); render(); });
 $("charsF").addEventListener("change", () => { cur = 0; render(); });
 $("q").addEventListener("input", () => { cur = 0; render(); });
 $("zoom").addEventListener("input", () => {
