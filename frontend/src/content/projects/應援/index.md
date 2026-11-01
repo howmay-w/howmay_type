@@ -32,9 +32,9 @@ tags:
 wordmark:
   src: "/projects/應援/wordmark.webp"
   source: "cutout"
-  accent: "#b98978"
+  accent: "#f48157"
   ink: 0.355
-  scale: 1.15
+  scale: 1.3
   reviewed: true
 ---
 

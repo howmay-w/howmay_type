@@ -23,7 +23,7 @@ wordmark:
   src: "/projects/消失保存/wordmark.webp"
   source: "cutout"
   sourceImage: "/projects/消失保存/wordmark-source.webp"
-  accent: "#ebdc2d"
+  accent: "#bba725"
   ink: 0.169
 ---
 

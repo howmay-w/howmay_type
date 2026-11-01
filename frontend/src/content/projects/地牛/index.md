@@ -26,7 +26,7 @@ wordmark:
   source: "cutout"
   accent: "#394e6c"
   ink: 0.415
-  scale: 1.2
+  scale: 1.25
 ---
 
 本月 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 主題台灣的妖怪傳說（適逢萬聖節）（嗯？）
