@@ -29,6 +29,7 @@ wordmark:
   accent: "#db591f"
   ink: 0.317
   chars: 2
+  scale: 1.2
 ---
 
 「如果有人說，懷抱希望是一種錯誤\
