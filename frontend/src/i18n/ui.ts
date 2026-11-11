@@ -19,6 +19,7 @@ export const ui = {
 		"project.next": "下一篇",
 		"project.home": "首頁",
 		"project.random": "隨機",
+		"project.inAppDownload": "App 內建瀏覽器無法下載檔案，請點右上角「⋯」選擇「在外部瀏覽器開啟」後再下載。",
 	},
 	en: {
 		"nav.about": "About",
@@ -38,6 +39,7 @@ export const ui = {
 		"project.next": "Next",
 		"project.home": "Home",
 		"project.random": "Random",
+		"project.inAppDownload": "In-app browsers can't download files. Tap “⋯” in the top-right corner and choose “Open in external browser” first.",
 	},
 } as const;
 

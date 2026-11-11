@@ -225,7 +225,7 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 				</p>
 			)}
 			{bodyHtml && (
-					<div class="prose hover-underline-animated" set:html={bodyHtml} />
+					<div class="prose hover-underline-animated" data-inapp-hint={t("project.inAppDownload")} set:html={bodyHtml} />
 				)}
 			</div>
 			{pageWordmarks.length > 0 && (
@@ -347,6 +347,32 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 					return false;
 				}
 			};
+			// IG、Threads、Facebook 的 App 內建瀏覽器不會下載檔案，點了沒反應。
+			// Android 直接交給 Chrome 下載；iPhone 沒有可靠的跳轉方式，只能提示改用外部瀏覽器。
+			const inApp = /Instagram|Barcelona|FBAN|FBAV|FB_IAB/.test(navigator.userAgent);
+			const prose = document.querySelector<HTMLElement>(".prose[data-inapp-hint]");
+			const downloads = prose ? [...prose.querySelectorAll<HTMLAnchorElement>('a[href^="/downloads/"]')] : [];
+			if (inApp && prose && downloads.length) {
+				const isAndroid = /Android/.test(navigator.userAgent);
+				const notes = new Set<Element>();
+				downloads.forEach((a) => {
+					const block = a.closest("p") ?? a;
+					if (!notes.has(block)) {
+						notes.add(block);
+						const note = document.createElement("p");
+						note.className = "inapp-hint";
+						note.textContent = prose.dataset.inappHint ?? "";
+						block.after(note);
+					}
+					if (!isAndroid) return;
+					a.addEventListener("click", (e) => {
+						e.preventDefault();
+						const url = new URL(a.href);
+						location.href = `intent://${url.host}${url.pathname}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url.href)};end`;
+					});
+				});
+			}
+
 			document.querySelectorAll<HTMLAnchorElement>("a[data-back]").forEach((a) => {
 				a.addEventListener("click", (e) => {
 					if (a.dataset.fromSearch || a.dataset.fromLatest) return;
@@ -613,6 +639,10 @@ const pageWordmarks = [project.data.wordmark, ...(project.data.extraWordmarks ??
 	}
 	.prose.hover-underline-animated :global(a:hover) {
 		color: inherit;
+	}
+	.prose :global(.inapp-hint) {
+		color: var(--color-faded);
+		font-size: 0.85em;
 	}
 
 	/* ── 底部導覽 ─────────────────────────── */
