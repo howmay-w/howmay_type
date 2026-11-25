@@ -21,6 +21,11 @@ video:
   src: "/projects/民主/video_0.mp4"
 hoverVideo:
   src: "/projects/民主/video_0.mp4"
+wordmark:
+  src: "/projects/民主/wordmark.webp"
+  source: "cutout"
+  accent: "#c76849"
+  ink: 0.441
 ---
 
 「你最重視的價值是什麼呢？」這是本月，也就是選舉月的 [#whatzurtype](https://www.instagram.com/explore/search/keyword/?q=%23whatzurtype) 題目，畫了不太能一眼認出的「民主」。
